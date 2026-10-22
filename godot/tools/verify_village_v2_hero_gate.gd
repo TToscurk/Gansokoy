@@ -217,17 +217,30 @@ func _to_local(p: Vector3) -> Vector3:
 ## 世界 XZ → 第一個非 hero 的碰撞面高度（玩家實際站的面）；exclude_terrain_only=true 只認地形
 var player_rid := RID()   # render 模式：地面射線排除玩家膠囊（否則量到膠囊頂）
 
+## 地面＝玩家會站上的靜態環境（2026-10-22）。玩家 CharacterBody3D 用預設遮罩 layer 1（村莊環境碰撞全在 layer 1）→ ENV_MASK；
+## 會動的物體不是地面：NPC 身體（AnimatableBody3D／CharacterBody3D）、布料代理、RigidBody3D。
+## 阿求袖子模擬 floor_collision 在 layer 20 放 WorldBoundaryShape3D（無限平面，y＝NPC 根高 1.69）→ 全村地面被量成 1.69，
+## 入口段差／頭頂淨空 12 FAIL（實測：只跳過該平面 → 0 FAIL）。
+const ENV_MASK := 1
+
+
+func _is_env(o: Object) -> bool:
+	return not (o is AnimatableBody3D or o is CharacterBody3D or o is RigidBody3D or o is PhysicalBone3D)
+
 
 func _ground(x: float, z: float, terrain_only := false) -> float:
 	var ex: Array[RID] = [hero_rid]
 	if player_rid.is_valid():
 		ex.append(player_rid)
-	for i in 12:
-		var q := PhysicsRayQueryParameters3D.create(Vector3(x, 400.0, z), Vector3(x, -80.0, z))
+	for i in 16:
+		var q := PhysicsRayQueryParameters3D.create(Vector3(x, 400.0, z), Vector3(x, -80.0, z), ENV_MASK)
 		q.exclude = ex
 		var hit := space.intersect_ray(q)
 		if hit.is_empty():
 			return NAN
+		if not _is_env(hit["collider"]):
+			ex.append(hit["rid"])
+			continue
 		if not terrain_only or hit["rid"] == terrain_rid:
 			return float(hit["position"].y)
 		ex.append(hit["rid"])
@@ -235,10 +248,17 @@ func _ground(x: float, z: float, terrain_only := false) -> float:
 
 
 func _first_collider(x: float, z: float) -> Object:
-	var q := PhysicsRayQueryParameters3D.create(Vector3(x, 400.0, z), Vector3(x, -80.0, z))
-	q.exclude = [hero_rid]
-	var hit := space.intersect_ray(q)
-	return hit.get("collider") if not hit.is_empty() else null
+	var ex: Array[RID] = [hero_rid]
+	for i in 16:
+		var q := PhysicsRayQueryParameters3D.create(Vector3(x, 400.0, z), Vector3(x, -80.0, z), ENV_MASK)
+		q.exclude = ex
+		var hit := space.intersect_ray(q)
+		if hit.is_empty():
+			return null
+		if _is_env(hit["collider"]):
+			return hit["collider"]
+		ex.append(hit["rid"])
+	return null
 
 
 ## 世界射線只打 hero 碰撞；回傳距離（打不到 INF）

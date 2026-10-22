@@ -42,14 +42,21 @@ const RAYS_MAX := 400        # 每單位射線上限（超過就等比降密度�
 const RENDER_R := 0.25       # 可見網格最低點格網（m）
 const VISUAL_ONLY_META: Array[String] = ["visual_only", "no_collision_required", "decorative_only"]
 
-## 永久反向／對照案例：改哪個、預期什麼。selftest 逐一驗，結果改變 → 回歸失敗。
+## 永久反向／對照案例（含 W9 Shell 失效 shell）：改哪個、預期什麼。selftest 逐一驗，結果改變 → 回歸失敗。
 const CASES := {
 	"float": "鈴奈庵抬高 0.3 m → 鈴奈庵 FAIL（FLOATING）",
 	"sink": "鈴奈庵下沉 0.8 m → 鈴奈庵 FAIL（TERRAIN_PENETRATION）",
 	"clash": "霧雨店推進鈴奈庵側面 6 m → 兩者 FAIL（OBJECT_PENETRATION）",
 	"aabbfp": "兩個 10×3×3 m 箱體 yaw 40°、短軸淨距 0.6 m 並排（AABB 明顯重疊、形狀不接觸）→ 兩者 PASS、計入 AABB_FALSE_POSITIVE",
 	"noproxy": "霧雨店碰撞全停用並推進鈴奈庵 AABB → 霧雨店 REVIEW（NO_COLLISION_PROXY），不得 PASS",
+	"shell": "W9 Shell 失效三種：MKT_001 Shell 全停用、MKT_025 Shell 移除、RSW_074 Shell 改 layer 20（玩家撞不到）→ 三棟 REVIEW，不得 PASS；對照 MKT_004 Shell 正常 → PASS",
 }
+
+## W9 FIX（eb0afba0）：外形換過的灰盒在執行期停用 body 原箱、改用 overlay ArchW9R2P13/<id>/Shell（meta body_path 指回 body）。
+## 稽核把 Shell 當該棟碰撞；只認玩家撞得到的層（玩家 CharacterBody3D 預設遮罩 layer 1）。
+const PLAYER_MASK := 1
+const SHELL_CASE := {"B_P_MKT_001": "off", "B_P_MKT_025": "gone", "B_P_RSW_074": "mask", "B_P_MKT_004": "ok"}
+var w9_entry := {}   # body 路徑（相對村莊根）→ overlay 子節點
 
 var v: Node3D
 var space: PhysicsDirectSpaceState3D
@@ -142,6 +149,15 @@ func _selftest(out: String) -> int:
 			"noproxy":
 				ok = K[0] == "REVIEW" and K[1].contains("NO_COLLISION_PROXY")
 				got = "霧雨店 %s %s" % K
+			"shell":
+				ok = int(R["tally"]["FAIL"]) == 0
+				var parts: Array = []
+				for bn: String in SHELL_CASE:
+					var X := _st(u, bn)
+					var want := "PASS" if SHELL_CASE[bn] == "ok" else "REVIEW"
+					ok = ok and X[0] == want
+					parts.append("%s(%s) %s" % [bn.trim_prefix("B_P_"), SHELL_CASE[bn], X[0]])
+				got = "、".join(parts)
 		_p("%s %s：%s → %s（%d ms）" % ["OK" if ok else "FAIL", c, CASES[c], got, R["ms"]])
 		bad += 0 if ok else 1
 	_p("結果：selftest %d 項不符預期（clean＋%d 案例，共 %d ms）" % [bad, CASES.size(), Time.get_ticks_msec() - t_all])
@@ -176,6 +192,8 @@ func _audit(case: String) -> Dictionary:
 	_apply_neg()
 	for i in 3:
 		await physics_frame
+	if case == "shell":
+		await _apply_shell_neg()
 	space = v.get_world_3d().direct_space_state
 	terrain_rid = (v.get_node("Collision/TerrainCollision") as CollisionObject3D).get_rid()
 	static_rids = [terrain_rid, (v.get_node("Collision/Boundary") as CollisionObject3D).get_rid()]
@@ -264,6 +282,25 @@ func _apply_neg() -> void:
 			_add_control()
 
 
+## W9 overlay 的 _boot（2 個 process frame 後）會 _restore→_shell 重套碰撞：等它跑完才破壞，否則停用會被蓋回去。
+func _apply_shell_neg() -> void:
+	var w9 := v.get_node("ArchW9R2P13")
+	for i in 30:
+		if bool(w9.get("_booted")):
+			break
+		await process_frame
+	for c in w9.get_node("B_P_MKT_001/Shell").find_children("*", "CollisionShape3D", true, false):
+		(c as CollisionShape3D).disabled = true
+	var gone := w9.get_node("B_P_MKT_025/Shell")
+	gone.get_parent().remove_child(gone)
+	gone.free()
+	var m := w9.get_node("B_P_RSW_074/Shell")
+	for co: CollisionObject3D in ([m] if m is CollisionObject3D else []) + m.find_children("*", "CollisionObject3D", true, false):
+		co.collision_layer = 1 << 19
+	for i in 2:
+		await physics_frame
+
+
 ## 對照組兩箱放在 spot 時，除地形外不得碰到任何既有 collider。
 ## StaticBody 原點 ±15 m 的粗篩看不到「原點在別處、shape 散在全圖」的 overlay 碰撞
 ## （分塊植被 Collision/C_x_z、Props/EnvironmentP9/Collision 等），所以逐 shape 實查。
@@ -349,6 +386,13 @@ func _add_control() -> void:
 # ─────────────────────────── 收集 ───────────────────────────
 
 func _collect() -> void:
+	w9_entry.clear()
+	var w9 := v.get_node_or_null("ArchW9R2P13")
+	if w9 != null:
+		for e: Node in w9.get_children():
+			var bp := String(e.get_meta("body_path", ""))
+			if bp != "":
+				w9_entry[bp] = e
 	var lm := v.get_node("Landmarks")
 	for a: Node in lm.get_children():
 		for c: Node in a.get_children():
@@ -404,6 +448,18 @@ func _add(n: Node3D, name: String, kind: String, building: bool) -> void:
 	var cos: Array = [n] if n is CollisionObject3D else []
 	cos.append_array(n.find_children("*", "CollisionObject3D", true, false))
 	var rids: Array[RID] = []
+	var note := ""
+	var ent: Node = w9_entry.get(String(v.get_path_to(n)), null)
+	if ent != null:
+		var sh := ent.get_node_or_null("Shell")
+		if sh != null:
+			var scos: Array = [sh] if sh is CollisionObject3D else []
+			scos.append_array(sh.find_children("*", "CollisionObject3D", true, false))
+			for co: CollisionObject3D in scos:
+				if co.collision_layer & PLAYER_MASK == 0:
+					note = "W9 Shell collision_layer %d 不在玩家遮罩 %d（玩家撞不到）" % [co.collision_layer, PLAYER_MASK]
+				else:
+					cos.append(co)
 	var retired := not cos.is_empty()
 	for co: CollisionObject3D in cos:
 		if co.collision_layer == 0:
@@ -421,6 +477,8 @@ func _add(n: Node3D, name: String, kind: String, building: bool) -> void:
 			rids.append(co.get_rid())
 	if retired and bool(n.get_meta("retired_by_hero", false)):
 		return   # 灰盒已被 Hero 取代（retire()：layer 0＋shape disabled＋隱藏）
+	if ent != null and ent.get_node_or_null("Shell") == null and shapes.is_empty():
+		note = "W9 overlay %s 缺 Shell、body 原箱也停用" % ent.name   # 沒 Shell 的 overlay 條目不換箱，body 仍有效＝正常
 	var wa := AABB()
 	if shapes.is_empty():
 		# 沒有可用碰撞代理：用可見網格的世界 AABB 參與 broad phase（NO_COLLISION_PROXY）
@@ -441,7 +499,8 @@ func _add(n: Node3D, name: String, kind: String, building: bool) -> void:
 		for s in shapes:
 			wa = wa.merge(s["waabb"])
 	units.append({"name": name, "node": n, "kind": kind, "building": building, "proxy": not shapes.is_empty(),
-		"shapes": shapes, "waabb": wa, "rids": rids})
+		"shapes": shapes, "waabb": wa, "rids": rids, "note": note,
+		"shell": ent != null and ent.get_node_or_null("Shell") != null and note == ""})
 
 
 func _shape_aabb(sh: Shape3D) -> AABB:
@@ -706,6 +765,8 @@ func _classify(u: Dictionary, r: Dictionary) -> void:
 	var fail: Array = []
 	var review: Array = []
 	var info: Array = []
+	if u.get("note", "") != "":
+		review.append("SHELL_INVALID " + String(u["note"]))
 	if not u["proxy"]:
 		var with: Array = []
 		for c: Dictionary in r["contacts"]:
