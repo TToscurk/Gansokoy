@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3]
 
-[ext_resource type="Shader" path="res://assets/village_v2/veg_kit/veg_leaf.gdshader" id="1_315ce"]
+[ext_resource type="Shader" path="res://assets/shrine_v3/shaders/veg_leaf.gdshader" id="1_315ce"]
 [ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/veg/sakura_card.png" id="2_g8h5i"]
 
 [resource]
@@ -8,7 +8,7 @@ resource_name = "s3_leaf_sakura_card"
 render_priority = 0
 shader = ExtResource("1_315ce")
 shader_parameter/albedo_tex = ExtResource("2_g8h5i")
-shader_parameter/albedo_mul = 1.0
+shader_parameter/albedo_mul = 0.72
 shader_parameter/normal_depth = null
 shader_parameter/roughness = 0.85
 shader_parameter/specular = 0.25
@@ -19,5 +19,5 @@ shader_parameter/flutter = null
 shader_parameter/wind_gain = null
 shader_parameter/alpha_cut = 0.45
 shader_parameter/alpha_mip_boost = null
-shader_parameter/translucency = 0.35
+shader_parameter/translucency = 0.2
 shader_parameter/crown_normal = null
