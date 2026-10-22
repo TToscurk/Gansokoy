@@ -1296,7 +1296,7 @@ def _structure_scan(gs, bid, declared, undeclared, detached, ground_z, step):
                          "measurable penetration", {"reason": reason, "pairs": len(items), "max_surface_crossing_m": exts[0],
                                                     "crossing_histogram": hist}, None, 0.005,
                          "bvh_overlap+surface_crossing",
-                         f"{len(items)} 對 {REASON_TEXT.get(reason, reason).split('：')[0]}：表面交錯最大 {exts[0]*1000:.1f} mm"
+                         f"{len(items)} 對 {reason}：表面交錯最大 {exts[0]*1000:.1f} mm"
                          f"（>50 mm 有 {hist['>50mm']} 對，先看這些）；沒有封閉體積，不能換算成穿透深度",
                          {"top_pairs": [{"a": t[1], "b": t[2], "surface_crossing_m": t[0], "crossing_tri_pairs": t[3], "at": t[4]}
                                         for t in items[:20]]}))

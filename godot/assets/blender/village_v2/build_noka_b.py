@@ -31,6 +31,7 @@ OUT = G + '/assets/village_v2/noka_b/src'
 MAP = REPO + '/docs/arch_spatial/examples/noka_b.arch.json'
 MATS = ['NK_Wood', 'NK_Plaster', 'NK_Thatch', 'NK_Stone', 'NK_Paper']
 TILE = {m: 1.0 for m in MATS}
+TILE['NK_Thatch'] = 1.0 / 0.55    # 與農家 A1（village_v2_farmstead_lib uv1_scale 0.55）同一個茅草尺度
 
 # ── 色（頂點色；參考圖の焦茶・生成り・茅・灰石）
 C_POST = (0.20, 0.14, 0.09)
@@ -38,14 +39,15 @@ C_BEAM = (0.17, 0.12, 0.08)
 C_SASU = (0.30, 0.24, 0.16)
 C_BOARD = (0.27, 0.21, 0.15)
 C_FLOOR = (0.40, 0.34, 0.27)
-C_PLASTER = (0.80, 0.73, 0.60)
-C_PAPER = (0.86, 0.84, 0.78)
+C_PLASTER = (0.58, 0.50, 0.36)    # r2：0.80→0.58（參考圖「髒的生成り」；r1 牆面在畫面裡過亮、壓過屋頂）
+C_PAPER = (0.66, 0.63, 0.56)
 C_THATCH = (0.55, 0.45, 0.28)
 C_MOSS = (0.38, 0.40, 0.22)
-C_STONE = (0.46, 0.45, 0.42)
+C_STONE = (0.17, 0.165, 0.15)     # r2：0.46→0.17（審圖：礎石近白、搶眼）
 C_BAMBOO = (0.47, 0.42, 0.28)
 C_LOG = (0.52, 0.40, 0.26)
-C_DARK = (0.06, 0.05, 0.04)
+C_DARK = (0.03, 0.025, 0.02)      # 換氣口後方的暗部
+C_GBOARD = (0.11, 0.08, 0.055)    # r2：妻の板（原本純黑，換氣口讀不出來）
 
 # ── 寸法（m）
 HW, HD = 4.095, 2.73            # 本體半幅（柱心）
@@ -388,8 +390,98 @@ for _sx, _l in ((-1, 'L'), (1, 'R')):
         yb = Y_M - 0.08 * (C50 / S50)
         zb = EZ - (yb - YI0) / T50
         x0, x1 = sorted((sx * (XG - 0.08), sx * (XG - 0.11)))
-        prism_zy(m, [(-zb, yb), (zb, yb), (0.0, y_in(0.0))], x0, x1, 'NK_Wood', C_DARK)
+        prism_zy(m, [(-zb, yb), (zb, yb), (0.0, y_in(0.0))], x0, x1, 'NK_Wood', C_GBOARD)
     part('Gable_' + _l, 'full', 'gable', 'enclosure')(_mk_gable)
+
+
+# ── r2：妻の三角換氣口（參考圖左妻：暗い三角の開口に格子、周りは厚い茅）。妻板の外面に付く
+VENT = {'w': 0.50, 'y0': 5.78, 'y1': 6.45}
+
+
+def vent_parts(m, sx):
+    xb = sx * (XG - 0.08)                       # 妻板の外面
+    back = sorted((xb, xb + sx * 0.012))
+    fr = sorted((xb + sx * 0.012, xb + sx * 0.052))
+    w, y0, y1 = VENT['w'], VENT['y0'], VENT['y1']
+    prism_zy(m, [(-w, y0), (w, y0), (0.0, y1)], back[0], back[1], 'NK_Wood', C_DARK)
+    xc = (fr[0] + fr[1]) / 2
+    hx = (fr[1] - fr[0]) / 2
+    m.box((fr[0], y0 - 0.03, -w - 0.03), (fr[1], y0 + 0.03, w + 0.03), 'NK_Wood', C_BEAM)          # 下枠
+    for s in (-1, 1):                                                                         # 斜め枠
+        a, b = (xc, y0 + 0.03, s * (w - 0.02)), (xc, y1 - 0.02, 0.0)
+        m.beam(a, b, 0.05, hx * 2, 'NK_Wood', C_BEAM, up=X)
+    for k in range(-3, 4):                                                                    # 縦格子
+        z = k * (w / 4.0)
+        top = y1 - (y1 - y0) * abs(z) / w - 0.05
+        if top - (y0 + 0.03) < 0.06:
+            continue
+        m.box((fr[0] + 0.005, y0 + 0.03, z - 0.016), (fr[1] - 0.005, top, z + 0.016), 'NK_Wood', C_BOARD)
+
+
+for _sx, _l in ((-1, 'L'), (1, 'R')):
+    def _mk_vent(m, sx=_sx):
+        vent_parts(m, sx)
+    part('Gable_Vent_' + _l, 'full', 'vent', 'enclosure')(_mk_vent)
+
+
+# ── r2：左側（−x、正面から見て左）の下屋：片流れ板葺、柱 2・桁・棚、下に薪
+GEK_X0 = -HW - P / 2                 # 柱外面
+GEK_XO = -HW - 1.80                  # 外柱心
+GEK_X1 = -HW - 2.00                  # 軒先
+GEK_Z = (-2.20, 1.90)
+GEK_POST_Z = (-2.00, 1.70)
+GEK_TOP0 = 2.45
+GEK_TAN = 0.32
+GEK_T = 0.05
+
+
+def gek_top(x):
+    return GEK_TOP0 - (GEK_X0 - x) * GEK_TAN
+
+
+def gek_under(x):
+    return gek_top(x) - GEK_T / math.cos(math.atan(GEK_TAN))
+
+
+def prism_xy(m, prof, z0, z1, mat, col):
+    """(x, y) 断面を z0..z1 に押し出し。"""
+    slab(m, [(x, y, z1) for (x, y) in prof], Z, z1 - z0, mat, col)
+
+
+@part('Gek_Ledger', 'full', 'beam', 'structure')
+def _mk_gled(m):
+    x1, x0 = GEK_X0, GEK_X0 - 0.09
+    prism_xy(m, [(x1, 2.20), (x1, gek_under(x1)), (x0, gek_under(x0)), (x0, 2.20)], GEK_Z[0] + 0.15, GEK_Z[1] - 0.15,
+             'NK_Wood', C_BEAM)
+
+
+@part('Gek_Keta', 'full', 'beam', 'structure')
+def _mk_gketa(m):
+    x1, x0 = GEK_XO + 0.06, GEK_XO - 0.06
+    yb = gek_under(x0) - 0.12
+    prism_xy(m, [(x1, yb), (x1, gek_under(x1)), (x0, gek_under(x0)), (x0, yb)], GEK_Z[0], GEK_Z[1], 'NK_Wood', C_BEAM)
+
+
+for _i, _z in enumerate(GEK_POST_Z):
+    def _mk_gpost(m, z=_z):
+        yb = gek_under(GEK_XO - 0.06) - 0.12
+        m.box((GEK_XO - 0.06, 0.12, z - 0.06), (GEK_XO + 0.06, yb, z + 0.06), 'NK_Wood', C_POST)
+
+    def _mk_gstone(m, z=_z):
+        m.box((GEK_XO - 0.14, -0.13, z - 0.14), (GEK_XO + 0.14, 0.12, z + 0.14), 'NK_Stone', C_STONE)
+    part('Gek_Post%d' % _i, 'full', 'post', 'structure')(_mk_gpost)
+    part('Gek_Stone%d' % _i, 'full', 'foundation', 'structure')(_mk_gstone)
+
+
+@part('Gek_Roof', 'full', 'roof', 'roof')
+def _mk_groof(m):
+    a = math.atan(GEK_TAN)
+    # 板厚の法線押し出しで裏面内端が柱へ戻らないように（下屋庇と同じ）＋ 5 mm 離す：屋根は棚に載り、柱には触れない
+    # （面同士ぴったりだと穿插／接觸が判定できず UNKNOWN：r2 初回 Gek_Roof×Post_S0）
+    x0 = GEK_X0 - GEK_T * math.sin(a) - 0.005
+    top = [(x0, gek_top(x0), GEK_Z[0]), (x0, gek_top(x0), GEK_Z[1]), (GEK_X1, gek_top(GEK_X1), GEK_Z[1]),
+           (GEK_X1, gek_top(GEK_X1), GEK_Z[0])]
+    slab(m, top, (-math.sin(a), math.cos(a), 0.0), GEK_T, 'NK_Wood', C_BOARD)
 
 
 @part('Ridge', 'full', 'ridge', 'roof')
@@ -508,6 +600,19 @@ def constraints():
     c('SYMMETRIC', 'Thatch_L', 'Thatch_R', id='SYM:skirts')
     c('SYMMETRIC', 'Thatch_F', 'Thatch_F', id='SYM:front_roof')
     c('CLEARANCE_REQUIRED', 'Makiba', 'Wall_S0b', min=0.05, id='CLEAR:woodpile')
+    # r2 追加
+    for side in ('L', 'R'):
+        c('CONTACT', 'Gable_Vent_' + side, 'Gable_' + side, tol=0.003)
+        c('CLEARANCE_REQUIRED', 'Gable_Vent_' + side, 'Thatch_F', min=0.05, id='CLEAR:vent_%s_under_F' % side)
+    c('CONTACT', 'Gek_Ledger', 'Post_S0')
+    c('SUPPORT', 'Gek_Roof', 'Gek_Ledger', require='b')
+    c('SUPPORT', 'Gek_Roof', 'Gek_Keta', require='b')
+    for i in range(2):
+        c('SUPPORT', 'Gek_Keta', 'Gek_Post%d' % i, require='b')
+        c('SUPPORT', 'Gek_Post%d' % i, 'Gek_Stone%d' % i, embed_max=0.005)
+        c('CLEARANCE_REQUIRED', 'Makiba', 'Gek_Post%d' % i, min=0.05, id='CLEAR:woodpile_post%d' % i)
+    c('CLEARANCE_REQUIRED', 'Gek_Roof', 'Thatch_L', min=0.10, id='CLEAR:leanto_under_thatch')
+    c('CLEARANCE_REQUIRED', 'Gek_Roof', 'Makiba', min=0.30, id='CLEAR:leanto_over_woodpile')
     c('NO_INTERSECTION', 'Kutsunugi', 'Eng_Deck')
     for d in C:
         if d.get('a') is None:
@@ -531,7 +636,7 @@ def write_map():
 
 PALETTE = {'post': C_POST, 'beam': C_BEAM, 'sasu': C_SASU, 'board': C_BOARD, 'floor': C_FLOOR, 'plaster': C_PLASTER,
            'paper': C_PAPER, 'thatch': C_THATCH, 'moss': C_MOSS, 'stone': C_STONE, 'bamboo': C_BAMBOO, 'log': C_LOG,
-           'dark': C_DARK}
+           'dark': C_DARK, 'gboard': C_GBOARD}
 
 
 def palette_mats():
@@ -541,10 +646,33 @@ def palette_mats():
         m = bpy.data.materials.new('NK_' + k)
         m.use_nodes = True
         b = m.node_tree.nodes.get('Principled BSDF')
-        b.inputs['Base Color'].default_value = (c[0], c[1], c[2], 1.0)
+        b.inputs['Base Color'].default_value = (c[0], c[1], c[2], 1.0) if k not in ('thatch', 'moss') else (1, 1, 1, 1)
         b.inputs['Roughness'].default_value = 0.88
+        if k in ('thatch', 'moss'):
+            nt = m.node_tree
+            img = nt.nodes.new('ShaderNodeTexImage')
+            img.image = bpy.data.images.load(OUT + '/tex/' + ('thatch_albedo.png' if k == 'thatch' else 'thatch_moss_albedo.png'))
+            nt.links.new(img.outputs['Color'], b.inputs['Base Color'])
+            nimg = nt.nodes.new('ShaderNodeTexImage')
+            nimg.image = bpy.data.images.load(OUT + '/tex/thatch_normal.png')
+            nimg.image.colorspace_settings.name = 'Non-Color'
+            nm = nt.nodes.new('ShaderNodeNormalMap')
+            nm.inputs['Strength'].default_value = 1.4
+            nt.links.new(nimg.outputs['Color'], nm.inputs['Color'])
+            nt.links.new(nm.outputs['Normal'], b.inputs['Normal'])
+            b.inputs['Roughness'].default_value = 0.97
         out[k] = m
     return out
+
+
+def export_glb_tex(path, objs):
+    """K.export_glb と同じ設定＋画像を内嵌（K は image_format NONE：prefab が材質を差し替える前提）。"""
+    for o in bpy.context.scene.objects:
+        o.select_set(o in objs)
+    bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_yup=True,
+                              export_apply=False, export_normals=True, export_tangents=True,
+                              export_materials='EXPORT', export_vertex_color='ACTIVE',
+                              export_all_vertex_colors=False, export_image_format='AUTO', export_extras=True)
 
 
 def recolor(ob, pm):
@@ -601,7 +729,7 @@ def main():
     blend = OUT + ('/noka_b_skeleton.blend' if stage == 'skeleton' else '/noka_b.blend')
     bpy.ops.wm.save_as_mainfile(filepath=blend, compress=True)
     if stage == 'full':
-        K.export_glb(bpy, OUT + '/noka_b.glb', objs)
+        export_glb_tex(OUT + '/noka_b.glb', objs)
     print('[NOKA] stage=%s objects=%d tris=%d blend=%s' % (stage, len(objs), tris, blend))
     print('[NOKA] dims: body %.2f x %.2f, eave %.2f, ridge %.2f, XG %.2f, ZM %.2f' % (2 * HW, 2 * HD, Y_E, Y_R, XG, ZM))
 

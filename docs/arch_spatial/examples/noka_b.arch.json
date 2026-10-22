@@ -381,6 +381,51 @@
    "type": "gable",
    "role": "enclosure"
   },
+  "Gable_Vent_L": {
+   "object": "Gable_Vent_L",
+   "type": "vent",
+   "role": "enclosure"
+  },
+  "Gable_Vent_R": {
+   "object": "Gable_Vent_R",
+   "type": "vent",
+   "role": "enclosure"
+  },
+  "Gek_Ledger": {
+   "object": "Gek_Ledger",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Gek_Keta": {
+   "object": "Gek_Keta",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Gek_Post0": {
+   "object": "Gek_Post0",
+   "type": "post",
+   "role": "structure"
+  },
+  "Gek_Stone0": {
+   "object": "Gek_Stone0",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Gek_Post1": {
+   "object": "Gek_Post1",
+   "type": "post",
+   "role": "structure"
+  },
+  "Gek_Stone1": {
+   "object": "Gek_Stone1",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Gek_Roof": {
+   "object": "Gek_Roof",
+   "type": "roof",
+   "role": "roof"
+  },
   "Ridge": {
    "object": "Ridge",
    "type": "ridge",
@@ -1355,6 +1400,110 @@
    "a": "Makiba",
    "b": "Wall_S0b",
    "min": 0.05
+  },
+  {
+   "id": "CONTACT:Gable_Vent_L>Gable_L",
+   "type": "CONTACT",
+   "a": "Gable_Vent_L",
+   "b": "Gable_L",
+   "tol": 0.003
+  },
+  {
+   "id": "CLEAR:vent_L_under_F",
+   "type": "CLEARANCE_REQUIRED",
+   "a": "Gable_Vent_L",
+   "b": "Thatch_F",
+   "min": 0.05
+  },
+  {
+   "id": "CONTACT:Gable_Vent_R>Gable_R",
+   "type": "CONTACT",
+   "a": "Gable_Vent_R",
+   "b": "Gable_R",
+   "tol": 0.003
+  },
+  {
+   "id": "CLEAR:vent_R_under_F",
+   "type": "CLEARANCE_REQUIRED",
+   "a": "Gable_Vent_R",
+   "b": "Thatch_F",
+   "min": 0.05
+  },
+  {
+   "id": "CONTACT:Gek_Ledger>Post_S0",
+   "type": "CONTACT",
+   "a": "Gek_Ledger",
+   "b": "Post_S0"
+  },
+  {
+   "id": "SUPPORT:Gek_Roof>Gek_Ledger",
+   "type": "SUPPORT",
+   "a": "Gek_Roof",
+   "b": "Gek_Ledger",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Gek_Roof>Gek_Keta",
+   "type": "SUPPORT",
+   "a": "Gek_Roof",
+   "b": "Gek_Keta",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Gek_Keta>Gek_Post0",
+   "type": "SUPPORT",
+   "a": "Gek_Keta",
+   "b": "Gek_Post0",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Gek_Post0>Gek_Stone0",
+   "type": "SUPPORT",
+   "a": "Gek_Post0",
+   "b": "Gek_Stone0",
+   "embed_max": 0.005
+  },
+  {
+   "id": "CLEAR:woodpile_post0",
+   "type": "CLEARANCE_REQUIRED",
+   "a": "Makiba",
+   "b": "Gek_Post0",
+   "min": 0.05
+  },
+  {
+   "id": "SUPPORT:Gek_Keta>Gek_Post1",
+   "type": "SUPPORT",
+   "a": "Gek_Keta",
+   "b": "Gek_Post1",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Gek_Post1>Gek_Stone1",
+   "type": "SUPPORT",
+   "a": "Gek_Post1",
+   "b": "Gek_Stone1",
+   "embed_max": 0.005
+  },
+  {
+   "id": "CLEAR:woodpile_post1",
+   "type": "CLEARANCE_REQUIRED",
+   "a": "Makiba",
+   "b": "Gek_Post1",
+   "min": 0.05
+  },
+  {
+   "id": "CLEAR:leanto_under_thatch",
+   "type": "CLEARANCE_REQUIRED",
+   "a": "Gek_Roof",
+   "b": "Thatch_L",
+   "min": 0.1
+  },
+  {
+   "id": "CLEAR:leanto_over_woodpile",
+   "type": "CLEARANCE_REQUIRED",
+   "a": "Gek_Roof",
+   "b": "Makiba",
+   "min": 0.3
   },
   {
    "id": "NO_INTERSECTION:Kutsunugi>Eng_Deck",
