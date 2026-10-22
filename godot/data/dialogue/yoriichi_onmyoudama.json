@@ -1,0 +1,10 @@
+{
+  "_doc": "博麗神社 v3 陰陽玉彩蛋（HAKUREI_SHRINE_AREA_SPEC §25–27 LEVEL 3：全圖 1 顆，倉庫北側木箱旁）。非任務、可重看；只立旗標，不影響劇情。",
+  "start": "l1",
+  "nodes": {
+    "l1": { "speaker": "yoriichi", "portrait": "normal", "text": "（紅白相間的圓珠，半埋在落葉裡。）", "next": "l2" },
+    "l2": { "speaker": "yoriichi", "portrait": "normal", "text": "（觸手微溫。邊緣磨得圓潤，像是常被人帶在身上。）", "next": "l3" },
+    "l3": { "speaker": "yoriichi", "portrait": "normal", "text": "（……不是我該碰的東西。放回原處吧。）", "next": null,
+            "set_flags": ["found_onmyoudama"] }
+  }
+}
