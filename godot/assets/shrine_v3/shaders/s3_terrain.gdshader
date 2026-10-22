@@ -8,6 +8,8 @@ render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_sc
 
 uniform sampler2D mask_a : filter_linear_mipmap, repeat_disable;
 uniform sampler2D mask_b : filter_linear_mipmap, repeat_disable;
+// mask_c（美術深化 2026-10-22）：R 踩踏量（壓實、草少、掃過）、G 楓落葉
+uniform sampler2D mask_c : filter_linear_mipmap, repeat_disable;
 
 uniform sampler2D grass_d : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
 uniform sampler2D grass_n : hint_normal, filter_linear_mipmap_anisotropic, repeat_enable;
@@ -33,6 +35,9 @@ uniform vec3 dirt_tint : source_color = vec3(1.0, 0.97, 0.93);
 uniform vec3 rock_tint : source_color = vec3(0.80, 0.82, 0.79);
 uniform float rock_desat = 0.5;
 uniform vec3 petal_col : source_color = vec3(0.98, 0.86, 0.90);
+uniform vec3 leaf_col_a : source_color = vec3(0.62, 0.16, 0.07);    // 楓落葉（紅）
+uniform vec3 leaf_col_b : source_color = vec3(0.58, 0.36, 0.12);    // 楓落葉（褐黃）
+uniform float earth_var = 0.20;     // 夯土色差（0.5–3 m 尺度深淺、乾濕）
 uniform float normal_strength = 0.85;
 uniform float macro_var = 0.16;      // 5–20 m 尺度明暗
 uniform float blend_sharp = 6.0;     // 高度混合銳利度
@@ -88,6 +93,7 @@ void fragment() {
 	vec2 wp = v_wpos.xz;
 	vec4 ma = texture(mask_a, UV2);
 	vec4 mb = texture(mask_b, UV2);
+	vec4 mc = texture(mask_c, UV2);
 	// 細節雜訊擾動遮罩邊界（0.75 m 遮罩格看不出方格）
 	float jit = (fbm2(wp * 1.7) - 0.5) * 0.35;
 
@@ -141,20 +147,37 @@ void fragment() {
 	hwt /= sw;
 
 	vec3 crs = mix(cr.rgb, vec3(dot(cr.rgb, vec3(0.299, 0.587, 0.114))), rock_desat);   // rock_face_03 偏橘褐：降彩度成風化灰岩
-	vec3 col = cd.rgb * dirt_tint * hw.x + cf.rgb * forest_tint * hw.y + crs * rock_tint * hw.z + cg.rgb * grass_tint * hw.w + ct.rgb * hwt;
+	// 夯土色差：大斑（~2 m）深淺＋小斑（~0.5 m）乾濕；踩踏處較亮、較平、彩度低（掃過、壓實）
+	float ev1 = fbm2(wp * 0.45) - 0.5;
+	float ev2 = fbm2(wp * 1.9 + 3.3) - 0.5;
+	float dirt_dark = 0.88;     // 審圖 r1：夯土太亮、和白灰踏石同明度 → 整體壓暗，踩踏處不再提亮
+	vec3 cdirt = cd.rgb * dirt_tint * dirt_dark * (1.0 + ev1 * earth_var * 1.6 + ev2 * earth_var * 0.6);
+	cdirt = mix(cdirt, cdirt * vec3(0.84, 0.83, 0.82), smoothstep(0.05, 0.3, ev1) * 0.75);      // 陰濕的冷暗斑
+	// 審圖 r2：前庭大尺度土色分區（mask_c.a，6–12 m）：暖赭（乾、外圍）↔ 冷褐（壓實、樹蔭、北半）
+	cdirt *= mix(vec3(1.06, 1.0, 0.9), vec3(0.86, 0.85, 0.86), mc.a);
+	float worn = mc.r;
+	// 踩踏：壓實（略暗、略灰、細節少），不是曬白
+	cdirt = mix(cdirt, mix(cdirt, vec3(dot(cdirt, vec3(0.333))), 0.25) * 0.94, worn * 0.6);
+	vec3 col = cdirt * hw.x + cf.rgb * forest_tint * hw.y + crs * rock_tint * hw.z + cg.rgb * grass_tint * hw.w + ct.rgb * hwt;
 	// 苔：林床與岩上的綠斑
 	float moss = clamp(mb.a * (0.4 + 0.8 * fbm2(wp * 0.35)), 0.0, 1.0) * (1.0 - hw.x);
 	col = mix(col, cm.rgb * vec3(0.85, 0.95, 0.75), moss * 0.65);
 	// 濕暗（林下、谷側）
 	col *= 1.0 - mb.g * 0.28;
+	// 鋪石接地（mask_c.b）：石縫與石外 0.3 m 稍暗——石塊「坐進土裡」，石與土的邊界讀得出來
+	col *= 1.0 - mc.b * 0.22;
 	// 大尺度明暗
 	float mv = fbm2(wp * 0.06) - 0.5;
 	col *= 1.0 + mv * macro_var * 2.0;
 	// 落花（細碎花瓣點）
 	float pet = mb.b * smoothstep(0.62, 0.70, vnoise(wp * 9.0)) * smoothstep(0.3, 0.8, vnoise(wp * 1.3 + 5.0));
 	col = mix(col, petal_col, clamp(pet, 0.0, 1.0) * 0.85);
+	// 楓落葉（比花瓣大的斑點，紅／褐黃兩色）
+	float lf = mc.g * smoothstep(0.58, 0.66, vnoise(wp * 5.3 + 11.0)) * smoothstep(0.25, 0.75, vnoise(wp * 0.9 + 2.0));
+	vec3 lcol = mix(leaf_col_a, leaf_col_b, step(0.5, vnoise(wp * 2.7 + 7.0)));
+	col = mix(col, lcol, clamp(lf, 0.0, 1.0) * 0.8);
 
-	vec3 tn = nd * hw.x + nf * hw.y + ng * hw.w + nt * hwt;
+	vec3 tn = nd * hw.x * (1.0 - worn * 0.45) + nf * hw.y + ng * hw.w + nt * hwt;
 	vec3 n = normalize(v_wnrm + (vec3(tn.x, 0.0, -tn.y) + rock_dn * hw.z) * normal_strength);
 	NORMAL = normalize((VIEW_MATRIX * vec4(n, 0.0)).xyz);
 	float rough = 0.94 - hw.z * 0.12 - mb.g * 0.15;

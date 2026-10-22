@@ -8,6 +8,7 @@ UV 一律「公尺」：材質在 Godot 端用 uv1_scale 決定一張貼圖代�
 頂點色＝每塊構件的色差（±7%）× 近地面汙損；Godot 材質開 vertex_color_use_as_albedo。
 """
 import math
+import os
 import random
 
 import numpy as np
@@ -380,8 +381,12 @@ def to_blender(b, mats, ground_grime=True, grime_mats=('s3_wood_old', 's3_wood_d
         for lp, uv, p in zip(f.loops, uvs, pts):
             lp[uvl].uv = (float(uv[0]), float(uv[1]))
             g = grime(float(p[1])) if (ground_grime and m in grime_mats) else 1.0
-            c = max(0.0, min(1.0, col * g))
-            lp[cl] = (c, c, c, 1.0)
+            if isinstance(col, (tuple, list)):
+                # (r, g, b, a)：每塊石頭各自的色調＋苔量（a；s3_stone.gdshader vc_moss）
+                lp[cl] = tuple(max(0.0, min(1.0, float(col[k]) * (g if k < 3 else 1.0))) for k in range(4))
+            else:
+                c = max(0.0, min(1.0, col * g))
+                lp[cl] = (c, c, c, 1.0)
     bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-5)
     bm.to_mesh(me)
     bm.free()
@@ -390,3 +395,44 @@ def to_blender(b, mats, ground_grime=True, grime_mats=('s3_wood_old', 's3_wood_d
         me.materials.append(mats[m])
     bpy.context.scene.collection.objects.link(ob)
     return ob
+
+
+# ───────────────────────── 安全寫檔 ─────────────────────────
+# Windows 上目標檔偶爾被別的程序短暫開著：make_site 直接匯出 sando.glb 得到 OSError [Errno 22] Invalid argument，
+# 腳本中斷、後面的檔都沒寫（Godot 端同類問題見 tools/shrine_v3/s3lib.gd 的 save_retry）。
+# 做法：先寫進 src/_tmp_export/（src/ 有 .gdignore，Godot 不會去匯入；同一顆磁碟，改名是原子操作），
+# 再 os.replace 換進目標；換不進去每 0.5 s 重試，最多 20 次，仍失敗就拋出原例外（不吞錯）。
+_TMP = os.path.join(os.path.dirname(os.path.abspath(__file__)), '_tmp_export')
+
+
+def _replace_into(tmp, path, tries=20):
+    import time
+    for k in range(tries):
+        try:
+            os.replace(tmp, path)
+            if k:
+                print('[s3b] %s 第 %d 次才換進去' % (os.path.basename(path), k + 1))
+            return
+        except OSError:
+            if k == tries - 1:
+                raise
+            time.sleep(0.5)
+
+
+def export_glb(path, **kw):
+    """bpy.ops.export_scene.gltf(filepath=path, **kw) 的安全版：暫存檔＋改名重試。"""
+    import bpy
+    os.makedirs(_TMP, exist_ok=True)
+    tmp = os.path.join(_TMP, os.path.basename(path))
+    bpy.ops.export_scene.gltf(filepath=tmp, **kw)
+    _replace_into(tmp, path)
+
+
+def dump_json(obj, path, **kw):
+    """json.dump 的安全版：暫存檔＋改名重試。"""
+    import json
+    os.makedirs(_TMP, exist_ok=True)
+    tmp = os.path.join(_TMP, os.path.basename(path))
+    with open(tmp, 'w', encoding='utf-8') as f:
+        json.dump(obj, f, **kw)
+    _replace_into(tmp, path)

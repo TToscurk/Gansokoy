@@ -127,3 +127,19 @@ static func load_grid_mesh(path: String) -> ArrayMesh:
 
 static func ensure_dir(path: String) -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(path))
+
+
+## 存檔＋重試：Windows 上偶發「Cannot save file」（ERR_CANT_OPEN 19；剛寫過的檔被其他程序短暫鎖住）。
+## 2026-10-22 美術深化實測：同一管線兩次各有一個檔（shrine_v3.tscn、terrain_near.tres）第一次存不進去，重跑就好。
+static func save_retry(res: Resource, path: String, tries := 6) -> int:
+	var e := ResourceSaver.save(res, path)
+	var n := 1
+	while e != OK and n < tries:
+		OS.delay_msec(400)
+		e = ResourceSaver.save(res, path)
+		n += 1
+	if e != OK:
+		push_error("[s3lib] 存檔失敗 %s err=%d（重試 %d 次）" % [path, e, n])
+	elif n > 1:
+		print("[s3lib] %s 第 %d 次才存進去" % [path, n])
+	return e

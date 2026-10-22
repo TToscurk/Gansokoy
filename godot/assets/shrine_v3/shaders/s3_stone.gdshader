@@ -11,6 +11,8 @@ uniform float moss_tile = 0.9;
 uniform float moss_amount = 0.45;
 uniform float moss_low_m = 0.45;   // 物件底部這麼高以內苔較多
 uniform bool triplanar = false;
+// 1＝苔量改由頂點色 a 決定（每塊石頭各自；參道／石段：踩踏的中央少、邊緣多），0＝舊行為（a 不用）
+uniform float vc_moss = 0.0;
 
 varying vec3 v_lpos;
 varying vec3 v_lnrm;
@@ -52,7 +54,8 @@ void fragment() {
 	float up = smoothstep(0.35, 0.9, v_wnrm.y);
 	float low = 1.0 - smoothstep(0.0, moss_low_m, v_lpos.y);
 	float nz = vn(v_lpos.xz * 7.0 + v_lpos.y * 3.0) * 0.6 + vn(v_lpos.xz * 23.0) * 0.4;
-	float m = clamp((up * 0.8 + low * 0.7) * moss_amount * 1.6 - (1.0 - nz) * 0.9, 0.0, 1.0);
+	float mfac = mix(1.0, COLOR.a * 2.0, vc_moss);
+	float m = clamp((up * 0.8 + low * 0.7) * moss_amount * 1.6 * mfac - (1.0 - nz) * 0.9, 0.0, 1.0);
 	vec3 mc = tri(moss_d, v_lpos, v_lnrm, moss_tile).rgb * vec3(0.78, 0.9, 0.62);
 	col = mix(col, mc, m);
 	ALBEDO = col;

@@ -70,11 +70,16 @@ func _go() -> void:
 	for p in L["paths"]["to_store"]:
 		store.append(Vector2(float(p[0]), float(p[1])))
 	fails += 0 if (await _walk("4_拜殿前→倉庫側", [Vector2(1.2, -13.5)] + store, 1.0))["arrived_all"] else 1
+	# 4b) 倉庫正面 → 繞北側 → 陰陽玉彩蛋旁（美術深化：確認走得到、互動區涵蓋站位），再走回倉庫正面
+	fails += 0 if (await _walk("4b_倉庫→陰陽玉", _resample([store[-1], Vector2(12.7, -20.4), Vector2(15.2, -20.75), Vector2(16.25, -20.95)], 2.0), 0.6))["arrived_all"] else 1
+	_check_interactions("陰陽玉旁")
+	fails += 0 if (await _walk("4c_陰陽玉→倉庫前", _resample([Vector2(16.25, -20.95), Vector2(15.2, -20.75), Vector2(12.7, -20.4), Vector2(11.6, -16.3)], 2.0), 0.8))["arrived_all"] else 1
 	# 5) 倉庫 → 繞拜殿西側 → 林徑起點 → 櫻林邊緣
+	#    美術深化：拜殿前燈籠移到 (±3.7, −12.6)，舊直線 (6,−12)→(−5.6,−12.6) 正好穿過左燈籠 → 改從燈籠前 1.1 m 走過
 	var grove: Array = []
 	for p in L["paths"]["grove"]:
 		grove.append(Vector2(float(p[0]), float(p[1])))
-	var leg5: Array = [Vector2(6.0, -12.0), Vector2(-5.6, -12.6), Vector2(-6.6, -20.0), Vector2(-6.6, -27.0), grove[0], grove[1], grove[2]]
+	var leg5: Array = [Vector2(6.0, -11.0), Vector2(-5.6, -11.0), Vector2(-6.6, -20.0), Vector2(-6.6, -27.0), grove[0], grove[1], grove[2]]
 	fails += 0 if (await _walk("5_倉庫→櫻林邊緣", _resample(leg5, 4.0), 1.1))["arrived_all"] else 1
 	# 6) 櫻林林徑 → 池塘北岸（林徑沿池北繞到東北岸）
 	var leg6 := _resample(grove.slice(2), 4.0)
@@ -251,9 +256,9 @@ func _check_nav() -> void:
 	var map_rid := player.get_world_3d().navigation_map
 	var pts := {
 		"獸道口": Vector2(-16.5, 89.0), "石段腳": Vector2(0.0, float(L["z_foot"]) + 1.5), "鳥居內": Vector2(0.0, 4.0),
-		"拜殿前": Vector2(0.0, -15.6), "倉庫前": Vector2(12.0, -16.5), "櫻林": Vector2(-8.0, -44.0), "池畔": Vector2(float(L["paths"]["pond_w"][1][0]), float(L["paths"]["pond_w"][1][1])),
+		"拜殿前": Vector2(0.0, -15.6), "倉庫前": Vector2(12.0, -16.5), "陰陽玉旁": Vector2(16.25, -20.95), "櫻林": Vector2(-8.0, -44.0), "池畔": Vector2(float(L["paths"]["pond_w"][1][0]), float(L["paths"]["pond_w"][1][1])),
 	}
-	var order := ["獸道口", "石段腳", "鳥居內", "拜殿前", "倉庫前", "櫻林", "池畔"]
+	var order := ["獸道口", "石段腳", "鳥居內", "拜殿前", "倉庫前", "陰陽玉旁", "櫻林", "池畔"]
 	for i in order.size() - 1:
 		var a: Vector2 = pts[order[i]]
 		var b: Vector2 = pts[order[i + 1]]

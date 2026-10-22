@@ -3,6 +3,7 @@ extends RefCounted
 ## 貼圖一律 Poly Haven CC0（assets/shrine_v3/tex/ph/SOURCES.json）。
 
 const PH := "res://assets/shrine_v3/tex/ph/"
+const S3 := preload("res://tools/shrine_v3/s3lib.gd")
 const GEN_TEX := "res://assets/shrine_v3/tex/gen/"
 const MAT := "res://assets/shrine_v3/mat/"
 const SH := "res://assets/shrine_v3/shaders/"
@@ -17,6 +18,7 @@ static func terrain() -> ShaderMaterial:
 	m.shader = load(SH + "s3_terrain.gdshader")
 	m.set_shader_parameter("mask_a", load("res://maps/shrine_v3/gen/mask_a.res"))
 	m.set_shader_parameter("mask_b", load("res://maps/shrine_v3/gen/mask_b.res"))
+	m.set_shader_parameter("mask_c", load("res://maps/shrine_v3/gen/mask_c.res"))
 	m.set_shader_parameter("grass_d", ph("leafy_grass", "diff", "2k"))
 	m.set_shader_parameter("grass_n", ph("leafy_grass", "nor_gl", "2k"))
 	m.set_shader_parameter("forest_d", ph("leaves_forest_ground", "diff", "2k"))
@@ -90,6 +92,24 @@ static func asset(name: String) -> Material:
 			m2.set_shader_parameter("triplanar", true)
 			m2.set_shader_parameter("tile", 0.9)
 			return m2
+		"s3_paving":
+			# 參道、石段、手水舍石台：每塊石頭的色調與苔量在頂點色（make_site.py stone_col；a＝苔量）
+			var pv := asset("s3_stone") as ShaderMaterial
+			pv.set_shader_parameter("vc_moss", 1.0)
+			pv.set_shader_parameter("moss_amount", 0.32)
+			pv.set_shader_parameter("tint", Color(0.86, 0.87, 0.88))       # 審圖 r2：偏冷的白灰（和暖色夯土分開）
+			return pv
+		"s3_onmyoudama":
+			# 陰陽玉（規格 §27：霧面 0.55–0.80、金屬 0、不發光）；貼圖由內部資產 assets/shrine/陰陽玉.glb 縮成 512（make_onmyoudama.py）
+			var od := StandardMaterial3D.new()
+			od.albedo_texture = load(GEN_TEX + "onmyoudama_base.png")
+			od.normal_enabled = true
+			od.normal_texture = load(GEN_TEX + "onmyoudama_normal.png")
+			od.normal_scale = 0.6
+			od.roughness = 0.66
+			od.metallic = 0.0
+			od.metallic_specular = 0.4
+			return od
 		"s3_paint_red", "s3_paint_black":
 			var p := ShaderMaterial.new()
 			p.shader = load(SH + "s3_paint.gdshader")
@@ -154,7 +174,7 @@ static func get_mat(name: String, rebuild := false) -> Material:
 static func save(m: Material, nm: String) -> Material:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(MAT))
 	var p := MAT + nm + ".tres"
-	var e := ResourceSaver.save(m, p)
+	var e := S3.save_retry(m, p)
 	if e != OK:
 		push_error("材質存檔失敗 %s err=%d" % [p, e])
 	return load(p) as Material

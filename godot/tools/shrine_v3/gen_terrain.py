@@ -264,26 +264,45 @@ def write_masks(Hn, masks_coarse, petal_fn=None):
     stair = mk['stair']
     cliff = mk['cliff']
     water = mk['water']
-    # 參道／小徑／前庭夯土
-    sd_sando = np.maximum(np.abs(X) - L.SANDO['half_w'] - 0.5, 0.0) + np.maximum(Z - L.SANDO['z0'] - 1.0, 0.0) + np.maximum(L.SANDO['z1'] - Z, 0.0)
+    # ── 前庭地面：依踩踏量決定（HAKUREI_SHRINE_AREA_SPEC §6、§29；美術深化 2026-10-22）──
+    #   高踩踏＝鳥居→拜殿參道兩側與拜殿前台（壓實、草少）；中踩踏＝往手水舍／倉庫／後林徑；低踩踏＝外緣、建築背後（草＋苔多）。
+    zlo, zhi = L.SANDO['z1'], L.SANDO['z0']
+    hw_c = np.array([L.sando_hw(min(max(float(z), zlo), zhi)) for z in zs])[:, None] * np.ones_like(X)
+    dz_out = np.maximum(Z - zhi, 0.0) + np.maximum(zlo - Z, 0.0)
+    ds = np.sqrt(np.maximum(np.abs(X) - hw_c, 0.0) ** 2 + dz_out ** 2)     # 到參道鋪石的距離（鋪石內＝0）
+    pav = (np.abs(X) <= hw_c) & (dz_out <= 0.0)
     nz1 = T.fbm(X, Z, 7.0, 3, seed=61)
-    # 前庭：泥地與草地交錯（雜訊斑塊），踩踏帶（鳥居↔拜殿中軸兩側 ~4 m）與建築周圍才是連續夯土
-    dirt = np.clip(plat * 0.85 * T.smoothstep(0.02, 0.42, nz1), 0, 1)
-    worn = plat * (1.0 - T.smoothstep(2.2, 5.5, np.abs(X))) * T.smoothstep(-20.5, -16.5, Z) * (1.0 - T.smoothstep(7.5, 10.0, Z))
-    dirt = np.maximum(dirt, worn * (0.55 + 0.4 * T.smoothstep(-0.3, 0.3, nz1)))
-    # 建築四周、參道兩側踩踏較多 → 夯土
+    patch = T.smoothstep(-0.05, 0.35, nz1)
+    hi = (1.0 - T.smoothstep(0.3, 2.4, ds)) * plat
+    med = np.zeros_like(X)
+    for pts_ in (L.PATHS['to_store'], L.PATHS['to_temizuya'], [(-4.6, -18.5), (-6.0, -24.0), (-6.0, -30.5)]):
+        d_, _, _ = T.polyline_dist(X, Z, pts_)
+        med = np.maximum(med, 1.0 - T.smoothstep(0.4, 1.6, d_))
+    traffic = np.maximum(hi, med * 0.75) * plat
+    pe = list(L.PLATFORM) + [L.PLATFORM[0]]
+    edge_d, _, _ = T.polyline_dist(X, Z, pe)
+    edge = (1.0 - T.smoothstep(1.0, 6.5, edge_d)) * plat              # 平台外緣 6.5 m 內＝低踩踏帶
+    # 開放地面：夯土為主（中央草侵入 <10%，外緣 25–45%）；踩踏處連續夯土
+    dirt = np.clip(plat * (0.92 - 0.5 * edge) * (0.58 + 0.42 * patch), 0, 1)
+    dirt = np.maximum(dirt, traffic * (0.86 + 0.14 * patch))
+    worn = traffic
+    # 建築四周 → 夯土（燈籠／狛犬台座周圍留給苔）
     for key, (px_, pz_, _) in L.PLACE.items():
-        r = {'haiden': 6.0, 'torii': 3.0, 'temizuya': 2.6, 'storehouse': 3.0, 'saisen': 2.2}.get(key, 1.2)
+        r = {'haiden': 6.0, 'torii': 3.0, 'temizuya': 2.6, 'storehouse': 3.0, 'saisen': 2.2}.get(key, 0.0)
+        if r <= 0.0:
+            continue
         dd = np.sqrt((X - px_) ** 2 + (Z - pz_) ** 2)
         dirt = np.maximum(dirt, (1.0 - T.smoothstep(r * 0.55, r * 1.25, dd)) * plat * 0.9)
-    dirt = np.maximum(dirt, 1.0 - T.smoothstep(0.0, 2.6, sd_sando))
-    for key in ('grove', 'pond_w', 'to_store'):
+    dirt = np.maximum(dirt, 1.0 - T.smoothstep(0.0, 1.0, ds))
+    for key in ('grove', 'pond_w', 'to_store', 'to_temizuya'):
         d, _, _ = T.polyline_dist(X, Z, L.PATHS[key])
         dirt = np.maximum(dirt, (1.0 - T.smoothstep(0.35, 1.3, d)) * 0.85)
     dfoot = np.sqrt(X ** 2 + (Z - (L.Z_FOOT + 2.2)) ** 2)
     trail = np.maximum(beast, 1.0 - T.smoothstep(2.5, 4.5, dfoot))
-    # 岩：坡度 > 40° 或西崖
-    rock = np.maximum(T.smoothstep(38.0, 50.0, slope), cliff)
+    # 石段兩側帶（石段外 1.9–9 m）：落葉林床＋苔為主（3D 草、蕨、灌木另外種），陡坡也不露成整片岩面
+    sb = (1.0 - T.smoothstep(1.9, 9.0, np.abs(X))) * T.smoothstep(9.8, 11.5, Z) * (1.0 - T.smoothstep(47.0, 50.0, Z)) * (1.0 - stair) * (1.0 - plat)
+    # 岩：坡度 > 40° 或西崖（石段兩側帶放寬到 > 50°）
+    rock = np.maximum(T.smoothstep(38.0, 50.0, slope) * (1.0 - sb * 0.75) + T.smoothstep(50.0, 58.0, slope) * sb * 0.75, cliff)
     rock = rock * (1.0 - stair)
     # 林床：平台外、非岩
     forest = (1.0 - plat) * (1.0 - rock) * (0.6 + 0.4 * T.smoothstep(-0.2, 0.4, T.fbm(X, Z, 11.0, 3, seed=63)))
@@ -299,31 +318,75 @@ def write_masks(Hn, masks_coarse, petal_fn=None):
     gnz = T.fbm(X, Z, 5.0, 3, seed=71)
     grass = np.maximum(grass, corr * (1.0 - rock * 0.85) * (1.0 - trail * 0.9) * (1.0 - stair) * (0.55 + 0.35 * T.smoothstep(-0.3, 0.3, gnz)))
     forest = forest * (1.0 - corr * 0.7)
+    # 石段兩側帶：落葉林床＋少量草紋理
+    forest = np.maximum(forest, sb * (0.55 + 0.3 * T.smoothstep(-0.3, 0.3, T.fbm(X, Z, 4.0, 3, seed=75))) * (1.0 - rock))
+    grass = grass * (1.0 - sb * 0.45)
     # 池塘棚地：草為主
     pc = L.POND
     dp = np.sqrt((X - pc['cx']) ** 2 + (Z - pc['cz']) ** 2)
     shelf = 1.0 - T.smoothstep(pc['shelf_r'] - 2.0, pc['shelf_r'] + 2.0, dp)
     grass = np.maximum(grass, shelf * (1.0 - water) * (1.0 - rock) * 0.9)
     forest = forest * (1.0 - shelf * 0.8)
-    # 濕暗：平台以下的林地（越低越濕）、池岸
+    # 細碎石（mask_b.r 在平台上＝礫石紋理）：參道鋪石外緣 0–0.55 m 的碎石帶、建築滴水線、手水舍石台前、零星碎石斑
+    grav = (1.0 - T.smoothstep(0.05, 0.6, ds)) * (ds > 0.0) * 0.8
+    for (cx_, cz_, hx_, hz_) in ((0.0, -23.0 + 0.12, 4.35, 3.45), (15.2, -17.4, 2.1, 2.2), (-8.6, 0.6, 1.62, 1.8)):
+        rd = np.maximum(np.abs(X - cx_) - hx_, np.abs(Z - cz_) - hz_)          # 屋簷外緣（矩形）有號距離
+        grav = np.maximum(grav, (1.0 - T.smoothstep(0.0, 0.45, np.abs(rd + 0.1))) * 0.6)
+    tp = L.TEMIZUYA_PAD
+    dtp = np.maximum(np.maximum(tp[0] - X, X - tp[1]), np.maximum(tp[2] - Z, Z - tp[3]))
+    grav = np.maximum(grav, (1.0 - T.smoothstep(0.0, 0.5, np.abs(dtp - 0.15))) * 0.55)
+    grav = np.maximum(grav, 0.3 * T.smoothstep(0.58, 0.8, T.fbm(X, Z, 2.2, 2, seed=73)) * (1.0 - edge))
+    trail = np.maximum(trail, grav * plat)
+    # 濕暗：平台以下的林地（越低越濕）、池岸、手水舍周圍（濺水）、鋪石縫
     wet = np.clip(T.smoothstep(26.0, 12.0, h) * (1.0 - plat) * 0.75 + (1.0 - T.smoothstep(0.9, 1.6, dp / max(pc['rx'], 1e-3))) * 0.5, 0, 1)
-    wet = np.maximum(wet, trail * 0.35)
-    # 落花：櫻花林區（拜殿後、池塘四周）＋前庭零星
+    wet = np.maximum(wet, trail * (1.0 - plat) * 0.35)
+    dtz = np.sqrt((X - (-8.6)) ** 2 + (Z - 0.6) ** 2)
+    wet = np.maximum(wet, (1.0 - T.smoothstep(0.8, 2.9, dtz)) * 0.55 * (0.7 + 0.3 * patch))
+    wet = np.maximum(wet, pav * 0.12)      # 審圖 r1：0.3 → 石縫太黑（像深溝）
+    # 落花：櫻花林區（拜殿後、池塘四周）＋前庭零星（掃過的中軸少）
     if petal_fn is not None:
         pet = petal_fn(X, Z)
     else:
         pet = np.clip((1.0 - T.smoothstep(-30.0, -24.0, Z)) * (1.0 - T.smoothstep(30.0, 40.0, np.abs(X - 5.0))) * 0.8, 0, 1)
         pet = np.maximum(pet, (1.0 - shelf * 0.0) * (1.0 - T.smoothstep(pc['shelf_r'] - 4.0, pc['shelf_r'] + 6.0, dp)) * 0.8)
         pet = np.maximum(pet, plat * 0.18)
-    pet = pet * (1.0 - water) * (1.0 - rock)
+    pet = pet * (1.0 - water) * (1.0 - rock) * (1.0 - traffic * 0.75)
+    # 審圖 r2：掃過的花瓣會被推到參道邊、燈籠台座腳 → 鋪石外 0.1–0.7 m 斷續的一條（跟著雜訊斷開）
+    pet_edge = (T.smoothstep(0.05, 0.2, ds) * (1.0 - T.smoothstep(0.45, 0.9, ds))) * plat
+    pet = np.maximum(pet, pet_edge * 0.55 * T.smoothstep(0.0, 0.45, T.fbm(X, Z, 2.8, 3, seed=79)))
     # 苔：林床＋岩，北向坡、濕處更多
     north = np.clip(-nrm[..., 2] * 2.0, 0, 1)
-    moss = np.clip((forest * 0.5 + rock * 0.6) * (0.5 + 0.5 * T.fbm(X, Z, 6.0, 3, seed=67)) + wet * 0.25 + north * 0.2, 0, 1) * (1.0 - trail * 0.7)
-    # 前庭少量苔痕：平台北半（樹蔭、少踩）與非踩踏帶的斑塊
-    moss = np.maximum(moss, plat * (1.0 - worn) * 0.55 * T.smoothstep(0.25, 0.6, T.fbm(X, Z, 3.5, 3, seed=69)) * (0.4 + 0.6 * T.smoothstep(-8.0, -26.0, Z)))
+    moss = np.clip((forest * 0.5 + rock * 0.6) * (0.5 + 0.5 * T.fbm(X, Z, 6.0, 3, seed=67)) + wet * 0.25 + north * 0.2, 0, 1) * (1.0 - trail * (1.0 - plat) * 0.7)
+    # 前庭苔痕：低踩踏處（外緣、北半樹蔭）成斑；高踩踏處幾乎沒有
+    mn = T.smoothstep(0.2, 0.55, T.fbm(X, Z, 3.5, 3, seed=69))
+    moss = np.maximum(moss, plat * (1.0 - traffic * 0.9) * mn * (0.25 + 0.45 * edge + 0.3 * T.smoothstep(-8.0, -26.0, Z)))
+    # 鋪石縫（石塊之間露出的地面）與鋪石外緣
+    moss = np.maximum(moss, pav * 0.45)
+    moss = np.maximum(moss, (1.0 - T.smoothstep(0.0, 0.8, ds)) * (ds > 0.0) * 0.45 * (0.5 + 0.5 * mn))
+    # 燈籠、狛犬台座、鳥居石台、社號標周圍
+    for key, (px_, pz_, _) in L.PLACE.items():
+        if key.startswith('lantern') or key.startswith('komainu') or key == 'shagohyo':
+            dd = np.sqrt((X - px_) ** 2 + (Z - pz_) ** 2)
+            moss = np.maximum(moss, (1.0 - T.smoothstep(0.4, 1.3, dd)) * 0.55 * (0.6 + 0.4 * mn))
+    for sx_ in (-1.7, 1.7):
+        dd = np.sqrt((X - sx_) ** 2 + (Z - 7.4) ** 2)
+        moss = np.maximum(moss, (1.0 - T.smoothstep(0.45, 1.2, dd)) * 0.5)
+    moss = np.maximum(moss, sb * 0.55 * (0.4 + 0.6 * mn))
+    # 落葉（楓）：楓樹下、前庭外緣零星；掃過的中軸少
+    leaf = np.zeros_like(X)
+    for (mx_, mz_) in L.MAPLES:
+        dd = np.sqrt((X - mx_) ** 2 + (Z - mz_) ** 2)
+        leaf = np.maximum(leaf, (1.0 - T.smoothstep(1.2, 5.5, dd)) * 0.85)
+    leaf = np.maximum(leaf, edge * 0.22 + sb * 0.3)
+    leaf = leaf * (1.0 - traffic * 0.7) * (1.0 - water)
+    # mask_c.b：鋪石接地（石縫＋石外 0.3 m 的接觸陰影）——審圖 r2：石與土同明度、邊界讀不出來
+    contact = np.maximum(pav * 0.6, (1.0 - T.smoothstep(0.0, 0.3, ds)) * (ds > 0.0)) * plat
+    # mask_c.a：前庭大尺度土色分區（6–12 m）：0＝暖赭（乾、外圍）→ 1＝冷褐（壓實、樹蔭、北半）
+    zone = np.clip(0.5 + 0.9 * T.fbm(X, Z, 9.0, 2, seed=83) + 0.25 * traffic + 0.2 * T.smoothstep(-6.0, -24.0, Z) - 0.25 * edge, 0, 1) * plat
     A = np.stack([dirt, forest, rock, grass], -1)
     B = np.stack([trail, wet, pet, moss], -1)
-    for nm, img in (('mask_a', A), ('mask_b', B)):
+    C = np.stack([worn, leaf, contact, zone], -1)
+    for nm, img in (('mask_a', A), ('mask_b', B), ('mask_c', C)):
         arr = (np.clip(img, 0, 1) * 255).astype(np.uint8)
         with open(os.path.join(OUT, nm + '.rgba'), 'wb') as f:
             f.write(np.array([arr.shape[1], arr.shape[0]], dtype=np.int32).tobytes())
@@ -442,6 +505,7 @@ def main():
         'stair': L.STAIR, 'stair_segs': [list(s) for s in L._SEGS], 'z_foot': L.Z_FOOT, 'y_foot': L.Y_FOOT,
         'beast': T.beast_profile(), 'beast_half_w': L.BEAST_HALF_W, 'portal': list(L.PORTAL),
         'pond': L.POND, 'paths': L.PATHS, 'sando': L.SANDO, 'place': L.PLACE, 'viewpoints': L.VIEWPOINTS,
+        'temizuya_pad': list(L.TEMIZUYA_PAD), 'fixed_trees': [list(t) for t in L.FIXED_TREES],
     }
     json.dump(lay, open(os.path.join(OUT, 'layout.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     # 數字摘要

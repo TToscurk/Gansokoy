@@ -6,6 +6,7 @@ extends SceneTree
 ##   godot --headless --path godot --script res://tools/shrine_v3/build_assets.gd [-- --only=haiden,torii]
 
 const M := preload("res://tools/shrine_v3/s3mat.gd")
+const S3 := preload("res://tools/shrine_v3/s3lib.gd")
 const MODELS := "res://assets/shrine_v3/models/"
 const MESH_DIR := "res://assets/shrine_v3/mesh/"
 const SCN_DIR := "res://assets/shrine_v3/scenes/"
@@ -14,7 +15,7 @@ const OVERRIDE := {"komainu_a": {"s3_stone": "s3_stone_tri"}, "komainu_un": {"s3
 const ZH := {
 	"haiden": "拜殿", "saisen": "賽錢箱", "torii": "鳥居", "temizuya": "手水舍", "storehouse": "倉庫",
 	"lantern_l": "石燈籠_大", "lantern_s": "石燈籠_小", "komainu_base": "狛犬台座", "komainu_a": "狛犬_阿",
-	"komainu_un": "狛犬_吽", "crate": "木箱", "broom": "竹箒", "bucket": "木桶", "shagohyo": "社號標",
+	"komainu_un": "狛犬_吽", "crate": "木箱", "broom": "竹箒", "bucket": "木桶", "shagohyo": "社號標", "onmyoudama": "陰陽玉",
 }
 
 
@@ -86,7 +87,7 @@ func _run() -> void:
 			used.append(mname)
 		mesh.resource_name = "shrine_v3_" + nm
 		var mp := MESH_DIR + nm + ".res"
-		var e := ResourceSaver.save(mesh, mp)
+		var e := S3.save_retry(mesh, mp)
 		inst.free()
 		# 場景
 		var root := Node3D.new()
@@ -130,7 +131,7 @@ func _run() -> void:
 			m3.owner = root
 		var pk := PackedScene.new()
 		pk.pack(root)
-		var e2 := ResourceSaver.save(pk, SCN_DIR + nm + ".tscn")
+		var e2 := S3.save_retry(pk, SCN_DIR + nm + ".tscn")
 		var aabb := mesh.get_aabb()
 		print("[ASSET] %-13s mesh=%d scene=%d surfaces=%d lods0=%d cols=%d aabb.pos=%s size=%s mats=%s" % [
 			nm, e, e2, mesh.get_surface_count(), mesh.surface_get_array_index_len(0), cols.size(), aabb.position, aabb.size, used])
@@ -167,11 +168,11 @@ func _site_meshes(rebuilt: Dictionary) -> int:
 				rebuilt[mname] = true
 			mesh.surface_set_material(i, M.get_mat(mname))
 		mesh.resource_name = "shrine_v3_site_" + nm
-		var e := ResourceSaver.save(mesh, dst + nm + ".res")
+		var e := S3.save_retry(mesh, dst + nm + ".res")
 		var extra := ""
 		if nm.begins_with("rock_"):
 			var cv := mesh.create_convex_shape(true, true)
-			ResourceSaver.save(cv, dst + nm + "_col.res")
+			S3.save_retry(cv, dst + nm + "_col.res")
 			extra = " convex_pts=%d" % cv.points.size()
 		print("[SITE] %-15s save=%d aabb=%s%s" % [nm, e, mesh.get_aabb(), extra])
 	return fails

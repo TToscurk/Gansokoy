@@ -1,0 +1,14 @@
+[
+ {"name": "p01_stair_up", "pos": [0.3, 47.2, 1.65], "at": [0, 8, 34.0, "abs"], "fov": 60},
+ {"name": "p02_stair_mid", "pos": [0.6, 33.0, 22.65, "abs"], "at": [0, 12.0, 30.6, "abs"], "fov": 66},
+ {"name": "p03_stair_down", "pos": [0.0, 11.0, 30.85, "abs"], "at": [0, 41.0, 18.2, "abs"], "fov": 66},
+ {"name": "p04_torii_front", "pos": [0.4, 13.2, 1.65], "at": [0, 2, 2.6], "fov": 62},
+ {"name": "p05_torii_back", "pos": [0.0, 1.0, 1.65], "at": [0, 70, 24, "abs"], "fov": 66},
+ {"name": "p06_court_front", "pos": [0, -2, 1.65], "at": [0, -23, 3.0], "fov": 60},
+ {"name": "p07_sando_haiden", "pos": [0.0, -6.0, 1.65], "at": [0, -19.5, 1.0], "fov": 55},
+ {"name": "p08_temizuya", "pos": [-2.6, -2.8, 1.65], "at": [-8.6, 1.0, 1.0], "fov": 60},
+ {"name": "p09_haiden_close", "pos": [2.6, -12.4, 1.65], "at": [0, -20.5, 2.0], "fov": 62},
+ {"name": "p10_storehouse", "pos": [7.5, -9.5, 1.65], "at": [15.2, -17.4, 1.4], "fov": 60},
+ {"name": "p11_court_oblique", "pos": [-15, 16, 46, "abs"], "at": [0, -9, 30.5, "abs"], "fov": 55},
+ {"name": "p12_aerial", "pos": [-62, 100, 78, "abs"], "at": [2, -15, 28, "abs"], "fov": 50}
+]

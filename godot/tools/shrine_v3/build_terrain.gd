@@ -22,14 +22,14 @@ func _run() -> void:
 			return
 		var m := S3.load_grid_mesh(S3.GEN + nm + ".bin")
 		m.resource_name = "shrine_v3_" + nm
-		var e := ResourceSaver.save(m, S3.GEN + nm + ".res")
+		var e := S3.save_retry(m, S3.GEN + nm + ".res")
 		print("[TERRAIN] %s.res err=%d aabb=%s verts=%d" % [nm, e, m.get_aabb(), m.surface_get_array_len(0)])
 		if nm == "terrain_near":
 			var sh := m.create_trimesh_shape()
 			sh.resource_name = "shrine_v3_terrain_near_col"
-			var e2 := ResourceSaver.save(sh, S3.GEN + "terrain_near_col.res")
+			var e2 := S3.save_retry(sh, S3.GEN + "terrain_near_col.res")
 			print("[TERRAIN] terrain_near_col.res err=%d faces=%d" % [e2, sh.get_faces().size() / 3])
-	for nm in ["mask_a", "mask_b"]:
+	for nm in ["mask_a", "mask_b", "mask_c"]:
 		if not FileAccess.file_exists(S3.GEN + nm + ".rgba"):
 			push_error("缺 %s.rgba（先跑 gen_terrain.py）" % nm)
 			quit(1)
@@ -41,7 +41,7 @@ func _run() -> void:
 		img.generate_mipmaps()
 		var tex := ImageTexture.create_from_image(img)
 		tex.resource_name = "shrine_v3_" + nm
-		var e3 := ResourceSaver.save(tex, S3.GEN + nm + ".res")
+		var e3 := S3.save_retry(tex, S3.GEN + nm + ".res")
 		print("[TERRAIN] %s.res err=%d size=%s" % [nm, e3, img.get_size()])
 	print("[TERRAIN] done (%d ms)" % (Time.get_ticks_msec() - t0))
 	quit()

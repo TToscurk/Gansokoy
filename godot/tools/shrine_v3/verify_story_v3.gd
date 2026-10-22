@@ -183,6 +183,26 @@ func _run() -> void:
 		await _teleport(0.0, -15.8)
 	check("S11 重複進出拜殿區不動任務進度", qm.get_objective_progress("MQ07") == mq07_before and before == 0)
 
+	# ── 陰陽玉彩蛋（美術深化新增）：倉庫北側木箱旁；提示「調查」→ 緣一獨白 3 句 → 立 found_onmyoudama，不動任務 ──
+	await _teleport(16.25, -20.95)
+	await _settle(4)
+	check("S13 陰陽玉旁出現「調查」提示", prompt.visible and prompt.text.contains("調查"))
+	await _press("interact")
+	await _settle(2)
+	ui = _dialogue_ui()
+	var egg_ok := false
+	if ui != null and dm.is_active():
+		egg_ok = (ui.get_node("Box/Panel/VBox/Text") as RichTextLabel).text == "（紅白相間的圓珠，半埋在落葉裡。）"
+	check("S13 按 E 進陰陽玉獨白（第一句）", egg_ok)
+	var egg_steps := 0
+	while dm.is_active() and egg_steps < 10:
+		await _press("ui_accept")
+		await _press("ui_accept")
+		egg_steps += 1
+	check("S13 獨白推進至結束（%d 步）" % egg_steps, not dm.is_active())
+	check("S13 found_onmyoudama 旗標", sf.get_flag("found_onmyoudama"))
+	check("S13 彩蛋不動任務進度（MQ07 仍 active、進度不變）", qm.is_active("MQ07") and qm.get_objective_progress("MQ07") == mq07_before)
+
 	# ── 回獸道再回來（出生／傳送）──
 	var portal_xz := Vector2.INF
 	for p in main.current_portals():
