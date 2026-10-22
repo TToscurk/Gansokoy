@@ -16,7 +16,10 @@ const SPEC := {
 	"sakura_yama": ["sakura_bark", "sakura_card", Color(1.0, 1.0, 1.0)],
 	"konara": ["japanese_zelkova_bark", "broad_card", Color(1.0, 1.0, 1.0)],
 	"keyaki": ["japanese_zelkova_bark", "broad_dark_card", Color(1.0, 1.0, 1.0)],
+	# momiji_ao（春季新綠的伊呂波楓）必須排在 momiji 前面：前綴比對依插入順序；風力物種仍是 momiji→broad_small
+	"momiji_ao": ["japanese_zelkova_bark", "momiji_ao_card", Color(1.0, 1.0, 1.0)],
 	"momiji": ["japanese_zelkova_bark", "momiji_card", Color(1.0, 1.0, 1.0)],
+	"shii": ["japanese_zelkova_bark", "broad_dark_card", Color(1.0, 1.0, 1.0)],
 	"sugi": ["japanese_cedar_bark", "sugi_card", Color(1.0, 1.0, 1.0)],
 	"akamatsu": ["pine_bark", "sugi_card", Color(1.12, 1.10, 0.92)],
 	"tsutsuji": ["japanese_zelkova_bark", "tsutsuji_card", Color(1.0, 1.0, 1.0)],

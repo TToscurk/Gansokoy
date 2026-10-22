@@ -127,7 +127,9 @@ TEMIZUYA_PAD = (-10.3, -6.9, -1.3, 2.5)
 
 # 境內定點樹（build_scene.gd 讀 layout.json 'fixed_trees'）：御神木＝西北角老山櫻、手水舍旁與倉庫旁的楓、池畔山櫻、
 # 鳥居右側小楓（美術深化：概念圖鳥居旁的紅葉；左側是燈籠，不對稱）
-FIXED_TREES = [('sakura_yama_v3_c', -18.0, -27.5), ('momiji_v3_b', -13.2, 4.4), ('momiji_v3_a', 21.5, -8.0),
+# 2026-10-23 多樣性：手水舍旁改青楓（momiji_ao；鳥居一帶原有兩棵紅楓＋紅鳥居），境內紅楓剩倉庫、鳥居右側兩棵。
+#   gen/layout.json 的 fixed_trees 同步手改（只差樹名；MAPLES 仍以 'momiji' 開頭比對 → 落葉遮罩不變，不必重生地形）
+FIXED_TREES = [('sakura_yama_v3_c', -18.0, -27.5), ('momiji_ao_v3_b', -13.2, 4.4), ('momiji_v3_a', 21.5, -8.0),
                ('sakura_yama_v3_a', 12.0, -36.0), ('momiji_v3_b', 6.4, 7.9)]
 MAPLES = [(x, z) for (n, x, z) in FIXED_TREES if n.startswith('momiji')]     # gen_terrain：楓樹下的落葉
 

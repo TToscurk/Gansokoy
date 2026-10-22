@@ -1,0 +1,14 @@
+[
+ {"name": "D01_stair_up", "pos": [0.3, 47.2, 1.65], "at": [0, 8, 34.0, "abs"], "fov": 60},
+ {"name": "D02_stair_mid", "pos": [0.6, 33.0, 22.65, "abs"], "at": [0, 12.0, 30.6, "abs"], "fov": 66},
+ {"name": "D03_torii_front", "pos": [0.4, 13.2, 1.65], "at": [0, 2, 2.6], "fov": 62},
+ {"name": "D04_torii_back", "pos": [0.0, 1.0, 1.65], "at": [0, 70, 24, "abs"], "fov": 66},
+ {"name": "D05_court_front", "pos": [0, -2, 1.65], "at": [0, -23, 3.0], "fov": 60},
+ {"name": "D06_haiden_side", "pos": [11, -14.5, 1.65], "at": [0, -23, 2.8], "fov": 62},
+ {"name": "D07_back_grove", "pos": [-7.5, -40.5, 1.65], "at": [3, -25, 3.4], "fov": 66},
+ {"name": "D08_grove_ground", "pos": [-2.0, -36.0, 1.65], "at": [-12.0, -48.0, 1.0], "fov": 64},
+ {"name": "D09_pond", "pos": [8.0, -51.0, 1.65], "at": [17.5, -42.0, 0.3], "fov": 66},
+ {"name": "D10_court_outlook_west", "pos": [-6, -4, 1.65], "at": [-150, 160, 8, "abs"], "fov": 70},
+ {"name": "D11_aerial", "pos": [-62, 100, 78, "abs"], "at": [2, -15, 28, "abs"], "fov": 50},
+ {"name": "D12_east_forest", "pos": [70, 10, 60, "abs"], "at": [0, -10, 0], "fov": 60}
+]

@@ -622,48 +622,263 @@ func max_top(x: float, z: float) -> float:
 	return INF
 
 
-const TALL := ["sugi_v3_b", "sugi_v3_a", "keyaki_v3_a", "konara_v3_b", "sugi_v3_c", "konara_v3_a", "sakura_yama_v3_c", "sakura_yama_v3_a", "sakura_yama_v3_b", "momiji_v3_a", "momiji_v3_b"]
+## ───── 樹種與變體（2026-10-23 植被多樣性，docs/shrine_v3/03_植被多樣性.md） ─────
+## 同一樹種有多個「剪影型」（src/make_veg.py）；相鄰樹優先用不同型；樹齡用型＋縮放表現。
+const VARIANTS := {
+	"sakura": ["sakura_yama_v3_a", "sakura_yama_v3_b", "sakura_yama_v3_c", "sakura_yama_v3_d", "sakura_yama_v3_e"],
+	"konara": ["konara_v3_a", "konara_v3_b", "konara_v3_c"],
+	"keyaki": ["keyaki_v3_a", "keyaki_v3_b"],
+	"shii": ["shii_v3_a", "shii_v3_b"],
+	"sugi": ["sugi_v3_a", "sugi_v3_b", "sugi_v3_c", "sugi_v3_d"],
+	"momiji_ao": ["momiji_ao_v3_a", "momiji_ao_v3_b"],
+	"momiji": ["momiji_v3_a", "momiji_v3_b"],
+	"akamatsu": ["akamatsu_v3_a", "akamatsu_v3_b"],
+}
+## 樹齡偏好：小樹（林緣、林隙）／老樹（林內）各自優先用哪些型
+const YOUNG := ["sakura_yama_v3_b", "konara_v3_a", "sugi_v3_c", "shii_v3_b", "momiji_ao_v3_a", "momiji_v3_b", "akamatsu_v3_b"]
+const OLD := ["sakura_yama_v3_c", "sakura_yama_v3_a", "keyaki_v3_b", "shii_v3_a", "sugi_v3_d", "sugi_v3_b", "konara_v3_b"]
+## 傾斜型：局部 +x＝傾斜方向，擺放時轉向空曠處（林緣樹往光的方向長）；離空曠處 > 10 m 的林內幾乎不用
+const LEANING := ["sakura_yama_v3_d", "konara_v3_c", "momiji_ao_v3_b"]
+## 各區基本樹種比例。鎮守之森（東、北）＝杉＋椎（常綠闊葉）為主；櫻林以櫻為主；
+## 西坡向陽乾燥＝枹櫟＋山櫻＋少量赤松；南坡（石段下）混交。紅楓只佔極少，另有距離限制。
+const ZONE_MIX := {
+	"grove": {"sakura": 0.76, "konara": 0.06, "keyaki": 0.05, "shii": 0.04, "momiji_ao": 0.05, "momiji": 0.02, "sugi": 0.02},
+	"east": {"sugi": 0.36, "shii": 0.24, "konara": 0.16, "keyaki": 0.12, "sakura": 0.08, "momiji_ao": 0.04, "momiji": 0.02},
+	"north": {"sugi": 0.45, "shii": 0.30, "keyaki": 0.10, "konara": 0.10, "sakura": 0.05},
+	"south": {"konara": 0.27, "sugi": 0.22, "sakura": 0.17, "keyaki": 0.12, "shii": 0.12, "momiji_ao": 0.07, "momiji": 0.03},
+	"west": {"konara": 0.38, "sakura": 0.18, "sugi": 0.15, "keyaki": 0.10, "shii": 0.08, "akamatsu": 0.06, "momiji_ao": 0.05},
+}
+## 建築淨空（中心, 半徑）：樹冠半徑 ×0.8 不得伸進（拜殿屋頂背後、倉庫、手水舍、鳥居）
+const BLD_CLEAR := [[Vector2(0.0, -23.0), 6.5], [Vector2(15.2, -17.4), 3.0], [Vector2(-8.6, 0.6), 2.2], [Vector2(0.0, 7.4), 2.5]]
+const RED_MIN_D := 24.0      # 紅楓（野村楓）彼此至少相隔：只當點綴，不連成紅色團塊或樹列
+const SAME_R := 18.0         # 「相鄰」判定半徑：此範圍內同一型的樹越近扣分越多
+var trees_placed: Array = []  # [Vector2, mesh 名, 樹種]
+var noise_patch: FastNoiseLite
+var noise_clump: FastNoiseLite
+var play_poly: PackedVector2Array
+var plat_poly: PackedVector2Array
 
 
-func pick_species(zone: String, x: float, z: float, g: float) -> String:
-	var cap := max_top(x, z) - g
-	var pool: Array
-	match zone:
-		"grove":
-			pool = ["sakura_yama_v3_a", "sakura_yama_v3_b", "sakura_yama_v3_c", "sakura_yama_v3_a", "sakura_yama_v3_b", "momiji_v3_a", "konara_v3_a"]
-		"east":
-			pool = ["sugi_v3_a", "sugi_v3_b", "sugi_v3_c", "sugi_v3_a", "konara_v3_a", "konara_v3_b", "keyaki_v3_a", "sakura_yama_v3_c"]
-		"north":
-			pool = ["sugi_v3_b", "sugi_v3_a", "konara_v3_b", "keyaki_v3_a", "sugi_v3_c"]
-		"south":
-			pool = ["sugi_v3_a", "sugi_v3_c", "konara_v3_a", "konara_v3_b", "sugi_v3_b", "keyaki_v3_a", "sakura_yama_v3_b"]
-		"west":
-			pool = ["konara_v3_a", "sugi_v3_c", "konara_v3_b", "sugi_v3_a"]
-		_:
-			pool = TALL
-	var cand: String = pool[rng.randi() % pool.size()]
-	if tree_h(cand) <= cap:
-		return cand
-	for nm in TALL:
-		if tree_h(String(nm)) <= cap:
-			return String(nm)
+func _species_of(nm: String) -> String:
+	for sp in VARIANTS:
+		if nm in VARIANTS[sp]:
+			return String(sp)
 	return ""
 
 
-func put_tree(g: Node, nm: String, x: float, z: float, idx: int, with_col: bool) -> void:
+## 最近的開闊處（不長樹、受光的地方）：平台、石段、池面、步道、獸道。回傳 [點, 距離]。
+## 林緣＝離它近的樹（受光多 → 櫻、楓、枹櫟、小樹、傾斜型）；林內＝杉、椎、大樹。
+func _open_pt(p: Vector2) -> Array:
+	var best := p
+	var bd := INF
+	if Geometry2D.is_point_in_polygon(p, plat_poly):
+		return [p, 0.0]
+	for i in plat_poly.size():
+		var q := Geometry2D.get_closest_point_to_segment(p, plat_poly[i], plat_poly[(i + 1) % plat_poly.size()])
+		if p.distance_to(q) < bd:
+			bd = p.distance_to(q)
+			best = q
+	var lines := [[Vector2(0.0, 9.6), Vector2(0.0, float(L["z_foot"]))]]
+	for key in ["grove", "pond_w", "to_store", "to_temizuya"]:
+		var pts: Array = L["paths"][key]
+		for i in pts.size() - 1:
+			lines.append([v2(pts[i]), v2(pts[i + 1])])
+	var bx := beast_xz()
+	for i in bx.size() - 1:
+		lines.append([v2(bx[i]), v2(bx[i + 1])])
+	for ln in lines:
+		var q := Geometry2D.get_closest_point_to_segment(p, ln[0], ln[1])
+		if p.distance_to(q) < bd:
+			bd = p.distance_to(q)
+			best = q
+	var pc := Vector2(17.5, -42.5)
+	var dp := maxf(p.distance_to(pc) - 6.0, 0.0)
+	if dp < bd:
+		bd = dp
+		best = pc + (p - pc).normalized() * 6.0
+	return [best, bd]
+
+
+func _edge_d(p: Vector2) -> float:
+	return float(_open_pt(p)[1])
+
+
+## 傾斜型樹的傾斜方向：林緣 → 朝最近的開闊處（受光）；林內 → 背離 12 m 內鄰樹的重心（往林隙長）
+func _open_dir(p: Vector2) -> Vector2:
+	for b in BLD_CLEAR:
+		if p.distance_to(b[0]) < float(b[1]) + 8.0:
+			return (p - (b[0] as Vector2)).normalized()     # 建築旁：背離建築傾斜（不伸進屋頂）
+	var op := _open_pt(p)
+	if float(op[1]) < 16.0 and float(op[1]) > 0.01:
+		return ((op[0] as Vector2) - p).normalized()
+	var c := Vector2.ZERO
+	var n := 0
+	for t in trees_placed:
+		if p.distance_to(t[0]) < 12.0:
+			c += t[0]
+			n += 1
+	if n > 0 and p.distance_to(c / n) > 0.3:
+		return (p - c / n).normalized()
+	return Vector2.from_angle(rng.randf() * TAU)
+
+
+func _near_red(p: Vector2) -> bool:
+	for t in trees_placed:
+		if String(t[2]) == "momiji" and p.distance_to(t[0]) < RED_MIN_D:
+			return true
+	return false
+
+
+## 石段走廊（兩側 16 m 內）：從石段往上看的視線裡不放紅楓
+func _in_stair_view(p: Vector2) -> bool:
+	return absf(p.x) < 16.0 and p.y > 8.0 and p.y < float(L["z_foot"]) + 6.0
+
+
+## 依權重的不重複抽樣順序
+func _weighted_order(w: Dictionary) -> Array:
+	var keys: Array = w.keys()
+	var out := []
+	while not keys.is_empty():
+		var tot := 0.0
+		for k in keys:
+			tot += float(w[k])
+		var r := rng.randf() * tot
+		var pick = keys[keys.size() - 1]
+		for k in keys:
+			r -= float(w[k])
+			if r <= 0.0:
+				pick = k
+				break
+		out.append(pick)
+		keys.erase(pick)
+	return out
+
+
+## 同一樹種裡挑型：附近（SAME_R）同型越近扣分越多；樹齡偏好；樹高受視線走廊限制。回傳 [mesh, 縮放] 或 []
+func _pick_variant(sp: String, p: Vector2, cap: float, edge: float) -> Array:
+	var young_p := 0.12 + 0.40 * clampf(1.0 - edge / 12.0, 0.0, 1.0)
+	var r := rng.randf()
+	var age := 0 if r < young_p else (2 if r > 0.86 else 1)
+	var best := ""
+	var best_s := 1.0
+	var best_pen := INF
+	for v in VARIANTS[sp]:
+		var s := rng.randf_range(0.74, 0.88) if age == 0 else (rng.randf_range(1.04, 1.16) if age == 2 else rng.randf_range(0.9, 1.06))
+		if tree_h(v) * s > cap:
+			s = cap / tree_h(v)
+			if s < 0.7:
+				continue
+		var pen := 0.0
+		for t in trees_placed:
+			if String(t[1]) == v:
+				var d := p.distance_to(t[0])
+				if d < SAME_R:
+					pen += 1.5 * (1.0 - d / SAME_R)
+		if age == 0 and v in YOUNG:
+			pen -= 0.2
+		if age == 2 and v in OLD:
+			pen -= 0.2
+		if v in LEANING and (edge > 10.0 or edge < 4.0):
+			pen += 0.8     # 林內不用；緊貼步道／平台也不用（會斜伸到玩家頭上、擋鏡頭）
+		pen += rng.randf() * 0.12
+		if pen < best_pen:
+			best_pen = pen
+			best = v
+			best_s = s
+	return [] if best == "" else [best, best_s]
+
+
+## 生態配置：區域基本比例 × 樹種斑塊（30–40 m 雜訊：杉林／椎林成片）× 林緣受光 × 坡度／海拔
+func _pick_tree(zone: String, p: Vector2, g: float, ny: float, edge: float) -> Array:
+	var cap := max_top(p.x, p.y) - g
+	var w: Dictionary = (ZONE_MIX[zone] as Dictionary).duplicate()
+	var patch := noise_patch.get_noise_2d(p.x, p.y)
+	var lit := clampf(1.0 - edge / 14.0, 0.0, 1.0)
+	if w.has("sugi"):
+		w["sugi"] = float(w["sugi"]) * (1.0 + 1.8 * clampf(patch, 0.0, 1.0)) * (1.0 - 0.5 * lit) * (1.5 if g < 22.0 else 1.0)
+	if w.has("shii"):
+		w["shii"] = float(w["shii"]) * (1.0 + 1.6 * clampf(-patch, 0.0, 1.0)) * (1.0 - 0.3 * lit)
+	for k in ["konara", "akamatsu"]:
+		if w.has(k):
+			w[k] = float(w[k]) * (1.0 + 1.5 * lit)
+	if w.has("momiji_ao"):
+		w["momiji_ao"] = float(w["momiji_ao"]) * (1.0 + 0.8 * lit)
+	# 點綴型的小樹（楓、赤松、欅）：10 m 內已有 2 棵同種就大幅降權，不讓同一種小樹聚成一排
+	for k in ["momiji_ao", "momiji", "akamatsu", "keyaki"]:
+		if w.has(k):
+			var same := 0
+			for t in trees_placed:
+				if String(t[2]) == k and p.distance_to(t[0]) < 10.0:
+					same += 1
+			if same >= 2:
+				w[k] = float(w[k]) * 0.25
+	if w.has("sakura"):
+		w["sakura"] = float(w["sakura"]) * (1.0 + (0.6 if zone == "grove" else 1.5) * lit)
+	if ny < 0.8:
+		for k in ["konara", "akamatsu"]:
+			if w.has(k):
+				w[k] = float(w[k]) * 1.6
+		for k in ["shii", "keyaki"]:
+			if w.has(k):
+				w[k] = float(w[k]) * 0.7
+	if w.has("momiji") and (_near_red(p) or _in_stair_view(p)):
+		w.erase("momiji")
+	# 視線走廊限高時，只剩一兩個型放得下的樹種降權（否則限高區整片都是同一個矮型，例如只剩 sugi c）
+	for k in w.keys():
+		var vs: Array = VARIANTS[k]
+		var fit := 0
+		for v in vs:
+			if tree_h(String(v)) * 0.7 <= cap:
+				fit += 1
+		w[k] = float(w[k]) * pow(float(fit) / float(vs.size()), 1.5)
+	for sp in _weighted_order(w):
+		var r := _pick_variant(String(sp), p, cap, edge)
+		if not r.is_empty():
+			return r
+	return []
+
+
+func _leaf_tint(sp: String) -> Vector3:
+	# 同一樹種內的細微個體差（亮度 ±5 %、色相極小幅）；不做跨樹種的隨機色
+	var b := rng.randf_range(0.94, 1.05)
+	var h := rng.randf_range(-1.0, 1.0)
+	match sp:
+		"sakura":
+			return Vector3(b, b * (1.0 - 0.03 * h), b * (1.0 - 0.012 * h))
+		"konara", "keyaki", "momiji_ao":
+			return Vector3(b * (1.0 + 0.05 * h), b, b * (1.0 - 0.06 * h))
+		_:
+			return Vector3(b, b, b)
+
+
+func put_tree(g: Node, nm: String, x: float, z: float, idx: int, with_col: bool, s := -1.0, yaw := NAN) -> void:
 	var mi := MeshInstance3D.new()
 	mi.mesh = load(VEG + nm + ".res")
-	var s := rng.randf_range(0.9, 1.1)
-	var y := S3.footprint_range(x, z, 0.3, 0.3, 0.0).x
-	mi.transform = Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(s, s, s)), Vector3(x, y, z))
+	if s <= 0.0:
+		s = rng.randf_range(0.9, 1.1)
+	var p := Vector2(x, z)
+	if is_nan(yaw):
+		if nm in LEANING:
+			var d := _open_dir(p)
+			yaw = atan2(-d.y, d.x) + rng.randf_range(-0.35, 0.35)
+		else:
+			yaw = rng.randf() * TAU
+	# 接地：樹幹腳印（半徑＝樹幹×1.3×縮放，至少 0.3 m）內的最低地面；粗幹的老杉在陡坡上用 0.3 m 會懸空 3–16 cm
+	var fr := maxf(0.3, tree_r(nm) * s * 1.3)
+	var y := S3.footprint_range(x, z, fr, fr, 0.0).x
+	mi.transform = Transform3D(Basis(Vector3.UP, yaw).scaled(Vector3(s, s, s)), Vector3(x, y, z))
 	mi.visibility_range_end = 600.0     # 近景區內的樹一律可見（鳥瞰／遠望時近景地面不會露出無樹的林床）
 	mi.visibility_range_end_margin = 30.0
 	mi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
-	if nm.begins_with("momiji"):
+	var sp := _species_of(nm)
+	if sp == "momiji":
 		# 紅楓降飽和（2026-10-23 光照校正）：葉卡反照率 (0.30, 0.015, 0.011)，G/R＝0.05 幾乎是純紅，
 		# 在 ACES 下比櫻與鳥居還搶。用共用葉 shader 的每棵樹色彩變體 leaf_sat（往亮度灰混 25 %）
 		mi.set_instance_shader_parameter("leaf_sat", 0.75)
+	else:
+		mi.set_instance_shader_parameter("leaf_tint", _leaf_tint(sp))
 	add(g, mi, "%s_%03d" % [nm, idx])
+	trees_placed.append([p, nm, sp])
 	var tr := tree_r(nm) * s
 	if with_col and tr > 0.06:
 		var body := StaticBody3D.new()
@@ -684,59 +899,74 @@ func _count_tree(counts: Dictionary, nm: String) -> int:
 	return i
 
 
-func scatter_trees(g: Node, zone: String, rect: Rect2, spacing: float, accept: Callable, n_max: int, counts: Dictionary, min_ny := 0.70) -> void:
-	var cols := int(rect.size.x / spacing)
-	var rows := int(rect.size.y / spacing)
-	var play := poly_of("play")
-	var plat := poly_of("platform")
-	var cells := []
-	for i in cols:
-		for j in rows:
-			cells.append(Vector2i(i, j))
-	for i in range(cells.size() - 1, 0, -1):     # 決定性洗牌（rng 固定種子）
-		var j := rng.randi_range(0, i)
-		var tmp = cells[i]
-		cells[i] = cells[j]
-		cells[j] = tmp
+## 疏密不均的撒點（取代舊的格點抖動）：均勻候選 × 團聚雜訊（20 m 尺度的林叢與林隙）接受率，
+## 間距＝樹冠半徑 ×0.45（樹冠可交疊）；小樹（縮放小）可擠進大樹之間。n_target＝修正前該區的實際棵數。
+func scatter_trees(g: Node, zone: String, rect: Rect2, accept: Callable, n_target: int, counts: Dictionary, min_ny := 0.70) -> void:
 	var n := 0
-	for c in cells:
-		if n >= n_max:
-			break
-		var x := rect.position.x + (float(c.x) + rng.randf_range(0.15, 0.85)) * spacing
-		var z := rect.position.y + (float(c.y) + rng.randf_range(0.15, 0.85)) * spacing
-		var p := Vector2(x, z)
-		if Geometry2D.is_point_in_polygon(p, plat):
+	var tries := 0
+	while n < n_target and tries < n_target * 60:
+		tries += 1
+		var p := Vector2(rng.randf_range(rect.position.x, rect.end.x), rng.randf_range(rect.position.y, rect.end.y))
+		var nz := noise_clump.get_noise_2d(p.x, p.y)
+		# 櫻林要連成一片花海：疏密對比較小；其他林區林叢／林隙較明顯
+		var dens := clampf(0.7 + 0.4 * nz, 0.35, 1.0) if zone == "grove" else clampf(0.55 + 0.6 * nz, 0.15, 1.0)
+		if rng.randf() > dens:
 			continue
+		if Geometry2D.is_point_in_polygon(p, plat_poly) or dist_to_poly(p, plat_poly) < 3.0:
+			continue     # 平台緣外 3 m 不種（玩家出平台的第一步不撞樹、鏡頭不貼樹幹）
 		if not accept.call(p):
 			continue
-		if S3.normal_at(x, z, 1.0).y < min_ny:
+		var ny := S3.normal_at(p.x, p.y, 1.0).y
+		if ny < min_ny:
 			continue
-		var nm := pick_species(zone, x, z, gy(x, z))
-		if nm == "":
+		if blocked(p, 1.2):
 			continue
-		var cr := tree_crown(nm)
+		var edge := _edge_d(p)
+		var pick := _pick_tree(zone, p, gy(p.x, p.y), ny, edge)
+		if pick.is_empty():
+			continue
+		var nm := String(pick[0])
+		var s := float(pick[1])
+		var cr := tree_crown(nm) * s
 		if blocked(p, maxf(cr * 0.45, 1.2)):
 			continue
-		var in_play := Geometry2D.is_point_in_polygon(p, play)
-		put_tree(g, nm, x, z, _count_tree(counts, nm), in_play or dist_to_poly(p, play) < 3.0)
-		occupy(p, cr * 0.45)
+		var near_bld := false
+		for b in BLD_CLEAR:
+			if p.distance_to(b[0]) < float(b[1]) + cr * 0.8:
+				near_bld = true
+		if near_bld:
+			continue
+		var in_play := Geometry2D.is_point_in_polygon(p, play_poly)
+		put_tree(g, nm, p.x, p.y, _count_tree(counts, nm), in_play or dist_to_poly(p, play_poly) < 3.0, s)
+		occupy(p, maxf(cr * 0.45, 1.0))
 		n += 1
+	stats["trees_" + zone] = "%d/%d（試 %d 次）" % [n, n_target, tries]
 
 
 func add_trees() -> void:
 	var g := group(sroot, "樹木")
 	var counts := {}
-	# 境內特定位置（layout.py FIXED_TREES：御神木＝西北角老山櫻、手水舍與倉庫旁的野村楓、池畔山櫻、鳥居右側小楓）
+	play_poly = poly_of("play")
+	plat_poly = poly_of("platform")
+	noise_patch = FastNoiseLite.new()
+	noise_patch.seed = 3141
+	noise_patch.frequency = 1.0 / 34.0
+	noise_clump = FastNoiseLite.new()
+	noise_clump.seed = 2718
+	noise_clump.frequency = 1.0 / 19.0
+	noise_clump.fractal_octaves = 2
+	# 境內特定位置（layout.py FIXED_TREES：御神木＝西北角老山櫻、手水舍旁青楓、倉庫旁與鳥居右側的野村楓、池畔山櫻）
 	for f in L["fixed_trees"]:
 		var nm0 := String(f[0])
 		put_tree(g, nm0, float(f[1]), float(f[2]), _count_tree(counts, nm0), true)
 		occupy(Vector2(float(f[1]), float(f[2])), tree_crown(nm0) * 0.45)
-	scatter_trees(g, "grove", Rect2(-30, -84, 80, 54), 7.0, func(p: Vector2) -> bool: return p.y < -27.0 or p.x > 26.0, 70, counts)
-	scatter_trees(g, "east", Rect2(27, -96, 51, 170), 7.0, func(p: Vector2) -> bool: return true, 140, counts)
-	scatter_trees(g, "north", Rect2(-78, -96, 105, 14), 7.5, func(p: Vector2) -> bool: return true, 40, counts)
-	scatter_trees(g, "south", Rect2(-78, 11, 156, 97), 6.5, func(p: Vector2) -> bool: return true, 190, counts)
+	# 目標棵數＝修正前各區實際棵數（grove 63、east 133、north 11、south 188、west 82）：同樣的數量、不同的配置
+	scatter_trees(g, "grove", Rect2(-30, -84, 80, 54), func(p: Vector2) -> bool: return p.y < -27.0 or p.x > 26.0, 63, counts)
+	scatter_trees(g, "east", Rect2(27, -96, 51, 170), func(p: Vector2) -> bool: return true, 133, counts)
+	scatter_trees(g, "north", Rect2(-78, -96, 105, 14), func(p: Vector2) -> bool: return true, 11, counts)
+	scatter_trees(g, "south", Rect2(-78, 11, 156, 97), func(p: Vector2) -> bool: return true, 188, counts)
 	# 西坡（regional 西翼平均 ~46°、連續落 50 m 以上）：容許到 ~53° 的坡長樹，否則整片陡坡裸露成一道牆
-	scatter_trees(g, "west", Rect2(-78, -82, 50, 93), 6.0, func(p: Vector2) -> bool: return p.x < -28.0, 110, counts, 0.60)
+	scatter_trees(g, "west", Rect2(-78, -82, 50, 93), func(p: Vector2) -> bool: return p.x < -28.0, 82, counts, 0.60)
 	# 崖松：西崖柵外（低矮框景）
 	var pines := 0
 	for i in 40:
@@ -747,10 +977,10 @@ func add_trees() -> void:
 		var p := Vector2(x, z)
 		if blocked(p, 1.5):
 			continue
-		var nm := "akamatsu_v3_a" if rng.randf() < 0.5 else "akamatsu_v3_b"
-		if gy(x, z) + tree_h(nm) > P + 1.2:
+		var pk := _pick_variant("akamatsu", p, P + 1.2 - gy(x, z), 0.0)
+		if pk.is_empty():
 			continue
-		put_tree(g, nm, x, z, _count_tree(counts, nm), false)
+		put_tree(g, String(pk[0]), x, z, _count_tree(counts, String(pk[0])), false, float(pk[1]))
 		occupy(p, 2.0)
 		pines += 1
 	stats["trees"] = counts
@@ -853,7 +1083,9 @@ func add_stair_sides() -> void:
 	# 2) 小樹（先放，佔位優先；|x| 4–9.5 m，每側每 6–10 m 一棵、每棵最多試 4 個位置；樹種依此處允許樹高：上段只剩矮楓或不放）
 	var counts := {}
 	var play := poly_of("play")
-	var cands := ["momiji_v3_b", "momiji_v3_a", "akamatsu_v3_b", "akamatsu_v3_a", "sakura_yama_v3_b", "sakura_yama_v3_a", "konara_v3_a"]
+	# 2026-10-23 多樣性：石段兩側不再放紅楓（從石段往上看會連成紅色樹列）；候選改成青楓、赤松與小型的櫻／枹櫟型，
+	# 依「附近同型／同樹種」扣分挑選，樹高超過視線走廊上限時縮小（≥0.8）
+	var cands := ["momiji_ao_v3_b", "momiji_ao_v3_a", "akamatsu_v3_b", "akamatsu_v3_a", "sakura_yama_v3_b", "sakura_yama_v3_e", "sakura_yama_v3_d", "konara_v3_c"]
 	for sx in [-1.0, 1.0]:
 		var zt := 12.0 + rng.randf_range(0.0, 3.0)
 		while zt < zf - 1.0:
@@ -863,14 +1095,24 @@ func add_stair_sides() -> void:
 				var p := Vector2(x, zz)
 				var cap := max_top(x, zz) - gy(x, zz)
 				var pick := ""
-				var k0 := rng.randi() % cands.size()
-				for j in cands.size():
-					var c := String(cands[(k0 + j) % cands.size()])
-					if tree_h(c) * 1.1 <= cap:
+				var best_pen := INF
+				for c0 in cands:
+					var c := String(c0)
+					if tree_h(c) * 0.8 > cap:
+						continue
+					var pen := rng.randf() * 0.3
+					for t in trees_placed:
+						var d := p.distance_to(t[0])
+						if d < SAME_R:
+							if String(t[1]) == c:
+								pen += 1.0 - d / SAME_R
+							elif String(t[2]) == _species_of(c):
+								pen += 0.4 * (1.0 - d / SAME_R)
+					if pen < best_pen:
+						best_pen = pen
 						pick = c
-						break
 				if pick != "" and not Geometry2D.is_point_in_polygon(p, plat) and not blocked(p, 1.0) and S3.normal_at(x, zz, 1.0).y > 0.6:
-					put_tree(gt, pick, x, zz, _count_tree(counts, pick), Geometry2D.is_point_in_polygon(p, play) or dist_to_poly(p, play) < 3.0)
+					put_tree(gt, pick, x, zz, _count_tree(counts, pick), Geometry2D.is_point_in_polygon(p, play) or dist_to_poly(p, play) < 3.0, minf(rng.randf_range(0.9, 1.05), cap / tree_h(pick)))
 					occupy(p, maxf(tree_crown(pick) * 0.35, 1.0))
 					st["trees"] += 1
 					break
