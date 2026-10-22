@@ -7,8 +7,8 @@
   "canon_notes": null,
   "scale": 1,
   "scale_source": "GLB 原尺寸",
-  "secs_geometry": 1.18532395362854,
-  "secs_capture": 10.2931489944458,
+  "secs_geometry": 1.033921241760254,
+  "secs_capture": 10.603325843811035,
   "godot": "4.7.2-stable (official)",
   "renderer": "forward_plus",
   "adapter": "NVIDIA GeForce GTX 1070",
@@ -55,19 +55,19 @@
     0.0
    ]
   },
-  "secs_analyze": 2.8756721019744873,
+  "secs_analyze": 3.0162007808685303,
   "review_request": "D:\\神社\\shrine\\docs\\visual_qa\\s01_torii_a\\review_request.json",
   "version": {
-   "git_head": "c4be7e64",
+   "git_head": "874c6254",
    "branch": "yoriichi-combat-and-village-routing",
-   "time": "2026-10-22 04:21:08",
+   "time": "2026-10-22 04:34:37",
    "inputs": {
     "godot/assets/beast_path/s01_kit/src/s01_shrine.blend": {
      "sha": "b922c6211e930e4f",
      "dirty": null
     },
     "docs/arch_spatial/examples/s01_torii.arch.json": {
-     "sha": "c6c0edcb9fe48236",
+     "sha": "637b94c36bbbf676",
      "dirty": null
     },
     "godot/assets/beast_path/s01_kit/glb/s01_torii_a.glb": {
@@ -82,27 +82,27 @@
    "tools": {
     "tools/visual_qa/vqa.py": {
      "sha": "921565c951025248",
-     "dirty": true
+     "dirty": false
     },
     "tools/visual_qa/vqa_analyze.py": {
      "sha": "7ead2cd1d732ad86",
-     "dirty": true
+     "dirty": false
     },
     "tools/visual_qa/profiles.json": {
      "sha": "8fd3fd0fcd9e9671",
-     "dirty": true
+     "dirty": false
     },
     "godot/tools/visual_qa/vqa_capture.gd": {
      "sha": "7b9cb7af38e0bc2f",
-     "dirty": true
+     "dirty": false
     },
     "tools/blender/arch_spatial.py": {
      "sha": "811e1d9b737b5738",
-     "dirty": true
+     "dirty": false
     },
     "tools/blender/arch_check.py": {
      "sha": "c70e8206c5b10800",
-     "dirty": true
+     "dirty": false
     },
     "godot/tools/arch_spatial_lib.gd": {
      "sha": "3fd72df262c6c7c5",
@@ -112,7 +112,7 @@
    "godot_bin": "D:/Godot/Godot_v4.7.2-stable_win64_console.exe",
    "blender_bin": "D:/Blender/blender-5.2.1-windows-x64/blender.exe"
   },
-  "secs_total": 14.632326126098633
+  "secs_total": 14.934707164764404
  },
  "summary": {
   "geometry": {
@@ -123,8 +123,8 @@
    "REVIEW": 0
   },
   "visual": {
-   "PASS": 19,
-   "WARN": 1,
+   "PASS": 20,
+   "WARN": 0,
    "FAIL": 0,
    "UNKNOWN": 0,
    "REVIEW": 0
@@ -145,8 +145,8 @@
   }
  },
  "totals": {
-  "PASS": 27,
-  "WARN": 1,
+  "PASS": 28,
+  "WARN": 0,
   "FAIL": 0,
   "UNKNOWN": 0,
   "REVIEW": 1
@@ -276,7 +276,7 @@
    },
    {
     "rule_id": "VIS_GROUND",
-    "final": "WARN"
+    "final": "PASS"
    },
    {
     "rule_id": "STYLE:height_to_width",
@@ -1327,7 +1327,7 @@
     "changed_pixels": "<0.05%（TAA 關閉時實測 0）"
    },
    "actual": {
-    "mean_abs": 0.032,
+    "mean_abs": 0.0318,
     "changed_pixels": 0.0
    },
    "deviation": null,
@@ -1367,11 +1367,11 @@
   {
    "rule_id": "VIS_GROUND",
    "type": "GROUND",
-   "status": "WARN",
+   "status": "PASS",
    "object_ids": [],
    "expected": {
     "lowest_y": 0.0,
-    "embed_max": 0.0
+    "embed_max": 0.33
    },
    "actual": {
     "lowest_y": -0.3223
@@ -1379,9 +1379,9 @@
    "deviation": -0.3223,
    "tolerance": 0.02,
    "method": "Godot 實際網格最低點（建築座標）vs 審查地面",
-   "suggestion": "最低點在地面下 0.322 m（埋入）：若是基座設計，在連接表宣告 ground_embed_max；否則檢查原點",
+   "suggestion": "埋入 0.322 m ≤ 宣告 ground_embed_max 0.33 m（INTENTIONAL）",
    "evidence": {},
-   "error_class": null,
+   "error_class": "INTENTIONAL",
    "section": "visual",
    "images": [],
    "camera": null

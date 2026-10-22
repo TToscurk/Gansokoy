@@ -28,9 +28,7 @@
   "base_self_symmetric PASS dev=0.0",
   "DETACHED PASS dev=0"
  ],
- "open_items": [
-  "VIS_GROUND WARN: 最低點在地面下 0.322 m（埋入）：若是基座設計，在連接表宣告 ground_embed_max；否則檢查原點"
- ],
+ "open_items": [],
  "graph": [],
  "format": {
   "items": [

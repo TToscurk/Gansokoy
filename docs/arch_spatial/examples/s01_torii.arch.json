@@ -1,6 +1,8 @@
 {
   "building_id": "s01_torii_a",
   "style": "japanese_shrine",
+  "ground_embed_max": 0.33,
+  "_ground_embed_source": "godot/assets/beast_path/s01_kit/src/build_s01_shrine.py:298 torii_base()：台座「下 0.92 見方，埋 0.32」——設計埋深，不是原點錯誤",
   "frame": {"origin": [0, 0, 0], "front": "-Y"},
   "components": {
     "torii": {"object": "s01_torii_a", "type": "gate", "role": "structure"},
