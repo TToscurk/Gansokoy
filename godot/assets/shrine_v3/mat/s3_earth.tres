@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/dirt_floor_diff_2k.jpg" id="1_4iodu"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/dirt_floor_nor_gl_2k.jpg" id="2_eun6a"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/dirt_floor_rough_2k.jpg" id="3_okdlf"]
+
+[resource]
+resource_name = "s3_earth"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.92, 0.88, 0.84, 1)
+albedo_texture = ExtResource("1_4iodu")
+roughness_texture = ExtResource("3_okdlf")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("2_eun6a")
+uv1_scale = Vector3(0.45454547, 0.45454547, 1)
+texture_filter = 5

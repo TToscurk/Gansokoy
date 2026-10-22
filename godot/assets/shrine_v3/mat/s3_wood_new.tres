@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/hinoki_planks_diff_1k.jpg" id="1_eg47w"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/hinoki_planks_nor_gl_1k.jpg" id="2_dbmty"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/hinoki_planks_rough_1k.jpg" id="3_36n7d"]
+
+[resource]
+resource_name = "s3_wood_new"
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.94, 0.86, 1)
+albedo_texture = ExtResource("1_eg47w")
+roughness_texture = ExtResource("3_36n7d")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("2_dbmty")
+uv1_scale = Vector3(0.71428573, 0.71428573, 1)
+texture_filter = 5

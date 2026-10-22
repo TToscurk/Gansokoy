@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/saisen.res" id="1_6rkpf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pdclg"]
+size = Vector3(1.2, 0.68, 0.62)
+
+[node name="賽錢箱" type="Node3D" unique_id=1444611702]
+metadata/s3_asset = "saisen"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=292984516]
+mesh = ExtResource("1_6rkpf")
+
+[node name="碰撞" type="StaticBody3D" parent="." unique_id=1369314452]
+
+[node name="00_賽錢箱" type="CollisionShape3D" parent="碰撞" unique_id=1402634618]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34, 0)
+shape = SubResource("BoxShape3D_pdclg")

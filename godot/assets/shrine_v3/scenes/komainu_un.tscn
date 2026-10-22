@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/komainu_un.res" id="1_50nmb"]
+
+[node name="狛犬_吽" type="Node3D" unique_id=1884512019]
+metadata/s3_asset = "komainu_un"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=1885722858]
+mesh = ExtResource("1_50nmb")

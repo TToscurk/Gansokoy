@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/temizuya.res" id="1_pn0k5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_es34r"]
+size = Vector3(0.18, 2.2, 0.18)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pmavb"]
+size = Vector3(0.18, 2.2, 0.18)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oomcr"]
+size = Vector3(0.18, 2.2, 0.18)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vmk2i"]
+size = Vector3(0.18, 2.2, 0.18)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2mnfy"]
+size = Vector3(1.5, 0.76, 0.78)
+
+[node name="手水舍" type="Node3D" unique_id=1963190322]
+metadata/s3_asset = "temizuya"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=720084212]
+mesh = ExtResource("1_pn0k5")
+
+[node name="碰撞" type="StaticBody3D" parent="." unique_id=1884920248]
+
+[node name="00_柱" type="CollisionShape3D" parent="碰撞" unique_id=1546407386]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.95, 1.1, -0.68)
+shape = SubResource("BoxShape3D_es34r")
+
+[node name="01_柱" type="CollisionShape3D" parent="碰撞" unique_id=783474879]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.95, 1.1, 0.68)
+shape = SubResource("BoxShape3D_pmavb")
+
+[node name="02_柱" type="CollisionShape3D" parent="碰撞" unique_id=1387332818]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.95, 1.1, -0.68)
+shape = SubResource("BoxShape3D_oomcr")
+
+[node name="03_柱" type="CollisionShape3D" parent="碰撞" unique_id=714249469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.95, 1.1, 0.68)
+shape = SubResource("BoxShape3D_vmk2i")
+
+[node name="04_水盤" type="CollisionShape3D" parent="碰撞" unique_id=763540921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+shape = SubResource("BoxShape3D_2mnfy")
+
+[node name="標記_front" type="Marker3D" parent="." unique_id=1491901683]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)

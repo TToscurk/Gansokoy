@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/komainu_base.res" id="1_6kukm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_74y8m"]
+size = Vector3(0.92, 0.86, 0.92)
+
+[node name="狛犬台座" type="Node3D" unique_id=1250712081]
+metadata/s3_asset = "komainu_base"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=1440283982]
+mesh = ExtResource("1_6kukm")
+
+[node name="碰撞" type="StaticBody3D" parent="." unique_id=722734391]
+
+[node name="00_狛犬台座" type="CollisionShape3D" parent="碰撞" unique_id=1969785706]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43, 0)
+shape = SubResource("BoxShape3D_74y8m")

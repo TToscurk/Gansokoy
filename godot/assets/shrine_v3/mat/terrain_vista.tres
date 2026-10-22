@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shrine_v3/shaders/s3_vista.gdshader" id="1_e5wkl"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_e5wkl")
+shader_parameter/cn_dark = null
+shader_parameter/cn_mid = null
+shader_parameter/cn_fresh = null
+shader_parameter/cn_conifer = null
+shader_parameter/cn_sakura = null
+shader_parameter/cn_rock = null
+shader_parameter/cn_meadow = null
+shader_parameter/cn_crown_m = null
+shader_parameter/cn_sakura_amount = null
+shader_parameter/cn_floor_y = null
+shader_parameter/inner_rect = Vector4(-78, -96, 78, 108)
+shader_parameter/haze_k = null

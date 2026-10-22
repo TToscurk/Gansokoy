@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/plank_flooring_03_diff_2k.jpg" id="1_lqo57"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/plank_flooring_03_nor_gl_2k.jpg" id="2_mxsjl"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/plank_flooring_03_rough_2k.jpg" id="3_46ibh"]
+
+[resource]
+resource_name = "s3_wood_old"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.74, 0.68, 0.62, 1)
+albedo_texture = ExtResource("1_lqo57")
+roughness_texture = ExtResource("3_46ibh")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("2_mxsjl")
+uv1_scale = Vector3(0.5555556, 0.5555556, 1)
+texture_filter = 5

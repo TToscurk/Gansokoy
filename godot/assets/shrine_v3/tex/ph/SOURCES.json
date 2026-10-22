@@ -1,0 +1,387 @@
+{
+ "grass": {
+  "id": "leafy_grass",
+  "name": "Leafy Grass",
+  "authors": [
+   "Charlotte Baglioni"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/leafy_grass",
+  "res": "2k",
+  "files": {
+   "diff": "leafy_grass_diff_2k.jpg",
+   "nor_gl": "leafy_grass_nor_gl_2k.jpg",
+   "rough": "leafy_grass_rough_2k.jpg"
+  },
+  "md5": {
+   "diff": "8014f4dace676a62ed71b3dd76119dae",
+   "nor_gl": "ea5e91abe01dc5e5d7028c68c3bc9194",
+   "rough": "b5c551ed91162aab5afbfb03b73ae3f5"
+  }
+ },
+ "forest_floor": {
+  "id": "leaves_forest_ground",
+  "name": "Leaves Forest Ground",
+  "authors": [
+   "Dario Barresi",
+   "Dimitrios Savva"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/leaves_forest_ground",
+  "res": "2k",
+  "files": {
+   "diff": "leaves_forest_ground_diff_2k.jpg",
+   "nor_gl": "leaves_forest_ground_nor_gl_2k.jpg",
+   "rough": "leaves_forest_ground_rough_2k.jpg"
+  },
+  "md5": {
+   "diff": "9adf3721c2a5ce011e1184762e8c1a8d",
+   "nor_gl": "da3f3f6762cc0e95bd1e5919d2c38d68",
+   "rough": "b961849445499cd5c37361e766f778d1"
+  }
+ },
+ "forest_moss": {
+  "id": "forest_leaves_02",
+  "name": "Forest Leaves 02",
+  "authors": [
+   "Rob Tuytel"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/forest_leaves_02",
+  "res": "1k",
+  "files": {
+   "diff": "forest_leaves_02_diff_1k.jpg",
+   "nor_gl": "forest_leaves_02_nor_gl_1k.jpg",
+   "rough": "forest_leaves_02_rough_1k.jpg"
+  },
+  "md5": {
+   "diff": "13e9bfac07cb72ca143e153cc2f589a8",
+   "nor_gl": "72002432222467c74cd9980cbddb25a4",
+   "rough": "578e637510d8fdd7acf97afc6f329e9d"
+  }
+ },
+ "dirt": {
+  "id": "dirt_floor",
+  "name": "Dirt Floor",
+  "authors": [
+   "eye-candy.xyz"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/dirt_floor",
+  "res": "2k",
+  "files": {
+   "diff": "dirt_floor_diff_2k.jpg",
+   "nor_gl": "dirt_floor_nor_gl_2k.jpg",
+   "rough": "dirt_floor_rough_2k.jpg"
+  },
+  "md5": {
+   "diff": "dace6e0d469e7b99f0794b941f06bab8",
+   "nor_gl": "f47bd35ce5a09771aba4ce85e22d5e36",
+   "rough": "c987eada3ef1492be2843f974e2d9a84"
+  }
+ },
+ "trail": {
+  "id": "rocky_trail",
+  "name": "Rocky Trail",
+  "authors": [
+   "Amal Kumar"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/rocky_trail",
+  "res": "2k",
+  "files": {
+   "diff": "rocky_trail_diff_2k.jpg",
+   "nor_gl": "rocky_trail_nor_gl_2k.jpg",
+   "rough": "rocky_trail_rough_2k.jpg"
+  },
+  "md5": {
+   "diff": "7327bf7d48d33688fb12465222ee3f22",
+   "nor_gl": "4642b3c833d526b23c96baa84f5bf429",
+   "rough": "f731e8566945924c07679de4af9b7460"
+  }
+ },
+ "mud": {
+  "id": "mud_forest",
+  "name": "Mud Forest",
+  "authors": [
+   "eye-candy.xyz"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/mud_forest",
+  "res": "1k",
+  "files": {
+   "diff": "mud_forest_diff_1k.jpg",
+   "nor_gl": "mud_forest_nor_gl_1k.jpg",
+   "rough": "mud_forest_rough_1k.jpg"
+  },
+  "md5": {
+   "diff": "d3ea8fc962bbf54d66fc5723cd0096c1",
+   "nor_gl": "6e2f0d15fdf402ca5221f63d0bfbeb60",
+   "rough": "7e8295bca2f2e7fe13c09b9ab0d6f67d"
+  }
+ },
+ "cliff": {
+  "id": "rock_face_03",
+  "name": "Rock Face 03",
+  "authors": [
+   "Dario Barresi",
+   "Rico Cilliers"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/rock_face_03",
+  "res": "2k",
+  "files": {
+   "diff": "rock_face_03_diff_2k.jpg",
+   "nor_gl": "rock_face_03_nor_gl_2k.jpg",
+   "rough": "rock_face_03_rough_2k.jpg"
+  },
+  "md5": {
+   "diff": "657add9e8a8dffaeed19bdfc58078b59",
+   "nor_gl": "279b33e71ae6275cafa24e6597024c98",
+   "rough": "8895a8b199487fd6cfeed2fed1fb39b4"
+  }
+ },
+ "mossy_rock": {
+  "id": "mossy_rock",
+  "name": "Mossy Rock",
+  "authors": [
+   "Rob Tuytel"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/mossy_rock",
+  "res": "2k",
+  "files": {
+   "diff": "mossy_rock_diff_2k.jpg",
+   "nor_gl": "mossy_rock_nor_gl_2k.jpg",
+   "rough": "mossy_rock_rough_2k.jpg"
+  },
+  "md5": {
+   "diff": "8e55bbeeef1db0d2d0cae85515812c46",
+   "nor_gl": "e6b611c8a6f8e3276e7f5491c8e66a0f",
+   "rough": "0b4bbecd6af36e343d05ed11914bb18f"
+  }
+ },
+ "granite": {
+  "id": "rock_boulder_dry",
+  "name": "Rock Boulder Dry",
+  "authors": [
+   "Dimitrios Savva",
+   "Rico Cilliers"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/rock_boulder_dry",
+  "res": "2k",
+  "files": {
+   "diff": "rock_boulder_dry_diff_2k.jpg",
+   "nor_gl": "rock_boulder_dry_nor_gl_2k.jpg",
+   "rough": "rock_boulder_dry_rough_2k.jpg"
+  },
+  "md5": {
+   "diff": "fbc9cf377db427f54381f463c0639e1f",
+   "nor_gl": "513ef3fdaadd106c38a9c40919918cc0",
+   "rough": "f69a2caafb58d427cb17cab31c202e0e"
+  }
+ },
+ "stone_wall": {
+  "id": "mossy_stone_wall",
+  "name": "Mossy Stone Wall",
+  "authors": [
+   "Amal Kumar"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/mossy_stone_wall",
+  "res": "1k",
+  "files": {
+   "diff": "mossy_stone_wall_diff_1k.jpg",
+   "nor_gl": "mossy_stone_wall_nor_gl_1k.jpg",
+   "rough": "mossy_stone_wall_rough_1k.jpg"
+  },
+  "md5": {
+   "diff": "ae70425d2aec4b8f454dc1762c1ec881",
+   "nor_gl": "e7e6c0318498ddb0bc0ece957ee2d86d",
+   "rough": "eb4161cf6559120bbcd02a24c799c02c"
+  }
+ },
+ "wood_old": {
+  "id": "plank_flooring_03",
+  "name": "Plank Flooring 03",
+  "authors": [
+   "Jenelle van Heerden",
+   "Matterfield"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/plank_flooring_03",
+  "res": "2k",
+  "files": {
+   "diff": "plank_flooring_03_diff_2k.jpg",
+   "nor_gl": "plank_flooring_03_nor_gl_2k.jpg",
+   "rough": "plank_flooring_03_rough_2k.jpg"
+  },
+  "md5": {
+   "diff": "dbcb51a985684faafec26db0d23b62b9",
+   "nor_gl": "4dbd427437fbb9ff2a0832979d4700e3",
+   "rough": "53f40de0eff8173b19b1287517bd399e"
+  }
+ },
+ "wood_dark": {
+  "id": "dark_wooden_planks",
+  "name": "Dark Wooden Planks",
+  "authors": [
+   "Amal Kumar"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/dark_wooden_planks",
+  "res": "2k",
+  "files": {
+   "diff": "dark_wooden_planks_diff_2k.jpg",
+   "nor_gl": "dark_wooden_planks_nor_gl_2k.jpg",
+   "rough": "dark_wooden_planks_rough_2k.jpg"
+  },
+  "md5": {
+   "diff": "e6ae2fe585184c16343c56b833eddbf8",
+   "nor_gl": "c7b2e77045b0983cd7c9c408c0361a59",
+   "rough": "9999def4fb6e250016bb21e2d4625a55"
+  }
+ },
+ "wood_new": {
+  "id": "hinoki_planks",
+  "name": "Hinoki Planks",
+  "authors": [
+   "Charlotte Baglioni"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/hinoki_planks",
+  "res": "1k",
+  "files": {
+   "diff": "hinoki_planks_diff_1k.jpg",
+   "nor_gl": "hinoki_planks_nor_gl_1k.jpg",
+   "rough": "hinoki_planks_rough_1k.jpg"
+  },
+  "md5": {
+   "diff": "7d59516b8cc9b8f55cd330099970e665",
+   "nor_gl": "29a916dfa192e82c27e93c052fc6323f",
+   "rough": "6e826a839e05fb09d80d22fcb9192b4e"
+  }
+ },
+ "roof_tile": {
+  "id": "grey_roof_tiles",
+  "name": "Grey Roof Tiles",
+  "authors": [
+   "Rob Tuytel"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/grey_roof_tiles",
+  "res": "2k",
+  "files": {
+   "diff": "grey_roof_tiles_diff_2k.jpg",
+   "nor_gl": "grey_roof_tiles_nor_gl_2k.jpg",
+   "rough": "grey_roof_tiles_rough_2k.jpg"
+  },
+  "md5": {
+   "diff": "304912638959851b052610a992e05274",
+   "nor_gl": "6d1ef876fc9750d81c8c8f6008ca0317",
+   "rough": "b726b64fb47ae1be160e5d5d2073aed0"
+  }
+ },
+ "straw": {
+  "id": "thatch_roof_angled",
+  "name": "Thatch Roof Angled",
+  "authors": [
+   "Rob Tuytel",
+   "Dimitrios Savva"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/thatch_roof_angled",
+  "res": "1k",
+  "files": {
+   "diff": "thatch_roof_angled_diff_1k.jpg",
+   "nor_gl": "thatch_roof_angled_nor_gl_1k.jpg",
+   "rough": "thatch_roof_angled_rough_1k.jpg"
+  },
+  "md5": {
+   "diff": "645a32cd470a4b14aa033793d0e7aa83",
+   "nor_gl": "eaa0da45ad5ce3fdb664be4202943fdf",
+   "rough": "6368f0014bf7411f38950d5dc23bd2e2"
+  }
+ },
+ "bark_sakura": {
+  "id": "sakura_bark",
+  "name": "Sakura Bark",
+  "authors": [
+   "Charlotte Baglioni"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/sakura_bark",
+  "res": "1k",
+  "files": {
+   "diff": "sakura_bark_diff_1k.jpg",
+   "nor_gl": "sakura_bark_nor_gl_1k.jpg",
+   "rough": "sakura_bark_rough_1k.jpg"
+  },
+  "md5": {
+   "diff": "19741f188bdf496e4cb57e34c4211e95",
+   "nor_gl": "c94e17644b3c6a5bf22f98ab960693c3",
+   "rough": "0c58ae457d5b41ed79fbc8866db673f2"
+  }
+ },
+ "bark_cedar": {
+  "id": "japanese_cedar_bark",
+  "name": "Japanese Cedar Bark",
+  "authors": [
+   "Charlotte Baglioni"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/japanese_cedar_bark",
+  "res": "1k",
+  "files": {
+   "diff": "japanese_cedar_bark_diff_1k.jpg",
+   "nor_gl": "japanese_cedar_bark_nor_gl_1k.jpg",
+   "rough": "japanese_cedar_bark_rough_1k.jpg"
+  },
+  "md5": {
+   "diff": "51e45ec05fc2d9ce21f38f2613704fc7",
+   "nor_gl": "437ca87e2f2a0d96deb4343ebf4b05f5",
+   "rough": "4ca55d434f325c124ce29aeef29c7532"
+  }
+ },
+ "bark_pine": {
+  "id": "pine_bark",
+  "name": "Pine Bark",
+  "authors": [
+   "Dimitrios Savva"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/pine_bark",
+  "res": "1k",
+  "files": {
+   "diff": "pine_bark_diff_1k.jpg",
+   "nor_gl": "pine_bark_nor_gl_1k.jpg",
+   "rough": "pine_bark_rough_1k.jpg"
+  },
+  "md5": {
+   "diff": "7bb38cccfc647aeaf2f5b6488c815e75",
+   "nor_gl": "7b971070fc986e517b5d2795cec0f4e0",
+   "rough": "f5ba950ee648056809153e0506f8a2e2"
+  }
+ },
+ "bark_broad": {
+  "id": "japanese_zelkova_bark",
+  "name": "Japanese Zelkova Bark",
+  "authors": [
+   "Charlotte Baglioni"
+  ],
+  "license": "CC0 1.0",
+  "page": "https://polyhaven.com/a/japanese_zelkova_bark",
+  "res": "1k",
+  "files": {
+   "diff": "japanese_zelkova_bark_diff_1k.jpg",
+   "nor_gl": "japanese_zelkova_bark_nor_gl_1k.jpg",
+   "rough": "japanese_zelkova_bark_rough_1k.jpg"
+  },
+  "md5": {
+   "diff": "25c394ed2385374b902da4fa1b92fe4a",
+   "nor_gl": "065be9c99779b1f881a12207915df173",
+   "rough": "6809bea6f04e61ff814ea169fc52f21e"
+  }
+ }
+}

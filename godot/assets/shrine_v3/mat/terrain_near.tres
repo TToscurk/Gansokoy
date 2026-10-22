@@ -1,0 +1,61 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shrine_v3/shaders/s3_terrain.gdshader" id="1_k75uq"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/dirt_floor_diff_2k.jpg" id="2_qebst"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/dirt_floor_nor_gl_2k.jpg" id="3_ibtcs"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/leaves_forest_ground_diff_2k.jpg" id="4_jc1ng"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/leaves_forest_ground_nor_gl_2k.jpg" id="5_g3yd0"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/leafy_grass_diff_2k.jpg" id="6_c31le"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/leafy_grass_nor_gl_2k.jpg" id="7_3lmhu"]
+[ext_resource type="Texture2D" path="res://maps/shrine_v3/gen/mask_a.res" id="8_lypcp"]
+[ext_resource type="Texture2D" path="res://maps/shrine_v3/gen/mask_b.res" id="9_62yxc"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/forest_leaves_02_diff_1k.jpg" id="10_swc41"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/rock_face_03_diff_2k.jpg" id="11_rd5ay"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/rock_face_03_nor_gl_2k.jpg" id="12_n0plx"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/rocky_trail_diff_2k.jpg" id="13_gkn1c"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/rocky_trail_nor_gl_2k.jpg" id="14_h3hhm"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_k75uq")
+shader_parameter/cn_dark = null
+shader_parameter/cn_mid = null
+shader_parameter/cn_fresh = null
+shader_parameter/cn_conifer = null
+shader_parameter/cn_sakura = null
+shader_parameter/cn_rock = null
+shader_parameter/cn_meadow = null
+shader_parameter/cn_crown_m = null
+shader_parameter/cn_sakura_amount = null
+shader_parameter/cn_floor_y = null
+shader_parameter/mask_a = ExtResource("8_lypcp")
+shader_parameter/mask_b = ExtResource("9_62yxc")
+shader_parameter/grass_d = ExtResource("6_c31le")
+shader_parameter/grass_n = ExtResource("7_3lmhu")
+shader_parameter/forest_d = ExtResource("4_jc1ng")
+shader_parameter/forest_n = ExtResource("5_g3yd0")
+shader_parameter/dirt_d = ExtResource("2_qebst")
+shader_parameter/dirt_n = ExtResource("3_ibtcs")
+shader_parameter/trail_d = ExtResource("13_gkn1c")
+shader_parameter/trail_n = ExtResource("14_h3hhm")
+shader_parameter/rock_d = ExtResource("11_rd5ay")
+shader_parameter/rock_n = ExtResource("12_n0plx")
+shader_parameter/moss_d = ExtResource("10_swc41")
+shader_parameter/grass_tile = null
+shader_parameter/forest_tile = null
+shader_parameter/dirt_tile = null
+shader_parameter/trail_tile = null
+shader_parameter/rock_tile = null
+shader_parameter/moss_tile = null
+shader_parameter/grass_tint = null
+shader_parameter/forest_tint = null
+shader_parameter/dirt_tint = null
+shader_parameter/rock_tint = null
+shader_parameter/rock_desat = null
+shader_parameter/petal_col = null
+shader_parameter/normal_strength = null
+shader_parameter/macro_var = null
+shader_parameter/blend_sharp = null
+shader_parameter/near_rect = null
+shader_parameter/edge_blend_m = null
+shader_parameter/albedo_gain = null

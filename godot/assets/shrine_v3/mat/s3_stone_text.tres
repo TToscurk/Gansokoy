@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/gen/stone_text_hakurei.png" id="1_ty3py"]
+
+[resource]
+resource_name = "s3_stone_text"
+albedo_texture = ExtResource("1_ty3py")
+roughness = 0.9

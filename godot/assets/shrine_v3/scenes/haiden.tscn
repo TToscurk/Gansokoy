@@ -1,0 +1,97 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/haiden.res" id="1_msaii"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qdk4r"]
+size = Vector3(8, 0.54, 6.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ivoey"]
+size = Vector3(3.7, 0.54, 1.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g3id6"]
+size = Vector3(7.9, 0.54, 5.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fig5n"]
+size = Vector3(0.1, 0.6, 5.21)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bqjtn"]
+size = Vector3(0.1, 0.6, 5.21)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4rqg7"]
+size = Vector3(0.1, 0.6, 2.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dy5qf"]
+size = Vector3(0.1, 0.6, 2.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yxmrb"]
+size = Vector3(2.2, 0.24, 1.3659028)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fgwxa"]
+size = Vector3(6.2, 2.3, 4.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wxelv"]
+size = Vector3(0.22, 2.38, 0.22)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dcnbs"]
+size = Vector3(0.22, 2.38, 0.22)
+
+[node name="拜殿" type="Node3D" unique_id=801666443]
+metadata/s3_asset = "haiden"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=669579740]
+mesh = ExtResource("1_msaii")
+
+[node name="碰撞" type="StaticBody3D" parent="." unique_id=265915729]
+
+[node name="00_基壇" type="CollisionShape3D" parent="碰撞" unique_id=576696569]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 0.125)
+shape = SubResource("BoxShape3D_qdk4r")
+
+[node name="01_基壇前伸" type="CollisionShape3D" parent="碰撞" unique_id=1810603463]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 4.05)
+shape = SubResource("BoxShape3D_ivoey")
+
+[node name="02_縁" type="CollisionShape3D" parent="碰撞" unique_id=1906505920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51, 0.4)
+shape = SubResource("BoxShape3D_g3id6")
+
+[node name="03_高欄" type="CollisionShape3D" parent="碰撞" unique_id=73147137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.92, 1.08, 0.415)
+shape = SubResource("BoxShape3D_fig5n")
+
+[node name="04_高欄" type="CollisionShape3D" parent="碰撞" unique_id=778167102]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.92, 1.08, 0.415)
+shape = SubResource("BoxShape3D_bqjtn")
+
+[node name="05_高欄" type="CollisionShape3D" parent="碰撞" unique_id=2072003790]
+transform = Transform3D(6.123234e-17, 0, 1, 0, 1, 0, -1, 0, 6.123234e-17, -2.585, 1.08, 2.98)
+shape = SubResource("BoxShape3D_4rqg7")
+
+[node name="06_高欄" type="CollisionShape3D" parent="碰撞" unique_id=1553057568]
+transform = Transform3D(6.123234e-17, 0, 1, 0, 1, 0, -1, 0, 6.123234e-17, 2.585, 1.08, 2.98)
+shape = SubResource("BoxShape3D_dy5qf")
+
+[node name="07_木階坡" type="CollisionShape3D" parent="碰撞" unique_id=556967462]
+transform = Transform3D(1, 0, 0, 0, 0.9119215, -0.4103647, 0, 0.4103647, 0.9119215, 0, 0.39, 3.6)
+shape = SubResource("BoxShape3D_yxmrb")
+
+[node name="08_殿身" type="CollisionShape3D" parent="碰撞" unique_id=373995155]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.97, 0)
+shape = SubResource("BoxShape3D_fgwxa")
+
+[node name="09_向拜柱" type="CollisionShape3D" parent="碰撞" unique_id=120363820]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, 1.43, 4.35)
+shape = SubResource("BoxShape3D_wxelv")
+
+[node name="10_向拜柱" type="CollisionShape3D" parent="碰撞" unique_id=456149669]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3, 1.43, 4.35)
+shape = SubResource("BoxShape3D_dcnbs")
+
+[node name="標記_front" type="Marker3D" parent="." unique_id=961609778]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.25)
+
+[node name="標記_worship" type="Marker3D" parent="." unique_id=872933868]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24, 5.6)
+
+[node name="標記_ridge_y" type="Marker3D" parent="." unique_id=633496282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.7409062, 0)

@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/shrine_v3/shaders/s3_paint.gdshader" id="1_o4m2v"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/dark_wooden_planks_diff_2k.jpg" id="2_1mcs2"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/dark_wooden_planks_nor_gl_2k.jpg" id="3_7av87"]
+
+[resource]
+resource_name = "s3_paint_red"
+render_priority = 0
+shader = ExtResource("1_o4m2v")
+shader_parameter/paint_col = null
+shader_parameter/wood_d = ExtResource("2_1mcs2")
+shader_parameter/wood_n = ExtResource("3_7av87")
+shader_parameter/wood_tile = null
+shader_parameter/wear = null
+shader_parameter/fade = null
+shader_parameter/streak = null
+shader_parameter/paint_rough = null

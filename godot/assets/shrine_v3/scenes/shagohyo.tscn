@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/shagohyo.res" id="1_850kp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_runnq"]
+size = Vector3(0.62, 2.06, 0.62)
+
+[node name="社號標" type="Node3D" unique_id=1487696979]
+metadata/s3_asset = "shagohyo"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=760206411]
+mesh = ExtResource("1_850kp")
+
+[node name="碰撞" type="StaticBody3D" parent="." unique_id=2091924606]
+
+[node name="00_社號標" type="CollisionShape3D" parent="碰撞" unique_id=1107439003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.03, 0)
+shape = SubResource("BoxShape3D_runnq")

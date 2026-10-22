@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/crate.res" id="1_mgw5e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qw7a6"]
+size = Vector3(0.64, 0.45, 0.46)
+
+[node name="木箱" type="Node3D" unique_id=509872213]
+metadata/s3_asset = "crate"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=999799466]
+mesh = ExtResource("1_mgw5e")
+
+[node name="碰撞" type="StaticBody3D" parent="." unique_id=2122183541]
+
+[node name="00_木箱" type="CollisionShape3D" parent="碰撞" unique_id=254987632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0)
+shape = SubResource("BoxShape3D_qw7a6")

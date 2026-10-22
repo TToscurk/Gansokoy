@@ -1,0 +1,43 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/torii.res" id="1_jvea7"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_d5y63"]
+height = 4.1
+radius = 0.19
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nd302"]
+size = Vector3(0.82, 0.3, 0.82)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xgckx"]
+height = 4.1
+radius = 0.19
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mcl3h"]
+size = Vector3(0.82, 0.3, 0.82)
+
+[node name="鳥居" type="Node3D" unique_id=1955878232]
+metadata/s3_asset = "torii"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=927004065]
+mesh = ExtResource("1_jvea7")
+
+[node name="碰撞" type="StaticBody3D" parent="." unique_id=1146566290]
+
+[node name="00_鳥居柱" type="CollisionShape3D" parent="碰撞" unique_id=2007474105]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7, 2.05, 0)
+shape = SubResource("CylinderShape3D_d5y63")
+
+[node name="01_鳥居石台" type="CollisionShape3D" parent="碰撞" unique_id=1713499088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7, 0.075, 0)
+shape = SubResource("BoxShape3D_nd302")
+
+[node name="02_鳥居柱" type="CollisionShape3D" parent="碰撞" unique_id=161536626]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7, 2.05, 0)
+shape = SubResource("CylinderShape3D_xgckx")
+
+[node name="03_鳥居石台" type="CollisionShape3D" parent="碰撞" unique_id=1337713715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7, 0.075, 0)
+shape = SubResource("BoxShape3D_mcl3h")
+
+[node name="標記_passage" type="Marker3D" parent="." unique_id=2083544902]

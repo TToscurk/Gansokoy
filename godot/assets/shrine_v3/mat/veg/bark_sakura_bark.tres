@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/village_v2/veg_kit/veg_bark.gdshader" id="1_poplo"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/sakura_bark_diff_1k.jpg" id="2_5gfh3"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/sakura_bark_nor_gl_1k.jpg" id="3_m5074"]
+
+[resource]
+resource_name = "s3_bark_sakura_bark"
+render_priority = 0
+shader = ExtResource("1_poplo")
+shader_parameter/albedo_tex = ExtResource("2_5gfh3")
+shader_parameter/normal_tex = ExtResource("3_m5074")
+shader_parameter/albedo_mul = 0.95
+shader_parameter/normal_depth = null
+shader_parameter/roughness = 0.92
+shader_parameter/specular = 0.18
+shader_parameter/wind_dir = null
+shader_parameter/wind_strength = null
+shader_parameter/wind_speed = null
+shader_parameter/flutter = null
+shader_parameter/wind_gain = null

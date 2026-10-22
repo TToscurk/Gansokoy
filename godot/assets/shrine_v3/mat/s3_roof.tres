@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/grey_roof_tiles_diff_2k.jpg" id="1_20ac6"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/grey_roof_tiles_nor_gl_2k.jpg" id="2_tude0"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/grey_roof_tiles_rough_2k.jpg" id="3_n2mhi"]
+
+[resource]
+resource_name = "s3_roof"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.58, 0.6, 0.62, 1)
+albedo_texture = ExtResource("1_20ac6")
+roughness_texture = ExtResource("3_n2mhi")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_scale = 1.2
+normal_texture = ExtResource("2_tude0")
+uv1_scale = Vector3(0.41666666, 0.41666666, 1)
+texture_filter = 5

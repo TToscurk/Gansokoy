@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/hinoki_planks_diff_1k.jpg" id="1_h4r2e"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/hinoki_planks_nor_gl_1k.jpg" id="2_xwn46"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/hinoki_planks_rough_1k.jpg" id="3_70350"]
+
+[resource]
+resource_name = "s3_bamboo"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.92, 0.88, 0.62, 1)
+albedo_texture = ExtResource("1_h4r2e")
+roughness_texture = ExtResource("3_70350")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("2_xwn46")
+uv1_scale = Vector3(1.25, 1.25, 1)
+texture_filter = 5

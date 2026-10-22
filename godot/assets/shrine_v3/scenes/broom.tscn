@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/broom.res" id="1_yqtjs"]
+
+[node name="竹箒" type="Node3D" unique_id=291914024]
+metadata/s3_asset = "broom"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=1449774293]
+mesh = ExtResource("1_yqtjs")

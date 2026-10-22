@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/lantern_l.res" id="1_duhtm"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0ypex"]
+height = 2.2
+radius = 0.32
+
+[node name="石燈籠_大" type="Node3D" unique_id=422510255]
+metadata/s3_asset = "lantern_l"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=48883972]
+mesh = ExtResource("1_duhtm")
+
+[node name="碰撞" type="StaticBody3D" parent="." unique_id=197721597]
+
+[node name="00_石燈籠" type="CollisionShape3D" parent="碰撞" unique_id=87322970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+shape = SubResource("CylinderShape3D_0ypex")

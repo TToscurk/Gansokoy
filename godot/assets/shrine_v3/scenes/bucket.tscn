@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/bucket.res" id="1_10hq3"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ndvdu"]
+height = 0.3
+radius = 0.17
+
+[node name="木桶" type="Node3D" unique_id=1088069583]
+metadata/s3_asset = "bucket"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=1913752797]
+mesh = ExtResource("1_10hq3")
+
+[node name="碰撞" type="StaticBody3D" parent="." unique_id=2003983773]
+
+[node name="00_桶" type="CollisionShape3D" parent="碰撞" unique_id=1344925161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+shape = SubResource("CylinderShape3D_ndvdu")

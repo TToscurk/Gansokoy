@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/storehouse.res" id="1_56o65"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bncqo"]
+size = Vector3(3.16, 2.3, 2.56)
+
+[node name="倉庫" type="Node3D" unique_id=1542592854]
+metadata/s3_asset = "storehouse"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=1832479906]
+mesh = ExtResource("1_56o65")
+
+[node name="碰撞" type="StaticBody3D" parent="." unique_id=1323841057]
+
+[node name="00_倉庫" type="CollisionShape3D" parent="碰撞" unique_id=316944632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0)
+shape = SubResource("BoxShape3D_bncqo")
+
+[node name="標記_front" type="Marker3D" parent="." unique_id=97950933]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)

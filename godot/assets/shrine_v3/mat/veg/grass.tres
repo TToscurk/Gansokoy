@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://assets/village_v2/meadow/meadow_grass.gdshader" id="1_w7q05"]
+
+[resource]
+resource_name = "s3_grass"
+render_priority = 0
+shader = ExtResource("1_w7q05")
+shader_parameter/wind_dir = null
+shader_parameter/wind_strength = null
+shader_parameter/wind_speed = null
+shader_parameter/gust_amp = null
+shader_parameter/flutter_amp = null
+shader_parameter/fade_in = null
+shader_parameter/fade_out = Vector2(30, 38)
+shader_parameter/base_ao = null
+shader_parameter/roughness = null
+shader_parameter/specular = null
+shader_parameter/translucency = null
+shader_parameter/far_widen = null

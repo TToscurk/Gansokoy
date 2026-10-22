@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/thatch_roof_angled_diff_1k.jpg" id="1_refir"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/thatch_roof_angled_nor_gl_1k.jpg" id="2_sa0x7"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/ph/thatch_roof_angled_rough_1k.jpg" id="3_noc8q"]
+
+[resource]
+resource_name = "s3_straw"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.95, 0.88, 0.7, 1)
+albedo_texture = ExtResource("1_refir")
+roughness_texture = ExtResource("3_noc8q")
+roughness_texture_channel = 1
+normal_enabled = true
+normal_texture = ExtResource("2_sa0x7")
+uv1_scale = Vector3(1.6666666, 1.6666666, 1)
+texture_filter = 5

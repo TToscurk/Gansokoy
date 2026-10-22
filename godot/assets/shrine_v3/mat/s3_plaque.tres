@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/gen/plaque_hakurei.png" id="1_qkiv2"]
+
+[resource]
+resource_name = "s3_plaque"
+albedo_texture = ExtResource("1_qkiv2")
+roughness = 0.6
