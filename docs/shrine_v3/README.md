@@ -9,6 +9,7 @@ godot --path godot -- --map=shrine_v3      # 直接開候選圖（出生在南�
 施工前的空間判讀：[`00_空間判讀.md`](00_空間判讀.md)。第一輪總表圖（10:30 日光，14 個視角）：[`sheet_final.jpg`](sheet_final.jpg)。
 第二輪美術深化：問題標記與策略 [`01_美術深化_問題與策略.md`](01_美術深化_問題與策略.md)；修正前／後同角度對照 [`polish_compare_A.jpg`](polish_compare_A.jpg)（石段、鳥居、前庭）、[`polish_compare_B.jpg`](polish_compare_B.jpg)（參道、手水舍、拜殿、倉庫、俯瞰）。
 第三輪植被光照一致性（2026-10-23）：原因、逐項排查、逐步修正的數字與回退 [`02_植被光照診斷.md`](02_植被光照診斷.md)；對照 [`light_compare_A.jpg`](light_compare_A.jpg)、[`light_compare_B.jpg`](light_compare_B.jpg)、同一棵櫻四面 [`light_same_tree.jpg`](light_same_tree.jpg)。葉卡改用 v3 自己的 `assets/shrine_v3/shaders/veg_leaf.gdshader`（陰影 pass 保留葉隙），本圖白天的天空補光在 `maps/shrine_v3/s3_light_profile.gd`。
+第四輪植被多樣性（2026-10-23）：盤點、變體、生態配置規則、重複度前後數字、效能 A/B [`03_植被多樣性.md`](03_植被多樣性.md)；對照 [`variety_compare_A.jpg`](variety_compare_A.jpg)（石段、鳥居、神社正面／側面）、[`variety_compare_B.jpg`](variety_compare_B.jpg)（櫻林、池塘、西坡、鳥瞰、鎮守之森）；變體並排 [`tree_variants.jpg`](tree_variants.jpg)。
 
 ## 第二輪：美術深化（2026-10-22，保留第一輪的地形、建築、動線）
 
