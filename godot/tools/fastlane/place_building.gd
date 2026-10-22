@@ -591,6 +591,34 @@ func _neighbours(inst: Node3D, c: Vector2, radius: float) -> Array:
 	return _neighbour_cache.filter(func(x): return ARCH._centroid(x["poly"]).distance_to(c) <= radius)
 
 
+## 環境查詢只認玩家撞得到的靜態物（2026-10-22）：玩家 CharacterBody3D 預設遮罩 layer 1；NPC 身體／布料代理是會動的物體。
+## 阿求袖子模擬 floor_collision 的 WorldBoundaryShape3D（layer 20 無限平面）讓外圍膠囊 23/23 點、鏡位探測全部被擋（noka_b 實測）。
+const PLAYER_MASK := 1
+
+
+static func _is_env(o: Object) -> bool:
+	return not (o is AnimatableBody3D or o is CharacterBody3D or o is RigidBody3D or o is PhysicalBone3D)
+
+
+static func _blocked(space: PhysicsDirectSpaceState3D, q: PhysicsShapeQueryParameters3D) -> bool:
+	q.collision_mask = PLAYER_MASK
+	for h in space.intersect_shape(q, 8):
+		if _is_env(h["collider"]):
+			return true
+	return false
+
+
+static func _ray_env(space: PhysicsDirectSpaceState3D, a: Vector3, b: Vector3, ex: Array[RID]) -> Dictionary:
+	var rq := PhysicsRayQueryParameters3D.create(a, b, PLAYER_MASK)
+	for i in 8:
+		rq.exclude = ex
+		var hit := space.intersect_ray(rq)
+		if hit.is_empty() or _is_env(hit["collider"]):
+			return hit
+		ex.append(hit["rid"])
+	return {}
+
+
 func _terrain_y(space: PhysicsDirectSpaceState3D, terrain: CollisionObject3D, wp: Vector3) -> Variant:
 	var q := PhysicsRayQueryParameters3D.create(Vector3(wp.x, 400, wp.z), Vector3(wp.x, -200, wp.z))
 	var ex: Array[RID] = []
@@ -615,7 +643,7 @@ func _overlap(inst: Node3D, space: PhysicsDirectSpaceState3D, terrain: Collision
 		if co == me or co == terrain:
 			continue
 		all_rids.append(co.get_rid())
-		if co.collision_layer == 0:
+		if co.collision_layer & PLAYER_MASK == 0 or not _is_env(co):
 			continue
 		for c in co.get_children():
 			if c is CollisionShape3D and not (c as CollisionShape3D).disabled and (c as CollisionShape3D).shape != null:
@@ -674,7 +702,7 @@ func _access(inst: Node3D, fp: Rect2, basis: Basis, at: Vector2, space: PhysicsD
 		q.shape = cap
 		q.transform = Transform3D(Basis.IDENTITY, Vector3(wp.x, float(y) + 0.85 + 0.12, wp.z))
 		q.exclude = [terrain.get_rid()]
-		if space.intersect_shape(q, 1).is_empty():
+		if not _blocked(space, q):
 			free += 1
 	var frac := float(free) / maxf(1, ring.size())
 	return {"result": "PASS" if frac >= 0.5 else ("REVIEW" if frac >= 0.25 else "FAIL"),
@@ -778,13 +806,11 @@ func _shots(inst: Node3D, r: Dictionary, h: float, fp: Rect2) -> void:
 				sq.shape = probe
 				sq.transform = Transform3D(Basis.IDENTITY, p)
 				sq.exclude = [terrain.get_rid()]
-				if not space.intersect_shape(sq, 1).is_empty():
+				if _blocked(space, sq):
 					continue
 				var clear := true
 				for tgt in [center, xf.origin + Vector3(0, h * 0.85, 0)]:
-					var rq := PhysicsRayQueryParameters3D.create(p, tgt)
-					rq.exclude = [me.get_rid()]
-					var hit := space.intersect_ray(rq)
+					var hit := _ray_env(space, p, tgt, [me.get_rid()] as Array[RID])
 					if not hit.is_empty() and (hit["position"] as Vector3).distance_to(tgt) > 1.0:
 						clear = false
 				if clear:

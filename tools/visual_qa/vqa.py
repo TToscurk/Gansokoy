@@ -140,10 +140,13 @@ def placement_rows(path):
     r = jload(path)
     rows = []
     for k, v in (r.get("checks") or {}).items():
-        st = v.get("status") if isinstance(v, dict) else None
-        if st is None and isinstance(v, dict):
+        # 快速通道寫的是 "result"（PASS／REVIEW／FAIL）；讀不到狀態＝UNKNOWN，不是 FAIL（noka_b：5 項 PASS 被讀成 FAIL）
+        st = (v.get("result") or v.get("status")) if isinstance(v, dict) else None
+        if st is None and isinstance(v, dict) and ("pass" in v or "ok" in v):
             st = "PASS" if v.get("pass", v.get("ok")) else "FAIL"
-        rows.append(VA.vrow(f"FASTLANE:{k}", "PLACEMENT", st or "UNKNOWN", actual=v.get("detail") if isinstance(v, dict) else v,
+        if st not in VA.STATUSES:
+            st = "UNKNOWN"
+        rows.append(VA.vrow(f"FASTLANE:{k}", "PLACEMENT", st, actual=v.get("detail") if isinstance(v, dict) else v,
                             method="godot/tools/fastlane/place_building.gd", section="placement"))
     for x in ((r.get("arch") or {}).get("results") or []):
         rows.append(dict(x, section="placement"))

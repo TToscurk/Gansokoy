@@ -26,7 +26,7 @@ import bpy
 from mathutils import Matrix, Vector
 from mathutils.bvhtree import BVHTree
 
-VERSION = "arch_spatial/1.0"
+VERSION = "arch_spatial/1.1"  # 1.1：inside() 重複命中修正 → 舊快取全部作廢
 UP = Vector((0.0, 0.0, 1.0))
 
 # 預設容差（公尺／度）。硬表面木構建築；個別約束可用 tol / tol_rel 覆寫。
@@ -499,11 +499,16 @@ def inside(g: Geom, p) -> object:
         o = p.copy()
         n = 0
         for _ in range(256):
-            loc, _nor, _i, _dist = g.bvh.ray_cast(o, d, maxd)
+            loc, _nor, _i, dist = g.bvh.ray_cast(o, d, maxd)
             if loc is None:
                 break
+            # 同一個交點的重複命中不算新的穿越：斜射時 BVH 會把剛穿過的三角形在 1e-7 m 處再報一次，
+            # 共邊的兩個三角形也會各報一次 → 奇偶翻轉（noka_b Thatch_L：點在外面卻判在裡面、報出不存在的 21 mm 穿插）。
+            if n and dist < 1e-5:
+                o = loc + d * 1e-5
+                continue
             n += 1
-            o = loc + d * 1e-6
+            o = loc + d * 1e-5
         votes += n % 2
     return votes >= 2
 

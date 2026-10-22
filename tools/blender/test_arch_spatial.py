@@ -528,6 +528,43 @@ def case_detached():
     check("scan", "裝飾浮起 0.1 m → DETACHED", (st, r["actual"]["floating_parts"]), ("FAIL", ["ornament"]))
 
 
+def case_inside_grazing():
+    """noka_b Thatch_L 實測：點在外側，舊的 inside() 因斜射時同一三角形在 1e-7 m 處重報而判在裡面（假 21 mm 穿插）。
+    幾何＝build_noka_b.py 同一組公式（Godot 座標建好再轉 Blender，面順序同 slab()）。"""
+    import math
+    from mathutils import Vector
+    reset()
+    t50, c50, s50 = math.tan(math.radians(50)), math.cos(math.radians(50)), math.sin(math.radians(50))
+    EX, EZ, YE, YM, TH = 4.095 + 0.9, 2.73 + 0.9, 3.10, 5.75, 0.45
+    run_m = (YM - YE) / t50
+    XG, ZM = EX - run_m, EZ - run_m
+    outer = [(-EX, YE, EZ), (-EX, YE, -EZ), (-XG, YM, -ZM), (-XG, YM, ZM)]
+    n = Vector((-s50, c50, 0.0))
+    nw = Vector((0.0, 0.0, 0.0))
+    for i in range(4):
+        a, b = outer[i], outer[(i + 1) % 4]
+        nw += Vector(((a[1] - b[1]) * (a[2] + b[2]), (a[2] - b[2]) * (a[0] + b[0]), (a[0] - b[0]) * (a[1] + b[1])))
+    if nw.dot(n) < 0:
+        outer = outer[::-1]
+    inner = [tuple(Vector(p) - n * TH) for p in outer]
+    vs = [(p[0], -p[2], p[1]) for p in outer + inner]
+    faces = [[0, 1, 2, 3], [7, 6, 5, 4]] + [[(i + 1) % 4, i, 4 + i, 4 + (i + 1) % 4] for i in range(4)]
+    me = bpy.data.meshes.new("Thatch_L")
+    me.from_pydata(vs, [], faces)
+    me.update()
+    ob = bpy.data.objects.new("Thatch_L", me)
+    bpy.context.scene.collection.objects.link(ob)
+    upd()
+    g = A.geom_from_object(ob)
+    p = Vector((-2.6913859844207764, -0.8519389629364014, 5.71068811416626))
+    check("inside", "封閉網格 manifold", g.manifold, True)
+    check("inside", "斜射重複命中：外側點 → 不在裡面（noka_b Thatch_L 假 21 mm）", A.inside(g, p), False)
+    c = sum((Vector(v) for v in vs), Vector()) / 8
+    check("inside", "對照：實體中心 → 在裡面", A.inside(g, c), True)
+    q = Vector((-4.0, 0.3, 3.6))
+    check("inside", "對照：實體內另一點 → 在裡面", A.inside(g, q), True)
+
+
 def case_21_perf():
     reset()
     box("ground", (60, 60, 0.2), (14, 14, -0.1))
@@ -615,7 +652,8 @@ def main():
     t = time.time()
     for fn in (case_01_aligned, case_02_gap5mm, case_03_penetration, case_04_tenon, case_05_tiles, case_06_roof_offset,
                case_07_rotated_module, case_08_nonuniform, case_09_negative, case_10_parent, case_19_coplanar,
-               case_20_nonmanifold, case_support_embed, case_unknown_reasons, case_islands_weld, case_graph, case_sym_cont, case_detached, case_frame):
+               case_20_nonmanifold, case_support_embed, case_unknown_reasons, case_islands_weld, case_graph, case_sym_cont, case_detached, case_frame,
+               case_inside_grazing):
         fn()
     case_22_cache(tmp)
     if "--no-perf" not in argv:

@@ -130,6 +130,20 @@ def main():
         check("C", "幾何 PASS 的視覺疑點 → REVIEW（不改模型）", mr[0]["status"], "REVIEW")
         check("C", "點到背景 → 無法定位 → REVIEW", (mr[1]["status"], mr[1]["object_ids"]), ("REVIEW", []))
 
+    # P：快速通道 result.json 的狀態欄位（純邏輯）。noka_b 實測：讀 status 讀不到 → 5 項 PASS 全被當 FAIL
+    pj = os.path.join(SCRATCH, "placement_fixture.json")
+    with open(pj, "w", encoding="utf-8") as fh:
+        json.dump({"checks": {"ground": {"result": "PASS", "detail": "g"}, "access": {"result": "REVIEW"},
+                              "overlap": {"result": "FAIL"}, "layout": {"detail": "沒有狀態欄位"}, "old": {"pass": True},
+                              "weird": {"result": "MAYBE"}}}, fh)
+    pr = {x["rule_id"]: x["status"] for x in vqa.placement_rows(pj)}
+    check("P", "快速通道 result 欄位照讀（PASS／REVIEW／FAIL）",
+          (pr["FASTLANE:ground"], pr["FASTLANE:access"], pr["FASTLANE:overlap"]), ("PASS", "REVIEW", "FAIL"))
+    check("P", "沒有狀態欄位 → UNKNOWN（不是 FAIL）", pr["FASTLANE:layout"], "UNKNOWN")
+    check("P", "舊格式 pass:true → PASS", pr["FASTLANE:old"], "PASS")
+    check("P", "不認得的狀態 → UNKNOWN", pr["FASTLANE:weird"], "UNKNOWN")
+    check("P", "placement FAIL 是硬性結果 → 最終 FAIL", vqa.final_verdicts(vqa.placement_rows(pj))["overall"], "FAIL")
+
     # G：最終判定優先級（純邏輯，不需要渲染）
     R = lambda rid, st, sec, **ev: {"rule_id": rid, "status": st, "section": sec, "evidence": ev}  # noqa: E731
     f = vqa.final_verdicts([R("roof_centered", "FAIL", "geometry"), R("VIS_SYMMETRY", "REVIEW", "visual", geometry=["roof_centered:FAIL"])])

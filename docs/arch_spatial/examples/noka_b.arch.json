@@ -1,0 +1,1369 @@
+{
+ "building_id": "noka_b",
+ "style": "japanese_house",
+ "_note": "P8 散點農舍 第二棟。build_noka_b.py が同じ定数から生成（skeleton／full 共通の表）。",
+ "frame": {
+  "origin": [
+   0,
+   0,
+   0
+  ],
+  "front": "-Y"
+ },
+ "components": {
+  "Stone_F0": {
+   "object": "Stone_F0",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Post_F0": {
+   "object": "Post_F0",
+   "type": "post",
+   "role": "structure"
+  },
+  "Stone_B0": {
+   "object": "Stone_B0",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Post_B0": {
+   "object": "Post_B0",
+   "type": "post",
+   "role": "structure"
+  },
+  "Stone_F1": {
+   "object": "Stone_F1",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Post_F1": {
+   "object": "Post_F1",
+   "type": "post",
+   "role": "structure"
+  },
+  "Stone_B1": {
+   "object": "Stone_B1",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Post_B1": {
+   "object": "Post_B1",
+   "type": "post",
+   "role": "structure"
+  },
+  "Stone_F2": {
+   "object": "Stone_F2",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Post_F2": {
+   "object": "Post_F2",
+   "type": "post",
+   "role": "structure"
+  },
+  "Stone_B2": {
+   "object": "Stone_B2",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Post_B2": {
+   "object": "Post_B2",
+   "type": "post",
+   "role": "structure"
+  },
+  "Stone_F3": {
+   "object": "Stone_F3",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Post_F3": {
+   "object": "Post_F3",
+   "type": "post",
+   "role": "structure"
+  },
+  "Stone_B3": {
+   "object": "Stone_B3",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Post_B3": {
+   "object": "Post_B3",
+   "type": "post",
+   "role": "structure"
+  },
+  "Stone_S0": {
+   "object": "Stone_S0",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Post_S0": {
+   "object": "Post_S0",
+   "type": "post",
+   "role": "structure"
+  },
+  "Stone_S1": {
+   "object": "Stone_S1",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Post_S1": {
+   "object": "Post_S1",
+   "type": "post",
+   "role": "structure"
+  },
+  "Ashi_F": {
+   "object": "Ashi_F",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Ashi_B": {
+   "object": "Ashi_B",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Ashi_S0": {
+   "object": "Ashi_S0",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Ashi_S1": {
+   "object": "Ashi_S1",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Obiki_0": {
+   "object": "Obiki_0",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Obiki_1": {
+   "object": "Obiki_1",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Keta_F": {
+   "object": "Keta_F",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Keta_B": {
+   "object": "Keta_B",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Hari_0": {
+   "object": "Hari_0",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Hari_1": {
+   "object": "Hari_1",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Hari_2": {
+   "object": "Hari_2",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Hari_3": {
+   "object": "Hari_3",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Sasu_F0": {
+   "object": "Sasu_F0",
+   "type": "rafter",
+   "role": "structure"
+  },
+  "Sasu_B0": {
+   "object": "Sasu_B0",
+   "type": "rafter",
+   "role": "structure"
+  },
+  "Sasu_F1": {
+   "object": "Sasu_F1",
+   "type": "rafter",
+   "role": "structure"
+  },
+  "Sasu_B1": {
+   "object": "Sasu_B1",
+   "type": "rafter",
+   "role": "structure"
+  },
+  "Yuka": {
+   "object": "Yuka",
+   "type": "floor",
+   "role": "structure"
+  },
+  "Wall_F0": {
+   "object": "Wall_F0",
+   "type": "wall",
+   "role": "enclosure"
+  },
+  "Wall_B0": {
+   "object": "Wall_B0",
+   "type": "wall",
+   "role": "enclosure"
+  },
+  "Wall_B1": {
+   "object": "Wall_B1",
+   "type": "wall",
+   "role": "enclosure"
+  },
+  "Wall_B2": {
+   "object": "Wall_B2",
+   "type": "wall",
+   "role": "enclosure"
+  },
+  "Wall_S0a": {
+   "object": "Wall_S0a",
+   "type": "wall",
+   "role": "enclosure"
+  },
+  "Wall_S0b": {
+   "object": "Wall_S0b",
+   "type": "wall",
+   "role": "enclosure"
+  },
+  "Wall_S1a": {
+   "object": "Wall_S1a",
+   "type": "wall",
+   "role": "enclosure"
+  },
+  "Wall_S1b": {
+   "object": "Wall_S1b",
+   "type": "wall",
+   "role": "enclosure"
+  },
+  "Door_F1": {
+   "object": "Door_F1",
+   "type": "door",
+   "role": "enclosure"
+  },
+  "Door_F2": {
+   "object": "Door_F2",
+   "type": "door",
+   "role": "enclosure"
+  },
+  "Eng_Ledger": {
+   "object": "Eng_Ledger",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Eng_Beam": {
+   "object": "Eng_Beam",
+   "type": "beam",
+   "role": "structure"
+  },
+  "Eng_Deck": {
+   "object": "Eng_Deck",
+   "type": "floor",
+   "role": "structure"
+  },
+  "Eng_Tsuka0": {
+   "object": "Eng_Tsuka0",
+   "type": "post",
+   "role": "structure"
+  },
+  "Eng_Stone0": {
+   "object": "Eng_Stone0",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Eng_Tsuka1": {
+   "object": "Eng_Tsuka1",
+   "type": "post",
+   "role": "structure"
+  },
+  "Eng_Stone1": {
+   "object": "Eng_Stone1",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Eng_Tsuka2": {
+   "object": "Eng_Tsuka2",
+   "type": "post",
+   "role": "structure"
+  },
+  "Eng_Stone2": {
+   "object": "Eng_Stone2",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Eng_Tsuka3": {
+   "object": "Eng_Tsuka3",
+   "type": "post",
+   "role": "structure"
+  },
+  "Eng_Stone3": {
+   "object": "Eng_Stone3",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "Kutsunugi": {
+   "object": "Kutsunugi",
+   "type": "step",
+   "role": "access"
+  },
+  "His_Ledger": {
+   "object": "His_Ledger",
+   "type": "beam",
+   "role": "structure"
+  },
+  "His_Keta": {
+   "object": "His_Keta",
+   "type": "beam",
+   "role": "structure"
+  },
+  "His_Post0": {
+   "object": "His_Post0",
+   "type": "post",
+   "role": "structure"
+  },
+  "His_Stone0": {
+   "object": "His_Stone0",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "His_Post1": {
+   "object": "His_Post1",
+   "type": "post",
+   "role": "structure"
+  },
+  "His_Stone1": {
+   "object": "His_Stone1",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "His_Post2": {
+   "object": "His_Post2",
+   "type": "post",
+   "role": "structure"
+  },
+  "His_Stone2": {
+   "object": "His_Stone2",
+   "type": "foundation",
+   "role": "structure"
+  },
+  "His_Roof": {
+   "object": "His_Roof",
+   "type": "roof",
+   "role": "roof"
+  },
+  "Thatch_F": {
+   "object": "Thatch_F",
+   "type": "roof",
+   "role": "roof"
+  },
+  "Thatch_B": {
+   "object": "Thatch_B",
+   "type": "roof",
+   "role": "roof"
+  },
+  "Thatch_L": {
+   "object": "Thatch_L",
+   "type": "roof",
+   "role": "roof"
+  },
+  "Gable_L": {
+   "object": "Gable_L",
+   "type": "gable",
+   "role": "enclosure"
+  },
+  "Thatch_R": {
+   "object": "Thatch_R",
+   "type": "roof",
+   "role": "roof"
+  },
+  "Gable_R": {
+   "object": "Gable_R",
+   "type": "gable",
+   "role": "enclosure"
+  },
+  "Ridge": {
+   "object": "Ridge",
+   "type": "ridge",
+   "role": "roof"
+  },
+  "Ridge_Cross": {
+   "object": "Ridge_Cross",
+   "type": "ornament",
+   "role": "decor"
+  },
+  "Makiba": {
+   "object": "Makiba",
+   "type": "prop",
+   "role": "decor"
+  }
+ },
+ "constraints": [
+  {
+   "id": "SUPPORT:Post_F0>Stone_F0",
+   "type": "SUPPORT",
+   "a": "Post_F0",
+   "b": "Stone_F0",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Post_B0>Stone_B0",
+   "type": "SUPPORT",
+   "a": "Post_B0",
+   "b": "Stone_B0",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Post_F1>Stone_F1",
+   "type": "SUPPORT",
+   "a": "Post_F1",
+   "b": "Stone_F1",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Post_B1>Stone_B1",
+   "type": "SUPPORT",
+   "a": "Post_B1",
+   "b": "Stone_B1",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Post_F2>Stone_F2",
+   "type": "SUPPORT",
+   "a": "Post_F2",
+   "b": "Stone_F2",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Post_B2>Stone_B2",
+   "type": "SUPPORT",
+   "a": "Post_B2",
+   "b": "Stone_B2",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Post_F3>Stone_F3",
+   "type": "SUPPORT",
+   "a": "Post_F3",
+   "b": "Stone_F3",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Post_B3>Stone_B3",
+   "type": "SUPPORT",
+   "a": "Post_B3",
+   "b": "Stone_B3",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Post_S0>Stone_S0",
+   "type": "SUPPORT",
+   "a": "Post_S0",
+   "b": "Stone_S0",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Post_S1>Stone_S1",
+   "type": "SUPPORT",
+   "a": "Post_S1",
+   "b": "Stone_S1",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Keta_F>Post_F0",
+   "type": "SUPPORT",
+   "a": "Keta_F",
+   "b": "Post_F0",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Keta_B>Post_B0",
+   "type": "SUPPORT",
+   "a": "Keta_B",
+   "b": "Post_B0",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Keta_F>Post_F1",
+   "type": "SUPPORT",
+   "a": "Keta_F",
+   "b": "Post_F1",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Keta_B>Post_B1",
+   "type": "SUPPORT",
+   "a": "Keta_B",
+   "b": "Post_B1",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Keta_F>Post_F2",
+   "type": "SUPPORT",
+   "a": "Keta_F",
+   "b": "Post_F2",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Keta_B>Post_B2",
+   "type": "SUPPORT",
+   "a": "Keta_B",
+   "b": "Post_B2",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Keta_F>Post_F3",
+   "type": "SUPPORT",
+   "a": "Keta_F",
+   "b": "Post_F3",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Keta_B>Post_B3",
+   "type": "SUPPORT",
+   "a": "Keta_B",
+   "b": "Post_B3",
+   "require": "b"
+  },
+  {
+   "id": "CONTACT:Hari_0>Keta_F",
+   "type": "CONTACT",
+   "a": "Hari_0",
+   "b": "Keta_F"
+  },
+  {
+   "id": "CONTACT:Hari_0>Keta_B",
+   "type": "CONTACT",
+   "a": "Hari_0",
+   "b": "Keta_B"
+  },
+  {
+   "id": "CONTACT:Hari_1>Keta_F",
+   "type": "CONTACT",
+   "a": "Hari_1",
+   "b": "Keta_F"
+  },
+  {
+   "id": "CONTACT:Hari_1>Keta_B",
+   "type": "CONTACT",
+   "a": "Hari_1",
+   "b": "Keta_B"
+  },
+  {
+   "id": "CONTACT:Hari_2>Keta_F",
+   "type": "CONTACT",
+   "a": "Hari_2",
+   "b": "Keta_F"
+  },
+  {
+   "id": "CONTACT:Hari_2>Keta_B",
+   "type": "CONTACT",
+   "a": "Hari_2",
+   "b": "Keta_B"
+  },
+  {
+   "id": "CONTACT:Hari_3>Keta_F",
+   "type": "CONTACT",
+   "a": "Hari_3",
+   "b": "Keta_F"
+  },
+  {
+   "id": "CONTACT:Hari_3>Keta_B",
+   "type": "CONTACT",
+   "a": "Hari_3",
+   "b": "Keta_B"
+  },
+  {
+   "id": "SUPPORT:Hari_0>Post_S0",
+   "type": "SUPPORT",
+   "a": "Hari_0",
+   "b": "Post_S0",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Hari_3>Post_S1",
+   "type": "SUPPORT",
+   "a": "Hari_3",
+   "b": "Post_S1",
+   "require": "b"
+  },
+  {
+   "id": "CONTACT:Ashi_F>Post_F0",
+   "type": "CONTACT",
+   "a": "Ashi_F",
+   "b": "Post_F0"
+  },
+  {
+   "id": "CONTACT:Ashi_F>Post_F1",
+   "type": "CONTACT",
+   "a": "Ashi_F",
+   "b": "Post_F1"
+  },
+  {
+   "id": "CONTACT:Ashi_F>Post_F2",
+   "type": "CONTACT",
+   "a": "Ashi_F",
+   "b": "Post_F2"
+  },
+  {
+   "id": "CONTACT:Ashi_F>Post_F3",
+   "type": "CONTACT",
+   "a": "Ashi_F",
+   "b": "Post_F3"
+  },
+  {
+   "id": "CONTACT:Ashi_B>Post_B0",
+   "type": "CONTACT",
+   "a": "Ashi_B",
+   "b": "Post_B0"
+  },
+  {
+   "id": "CONTACT:Ashi_B>Post_B1",
+   "type": "CONTACT",
+   "a": "Ashi_B",
+   "b": "Post_B1"
+  },
+  {
+   "id": "CONTACT:Ashi_B>Post_B2",
+   "type": "CONTACT",
+   "a": "Ashi_B",
+   "b": "Post_B2"
+  },
+  {
+   "id": "CONTACT:Ashi_B>Post_B3",
+   "type": "CONTACT",
+   "a": "Ashi_B",
+   "b": "Post_B3"
+  },
+  {
+   "id": "CONTACT:Ashi_S0>Post_B0",
+   "type": "CONTACT",
+   "a": "Ashi_S0",
+   "b": "Post_B0"
+  },
+  {
+   "id": "CONTACT:Ashi_S0>Post_S0",
+   "type": "CONTACT",
+   "a": "Ashi_S0",
+   "b": "Post_S0"
+  },
+  {
+   "id": "CONTACT:Ashi_S0>Post_F0",
+   "type": "CONTACT",
+   "a": "Ashi_S0",
+   "b": "Post_F0"
+  },
+  {
+   "id": "CONTACT:Ashi_S1>Post_B3",
+   "type": "CONTACT",
+   "a": "Ashi_S1",
+   "b": "Post_B3"
+  },
+  {
+   "id": "CONTACT:Ashi_S1>Post_S1",
+   "type": "CONTACT",
+   "a": "Ashi_S1",
+   "b": "Post_S1"
+  },
+  {
+   "id": "CONTACT:Ashi_S1>Post_F3",
+   "type": "CONTACT",
+   "a": "Ashi_S1",
+   "b": "Post_F3"
+  },
+  {
+   "id": "CONTACT:Obiki_0>Ashi_S0",
+   "type": "CONTACT",
+   "a": "Obiki_0",
+   "b": "Ashi_S0"
+  },
+  {
+   "id": "CONTACT:Obiki_0>Ashi_S1",
+   "type": "CONTACT",
+   "a": "Obiki_0",
+   "b": "Ashi_S1"
+  },
+  {
+   "id": "CONTACT:Obiki_1>Ashi_S0",
+   "type": "CONTACT",
+   "a": "Obiki_1",
+   "b": "Ashi_S0"
+  },
+  {
+   "id": "CONTACT:Obiki_1>Ashi_S1",
+   "type": "CONTACT",
+   "a": "Obiki_1",
+   "b": "Ashi_S1"
+  },
+  {
+   "id": "SUPPORT:Sasu_F0>Hari_1",
+   "type": "SUPPORT",
+   "a": "Sasu_F0",
+   "b": "Hari_1",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.8
+  },
+  {
+   "id": "SUPPORT:Sasu_B0>Hari_1",
+   "type": "SUPPORT",
+   "a": "Sasu_B0",
+   "b": "Hari_1",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.8
+  },
+  {
+   "id": "GASSHO:0",
+   "type": "CONTACT",
+   "a": "Sasu_F0",
+   "b": "Sasu_B0"
+  },
+  {
+   "id": "SUPPORT:Sasu_F1>Hari_2",
+   "type": "SUPPORT",
+   "a": "Sasu_F1",
+   "b": "Hari_2",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.8
+  },
+  {
+   "id": "SUPPORT:Sasu_B1>Hari_2",
+   "type": "SUPPORT",
+   "a": "Sasu_B1",
+   "b": "Hari_2",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.8
+  },
+  {
+   "id": "GASSHO:1",
+   "type": "CONTACT",
+   "a": "Sasu_F1",
+   "b": "Sasu_B1"
+  },
+  {
+   "id": "EVEN:front_posts",
+   "type": "EVEN_SPACING",
+   "components": [
+    "Post_F0",
+    "Post_F1",
+    "Post_F2",
+    "Post_F3"
+   ],
+   "axis": "right"
+  },
+  {
+   "id": "SYM:hari_ends",
+   "type": "SYMMETRIC",
+   "a": "Hari_0",
+   "b": "Hari_3"
+  },
+  {
+   "id": "PAR:keta",
+   "type": "PARALLEL",
+   "a": "Keta_F",
+   "b": "Keta_B"
+  },
+  {
+   "id": "CONTACT:Yuka>Obiki_0",
+   "type": "CONTACT",
+   "a": "Yuka",
+   "b": "Obiki_0"
+  },
+  {
+   "id": "CONTACT:Yuka>Obiki_1",
+   "type": "CONTACT",
+   "a": "Yuka",
+   "b": "Obiki_1"
+  },
+  {
+   "id": "SUPPORT:Wall_F0>Ashi_F",
+   "type": "SUPPORT",
+   "a": "Wall_F0",
+   "b": "Ashi_F",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.6
+  },
+  {
+   "id": "CONTACT:Wall_F0>Post_F0",
+   "type": "CONTACT",
+   "a": "Wall_F0",
+   "b": "Post_F0"
+  },
+  {
+   "id": "CONTACT:Wall_F0>Post_F1",
+   "type": "CONTACT",
+   "a": "Wall_F0",
+   "b": "Post_F1"
+  },
+  {
+   "id": "CONTACT:Wall_F0>Keta_F",
+   "type": "CONTACT",
+   "a": "Wall_F0",
+   "b": "Keta_F"
+  },
+  {
+   "id": "SUPPORT:Wall_B0>Ashi_B",
+   "type": "SUPPORT",
+   "a": "Wall_B0",
+   "b": "Ashi_B",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.6
+  },
+  {
+   "id": "CONTACT:Wall_B0>Post_B0",
+   "type": "CONTACT",
+   "a": "Wall_B0",
+   "b": "Post_B0"
+  },
+  {
+   "id": "CONTACT:Wall_B0>Post_B1",
+   "type": "CONTACT",
+   "a": "Wall_B0",
+   "b": "Post_B1"
+  },
+  {
+   "id": "CONTACT:Wall_B0>Keta_B",
+   "type": "CONTACT",
+   "a": "Wall_B0",
+   "b": "Keta_B"
+  },
+  {
+   "id": "SUPPORT:Wall_B1>Ashi_B",
+   "type": "SUPPORT",
+   "a": "Wall_B1",
+   "b": "Ashi_B",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.6
+  },
+  {
+   "id": "CONTACT:Wall_B1>Post_B1",
+   "type": "CONTACT",
+   "a": "Wall_B1",
+   "b": "Post_B1"
+  },
+  {
+   "id": "CONTACT:Wall_B1>Post_B2",
+   "type": "CONTACT",
+   "a": "Wall_B1",
+   "b": "Post_B2"
+  },
+  {
+   "id": "CONTACT:Wall_B1>Keta_B",
+   "type": "CONTACT",
+   "a": "Wall_B1",
+   "b": "Keta_B"
+  },
+  {
+   "id": "SUPPORT:Wall_B2>Ashi_B",
+   "type": "SUPPORT",
+   "a": "Wall_B2",
+   "b": "Ashi_B",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.6
+  },
+  {
+   "id": "CONTACT:Wall_B2>Post_B2",
+   "type": "CONTACT",
+   "a": "Wall_B2",
+   "b": "Post_B2"
+  },
+  {
+   "id": "CONTACT:Wall_B2>Post_B3",
+   "type": "CONTACT",
+   "a": "Wall_B2",
+   "b": "Post_B3"
+  },
+  {
+   "id": "CONTACT:Wall_B2>Keta_B",
+   "type": "CONTACT",
+   "a": "Wall_B2",
+   "b": "Keta_B"
+  },
+  {
+   "id": "SUPPORT:Wall_S0a>Ashi_S0",
+   "type": "SUPPORT",
+   "a": "Wall_S0a",
+   "b": "Ashi_S0",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.6
+  },
+  {
+   "id": "CONTACT:Wall_S0a>Post_B0",
+   "type": "CONTACT",
+   "a": "Wall_S0a",
+   "b": "Post_B0"
+  },
+  {
+   "id": "CONTACT:Wall_S0a>Post_S0",
+   "type": "CONTACT",
+   "a": "Wall_S0a",
+   "b": "Post_S0"
+  },
+  {
+   "id": "CONTACT:Wall_S0a>Hari_0",
+   "type": "CONTACT",
+   "a": "Wall_S0a",
+   "b": "Hari_0"
+  },
+  {
+   "id": "SUPPORT:Wall_S0b>Ashi_S0",
+   "type": "SUPPORT",
+   "a": "Wall_S0b",
+   "b": "Ashi_S0",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.6
+  },
+  {
+   "id": "CONTACT:Wall_S0b>Post_S0",
+   "type": "CONTACT",
+   "a": "Wall_S0b",
+   "b": "Post_S0"
+  },
+  {
+   "id": "CONTACT:Wall_S0b>Post_F0",
+   "type": "CONTACT",
+   "a": "Wall_S0b",
+   "b": "Post_F0"
+  },
+  {
+   "id": "CONTACT:Wall_S0b>Hari_0",
+   "type": "CONTACT",
+   "a": "Wall_S0b",
+   "b": "Hari_0"
+  },
+  {
+   "id": "SUPPORT:Wall_S1a>Ashi_S1",
+   "type": "SUPPORT",
+   "a": "Wall_S1a",
+   "b": "Ashi_S1",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.6
+  },
+  {
+   "id": "CONTACT:Wall_S1a>Post_B3",
+   "type": "CONTACT",
+   "a": "Wall_S1a",
+   "b": "Post_B3"
+  },
+  {
+   "id": "CONTACT:Wall_S1a>Post_S1",
+   "type": "CONTACT",
+   "a": "Wall_S1a",
+   "b": "Post_S1"
+  },
+  {
+   "id": "CONTACT:Wall_S1a>Hari_3",
+   "type": "CONTACT",
+   "a": "Wall_S1a",
+   "b": "Hari_3"
+  },
+  {
+   "id": "SUPPORT:Wall_S1b>Ashi_S1",
+   "type": "SUPPORT",
+   "a": "Wall_S1b",
+   "b": "Ashi_S1",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.6
+  },
+  {
+   "id": "CONTACT:Wall_S1b>Post_S1",
+   "type": "CONTACT",
+   "a": "Wall_S1b",
+   "b": "Post_S1"
+  },
+  {
+   "id": "CONTACT:Wall_S1b>Post_F3",
+   "type": "CONTACT",
+   "a": "Wall_S1b",
+   "b": "Post_F3"
+  },
+  {
+   "id": "CONTACT:Wall_S1b>Hari_3",
+   "type": "CONTACT",
+   "a": "Wall_S1b",
+   "b": "Hari_3"
+  },
+  {
+   "id": "SUPPORT:Door_F1>Ashi_F",
+   "type": "SUPPORT",
+   "a": "Door_F1",
+   "b": "Ashi_F",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.6
+  },
+  {
+   "id": "CONTACT:Door_F1>Post_F1",
+   "type": "CONTACT",
+   "a": "Door_F1",
+   "b": "Post_F1"
+  },
+  {
+   "id": "CONTACT:Door_F1>Post_F2",
+   "type": "CONTACT",
+   "a": "Door_F1",
+   "b": "Post_F2"
+  },
+  {
+   "id": "CONTACT:Door_F1>Keta_F",
+   "type": "CONTACT",
+   "a": "Door_F1",
+   "b": "Keta_F"
+  },
+  {
+   "id": "SUPPORT:Door_F2>Ashi_F",
+   "type": "SUPPORT",
+   "a": "Door_F2",
+   "b": "Ashi_F",
+   "method": "lowest",
+   "contact_band": 0.02,
+   "min_contact": 0.6
+  },
+  {
+   "id": "CONTACT:Door_F2>Post_F2",
+   "type": "CONTACT",
+   "a": "Door_F2",
+   "b": "Post_F2"
+  },
+  {
+   "id": "CONTACT:Door_F2>Post_F3",
+   "type": "CONTACT",
+   "a": "Door_F2",
+   "b": "Post_F3"
+  },
+  {
+   "id": "CONTACT:Door_F2>Keta_F",
+   "type": "CONTACT",
+   "a": "Door_F2",
+   "b": "Keta_F"
+  },
+  {
+   "id": "CONTACT:Eng_Ledger>Post_F1",
+   "type": "CONTACT",
+   "a": "Eng_Ledger",
+   "b": "Post_F1"
+  },
+  {
+   "id": "CONTACT:Eng_Ledger>Post_F2",
+   "type": "CONTACT",
+   "a": "Eng_Ledger",
+   "b": "Post_F2"
+  },
+  {
+   "id": "SUPPORT:Eng_Deck>Eng_Ledger",
+   "type": "SUPPORT",
+   "a": "Eng_Deck",
+   "b": "Eng_Ledger",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Eng_Deck>Eng_Beam",
+   "type": "SUPPORT",
+   "a": "Eng_Deck",
+   "b": "Eng_Beam",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Eng_Beam>Eng_Tsuka0",
+   "type": "SUPPORT",
+   "a": "Eng_Beam",
+   "b": "Eng_Tsuka0",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Eng_Tsuka0>Eng_Stone0",
+   "type": "SUPPORT",
+   "a": "Eng_Tsuka0",
+   "b": "Eng_Stone0",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Eng_Beam>Eng_Tsuka1",
+   "type": "SUPPORT",
+   "a": "Eng_Beam",
+   "b": "Eng_Tsuka1",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Eng_Tsuka1>Eng_Stone1",
+   "type": "SUPPORT",
+   "a": "Eng_Tsuka1",
+   "b": "Eng_Stone1",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Eng_Beam>Eng_Tsuka2",
+   "type": "SUPPORT",
+   "a": "Eng_Beam",
+   "b": "Eng_Tsuka2",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Eng_Tsuka2>Eng_Stone2",
+   "type": "SUPPORT",
+   "a": "Eng_Tsuka2",
+   "b": "Eng_Stone2",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:Eng_Beam>Eng_Tsuka3",
+   "type": "SUPPORT",
+   "a": "Eng_Beam",
+   "b": "Eng_Tsuka3",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:Eng_Tsuka3>Eng_Stone3",
+   "type": "SUPPORT",
+   "a": "Eng_Tsuka3",
+   "b": "Eng_Stone3",
+   "embed_max": 0.005
+  },
+  {
+   "id": "CONTACT:His_Ledger>Post_F1",
+   "type": "CONTACT",
+   "a": "His_Ledger",
+   "b": "Post_F1"
+  },
+  {
+   "id": "CONTACT:His_Ledger>Post_F2",
+   "type": "CONTACT",
+   "a": "His_Ledger",
+   "b": "Post_F2"
+  },
+  {
+   "id": "SUPPORT:His_Roof>His_Ledger",
+   "type": "SUPPORT",
+   "a": "His_Roof",
+   "b": "His_Ledger",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:His_Roof>His_Keta",
+   "type": "SUPPORT",
+   "a": "His_Roof",
+   "b": "His_Keta",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:His_Keta>His_Post0",
+   "type": "SUPPORT",
+   "a": "His_Keta",
+   "b": "His_Post0",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:His_Post0>His_Stone0",
+   "type": "SUPPORT",
+   "a": "His_Post0",
+   "b": "His_Stone0",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:His_Keta>His_Post1",
+   "type": "SUPPORT",
+   "a": "His_Keta",
+   "b": "His_Post1",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:His_Post1>His_Stone1",
+   "type": "SUPPORT",
+   "a": "His_Post1",
+   "b": "His_Stone1",
+   "embed_max": 0.005
+  },
+  {
+   "id": "SUPPORT:His_Keta>His_Post2",
+   "type": "SUPPORT",
+   "a": "His_Keta",
+   "b": "His_Post2",
+   "require": "b"
+  },
+  {
+   "id": "SUPPORT:His_Post2>His_Stone2",
+   "type": "SUPPORT",
+   "a": "His_Post2",
+   "b": "His_Stone2",
+   "embed_max": 0.005
+  },
+  {
+   "id": "CLEAR:canopy_under_thatch",
+   "type": "CLEARANCE_REQUIRED",
+   "a": "His_Roof",
+   "b": "Thatch_F",
+   "min": 0.05
+  },
+  {
+   "id": "CONTACT:Thatch_F>Sasu_F0",
+   "type": "CONTACT",
+   "a": "Thatch_F",
+   "b": "Sasu_F0",
+   "tol": 0.003
+  },
+  {
+   "id": "CONTACT:Thatch_F>Sasu_F1",
+   "type": "CONTACT",
+   "a": "Thatch_F",
+   "b": "Sasu_F1",
+   "tol": 0.003
+  },
+  {
+   "id": "HIP:FL",
+   "type": "OVERLAP_ALLOWED",
+   "a": "Thatch_F",
+   "b": "Thatch_L",
+   "max_depth": 0.5
+  },
+  {
+   "id": "HIP:FR",
+   "type": "OVERLAP_ALLOWED",
+   "a": "Thatch_F",
+   "b": "Thatch_R",
+   "max_depth": 0.5
+  },
+  {
+   "id": "CONTACT:Thatch_B>Sasu_B0",
+   "type": "CONTACT",
+   "a": "Thatch_B",
+   "b": "Sasu_B0",
+   "tol": 0.003
+  },
+  {
+   "id": "CONTACT:Thatch_B>Sasu_B1",
+   "type": "CONTACT",
+   "a": "Thatch_B",
+   "b": "Sasu_B1",
+   "tol": 0.003
+  },
+  {
+   "id": "HIP:BL",
+   "type": "OVERLAP_ALLOWED",
+   "a": "Thatch_B",
+   "b": "Thatch_L",
+   "max_depth": 0.5
+  },
+  {
+   "id": "HIP:BR",
+   "type": "OVERLAP_ALLOWED",
+   "a": "Thatch_B",
+   "b": "Thatch_R",
+   "max_depth": 0.5
+  },
+  {
+   "id": "RIDGE_LAP",
+   "type": "OVERLAP_ALLOWED",
+   "a": "Thatch_F",
+   "b": "Thatch_B",
+   "max_depth": 0.5
+  },
+  {
+   "id": "CONTACT:Gable_L>Thatch_L",
+   "type": "CONTACT",
+   "a": "Gable_L",
+   "b": "Thatch_L",
+   "tol": 0.003
+  },
+  {
+   "id": "CONTACT:Gable_L>Thatch_F",
+   "type": "CONTACT",
+   "a": "Gable_L",
+   "b": "Thatch_F",
+   "tol": 0.003
+  },
+  {
+   "id": "CLEAR:skirt_over_Hari_0",
+   "type": "CLEARANCE_REQUIRED",
+   "a": "Thatch_L",
+   "b": "Hari_0",
+   "min": 0.05
+  },
+  {
+   "id": "CONTACT:Gable_R>Thatch_R",
+   "type": "CONTACT",
+   "a": "Gable_R",
+   "b": "Thatch_R",
+   "tol": 0.003
+  },
+  {
+   "id": "CONTACT:Gable_R>Thatch_F",
+   "type": "CONTACT",
+   "a": "Gable_R",
+   "b": "Thatch_F",
+   "tol": 0.003
+  },
+  {
+   "id": "CLEAR:skirt_over_Hari_3",
+   "type": "CLEARANCE_REQUIRED",
+   "a": "Thatch_R",
+   "b": "Hari_3",
+   "min": 0.05
+  },
+  {
+   "id": "CLEAR:thatch_over_hari_end",
+   "type": "CLEARANCE_REQUIRED",
+   "a": "Thatch_F",
+   "b": "Hari_1",
+   "min": 0.005
+  },
+  {
+   "id": "RIDGE_ON_F",
+   "type": "OVERLAP_ALLOWED",
+   "a": "Ridge",
+   "b": "Thatch_F",
+   "max_depth": 0.25
+  },
+  {
+   "id": "RIDGE_ON_B",
+   "type": "OVERLAP_ALLOWED",
+   "a": "Ridge",
+   "b": "Thatch_B",
+   "max_depth": 0.25
+  },
+  {
+   "id": "CROSS_ON_RIDGE",
+   "type": "OVERLAP_ALLOWED",
+   "a": "Ridge_Cross",
+   "b": "Ridge",
+   "max_depth": 0.06
+  },
+  {
+   "id": "SYM:skirts",
+   "type": "SYMMETRIC",
+   "a": "Thatch_L",
+   "b": "Thatch_R"
+  },
+  {
+   "id": "SYM:front_roof",
+   "type": "SYMMETRIC",
+   "a": "Thatch_F",
+   "b": "Thatch_F"
+  },
+  {
+   "id": "CLEAR:woodpile",
+   "type": "CLEARANCE_REQUIRED",
+   "a": "Makiba",
+   "b": "Wall_S0b",
+   "min": 0.05
+  },
+  {
+   "id": "NO_INTERSECTION:Kutsunugi>Eng_Deck",
+   "type": "NO_INTERSECTION",
+   "a": "Kutsunugi",
+   "b": "Eng_Deck"
+  }
+ ],
+ "ground_z": 0.0,
+ "check_detached": true,
+ "ground_embed_max": 0.14
+}

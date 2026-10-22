@@ -1,0 +1,7060 @@
+{
+ "arch": {
+  "results": [
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00804261779785156,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Ashi_B"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Ashi_B",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00804261779785156,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00804261779785156,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Ashi_F"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Ashi_F",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00804261779785156,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00531396293640137,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Ashi_S0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Ashi_S0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00531396293640137,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00531396293640137,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Ashi_S1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Ashi_S1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00531396293640137,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0034181866645813,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Door_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Door_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0034181866645813,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0034181866645813,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Door_F2"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Door_F2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0034181866645813,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00834172630310059,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Eng_Beam"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Eng_Beam",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00834172630310059,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00838971424102783,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Eng_Deck"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Eng_Deck",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00838971424102783,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00834134864807129,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Eng_Ledger"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Eng_Ledger",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00834134864807129,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Eng_Stone0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Eng_Stone0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Eng_Stone1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Eng_Stone1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Eng_Stone2"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Eng_Stone2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Eng_Stone3"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Eng_Stone3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Eng_Tsuka0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Eng_Tsuka0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Eng_Tsuka1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Eng_Tsuka1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Eng_Tsuka2"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Eng_Tsuka2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Eng_Tsuka3"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Eng_Tsuka3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000028,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000281333923339844,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00203800249099731,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Gable_L"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Gable_L",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00203800249099731,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000028,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000281333923339844,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00203800249099731,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Gable_R"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Gable_R",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00203800249099731,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00576694917678833,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Hari_0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Hari_0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00576694917678833,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00576694917678833,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Hari_1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Hari_1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00576694917678833,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00576694917678833,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Hari_2"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Hari_2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00576694917678833,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00576694917678833,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Hari_3"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Hari_3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00576694917678833,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000023,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.00002288818359375,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00879204368591309,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "His_Keta"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:His_Keta",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00879204368591309,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000028,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000281333923339844,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00834133148193359,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "His_Ledger"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:His_Ledger",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00834133148193359,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000017,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000169277191162109,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00219648289680481,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "His_Post0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:His_Post0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00219648289680481,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000017,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000169277191162109,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00219648289680481,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "His_Post1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:His_Post1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00219648289680481,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000017,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000169277191162109,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00219648289680481,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "His_Post2"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:His_Post2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00219648289680481,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000027,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000269412994384766,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00892967319488525,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "His_Roof"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:His_Roof",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00892967319488525,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "His_Stone0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:His_Stone0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "His_Stone1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:His_Stone1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "His_Stone2"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:His_Stone2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00849471569061279,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Keta_B"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Keta_B",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00849471569061279,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00849471569061279,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Keta_F"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Keta_F",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00849471569061279,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00104642248153687,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Kutsunugi"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Kutsunugi",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00104642248153687,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000027,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000272989273071289,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00327460312843323,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Makiba"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Makiba",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00327460312843323,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0080421142578125,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Obiki_0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Obiki_0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0080421142578125,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0080421142578125,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Obiki_1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Obiki_1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0080421142578125,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Post_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Post_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Post_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Post_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Post_B2"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Post_B2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Post_B3"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Post_B3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Post_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Post_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Post_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Post_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Post_F2"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Post_F2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Post_F3"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Post_F3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000000298023223876953,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00274819946289062,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Post_S0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Post_S0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00274819946289062,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000000298023223876953,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00274819946289062,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Post_S1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Post_S1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00274819946289062,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000034,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000034332275390625,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00608374786376953,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Ridge"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Ridge",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00608374786376953,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000033,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000326335430145264,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00509011030197144,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Ridge_Cross"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Ridge_Cross",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00509011030197144,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000029,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000288486480712891,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0045000205039978,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Sasu_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Sasu_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0045000205039978,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000029,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000288486480712891,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0045000205039978,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Sasu_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Sasu_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0045000205039978,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000029,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000288486480712891,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0045000205039978,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Sasu_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Sasu_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0045000205039978,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000029,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000288486480712891,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0045000205039978,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Sasu_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Sasu_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0045000205039978,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Stone_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Stone_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Stone_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Stone_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Stone_B2"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Stone_B2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Stone_B3"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Stone_B3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Stone_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Stone_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Stone_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Stone_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Stone_F2"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Stone_F2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Stone_F3"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Stone_F3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000000298023223876953,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Stone_S0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Stone_S0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000000298023223876953,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Stone_S1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Stone_S1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000046,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000455379486083984,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0117004137039185,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Thatch_B"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Thatch_B",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0117004137039185,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000046,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000455379486083984,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0117004137039185,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Thatch_F"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Thatch_F",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0117004137039185,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000046,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000455379486083984,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00824276447296143,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Thatch_L"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Thatch_L",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00824276447296143,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000046,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000455379486083984,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00824276447296143,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Thatch_R"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Thatch_R",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00824276447296143,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00341790866851807,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Wall_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Wall_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00341790866851807,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00341790866851807,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Wall_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Wall_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00341790866851807,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00341790866851807,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Wall_B2"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Wall_B2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00341790866851807,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00341790866851807,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Wall_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Wall_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00341790866851807,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00357979035377502,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Wall_S0a"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Wall_S0a",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00357979035377502,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00357979035377502,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Wall_S0b"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Wall_S0b",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00357979035377502,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00357979035377502,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Wall_S1a"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Wall_S1a",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00357979035377502,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00357979035377502,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Wall_S1b"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Wall_S1b",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00357979035377502,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000000596046447753906,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00963531494140625,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "glb_vs_import",
+    "object_ids": [
+     "Yuka"
+    ],
+    "priority": "hard",
+    "rule_id": "glb_vs_import:Yuka",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00963531494140625,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "min_edge_dist_m": 6.82,
+     "road": "FarmPath_2"
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": "footprint outside road (edge_dist ≥ -0.05 m)",
+    "fix": null,
+    "method": "footprint_edge_samples→nearest_centerline",
+    "object_ids": [
+     "FarmPath_2"
+    ],
+    "priority": "hard",
+    "rule_id": "layout:road_intrusion",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.05,
+    "type": "ROAD_ALIGNMENT"
+   },
+   {
+    "actual": {
+     "entrance_edge_dist_m": 6.82,
+     "local_tangent": [
+      0.0,
+      1.0
+     ],
+     "nearest_s_m": 55.0,
+     "road": "FarmPath_2",
+     "road_class": "farm"
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": "entrance→road edge ≤ 15.0 m, road ahead",
+    "fix": null,
+    "method": "nearest_centerline(local_tangent ±6 m)",
+    "object_ids": [
+     "FarmPath_2"
+    ],
+    "priority": "hard",
+    "rule_id": "layout:entrance_road",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 15.0,
+    "type": "ROAD_ALIGNMENT"
+   },
+   {
+    "actual": {
+     "angle_deg": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.00000250447806548767,
+    "evidence": {},
+    "expected": "front vs road normal ≤ 35°（organic）",
+    "fix": null,
+    "method": "front·local_road_normal",
+    "object_ids": [
+     "FarmPath_2"
+    ],
+    "priority": "soft",
+    "rule_id": "layout:facing",
+    "severity": "low",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 35.0,
+    "type": "ROAD_ALIGNMENT"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00804261779785156,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Ashi_B"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Ashi_B",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00804261779785156,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00804261779785156,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Ashi_F"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Ashi_F",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00804261779785156,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00531396293640137,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Ashi_S0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Ashi_S0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00531396293640137,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00531396293640137,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Ashi_S1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Ashi_S1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00531396293640137,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00341818642616272,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Door_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Door_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00341818642616272,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00341818642616272,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Door_F2"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Door_F2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00341818642616272,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00834172630310059,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Eng_Beam"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Eng_Beam",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00834172630310059,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00838971424102783,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Eng_Deck"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Eng_Deck",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00838971424102783,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00834134864807129,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Eng_Ledger"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Eng_Ledger",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00834134864807129,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Eng_Stone0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Eng_Stone0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Eng_Stone1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Eng_Stone1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Eng_Stone2"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Eng_Stone2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Eng_Stone3"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Eng_Stone3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Eng_Tsuka0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Eng_Tsuka0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Eng_Tsuka1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Eng_Tsuka1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Eng_Tsuka2"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Eng_Tsuka2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Eng_Tsuka3"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Eng_Tsuka3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000028,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000281333923339844,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00203800225257874,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Gable_L"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Gable_L",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00203800225257874,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000028,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000281333923339844,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00203800225257874,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Gable_R"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Gable_R",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00203800225257874,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00576694917678833,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Hari_0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Hari_0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00576694917678833,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00576694917678833,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Hari_1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Hari_1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00576694917678833,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00576694917678833,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Hari_2"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Hari_2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00576694917678833,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00576694917678833,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Hari_3"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Hari_3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00576694917678833,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000023,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.00002288818359375,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00879204368591309,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "His_Keta"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:His_Keta",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00879204368591309,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000028,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000281333923339844,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00834133148193359,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "His_Ledger"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:His_Ledger",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00834133148193359,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000017,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000169277191162109,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00219648265838623,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "His_Post0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:His_Post0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00219648265838623,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000017,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000169277191162109,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00219648265838623,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "His_Post1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:His_Post1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00219648265838623,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000017,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000169277191162109,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00219648265838623,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "His_Post2"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:His_Post2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00219648265838623,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000027,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000269412994384766,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00892967319488525,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "His_Roof"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:His_Roof",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00892967319488525,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "His_Stone0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:His_Stone0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "His_Stone1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:His_Stone1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "His_Stone2"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:His_Stone2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00849471569061279,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Keta_B"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Keta_B",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00849471569061279,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00849471569061279,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Keta_F"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Keta_F",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00849471569061279,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00104642248153687,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Kutsunugi"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Kutsunugi",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00104642248153687,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000027,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000272989273071289,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00327460312843323,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Makiba"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Makiba",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00327460312843323,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0080421142578125,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Obiki_0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Obiki_0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0080421142578125,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0080421142578125,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Obiki_1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Obiki_1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0080421142578125,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Post_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Post_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Post_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Post_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Post_B2"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Post_B2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Post_B3"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Post_B3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Post_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Post_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Post_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Post_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Post_F2"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Post_F2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00250898385047913,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Post_F3"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Post_F3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00250898385047913,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00274819922447205,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Post_S0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Post_S0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00274819922447205,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00274819922447205,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Post_S1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Post_S1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00274819922447205,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000034,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000034332275390625,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00608374786376953,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Ridge"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Ridge",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00608374786376953,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000033,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000326633453369141,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00509011030197144,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Ridge_Cross"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Ridge_Cross",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00509011030197144,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000029,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000288486480712891,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00450002098083496,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Sasu_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Sasu_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00450002098083496,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000029,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000288486480712891,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00450002098083496,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Sasu_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Sasu_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00450002098083496,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000029,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000288486480712891,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00450002098083496,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Sasu_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Sasu_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00450002098083496,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000029,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000288486480712891,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00450002098083496,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Sasu_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Sasu_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00450002098083496,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Stone_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Stone_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Stone_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Stone_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Stone_B2"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Stone_B2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Stone_B3"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Stone_B3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Stone_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Stone_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Stone_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Stone_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Stone_F2"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Stone_F2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Stone_F3"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Stone_F3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000000596046447753906,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Stone_S0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Stone_S0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000000596046447753906,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Stone_S1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Stone_S1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000046,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000455379486083984,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0117004137039185,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Thatch_B"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Thatch_B",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0117004137039185,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000046,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000455379486083984,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.0117004137039185,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Thatch_F"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Thatch_F",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.0117004137039185,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000046,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000455379486083984,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00824276447296143,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Thatch_L"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Thatch_L",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00824276447296143,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.000046,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000455379486083984,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00824276447296143,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Thatch_R"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Thatch_R",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00824276447296143,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00341790843009949,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Wall_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Wall_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00341790843009949,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00341790843009949,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Wall_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Wall_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00341790843009949,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00341790843009949,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Wall_B2"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Wall_B2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00341790843009949,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000238418579101563,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00341790843009949,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Wall_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Wall_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00341790843009949,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00357979035377502,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Wall_S0a"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Wall_S0a",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00357979035377502,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00357979035377502,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Wall_S0b"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Wall_S0b",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00357979035377502,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00357979035377502,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Wall_S1a"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Wall_S1a",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00357979035377502,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.000000476837158203125,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00357979035377502,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Wall_S1b"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Wall_S1b",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00357979035377502,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0000000596046447753906,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.00963531494140625,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "wrapper_local",
+    "object_ids": [
+     "Yuka"
+    ],
+    "priority": "hard",
+    "rule_id": "wrapper_local:Yuka",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.00963531494140625,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Ashi_B"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Ashi_B",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Ashi_F"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Ashi_F",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Ashi_S0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Ashi_S0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Ashi_S1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Ashi_S1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Door_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Door_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Door_F2"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Door_F2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Eng_Beam"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Eng_Beam",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Eng_Deck"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Eng_Deck",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Eng_Ledger"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Eng_Ledger",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Eng_Stone0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Eng_Stone0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Eng_Stone1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Eng_Stone1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Eng_Stone2"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Eng_Stone2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Eng_Stone3"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Eng_Stone3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Eng_Tsuka0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Eng_Tsuka0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Eng_Tsuka1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Eng_Tsuka1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Eng_Tsuka2"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Eng_Tsuka2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Eng_Tsuka3"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Eng_Tsuka3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Gable_L"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Gable_L",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Gable_R"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Gable_R",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Hari_0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Hari_0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Hari_1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Hari_1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Hari_2"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Hari_2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Hari_3"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Hari_3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "His_Keta"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:His_Keta",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "His_Ledger"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:His_Ledger",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "His_Post0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:His_Post0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "His_Post1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:His_Post1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "His_Post2"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:His_Post2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "His_Roof"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:His_Roof",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "His_Stone0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:His_Stone0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "His_Stone1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:His_Stone1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "His_Stone2"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:His_Stone2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Keta_B"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Keta_B",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Keta_F"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Keta_F",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Kutsunugi"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Kutsunugi",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Makiba"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Makiba",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Obiki_0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Obiki_0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Obiki_1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Obiki_1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Post_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Post_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Post_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Post_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Post_B2"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Post_B2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Post_B3"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Post_B3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Post_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Post_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Post_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Post_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Post_F2"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Post_F2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Post_F3"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Post_F3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Post_S0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Post_S0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Post_S1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Post_S1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Ridge"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Ridge",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Ridge_Cross"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Ridge_Cross",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Sasu_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Sasu_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Sasu_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Sasu_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Sasu_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Sasu_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Sasu_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Sasu_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Stone_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Stone_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Stone_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Stone_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Stone_B2"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Stone_B2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Stone_B3"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Stone_B3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Stone_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Stone_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Stone_F1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Stone_F1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Stone_F2"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Stone_F2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Stone_F3"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Stone_F3",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Stone_S0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Stone_S0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Stone_S1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Stone_S1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Thatch_B"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Thatch_B",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Thatch_F"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Thatch_F",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Thatch_L"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Thatch_L",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Thatch_R"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Thatch_R",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Wall_B0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Wall_B0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Wall_B1"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Wall_B1",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Wall_B2"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Wall_B2",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Wall_F0"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Wall_F0",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Wall_S0a"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Wall_S0a",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Wall_S0b"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Wall_S0b",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Wall_S1a"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Wall_S1a",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Wall_S1b"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Wall_S1b",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   },
+   {
+    "actual": {
+     "aabb_dev_m": 0.0,
+     "det_got": 1.0,
+     "det_ref": 1.0,
+     "origin_dev_m": 0.0,
+     "rot_dev_deg": 0.0,
+     "scale_dev_rel": 0.0
+    },
+    "building_id": "noka_b",
+    "deviation": 0.0,
+    "evidence": {},
+    "expected": {
+     "tol_pos_m": 0.001,
+     "tol_rot_deg": 0.05,
+     "tol_scale_rel": 0.0005
+    },
+    "fix": null,
+    "method": "placed_world",
+    "object_ids": [
+     "Yuka"
+    ],
+    "priority": "hard",
+    "rule_id": "placed_world:Yuka",
+    "severity": "high",
+    "status": "PASS",
+    "suggestion": "",
+    "tolerance": 0.001,
+    "type": "IMPORT_CONSISTENCY"
+   }
+  ],
+  "summary": {
+   "FAIL": 0,
+   "PASS": 234,
+   "UNKNOWN": 0,
+   "WARN": 0
+  },
+  "tool": "arch_spatial_godot/1.0"
+ },
+ "at": [
+  428.0,
+  -61.0
+ ],
+ "checks": {
+  "access": {
+   "detail": "外圍 1.5 m 一圈 23 點，玩家站得下 23 點（100%）",
+   "free_ratio": 1.0,
+   "result": "PASS"
+  },
+  "consistency": {
+   "detail": "匯入一致性 77 項（{\"FAIL\":0,\"PASS\":77,\"UNKNOWN\":0,\"WARN\":0}）；放置鏈 154 項 {\"FAIL\":0,\"PASS\":154,\"UNKNOWN\":0,\"WARN\":0}",
+   "result": "PASS"
+  },
+  "ground": {
+   "detail": "牆腳範圍內地形起伏 0.25 m（上限 0.28）：地形高出地板 0.05 m、低側可見底懸空 0.12 m；99 點",
+   "relief_m": 0.25,
+   "result": "PASS"
+  },
+  "layout": {
+   "detail": "organic 排列 3 項 {\"FAIL\":0,\"PASS\":3,\"UNKNOWN\":0,\"WARN\":0}",
+   "result": "PASS"
+  },
+  "overlap": {
+   "bodies": [],
+   "detail": "與既有碰撞體穿插 > 0.05 m：0 個（候選 1）",
+   "result": "PASS"
+  }
+ },
+ "id": "noka_b",
+ "model": {
+  "collision": "trimesh",
+  "collision_tris": 4556,
+  "scale": 1.0,
+  "size_m": [
+   9.99,
+   8.28,
+   7.96
+  ]
+ },
+ "scene": "res://maps/village_v2/village_v2.tscn",
+ "seconds": 24.7,
+ "shot_notes": [],
+ "shots": "D:/神社/shrine/docs/fastlane/noka_b/sheet.jpg",
+ "written": false,
+ "xform": "Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 428, 1.2410462, -61)"
+}
