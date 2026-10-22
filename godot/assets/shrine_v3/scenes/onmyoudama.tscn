@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="ArrayMesh" path="res://assets/shrine_v3/mesh/onmyoudama.res" id="1_fgtnb"]
+
+[node name="陰陽玉" type="Node3D" unique_id=1477794946]
+metadata/s3_asset = "onmyoudama"
+
+[node name="模型" type="MeshInstance3D" parent="." unique_id=1548989804]
+mesh = ExtResource("1_fgtnb")

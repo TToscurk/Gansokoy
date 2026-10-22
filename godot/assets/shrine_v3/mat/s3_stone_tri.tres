@@ -18,3 +18,4 @@ shader_parameter/moss_tile = null
 shader_parameter/moss_amount = 0.42
 shader_parameter/moss_low_m = null
 shader_parameter/triplanar = true
+shader_parameter/vc_moss = null

@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/gen/onmyoudama_base.png" id="1_uoj3l"]
+[ext_resource type="Texture2D" path="res://assets/shrine_v3/tex/gen/onmyoudama_normal.png" id="2_vmfsh"]
+
+[resource]
+resource_name = "s3_onmyoudama"
+albedo_texture = ExtResource("1_uoj3l")
+metallic_specular = 0.4
+roughness = 0.66
+normal_enabled = true
+normal_scale = 0.6
+normal_texture = ExtResource("2_vmfsh")
