@@ -1,4 +1,6 @@
 extends RefCounted
+## TASK E FINAL（使用者 2026-10-18）：社寺取消。現行設計（HF_design.json v1 woodland）不再有 Ground／草株抑制；
+## 下面的境內地面函式（design()／ground_mesh()）只在設計含 "ground" 時被 build_hf_precinct.gd 使用（E2 舊設計，保留供還原）。
 ## 丘腳社寺 E2（2026-10-17 使用者 TASK E2）：境內環境の地面・抑制の共通庫。
 ## 設計の幾何は res://data/district/HF_design.json（Blender 配置・verify と共通）。
 ## 重用：地面は P9 R4-2 神社周邊のシェーダ sg_ground（shrine_grove/sg_ground.gdshader・唯讀）＋ SG.sg_material()、地形は RLib.terrain_sampler（唯讀）。
@@ -13,7 +15,7 @@ const NODE_NAME := "HillfootPrecinctE2"
 const OUTPUT := "res://maps/village_v2/gen/hillfoot_precinct_e2.scn"
 const SCRIPT := "res://maps/village_v2/scripts_p13/hillfoot_precinct_e2.gd"
 const DISTRICT_NODE := "DistrictHF"
-const ART_REVISION := "TASK E2 丘腳社寺 境內環境（ART_REVIEW・未經使用者 ART_APPROVED）"
+const ART_REVISION := "TASK E FINAL 丘腳林地（社寺取消→自然林；ART_REVIEW・未經使用者 ART_APPROVED）"
 
 static var _D: Dictionary = {}
 static var _noise: Dictionary = {}

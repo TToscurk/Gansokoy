@@ -47,6 +47,7 @@ func _verify_files() -> void:
 	var names := [
 		"sword_swing_1", "sword_swing_2", "sword_swing_3",
 		"sword_fire_swing_1", "sword_fire_swing_2", "sword_fire_swing_3",
+		"sword_swing_el_1", "sword_swing_el_2", "sword_swing_el_3",
 		"sword_heavy", "sword_draw", "sword_sheathe",
 		"hit_impact_light", "hit_impact_heavy",
 		"hit_fire_light_1", "hit_fire_light_2", "hit_fire_heavy", "hit_fire_spin",

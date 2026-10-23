@@ -37,6 +37,11 @@ const JOBS := [
 	#   錨末鍵會把蹲姿抬回 Idle 高度、f0 反而高出 12 cm。Slash 末鍵就是 Idle，照舊錨末。
 	{"src": "Iai_Stance",   "out": "res://characters/yoriichi/animations/yoriichi_iai_stance.res",    "loop": false, "glb": GLB_IAI, "anchor_first": true},
 	{"src": "Iai_Slash",    "out": "res://characters/yoriichi/animations/yoriichi_iai_slash.res",     "loop": false, "glb": GLB_IAI},
+	# 拔刀斬預備跑步（Iai_Run）：純循環、原地、全身（蹲姿）。
+	#   ⚠ 這支沒有 Idle 端點幀可錨（整支都是蹲姿跑），錨任何一鍵都會把蹲姿抬到 Idle 高度 →
+	#   用 hips_ref 直接指定「Idle 姿的 GLB y」當基準（實測 Iai_Stance f0 = 101.28969，
+	#   對照它的 kamae 蹲姿 y 101.17353 = 沉腰 11.6 cm）。蹲姿深度因此原樣保留。
+	{"src": "Iai_Run",      "out": "res://characters/yoriichi/animations/yoriichi_iai_run.res",      "loop": true,  "glb": GLB_IAI, "hips_ref": 101.28969},
 ]
 
 
@@ -133,7 +138,10 @@ func _init() -> void:
 				#   基準取**最後一個 key**：匯出器把時間軸滑掉了約 1 幀（Form05 首 key 已在 −1.3 cm），
 				#   末幀才是乾淨的 Idle 髖高 —— 淡回 loco 那一刻要對齊 0.9475，起手差 1 cm 被 fadein 吃掉。
 				var base_y: float = 0.0
-				if src.track_get_key_count(t) > 0:
+				if job.has("hips_ref"):
+					# 明確給基準：純循環 clip 沒有 Idle 端點幀可錨（見 Iai_Run 的註解）
+					base_y = float(job.get("hips_ref"))
+				elif src.track_get_key_count(t) > 0:
 					var anchor_key: int = 0 if bool(job.get("anchor_first", false)) else src.track_get_key_count(t) - 1
 					var anchor_v: Vector3 = src.track_get_key_value(t, anchor_key)
 					base_y = anchor_v.y

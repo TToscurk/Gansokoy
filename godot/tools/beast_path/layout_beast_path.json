@@ -10,7 +10,7 @@
     "docs/reference/獸道概念圖/林道.png"
   ],
   "frame": { "seed": 20261015, "play_floor_max_angle_deg": 52.0, "player_step_height": 0.35, "player_jump_height": 1.68 },
-  "atmosphere": { "_note": "V1.3：獸道的大氣＝main 的 Environment 複本，只覆寫這兩個值（maps/beast_path/bp_atmosphere.gd）。fog_sky_affect：main 預設 1.0 會把天空整片換成霧色（灰白天的根因）；fog_aerial_perspective：遠景的霧取天空色。霧密度／霧色／日夜循環不動。enabled:false＝回到 V1.2（直接用 main 的 Environment）。", "enabled": true, "scope": "S04", "blend_z": [-340.0, -366.0], "_scope_note": "只在 S04 生效：S01–S03 已凍結＝V1.2 的天空（main 原值 1.0／0.0）。相機 z 在 −340 → −366（＝bp_ground 的 S03／S04 接縫段）之間線性淡入。要全圖一致＝scope 改 \"map\"、blend_z 改成 [1000, 999]（S01–S03 的天空會跟著變，需使用者同意）。", "fog_sky_affect": 0.5, "fog_aerial_perspective": 0.35, "day_k": [0.40, 0.85], "_day_note": "只在日高時生效：k＝DayNight 的日照係數（0 半夜～1 正午；10:00＝0.89、07:00／17:00＝0.37），k 在 0.40 → 0.85 之間淡入。天空 shader 在太陽仰角 > 20° 一律是正午藍（晨昏染色只在 < 20°），07:00／17:00 露出天空＝正午藍天配黃昏的暗光；低太陽時退回 V1.2（天空＝DayNight 依時刻調暗調藍的霧色）。第三輪 07／10／17 審圖抓到後加的。", "_choice": "同鏡位 5 組比較（d5／d7：sky_affect 1.0／0／0.35／0.5，aerial 0／0.35／0.5）→ 0.5＋0.35 最平和：天空帶藍、雲對比柔、遠景樹林一層層淡出；0 與霧關掉時雲太搶、0.35＋0.5 偏亮偏藍" },
+  "atmosphere": { "_note": "V1.3：獸道的大氣＝main 的 Environment 複本，只覆寫這兩個值（maps/beast_path/bp_atmosphere.gd）。fog_sky_affect：main 預設 1.0 會把天空整片換成霧色（灰白天的根因）；fog_aerial_perspective：遠景的霧取天空色。霧密度／霧色／日夜循環不動。enabled:false＝回到 V1.2（直接用 main 的 Environment）。", "enabled": true, "scope": "S04", "blend_z": [-340.0, -366.0], "_scope_note": "只在 S04 生效：S01–S03 已凍結＝V1.2 的天空（main 原值 1.0／0.0）。相機 z 在 −340 → −366（＝bp_ground 的 S03／S04 接縫段）之間線性淡入。要全圖一致＝scope 改 \"map\"、blend_z 改成 [1000, 999]（S01–S03 的天空會跟著變，需使用者同意）。", "fog_sky_affect": 0.5, "fog_aerial_perspective": 0.35, "day_k": [0.40, 0.85], "_day_note": "只在日高時生效：k＝DayNight 的日照係數（0 半夜～1 正午；10:00＝0.89、07:00／17:00＝0.37），k 在 0.40 → 0.85 之間淡入。天空 shader 在太陽仰角 > 20° 一律是正午藍（晨昏染色只在 < 20°），07:00／17:00 露出天空＝正午藍天配黃昏的暗光；低太陽時退回 V1.2（天空＝DayNight 依時刻調暗調藍的霧色）。第三輪 07／10／17 審圖抓到後加的。", "_choice": "同鏡位 5 組比較（d5／d7：sky_affect 1.0／0／0.35／0.5，aerial 0／0.35／0.5）→ 0.5＋0.35 最平和：天空帶藍、雲對比柔、遠景樹林一層層淡出；0 與霧關掉時雲太搶、0.35＋0.5 偏亮偏藍", "gloom": { "enabled": true, "z": [-60.0, -112.0, -312.0, -336.0], "fog_density": 0.0028, "brightness": 0.95, "saturation_k": 0.92, "_r2": "荒野化 R2：灰白霧遮蔽太重——全區霧 0.008→0.0028、亮度 0.88→0.95、飽和 0.88→0.92；危險感改由樹冠、巨根、岩壁、局部薄霧（dress.mist）來做", "_note": "2026-10-18 荒野化：S02／S03 林中幽暗（霧密度 main 0.0012→0.008、亮度×0.88、飽和×0.88）。相機 z −60→−112 淡入、−312→−336 淡出（S03／S04 接縫 −340 之前就回到原樣；S04／BOSS 不變）。enabled:false＝原樣。" } },
 
   "freeze_s04_pool_shore": { "_note": "V1.3：潭岸石 14 顆＝V1.2 原樣（位置／旋轉／半徑／網格）。V1.3 第一版把崖面岩塊排在 POI 最後，props 共用亂數的剩餘狀態流進潭岸石的半徑 → 14 顆整組變大變小（位置不變、高差 1–3 cm）；generate 改成崖面岩塊建完還原亂數狀態。凍結檔＝V1.2 備份場景的值，verify：pool.shore_v12_kept", "file": "res://tools/beast_path/frozen/pool_shore_v12_s04.json", "sha256": "f45e48a2c4f8d60efedfb7674a976358924e7a201be8bd98a3439444e7eb5df9" },
   "limits": {
@@ -67,7 +67,6 @@
       { "type": "mound", "id": "m_s04_b", "c": [42, -380], "r": 9, "h": 1.1 },
       { "type": "mound", "id": "m_s04_c", "c": [-34, -414], "r": 7, "h": 0.8 },
       { "type": "terrace_rect", "id": "torii_apron", "c": { "st": "torii", "ds": 0.0 }, "hx": 4.4, "hz": 3.8, "yaw": "path", "y": "path", "blend": 3.0, "paving": true },
-      { "type": "terrace_rect", "id": "farm_patch", "c": { "st": "farm_edge", "ds": 2.0, "off": 24.0 }, "hx": 14.0, "hz": 11.0, "yaw": "path", "y": "macro", "blend": 7.0 },
       { "type": "terrace_disc", "id": "fork_plaza", "c": { "st": "fork", "ds": 2.0 }, "r": 11.0, "y": "path", "blend": 9.0, "paving": true },
       { "type": "terrace_disc", "id": "glade_flat", "c": { "st": "glade", "ds": 8.0 }, "r": 8.0, "y": "path", "blend": 10.0 },
       { "type": "arena", "id": "boss_floor", "c": [4, -398], "r_flat": 22.0, "y": 12.8, "blend": 9.0, "undulate": 0.7 },
@@ -313,6 +312,7 @@
   "s01_ground": {
     "_note": "S01 專用地表情境（R1）。enabled＝false 時 S01 維持 V1.3 的白模頂點色（零變化）。材質入口獨立於 S04（bp_ground_s01.*），不改 bp_ground.*；只動地表著色，不動高度與碰撞。features＝手放的地表特徵，每一個都寫明原因（why），分布是『人與環境留下的痕跡』，不是亂撒。",
     "enabled": true,
+    "road_vis_k": 0.60, "shoulder_k": 0.40, "road_vis_u0": 0.25, "road_vis_u1": 0.55, "_r3": "2026-10-18 荒野化 R3：視覺路寬（壓實土著色）在鳥居一帶漸窄到 0.70 倍；路線、路寬（WM）、碰撞不動",
     "ground_k": 0.27,
     "seam_fade_m": 12.0,
     "seam_off": true,
@@ -362,6 +362,7 @@
   "zone_ground": {
     "_note": "全區美術完成（使用者 2026-10-17 授權 S02／S03 環境美術重製）：S02／S03 從 V0.1 白模頂點色改用 S01 R3 的森林地表（同一個 bp_ground_s01.gdshader、13 通道；tools/beast_path/zone_ground.gd）。u≡1（S01 最深處的延伸）；r3 只列與 S01 不同的參數。只動頂點通道與材質（bp_ground_zone.tres），不動高度。enabled＝false＝回到白模頂點色。",
     "enabled": true,
+    "road_vis_k": 0.56, "shoulder_k": 0.35, "_r3": "2026-10-18 荒野化 R3：S02／S03 視覺路寬 0.66 倍（只動著色）",
     "r3": { "deep_k": 0.55, "lit": [0.30, 0.86], "lit_cap": 0.9, "mg_k": 0.85, "moss_part": 0.72, "gap_part": 0.6, "verge_cut": 0.45, "rough": [-0.05, 0.12], "rough_max": 0.7, "mud_k": 0.55 },
     "shader": {},
     "features": []
@@ -428,10 +429,10 @@
         { "u": 1.00, "clear": 3.6, "step": [4.5, 7], "p_side": 0.84, "edge": [1.6, 4.8], "radius": [4.6, 7.4], "n": [6, 10] }
       ],
       "mix": [
-        { "u": 0.00, "cedar": 0.08, "broadleaf": 0.46, "maple": 0.04, "cherry": 0.14, "sapling": 0.28 },
-        { "u": 0.30, "cedar": 0.14, "broadleaf": 0.44, "maple": 0.08, "cherry": 0.10, "sapling": 0.24 },
-        { "u": 0.60, "cedar": 0.20, "broadleaf": 0.42, "maple": 0.11, "cherry": 0.06, "sapling": 0.21 },
-        { "u": 1.00, "cedar": 0.34, "broadleaf": 0.37, "maple": 0.10, "cherry": 0.01, "sapling": 0.18 }
+        { "u": 0.00, "cedar": 0.22, "broadleaf": 0.46, "maple": 0.04, "cherry": 0.00, "sapling": 0.28 },
+        { "u": 0.30, "cedar": 0.24, "broadleaf": 0.44, "maple": 0.08, "cherry": 0.00, "sapling": 0.24 },
+        { "u": 0.60, "cedar": 0.26, "broadleaf": 0.42, "maple": 0.11, "cherry": 0.00, "sapling": 0.21 },
+        { "u": 1.00, "cedar": 0.35, "broadleaf": 0.37, "maple": 0.10, "cherry": 0.00, "sapling": 0.18 }
       ],
       "under": [
         { "u": 0.00, "per_tree": 0.22, "verge": 0.07 },
@@ -442,7 +443,6 @@
         { "id": "keyaki_a", "name": "village_keyaki", "at": { "st": "village", "ds": 20.0, "off": -11.0 }, "h": 13.0 }
       ],
       "hedges": [
-        { "name": "hut_back", "a": { "st": "farm_edge", "ds": 2.0, "off": 17.4 }, "b": { "st": "farm_edge", "ds": 15.0, "off": 16.8 }, "n": 5 }
       ],
       "r2": {
         "_note": "S01 R2（使用者 2026-10-16 R2 授權：R1 方向接受、局部修整、不重建）。mode＝r2 時在 r1 的規則上加這些修整；mode＝r1 可重現 R1 的森林規劃、地形與場景語意（S01 專用 shader 多了 R2 土袋通道，R1 狀態下算式等價；bp_ground_s01.tres 多兩行 null 參數；見 docs/art_review/beast_path_s01_r2/ART_REVIEW.md §14）。總量維持 380（target_total），多出的由背景林稀疏化扣回。",
@@ -586,11 +586,9 @@
       "wall": { "cedar": 0.55, "broadleaf": 0.35, "maple": 0.10 }
     },
     "clearings": [
-      { "id": "lung", "c": { "st": "lung", "ds": 0.0 }, "r": 10.0 },
-      { "id": "glade", "c": { "st": "glade", "ds": 8.0 }, "r": 13.0 },
-      { "id": "meadow_open", "c": { "st": "meadow", "ds": 4.0, "off": 8.0 }, "r": 14.0 },
-      { "id": "farm", "c": { "st": "farm_edge", "ds": 2.0, "off": 24.0 }, "r": 20.0 },
-      { "id": "fork_plaza", "c": { "st": "fork", "ds": 2.0 }, "r": 13.0 },
+      { "id": "lung", "c": { "st": "lung", "ds": 0.0 }, "r": 8.0 },
+      { "id": "glade", "c": { "st": "glade", "ds": 8.0 }, "r": 9.0 },
+      { "id": "fork_plaza", "c": { "st": "fork", "ds": 2.0 }, "r": 10.0 },
       { "id": "arena", "c": [4, -398], "r": 27.0, "wobble": { "amp": 4.6, "min": 24.2, "k1": 1.6, "k2": 3.9 }, "_note": "V1.2：空地不是正圓。有效半徑 = r + amp×噪聲(方位角)×1.6，下限 min（戰鬥圓 r=22 外至少再留 2.2 m）——林舌伸進來、林緣退開" },
       { "id": "hollow_lair", "c": [50, -168], "r": 9.0 },
       { "id": "bridge", "c": { "cross": "stream_main" }, "r": 9.0 },
@@ -599,7 +597,6 @@
     "stands": [
       { "id": "cedar_corridor", "c": { "st": "corridor", "ds": 0.0, "off": -12.0 }, "r": 30.0, "species": "cedar", "boost": 1.8 },
       { "id": "cedar_north", "c": { "st": "north_b", "ds": -6.0, "off": -10.0 }, "r": 26.0, "species": "cedar", "boost": 1.6 },
-      { "id": "sakura_village", "c": { "st": "cherry", "ds": 0.0, "off": 8.0 }, "r": 20.0, "species": "cherry", "boost": 1.9 },
       { "id": "maple_boss", "c": [4, -398], "r": 42.0, "species": "maple", "boost": 1.2 },
       { "id": "cedar_torii", "c": { "st": "torii", "ds": 8.0, "off": -14.0 }, "r": 18.0, "species": "cedar", "boost": 2.2 },
       { "id": "oak_torii", "c": { "st": "torii", "ds": 4.0, "off": 14.0 }, "r": 16.0, "species": "broadleaf", "boost": 2.0 },
@@ -609,6 +606,24 @@
       { "id": "bamboo_west", "c": [-40, -312], "r": 26.0, "density": 6.0 },
       { "id": "bamboo_edge", "c": { "br": "bamboo", "u": 0.45 }, "r": 14.0, "density": 7.0 }
     ],
+    "wild": {
+      "_note": "2026-10-18 S01–S03 荒野化（使用者：危險的妖怪森林，不是公園）。forest_planner._wild_pass：在既有規劃之後只加不改——加樹（高低混種、微傾）、竹叢、枯立木；S01 的櫻換成野生樹。獨立亂數、只落在 S01–S03、禁區沿用 _blocked／_too_close（主路／支線／溪／道具腳印淨空不變）。enabled＝false＝回到原規劃。同輪也移除了農田（POI＋地形平台＋空地）、農舍、柴堆、籃、田邊柵、櫻林 stand、小屋後綠籬。",
+      "enabled": true,
+      "seed": 18101,
+      "cherry_swap": { "S01": { "konara_a": 0.3, "shii_a": 0.25, "sugi_b": 0.25, "enoki_a": 0.2 } },
+      "zones": {
+        "S01": { "dens": [[30, 0.6], [0, 1.4], [-30, 2.6], [-60, 3.4], [-100, 3.8]], "mix": { "cedar": 0.34, "broadleaf": 0.33, "sapling": 0.33 }, "near_m": [26.0, 46.0], "far_k": 0.35, "gap_k": 0.75, "lean_p": 0.45, "lean_deg": 5.0, "big_edge_m": 3.0, "_why": "村緣（z>0）稀 → 鳥居後轉成林；高低混種" },
+        "S02": { "dens": [[-220, 3.0], [-100, 3.0]], "mix": { "cedar": 0.3, "broadleaf": 0.5, "sapling": 0.2 }, "near_m": [24.0, 44.0], "far_k": 0.3, "gap_k": 0.7, "lean_p": 0.5, "lean_deg": 6.0, "big_edge_m": 3.0, "_why": "幽暗深林：杉為主、林冠閉合" },
+        "S03": { "dens": [[-340, 2.4], [-220, 2.4]], "mix": { "cedar": 0.25, "broadleaf": 0.45, "maple": 0.1, "sapling": 0.2 }, "near_m": [24.0, 44.0], "far_k": 0.3, "gap_k": 0.75, "lean_p": 0.55, "lean_deg": 7.0, "big_edge_m": 3.0, "_why": "野性分岔：混林、歪斜多" }
+      },
+      "bamboo": [
+        { "id": "wild_bamboo_oldfield", "c": { "st": "farm_edge", "ds": 2.0, "off": 24.0 }, "r": 15.0, "density": 5.0, "_why": "舊農田被竹藪吞沒" },
+        { "id": "wild_bamboo_meadow", "c": { "st": "meadow", "ds": 4.0, "off": 12.0 }, "r": 10.0, "density": 4.0, "_why": "原草坪改竹叢" },
+        { "id": "wild_bamboo_s02", "c": { "st": "corridor", "ds": -6.0, "off": 16.0 }, "r": 10.0, "density": 4.0 },
+        { "id": "wild_bamboo_s03", "c": { "st": "glade", "ds": -6.0, "off": -17.0 }, "r": 12.0, "density": 5.0 }
+      ],
+      "snags": { "S01": 5, "S02": 16, "S03": 12 }
+    },
     "pins": [
       { "id": "gate_tree_L", "species": "broadleaf", "at": { "st": "forest_gate", "ds": -4.0, "off": -4.6 }, "h": 21.0, "r": 0.85 },
       { "id": "gate_tree_R", "species": "broadleaf", "at": { "st": "forest_gate", "ds": -4.0, "off": 4.6 }, "h": 20.0, "r": 0.80 },
@@ -660,32 +675,25 @@
     { "id": "portal_village", "kind": "portal_marker", "at": { "x": 0.0, "z": -1.0 }, "target": "village_v2", "note": "→ 人間之里 V2（C10-D10 入口道路南端）。預留：V2 對外傳送目前停用（P11 R2B）" },
     { "id": "spawn_s01", "kind": "spawn", "at": { "x": 0.0, "z": -12.0 }, "yaw_deg": 0.0 },
 
-    { "id": "fence_village_L", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "village", "ds0": 10.0, "ds1": 16.5, "off": -3.7, "off1": -5.8 }, "weathered": 0.35, "_s01_r1": "V1.3 是 ds 10–36、離路 3.7 m 的 26 m 平行欄杆（西側沒有農地也沒有住家，純裝飾）。R1：只留村口一段 6.5 m、離路斜開＝村界的殘欄。" },
-    { "id": "fence_village_R", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "village", "ds0": 12.0, "ds1": 19.5, "off": 3.9, "off1": 5.6 }, "weathered": 0.4, "_s01_r1": "V1.3 是 ds 10–22、貼路 3.7 m。R1：離路斜開，當作通往農舍的地界（東側有田與農舍）。" },
-    { "id": "fence_village_R2", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "village", "ds0": 31.0, "ds1": 38.5, "off": 6.9, "off1": 9.0 }, "weathered": 0.45, "_s01_r1": "V1.3 是 ds 28–38、貼路。R1：與 R 之間留 11.5 m 缺口（進農舍的小徑口；V1.3 為 6 m），斜向收到農舍院子邊。" },
-    { "id": "farm_patch", "kind": "farm_patch", "at": { "st": "farm_edge", "ds": 2.0, "off": 24.0 }, "hx": 11.0, "hz": 8.0, "ridges": 5, "model": "s01_field", "_s01_r6": "R6：原本 5 條 19.8 m 的褐色長方盒＋上面一條亮綠薄盒（d_wide 裡的平行亮綠條）→ 順地形的畝と溝（12 條、畝距 1.15 m）＋大根／蔥／小松菜（Blender 資產）＋畦の雑草。拿掉 model 欄位＝回到原本。" },
-    { "id": "farm_hut", "skin": true, "kind": "hut", "spec": "REF-HUT", "at": { "st": "farm_edge", "ds": 8.0, "off": 12.5 }, "face": "path", "w": 4.6, "d": 3.6, "h": 3.2 },
-    { "id": "firewood", "skin": true, "kind": "firewood", "spec": "H08", "at": { "st": "farm_edge", "ds": 4.0, "off": 12.0 } },
-    { "id": "basket_farm", "skin": true, "kind": "basket", "spec": "H07", "at": { "st": "farm_edge", "ds": 12.5, "off": 11.4 } },
-    { "id": "fence_field_edge", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "farm_edge", "ds0": -10.0, "ds1": 14.0, "off": 14.8 }, "weathered": 0.2 },
+    { "id": "fence_village_L", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "village", "ds0": 10.0, "ds1": 16.5, "off": -3.7, "off1": -5.8 }, "weathered": 0.85, "_s01_r1": "V1.3 是 ds 10–36、離路 3.7 m 的 26 m 平行欄杆（西側沒有農地也沒有住家，純裝飾）。R1：只留村口一段 6.5 m、離路斜開＝村界的殘欄。", "_wild_1018": "荒廢：歪斜、缺橫木" },
+    { "id": "fence_village_R", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "village", "ds0": 12.0, "ds1": 19.5, "off": 3.9, "off1": 5.6 }, "weathered": 0.9, "_s01_r1": "V1.3 是 ds 10–22、貼路 3.7 m。R1：離路斜開，當作通往農舍的地界（東側有田與農舍）。", "_wild_1018": "荒廢：歪斜、缺橫木" },
+    { "id": "fence_village_R2", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "village", "ds0": 31.0, "ds1": 38.5, "off": 6.9, "off1": 9.0 }, "weathered": 0.95, "_s01_r1": "V1.3 是 ds 28–38、貼路。R1：與 R 之間留 11.5 m 缺口（進農舍的小徑口；V1.3 為 6 m），斜向收到農舍院子邊。", "_wild_1018": "荒廢：歪斜、缺橫木" },
 
     { "id": "signpost_entrance", "skin": true, "kind": "signpost", "spec": "H01", "at": { "st": "torii", "ds": -13.0, "off": 3.5 }, "face": "path",
       "boards": [ { "dir": "N", "label": "獸道" }, { "dir": "S", "label": "人間之里" } ] },
-    { "id": "fence_torii_L", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "torii", "ds0": -8.0, "ds1": -2.5, "off": -4.3, "off1": -4.9 }, "weathered": 0.3, "_s01_r1": "鳥居前的境界欄：保留（定位鳥居口），但縮短、左右不再鏡像、做舊。" },
-    { "id": "fence_torii_R", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "torii", "ds0": -7.0, "ds1": -2.0, "off": 4.3, "off1": 4.7 }, "weathered": 0.3, "_s01_r1": "同上。" },
-    { "id": "rock_torii_L", "skin": true, "kind": "rock", "spec": "N03", "at": { "st": "torii", "ds": 5.0, "off": -6.0 }, "size": "large", "moss": 0.45 },
-    { "id": "rock_torii_R", "skin": true, "kind": "rock", "spec": "N03", "at": { "st": "torii", "ds": 7.5, "off": 6.4 }, "size": "boulder", "moss": 0.5 },
+    { "id": "rock_torii_L", "skin": true, "kind": "rock", "spec": "N03", "at": { "st": "torii", "ds": 5.0, "off": -6.0 }, "size": "large", "moss": 0.75 },
+    { "id": "rock_torii_R", "skin": true, "kind": "rock", "spec": "N03", "at": { "st": "torii", "ds": 7.5, "off": 6.4 }, "size": "boulder", "moss": 0.75 },
     { "id": "rocks_torii", "skin": true, "kind": "rock_scatter", "spec": "N01", "n": 8, "size": "medium", "st0": "torii", "ds0": 2.0, "st1": "torii", "ds1": 20.0, "band": [4.8, 10.5] },
-    { "id": "lantern_in_L", "kind": "lantern", "spec": "REF-LANTERN", "at": { "st": "torii", "ds": -6.5, "off": -3.4 }, "moss": 0.4, "model": "s01_lantern_a", "_s01_r6": "R6：Blender 春日型石燈籠（拿掉 model＝回到原本的方塊燈籠，moss 原為 0.0）" },
-    { "id": "lantern_in_R", "kind": "lantern", "spec": "REF-LANTERN", "at": { "st": "torii", "ds": -6.5, "off": 3.4 }, "moss": 0.3, "model": "s01_lantern_a" },
-    { "id": "torii_gate", "kind": "torii", "spec": "REF-TORII", "at": { "st": "torii", "ds": 0.0, "off": 0.0 }, "span": 5.0, "h": 4.6, "color": "red", "model": "s01_torii_a", "_s01_r6": "R6：Blender 明神鳥居（柱心距同為 5.0 m）；拿掉 model＝回到原本" },
+    { "id": "lantern_in_L", "kind": "lantern", "spec": "REF-LANTERN", "at": { "st": "torii", "ds": -6.5, "off": -3.4 }, "moss": 0.9, "model": "s01_lantern_a", "_s01_r6": "R6：Blender 春日型石燈籠（拿掉 model＝回到原本的方塊燈籠，moss 原為 0.0）" },
+    { "id": "lantern_in_R", "kind": "lantern", "spec": "REF-LANTERN", "at": { "st": "torii", "ds": -6.5, "off": 3.4 }, "moss": 1.0, "skin": true, "fallen": true, "_wild_1018": "倒塌的石燈籠（zone_props 倒地版）" },
+    { "id": "torii_gate", "kind": "torii", "spec": "REF-TORII", "at": { "st": "torii", "ds": 0.0, "off": 0.0 }, "span": 5.0, "h": 4.6, "color": "red", "model": "wild_torii_ruin", "_wild_r2": "荒野化 R2：破損鳥居（貫右半斷落、額落地、島木／笠木右端折斷落地；柱位與碰撞同 s01_torii_a）。model＝s01_torii_a＝回到完整版", "_s01_r6": "R6：Blender 明神鳥居（柱心距同為 5.0 m）；拿掉 model＝回到原本", "moss": 0.9, "paint_tone": 0.5, "_wild_1018": "朱漆褪暗＋台座苔" },
     { "id": "shrine_hut_entrance", "skin": true, "kind": "shrine_small", "spec": "REF-HUT-SHRINE", "at": { "st": "torii", "ds": 10.0, "off": -10.0 }, "face": "path", "w": 2.4, "d": 2.0, "h": 2.5, "steps": 3, "fence": false },
     { "id": "stone_marker_a", "skin": true, "kind": "stone_marker", "spec": "H09", "at": { "st": "meadow", "ds": 10.0, "off": 3.3 }, "h": 1.15 },
     { "id": "rocks_meadow", "skin": true, "kind": "rock_scatter", "spec": "N01", "n": 6, "size": "small", "st0": "meadow", "ds0": -8.0, "st1": "cherry", "ds1": 6.0, "band": [4.5, 12.0] },
-    { "id": "rock_meadow_m1", "skin": true, "kind": "rock", "spec": "N02", "at": { "st": "meadow", "ds": -6.0, "off": -9.5 }, "size": "medium", "moss": 0.2 },
-    { "id": "rock_meadow_m2", "skin": true, "kind": "rock", "spec": "N02", "at": { "st": "cherry", "ds": 6.0, "off": 10.5 }, "size": "medium", "moss": 0.1 },
+    { "id": "rock_meadow_m1", "skin": true, "kind": "rock", "spec": "N02", "at": { "st": "meadow", "ds": -6.0, "off": -9.5 }, "size": "medium", "moss": 0.75 },
+    { "id": "rock_meadow_m2", "skin": true, "kind": "rock", "spec": "N02", "at": { "st": "cherry", "ds": 6.0, "off": 10.5 }, "size": "medium", "moss": 0.75 },
 
-    { "id": "fence_end", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "s01_s02", "ds0": 4.0, "ds1": 14.0, "off": -3.6 }, "weathered": 0.7 },
+    { "id": "fence_end", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "s01_s02", "ds0": 4.0, "ds1": 14.0, "off": -3.6 }, "weathered": 0.95, "_wild_1018": "荒廢：歪斜、缺橫木" },
     { "id": "log_fallen_1", "skin": true, "kind": "log", "spec": "N05", "at": { "st": "forest_gate", "ds": 14.0, "off": 6.8 }, "yaw_deg": 62.0, "len": 6.2, "r": 0.38 },
     { "id": "stump_1", "skin": true, "kind": "stump", "spec": "N06", "at": { "st": "corridor", "ds": -6.0, "off": -5.4 }, "r": 0.55, "h": 0.75 },
     { "id": "roots_1", "skin": true, "kind": "roots", "spec": "N07", "at": { "st": "corridor", "ds": 7.0, "off": 3.6 }, "r": 1.4 },
@@ -765,6 +773,13 @@
     { "id": "pillar_R", "kind": "stone_pillar", "at": { "st": "buffer_s", "ds": 5.0, "off": 3.6 }, "h": 2.4 },
     { "id": "shimenawa_threshold", "kind": "shimenawa", "between": [ "pillar_L", "pillar_R" ], "h": 2.3 },
     { "id": "offerings_threshold", "kind": "offerings", "at": { "st": "buffer_s", "ds": 9.0, "off": -4.6 } },
-    { "id": "bones_threshold", "kind": "bones", "at": { "st": "buffer_s", "ds": 12.0, "off": 4.8 } }
+    { "id": "bones_threshold", "kind": "bones", "at": { "st": "buffer_s", "ds": 12.0, "off": 4.8 } },
+    { "id": "farm_patch", "kind": "farm_patch", "at": { "st": "farm_edge", "ds": 2.0, "off": 24.0 }, "hx": 11.0, "hz": 8.0, "ridges": 5, "model": "s01_field", "_s01_r6": "R6：原本 5 條 19.8 m 的褐色長方盒＋上面一條亮綠薄盒（d_wide 裡的平行亮綠條）→ 順地形的畝と溝（12 條、畝距 1.15 m）＋大根／蔥／小松菜（Blender 資產）＋畦の雑草。拿掉 model 欄位＝回到原本。", "_wild_1018": "2026-10-18 荒野化：移除（農田／農舍／柴堆／籃／田邊柵＝人居感）" },
+    { "id": "farm_hut", "skin": true, "kind": "hut", "spec": "REF-HUT", "at": { "st": "farm_edge", "ds": 8.0, "off": 12.5 }, "face": "path", "w": 4.6, "d": 3.6, "h": 3.2, "_wild_1018": "2026-10-18 荒野化：移除（農田／農舍／柴堆／籃／田邊柵＝人居感）" },
+    { "id": "firewood", "skin": true, "kind": "firewood", "spec": "H08", "at": { "st": "farm_edge", "ds": 4.0, "off": 12.0 }, "_wild_1018": "2026-10-18 荒野化：移除（農田／農舍／柴堆／籃／田邊柵＝人居感）" },
+    { "id": "basket_farm", "skin": true, "kind": "basket", "spec": "H07", "at": { "st": "farm_edge", "ds": 12.5, "off": 11.4 }, "_wild_1018": "2026-10-18 荒野化：移除（農田／農舍／柴堆／籃／田邊柵＝人居感）" },
+    { "id": "fence_field_edge", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "farm_edge", "ds0": -10.0, "ds1": 14.0, "off": 14.8 }, "weathered": 0.2, "_wild_1018": "2026-10-18 荒野化：移除（農田／農舍／柴堆／籃／田邊柵＝人居感）" },
+    { "id": "fence_torii_L", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "torii", "ds0": -8.0, "ds1": -2.5, "off": -4.3, "off1": -4.9 }, "weathered": 0.9, "_s01_r1": "鳥居前的境界欄：保留（定位鳥居口），但縮短、左右不再鏡像、做舊。", "_wild_1018": "2026-10-18 荒野化：移除（鳥居兩側整齊的橫木柵＝庭園感；倒下的石燈籠會穿進右側柵）" },
+    { "id": "fence_torii_R", "skin": true, "kind": "fence_run", "spec": "H03", "at": { "st": "torii", "ds0": -7.0, "ds1": -2.0, "off": 4.3, "off1": 4.7 }, "weathered": 0.85, "_s01_r1": "同上。", "_wild_1018": "2026-10-18 荒野化：移除（鳥居兩側整齊的橫木柵＝庭園感；倒下的石燈籠會穿進右側柵）" }
   ]
 }

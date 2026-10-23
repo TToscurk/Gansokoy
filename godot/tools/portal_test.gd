@@ -199,6 +199,8 @@ func _check_target(target_id: String, source_ids: Array) -> void:
 
 	var terrain := root.find_child("Terrain", true, false) as MeshInstance3D
 	if terrain == null or terrain.mesh == null:
+		terrain = root.find_child("UnifiedGround", true, false) as MeshInstance3D
+	if terrain == null or terrain.mesh == null:
 		_fail("target[%s]" % target_id, "target Terrain mesh is missing or failed to load")
 		await _teardown(root)
 		return
@@ -220,7 +222,7 @@ func _check_target(target_id: String, source_ids: Array) -> void:
 
 		var arrival := _arrival_for(return_portal)
 		_arrivals[scope] = arrival
-		var ground: Variant = _ground_at(space, terrain, arrival.x, arrival.z)
+		var ground: Variant = _ground_at(space, terrain, arrival.x, arrival.z, float(return_portal.y))
 		if ground == null:
 			_fail(scope, "no ground below arrival %s" % arrival)
 			continue
@@ -252,7 +254,7 @@ func _build_runtime_collisions(root: Node3D, meta: Dictionary) -> void:
 		for child: Node in node.get_children():
 			stack.append(child)
 		if node is MeshInstance3D:
-			if own_colliders and not (String(node.name) == "Terrain" or node.has_meta("needs_trimesh")):
+			if own_colliders and not (String(node.name) == "Terrain" or String(node.name) == "UnifiedGround" or node.has_meta("needs_trimesh")):
 				continue
 			var bounds: AABB = (node as MeshInstance3D).get_aabb()
 			if maxf(bounds.size.x, bounds.size.z) >= TRIMESH_MIN_SPAN:
@@ -278,20 +280,27 @@ func _build_runtime_collisions(root: Node3D, meta: Dictionary) -> void:
 		body.add_child(shape)
 
 
-func _ground_at(space: PhysicsDirectSpaceState3D, terrain: MeshInstance3D, x: float, z: float) -> Variant:
-	var terrain_bounds := terrain.global_transform * terrain.get_aabb()
-	var terrain_top := terrain_bounds.position.y + terrain_bounds.size.y
-	var from_y := terrain_top + 60.0
+func _ground_at(space: PhysicsDirectSpaceState3D, terrain: MeshInstance3D, x: float, z: float, expected_y: float = 0.0) -> Variant:
+	var from_y := expected_y + 30.0
+	var to_y := expected_y - 20.0
+	var ex: Array[RID] = []
 	for attempt in range(8):
-		var query := PhysicsRayQueryParameters3D.create(Vector3(x, from_y, z), Vector3(x, terrain_top - 40.0, z))
+		var query := PhysicsRayQueryParameters3D.create(Vector3(x, from_y, z), Vector3(x, to_y, z))
 		query.collide_with_areas = false
+		query.exclude = ex
 		var hit := space.intersect_ray(query)
 		if hit.is_empty():
 			return null
+		var col: Object = hit.get("collider")
+		var nm := String(col.name) if col else ""
+		if nm.contains("Boundary") or nm.contains("邊界") or nm.contains("boundary"):
+			ex.append(hit.rid)
+			continue
 		var y := float(hit.position.y)
-		if y <= terrain_top + META_Y_TOLERANCE:
+		if absf(y - expected_y) <= META_Y_TOLERANCE:
 			return y
 		from_y = y - 0.05
+		ex.append(hit.rid)
 	return null
 
 

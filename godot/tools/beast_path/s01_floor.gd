@@ -163,6 +163,8 @@ static func _splat(D: PackedFloat32Array, o: Vector2, nx: int, nz: int, c: Vecto
 
 # ================================================================= 每一類的接受率
 static func _p(S: Dictionary, sp: String, p: Vector2, c: Dictionary) -> float:
+	if sp.begins_with("verge_"):
+		return _p_verge(S, sp, p, c)
 	var N: Dictionary = S["noise"]
 	var wx := p.x + 7.0 * (N["warp"] as FastNoiseLite).get_noise_2d(p.x, p.y)
 	var wz := p.y + 7.0 * (N["warp"] as FastNoiseLite).get_noise_2d(p.x + 71.0, p.y - 33.0)
@@ -324,13 +326,17 @@ const BASE_TINT := {"grass_tall": Color(0.64, 0.71, 0.70), "grass_short": Color(
 
 static func _tint(S: Dictionary, sp: String, p: Vector2, c: Dictionary, rng: RandomNumberGenerator) -> Color:
 	var k := rng.randf_range(0.90, 1.06)
-	var col: Color = BASE_TINT.get(sp, Color(1, 1, 1)) * k
+	var col: Color = BASE_TINT.get(sp.trim_prefix("verge_"), Color(1, 1, 1)) * k
 	if sp == "grass_tall" or sp == "grass_short":
 		var pd := clampf(float(c["dry"]) * 0.7 + 0.45 * (S["noise"]["var"] as FastNoiseLite).get_noise_2d(p.x * 0.6 + 50.0, p.y * 0.6), 0.0, 1.0)
 		col = col * Color(1, 1, 1).lerp(Color(1.04, 0.98, 0.84), pd * 0.8)
 		col = col * Color(1, 1, 1).lerp(Color(0.90, 1.02, 0.92), clampf(float(c["lush"]), 0.0, 1.0))
 	if sp.begins_with("grass") or sp == "sedge":
-		col = col * lerpf(1.0, 0.86, float(c["shade"]))      # 闊葉、蕨在林下不再額外壓暗（光照已經夠暗，再壓會變黑色剪影）
+		col = col * lerpf(1.0, 0.86, float(c["shade"]))
+	if sp == "verge_litter":
+		col = col * Color(0.76, 0.72, 0.68)                 # 荒野化 R2：路上的落葉是踩過、濕的（審圖：橘色太飽和像貼紙）
+	elif sp == "verge_moss":
+		col = col * Color(0.78, 0.80, 0.74)      # 闊葉、蕨在林下不再額外壓暗（光照已經夠暗，再壓會變黑色剪影）
 	return Color(minf(col.r, 1.0), minf(col.g, 1.0), minf(col.b, 1.0), 1.0)
 
 
@@ -408,9 +414,10 @@ static func plan(dress, lib, cfg: Dictionary, F, trunks: Array, unders: Array, w
 				if float(c["de"]) < need0 * (1.0 + 1.3 * maxf(0.0, nr) + 0.9 * minf(0.0, nr)):
 					continue
 				var pr := _p(S, sp, p, c)
+				var spb := sp.trim_prefix("verge_")            # 路緣侵蝕種：擺法（傾斜、下沉、石鋪規則）同原種
 				if float(c["pv"]) > 0.05:
 					# 石鋪上：只有低地被（苔、短草、蔭草、落葉、枯枝、小草花），越往石鋪中心越少
-					if not (sp == "moss" or sp == "grass_short" or sp == "shadegrass" or sp == "litter" or sp == "twigs" or sp == "forb"):
+					if not (spb == "moss" or spb == "grass_short" or spb == "shadegrass" or spb == "litter" or spb == "twigs" or spb == "forb" or spb == "mud"):
 						continue
 					pr *= 1.0 - smoothstep(0.05, float(clr.get("paving_low", 0.05)), float(c["pv"]))
 				if pr <= 0.0 or u > pr * float(cc["pmax"]):
@@ -419,7 +426,7 @@ static func plan(dress, lib, cfg: Dictionary, F, trunks: Array, unders: Array, w
 				var an: String = assets[mini(ai, assets.size() - 1)]
 				var y := float(lib.h_at(p.x, p.y))
 				var nrm: Vector3 = dress.normal_at(lib, p.x, p.y)
-				var tilt := 1.0 if (sp == "litter" or sp == "moss" or sp == "twigs") else (0.7 if sp == "shadegrass" else (0.5 if sp.begins_with("fern") or sp == "herb" else 0.3))
+				var tilt := 1.0 if (spb == "litter" or spb == "moss" or spb == "twigs" or spb == "mud") else (0.7 if spb == "shadegrass" else (0.5 if spb.begins_with("fern") or spb == "herb" else 0.3))
 				var upv := Vector3.UP.slerp(nrm, tilt).normalized()
 				if sp == "grass_tall" or sp == "forb" or sp == "sedge" or sp == "fern_big" or sp == "sapling":
 					var lean := 0.14 if sp != "sapling" else 0.08
@@ -427,12 +434,12 @@ static func plan(dress, lib, cfg: Dictionary, F, trunks: Array, unders: Array, w
 				var sy := sc
 				if sp.begins_with("grass") or sp.begins_with("fern") or sp == "sedge" or sp == "herb" or sp == "forb":
 					sy = sc * lerpf(0.78, 1.22, j3)
-				elif sp == "moss":
+				elif spb == "moss" or spb == "mud":
 					sy = sc * 0.6
 				elif sp == "sapling":
 					sy = sc * lerpf(0.85, 1.2, j3)
 				var b3: Basis = dress._basis_up(upv, yaw) * Basis.from_scale(Vector3(sc, sy, sc))
-				var sink := 0.004 if (sp == "litter" or sp == "twigs") else (0.0 if sp == "moss" else 0.03)
+				var sink := 0.004 if (spb == "litter" or spb == "twigs") else (0.0 if (spb == "moss" or spb == "mud") else 0.03)
 				if not cover.has(an):
 					cover[an] = []
 				(cover[an] as Array).append({"xf": Transform3D(b3, Vector3(p.x, y - sink, p.y)), "c": _tint(S, sp, p, c, rng), "cat": sp})
@@ -567,3 +574,26 @@ static func auto_wood(dress, lib, cfg: Dictionary, F, trunks: Array, foot: Array
 		out.append(e3)
 		taken.append(p2)
 	return out
+
+
+## 2026-10-18 荒野化 R2：路緣侵蝕。路面土帶的「邊」不再是一條直線——落葉、苔、泥、矮草沿路緣以不規則的舌狀
+## 長進路面（de＜0）與路肩。只用低矮、無碰撞的地被（MultiMesh），路線與碰撞不變。
+##   species.<verge_x>.verge＝[伸進路面最多的 de（負）, 路肩外緣的 de]；verge_ramp_z＝[z0, z1]：z0（村端）只伸 35 %，到 z1 全量（S01 村緣→荒野）
+static func _p_verge(S: Dictionary, sp: String, p: Vector2, c: Dictionary) -> float:
+	var N: Dictionary = S["noise"]
+	var cc: Dictionary = ((S["cfg"] as Dictionary)["floor"] as Dictionary)["species"][sp]
+	var band: Array = cc.get("verge", [-1.2, 0.8])
+	if float(c["sl"]) > 38.0 or float(c["in_h"]) > 0.08 or float(c["td"]) < 0.12:
+		return 0.0
+	var de := float(c["de"])
+	var nr: float = (N["roadside"] as FastNoiseLite).get_noise_2d(p.x * 0.6 + 13.0, p.y * 0.6 - 7.0)
+	var ramp := 1.0
+	if cc.has("verge_ramp_z"):
+		var rz: Array = cc["verge_ramp_z"]
+		ramp = lerpf(0.35, 1.0, smoothstep(float(rz[0]), float(rz[1]), p.y) if float(rz[0]) < float(rz[1]) else 1.0 - smoothstep(float(rz[1]), float(rz[0]), p.y))
+	var reach := float(band[0]) * ramp * (0.30 + 0.70 * smoothstep(-0.35, 0.45, nr))
+	var inside := smoothstep(reach, reach * 0.3, de)
+	var outside := 1.0 - smoothstep(float(band[1]) * 0.5, float(band[1]), de)
+	var nn: float = (N[sp] as FastNoiseLite).get_noise_2d(p.x, p.y)
+	var patch := smoothstep(-0.5, 0.12, nn + 0.35 * nr)
+	return clampf(inside * outside * patch * float(c["zw"]), 0.0, 1.0)

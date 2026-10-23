@@ -36,7 +36,7 @@ static func load_cfg() -> Dictionary:
 static func glb(name: String) -> Dictionary:
 	if _glb.has(name):
 		return _glb[name]
-	var path := GLB_DIR + name + ".glb"
+	var path := name if name.begins_with("res://") else GLB_DIR + name + ".glb"     # 荒野化 R3：可直接給 res:// 的 .gltf／.glb（只取幾何，材質照本系統）
 	var doc := GLTFDocument.new()
 	var st := GLTFState.new()
 	if doc.append_from_file(ProjectSettings.globalize_path(path), st) != OK:
@@ -60,12 +60,13 @@ static func glb(name: String) -> Dictionary:
 
 
 # ================================================================= 材質
-static func veg_mat(cat0: String, lod: Array) -> ShaderMaterial:
+static func veg_mat(cat00: String, lod: Array) -> ShaderMaterial:
+	var cat0 := cat00.trim_prefix("verge_")                   # 路緣侵蝕種（荒野化 R2）＝同原種的材質
 	var cat: String = S01Floor.FAMILY.get(cat0, cat0)
 	var m := ShaderMaterial.new()
 	m.shader = load(MEADOW_SH)
 	m.set_shader_parameter("fade_out", Vector2(float(lod[0]), float(lod[1])))
-	if cat == "litter" or cat == "moss" or cat == "twigs":
+	if cat == "litter" or cat == "moss" or cat == "twigs" or cat == "mud":
 		m.set_shader_parameter("wind_strength", 0.0)
 		m.set_shader_parameter("base_ao", 1.0)
 		m.set_shader_parameter("translucency", 0.04)
@@ -263,6 +264,7 @@ static func contact_stats(lib, V: PackedVector3Array, N: PackedVector3Array, xf:
 static func plan(lib, cfg: Dictionary, F: Fields, trees: Array, foot: Array, wall: Dictionary, rm: Dictionary) -> Dictionary:
 	scene_id = String(cfg.get("scene", "S01"))
 	zlib = lib
+	cfg = resolve_at(lib, cfg)                      # 2026-10-18 荒野化 R2：rocks／wood 的 at 可寫沿路站點 {st, ds, off}
 	# （回傳的 cover 每項含 xf／c／cat；bake 腳本可另存點位圖）
 	var seed_ := int(cfg.get("seed", 1))
 	var clr: Dictionary = cfg["clear"]
@@ -296,7 +298,16 @@ static func plan(lib, cfg: Dictionary, F: Fields, trees: Array, foot: Array, wal
 		var s := float(rc.get("s", 1.0))
 		var ab: AABB = a["aabb"]
 		var rr := 0.5 * maxf(ab.size.x, ab.size.z) * s
-		var why := _hard_clear(lib, clr, p, rr, foot, trunks, wrocks, true)
+		var rr_road := rr * float(rc.get("rr_k", 1.0)) if rc.has("_r2") else -1.0
+		var ES := _spec(rc, clr)
+		if bool(ES["flat"]):
+			rr_road = -2.0                                    # 平鋪件（舊鋪石殘片）：可以在路面上，不做路緣淨空
+		var why := _hard_clear(lib, clr, p, rr, foot, trunks, wrocks, true, rr_road)
+		if why != "" and rc.has("_r2"):
+			var pn := _nudge(lib, clr, p, rr, foot, trunks, wrocks, true, rr_road)
+			if pn.x < 1e8:
+				p = pn
+				why = ""
 		if why != "":
 			skipped.append({"id": rc["id"], "why": why})
 			continue
@@ -326,12 +337,56 @@ static func plan(lib, cfg: Dictionary, F: Fields, trees: Array, foot: Array, wal
 		var bury := float(rc.get("bury", 0.42 if along else (0.55 if is_deb else 0.0)))
 		var fit := ground_fit(lib, V, N, xf, 0.06, float(rc.get("sink", 0.1)), bury)
 		xf.origin.y -= float(fit[0])
+		if bool(ES["flat"]):
+			xf.origin.y += _flat_set(lib, V, xf, 0.05)
+		if rc.has("_r2"):
+			for _round in 4:                                  # 外推（路緣幾何）↔ 繞開（腳印／樹幹／支線／其他件）交替，直到都合格
+				for _it in 10:
+					if bool(ES["flat"]):
+						break
+					var push := _edge_push(lib, V, xf, float(ES["near"]), float(ES["tall_h"]), float(ES["tall_near"]))
+					if push.length() < 0.01:
+						break
+					p += push
+					xf.origin = Vector3(p.x, lib.h_at(p.x, p.y), p.y)
+					fit = ground_fit(lib, V, N, xf, 0.06, float(rc.get("sink", 0.1)), bury)
+					xf.origin.y -= float(fit[0])
+				if _hard_clear(lib, clr, p, rr, foot, trunks, wrocks, true, rr_road if bool(ES["flat"]) else 0.0) == "" and _clash(lib, V, xf, p, rr, hard, trunks) == "":
+					break
+				if _clash(lib, V, xf, p, rr, hard, trunks).begins_with("穿進樹幹"):
+					var turned := false
+					for _r in 8:
+						xf.basis = Basis(Vector3.UP, 0.7156) * xf.basis
+						xf.origin = Vector3(p.x, lib.h_at(p.x, p.y), p.y)
+						fit = ground_fit(lib, V, N, xf, 0.06, float(rc.get("sink", 0.1)), bury)
+						xf.origin.y -= float(fit[0])
+						if _clash(lib, V, xf, p, rr, hard, trunks) == "" and (bool(ES["flat"]) or _edge_push(lib, V, xf, float(ES["near"]), float(ES["tall_h"]), float(ES["tall_near"])).length() < 0.01):
+							turned = true
+							break
+					if turned:
+						break
+				var pn3 := _nudge(lib, clr, p, rr, foot, trunks, wrocks, true, rr_road if bool(ES["flat"]) else 0.0, hard)
+				if pn3.x > 1e8:
+					break
+				p = pn3
+				xf.origin = Vector3(p.x, lib.h_at(p.x, p.y), p.y)
+				fit = ground_fit(lib, V, N, xf, 0.06, float(rc.get("sink", 0.1)), bury)
+				xf.origin.y -= float(fit[0])
+				if bool(ES["flat"]):
+					xf.origin.y += _flat_set(lib, V, xf, 0.05)
+			var hc := _hard_clear(lib, clr, p, rr, foot, trunks, wrocks, true, rr_road if bool(ES["flat"]) else 0.0)
+			var ep := 0.0 if bool(ES["flat"]) else _edge_push(lib, V, xf, float(ES["near"]), float(ES["tall_h"]), float(ES["tall_near"])).length()
+			var cl := _clash(lib, V, xf, p, rr, hard, trunks)
+			if ep > 0.01 or hc != "" or cl != "":
+				skipped.append({"id": rc["id"], "why": "R2/R3 外推後仍不合淨空：%s%s 路緣推 %.2f m" % [hc, cl, ep]})
+				continue
 		var st := contact_stats(lib, V, N, xf)
 		var reach := S01Wall.reachable(rm, p) or S01Wall.reachable(rm, p + dd * 2.0) or S01Wall.reachable(rm, p + dd * 4.0)
-		var collide := reach and float(st["protrude_m"]) > 0.45
+		var collide := reach and float(st["protrude_m"]) > 0.45 and not bool(ES["soft"])     # R3 無碰撞輪廓件／平鋪件：不給碰撞
 		st["drop_m"] = snappedf(float(fit[0]), 0.01)
 		st["reachable"] = reach
 		st["trunk_clear_m"] = snappedf(_trunk_d(p, trunks) - rr, 0.01)
+		st["edge_min_m"] = snappedf(_edge_min(lib, V, xf), 0.01)
 		hard.append({"id": String(rc["id"]), "kind": "rock", "asset": String(rc["asset"]), "xf": xf, "moss": float(rc.get("moss", 0.5)), "collide": collide, "rr": rr, "p": p, "stats": st,
 			"seed": seed_ * 13 + hard.size() * 977})
 	# ---- 木
@@ -361,11 +416,19 @@ static func plan(lib, cfg: Dictionary, F: Fields, trees: Array, foot: Array, wal
 		else:
 			p2 = Vector2(float(wc["at"][0]), float(wc["at"][1]))
 		var asset := String(wc["asset"])
+		var ES2 := _spec(wc, clr)
 		var is_log := asset.contains("log")
-		var is_stump := asset.contains("stump")
+		var is_stump := asset.contains("stump") or asset.contains("rootgiant")      # 巨根：與殘株同樣要路緣淨空＋碰撞
 		var rr2 := 0.5 * maxf(ab2.size.x, ab2.size.z) * s2
 		if is_log or is_stump:
-			var why2 := _hard_clear(lib, clr, p2, rr2, foot, trunks, wrocks, false)
+			var rr2_road := rr2 * float(wc.get("rr_k", 1.0)) if wc.has("_r2") else -1.0
+			ES2 = _spec(wc, clr)
+			var why2 := _hard_clear(lib, clr, p2, rr2, foot, trunks, wrocks, false, rr2_road)
+			if why2 != "" and wc.has("_r2"):
+				var pn2 := _nudge(lib, clr, p2, rr2, foot, trunks, wrocks, false, rr2_road)
+				if pn2.x < 1e8:
+					p2 = pn2
+					why2 = ""
 			if why2 != "":
 				skipped.append({"id": wc["id"], "why": why2})
 				continue
@@ -394,13 +457,68 @@ static func plan(lib, cfg: Dictionary, F: Fields, trees: Array, foot: Array, wal
 		var band := 0.05 if is_log else (-0.08 if wc.has("tree_near") else 0.02)
 		var fit2 := ground_fit(lib, V2, N2, xf2, band, float(wc.get("sink", 0.04)), 0.0)
 		xf2.origin.y -= float(fit2[0])
+		if wc.has("_r2"):
+			var bad2 := false
+			for _round in 4:
+				for _it in 10:
+					var push2 := _edge_push(lib, V2, xf2, float(ES2["near"]), float(ES2["tall_h"]), float(ES2["tall_near"]))
+					if push2.length() < 0.01:
+						break
+					p2 += push2
+					xf2.origin = Vector3(p2.x, lib.h_at(p2.x, p2.y), p2.y)
+					fit2 = ground_fit(lib, V2, N2, xf2, band, float(wc.get("sink", 0.04)), 0.0)
+					xf2.origin.y -= float(fit2[0])
+				if _hard_clear(lib, clr, p2, rr2, foot, trunks, wrocks, false, 0.0) == "" and _clash(lib, V2, xf2, p2, rr2, hard, trunks) == "":
+					break
+				if _clash(lib, V2, xf2, p2, rr2, hard, trunks).begins_with("穿進樹幹"):
+					var turned2 := false
+					for _r in 8:
+						xf2.basis = Basis(Vector3.UP, 0.7156) * xf2.basis
+						xf2.origin = Vector3(p2.x, lib.h_at(p2.x, p2.y), p2.y)
+						fit2 = ground_fit(lib, V2, N2, xf2, band, float(wc.get("sink", 0.04)), 0.0)
+						xf2.origin.y -= float(fit2[0])
+						if _clash(lib, V2, xf2, p2, rr2, hard, trunks) == "" and _edge_push(lib, V2, xf2, float(ES2["near"]), float(ES2["tall_h"]), float(ES2["tall_near"])).length() < 0.01:
+							turned2 = true
+							break
+					if turned2:
+						break
+				var pn4 := _nudge(lib, clr, p2, rr2, foot, trunks, wrocks, false, 0.0, hard)
+				if pn4.x > 1e8:
+					break
+				p2 = pn4
+				xf2.origin = Vector3(p2.x, lib.h_at(p2.x, p2.y), p2.y)
+				fit2 = ground_fit(lib, V2, N2, xf2, band, float(wc.get("sink", 0.04)), 0.0)
+				xf2.origin.y -= float(fit2[0])
+			var hc2 := _hard_clear(lib, clr, p2, rr2, foot, trunks, wrocks, false, 0.0)
+			var ep2 := _edge_push(lib, V2, xf2, float(ES2["near"]), float(ES2["tall_h"]), float(ES2["tall_near"])).length()
+			var cl2 := _clash(lib, V2, xf2, p2, rr2, hard, trunks)
+			if ep2 > 0.01 or hc2 != "" or cl2 != "":
+				bad2 = true
+			if bad2:
+				skipped.append({"id": wc["id"], "why": "R2/R3 外推後仍不合淨空：%s%s 路緣推 %.2f m" % [hc2, cl2, ep2]})
+				continue
 		var st2 := contact_stats(lib, V2, N2, xf2)
+		if bool(ES2["soft"]) and is_log and not asset.contains("rootplate") and float(st2["underside_gap_max_m"]) > 0.35:   # 根盤本來就立起（下緣離地），不算懸空
+			var ok_turn := false
+			for _r2 in 8:
+				xf2.basis = Basis(Vector3.UP, 0.7854) * xf2.basis
+				xf2.origin = Vector3(p2.x, lib.h_at(p2.x, p2.y), p2.y)
+				fit2 = ground_fit(lib, V2, N2, xf2, band, float(wc.get("sink", 0.04)), 0.0)
+				xf2.origin.y -= float(fit2[0])
+				st2 = contact_stats(lib, V2, N2, xf2)
+				if float(st2["underside_gap_max_m"]) <= 0.35 and _clash(lib, V2, xf2, p2, rr2, hard, trunks) == "" and _edge_push(lib, V2, xf2, float(ES2["near"]), float(ES2["tall_h"]), float(ES2["tall_near"])).length() < 0.01:
+					ok_turn = true
+					break
+			if not ok_turn:
+				skipped.append({"id": wc["id"], "why": "R3 倒木底下懸空 > 0.35 m（8 個方向都不貼地）"})
+				continue
 		st2["drop_m"] = snappedf(float(fit2[0]), 0.01)
 		if tree_id != "":
 			st2["tree"] = tree_id
 		var reach2 := S01Wall.reachable(rm, p2)
-		hard.append({"id": String(wc["id"]), "kind": "wood", "asset": asset, "xf": xf2, "moss": float(wc.get("moss", 0.4)), "collide": (is_log or is_stump) and reach2,
-			"rr": rr2 if is_log else 0.6 * rr2, "p": p2, "stats": st2, "ground_y": float(lib.h_at(p2.x, p2.y))})
+		st2["edge_min_m"] = snappedf(_edge_min(lib, V2, xf2), 0.01)
+		hard.append({"id": String(wc["id"]), "kind": "wood", "asset": asset, "xf": xf2, "moss": float(wc.get("moss", 0.4)), "collide": (is_log or is_stump) and reach2 and not bool(ES2["soft"]),
+			"rr": rr2 if is_log else (0.9 if asset.contains("rootgiant") else 0.6) * rr2, "p": p2, "stats": st2, "ground_y": float(lib.h_at(p2.x, p2.y))})   # 巨根：根群上不長地被（R2 審圖：根被蕨蓋掉）
 	# ---- 地被
 	if cfg.has("floor"):
 		var fl: Dictionary = S01Floor.plan(load(SELF_PATH), lib, cfg, F, trunks, unders, wrocks, foot, hard, clr, seed_)
@@ -630,13 +748,15 @@ static func _trunk_d(p: Vector2, trunks: Array) -> float:
 	return best
 
 
-static func _hard_clear(lib, clr: Dictionary, p: Vector2, rr: float, foot: Array, trunks: Array, wrocks: Array, is_rock: bool) -> String:
+static func _hard_clear(lib, clr: Dictionary, p: Vector2, rr: float, foot: Array, trunks: Array, wrocks: Array, is_rock: bool, rr_road := -1.0) -> String:
 	if lib.scene_id_of_z(p.y - rr) != scene_id or lib.scene_id_of_z(p.y + rr) != scene_id:
 		return "越過 S01 邊界"
-	var de := S01Wall.path_edge_d(lib, p) - rr
-	if de < float(clr["hard"]):
+	# rr_road ≥ 0（荒野化 R2 件）：路緣這一項只當粗篩，真正的淨空由擺好後的 _edge_push 用地上頂點量
+	var de := S01Wall.path_edge_d(lib, p) - (rr if rr_road < 0.0 else rr_road)
+	if rr_road > -1.5 and de < float(clr["hard"]) * (1.0 if rr_road < 0.0 else 0.0):
 		return "離主路路緣 %.2f m（要 ≥ %.1f）" % [de, float(clr["hard"])]
-	if lib.sample_arr(lib.DB, p.x, p.y) - rr < float(clr["branch_db"]) or lib.sample_arr(lib.DS, p.x, p.y) - rr < float(clr["stream_ds"]):
+	var rr_b := rr * (0.5 if rr_road <= -1.5 else 1.0)
+	if lib.sample_arr(lib.DB, p.x, p.y) - rr_b < float(clr["branch_db"]) or lib.sample_arr(lib.DS, p.x, p.y) - rr_b < float(clr["stream_ds"]):
 		return "離支線／溪太近"
 	for f: Dictionary in foot:
 		if p.distance_to(f["p"]) < float(f["r"]) + rr * 0.8:
@@ -812,7 +932,7 @@ static func build(lib, cfg: Dictionary, P: Dictionary) -> Node3D:
 	cover.name = "Cover"
 	root.add_child(cover)
 	var rmat := rock_mat()
-	var wmats := {"log": wood_mat("dead"), "root": wood_mat("hackberry"), "branch": wood_mat("dead")}
+	var wmats := {"log": wood_mat("dead"), "root": wood_mat("hackberry"), "branch": wood_mat("dead"), "giant": wood_mat("camphor")}   # giant＝荒野化 R2 巨根（楠：深褐，不是淺灰）
 	var wmesh := {}
 	var ncol := 0
 	for h: Dictionary in P["hard"]:
@@ -828,11 +948,16 @@ static func build(lib, cfg: Dictionary, P: Dictionary) -> Node3D:
 			arrays.resize(Mesh.ARRAY_MAX)
 			arrays[Mesh.ARRAY_VERTEX] = a["V"]
 			arrays[Mesh.ARRAY_NORMAL] = a["N"]
-			arrays[Mesh.ARRAY_COLOR] = rock_colors(lib, a["V"], a["N"], h["xf"], float(h["moss"]), int(h["seed"]), 0.88)
+			var rcol := rock_colors(lib, a["V"], a["N"], h["xf"], float(h["moss"]), int(h["seed"]), 0.88)
+			var is_cut := _is_cut_stone(String(h["asset"]))
+			if is_cut:
+				for k0 in rcol.size():
+					rcol[k0].g = lerpf(rcol[k0].g, 1.0, 0.45)       # 加工石面平整（同 s01_arch._stone）
+			arrays[Mesh.ARRAY_COLOR] = rcol
 			arrays[Mesh.ARRAY_INDEX] = a["I"]
 			var m := ArrayMesh.new()
 			m.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-			m.surface_set_material(0, rmat)
+			m.surface_set_material(0, stone_mat() if is_cut else rmat)
 			mi.mesh = m
 			rocks.add_child(holder)
 		else:
@@ -851,7 +976,7 @@ static func build(lib, cfg: Dictionary, P: Dictionary) -> Node3D:
 				stl.create_from(m0, 0)
 				stl.generate_tangents()
 				var m1 := stl.commit()
-				m1.surface_set_material(0, wmats["log" if an.contains("log") else ("root" if an.contains("root") else "branch")])
+				m1.surface_set_material(0, wmats["giant" if an.contains("rootgiant") else ("log" if an.contains("log") else ("root" if an.contains("root") else "branch"))])
 				wmesh[an] = m1
 			mi.mesh = wmesh[an]
 			mi.set_instance_shader_parameter("moss_k", float(h["moss"]))
@@ -863,7 +988,11 @@ static func build(lib, cfg: Dictionary, P: Dictionary) -> Node3D:
 			body.name = "Body"
 			var cs := CollisionShape3D.new()
 			cs.name = "Shape"
-			cs.shape = mi.mesh.create_convex_shape(true, true)
+			var an_c := String(h["asset"])
+			if an_c.contains("rootgiant") or an_c.contains("rootplate") or an_c.contains("ruin_wall") or an_c.contains("ruin_steps"):
+				cs.shape = mi.mesh.create_trimesh_shape()        # 凹形（根群、根盤、崩れ石垣、石段）：凸包會在空中留下看不見的牆
+			else:
+				cs.shape = mi.mesh.create_convex_shape(true, true)
 			body.add_child(cs)
 			holder.add_child(body)
 			ncol += 1
@@ -937,6 +1066,9 @@ static func build(lib, cfg: Dictionary, P: Dictionary) -> Node3D:
 				if lv == 1:
 					n_lod1 += 1
 			n_items += its.size()
+	var mist := build_mist(lib, cfg)                 # 荒野化 R2：局部薄霧
+	if mist != null:
+		root.add_child(mist)
 	root.set_meta("hard", (P["hard"] as Array).size())
 	root.set_meta("collide", ncol)
 	root.set_meta("items", n_items)
@@ -944,4 +1076,193 @@ static func build(lib, cfg: Dictionary, P: Dictionary) -> Node3D:
 	root.set_meta("mm_lod1_nodes", n_lod1)
 	for n in root.find_children("*", "", true, false):
 		n.owner = root
+	return root
+
+
+# ================================================================= 2026-10-18 荒野化 R2
+## rocks／wood 的 "at" 可寫沿路站點（{st, ds, off}，同 layout 的 POI）；這裡換成世界座標 [x, z]，其餘流程不變
+static func resolve_at(lib, cfg: Dictionary) -> Dictionary:
+	var c2 := cfg.duplicate(true)
+	for key: String in ["rocks", "wood"]:
+		for e: Dictionary in c2.get(key, []):
+			if e.has("at") and e["at"] is Dictionary:
+				var res: Dictionary = lib.resolve(e["at"])
+				var rp: Vector2 = res["p"]
+				e["at"] = [snappedf(rp.x, 0.01), snappedf(rp.y, 0.01)]
+				if e.has("yaw_rel"):                         # R3：順著路（本地 +X＝路的前進方向）再轉 yaw_rel 度
+					var tg: Vector2 = res.get("tan", Vector2(0, -1))
+					e["yaw"] = snappedf(rad_to_deg(atan2(-tg.y, tg.x)) + float(e["yaw_rel"]), 0.1)
+	return c2
+
+
+## 荒野化 R2 的具名件：原位不合淨空規則（道具腳印、樹幹、接縫…）時，在 1–9 m 內螺旋找最近的合格點；找不到＝照舊略過。
+## 只會更遠離／繞開，不放寬任何淨空規則。
+static func _nudge(lib, clr: Dictionary, p: Vector2, rr: float, foot: Array, trunks: Array, wrocks: Array, is_rock: bool, rr_road := -1.0, hard: Array = []) -> Vector2:
+	for k in range(1, 73):
+		var rad := 1.0 + 8.0 * float(k) / 72.0
+		var a := float(k) * 2.39996
+		var q := p + Vector2(cos(a), sin(a)) * rad
+		var near_h := false
+		for h: Dictionary in hard:
+			if (h["p"] as Vector2).distance_to(q) < 0.45 * (rr + float(h["rr"])):
+				near_h = true
+				break
+		if not near_h and _hard_clear(lib, clr, q, rr, foot, trunks, wrocks, is_rock, rr_road) == "":
+			return q
+	return Vector2(1e9, 1e9)
+
+
+## 荒野化 R2：擺好的件，地面以上（高於地 5 cm）的頂點離主路路緣的最近距離要 ≥ hard；不夠就回傳往外推的位移（沿路緣距離場的梯度）
+static func _edge_push(lib, V: PackedVector3Array, xf: Transform3D, hard: float, tall_h := 1e9, tall_near := 0.0) -> Vector2:
+	# 每個地上頂點的要求距離＝hard；離地高於 tall_h 的部分要 tall_near（R3：低矮輪廓可近路、高的要遠，免得擋相機／玩家）
+	var worst := 1e9
+	var wp := Vector2.ZERO
+	var step := maxi(1, V.size() / 900)
+	for k in range(0, V.size(), step):
+		var w: Vector3 = xf * V[k]
+		var gy: float = lib.h_at(w.x, w.z)
+		if w.y < gy + 0.05:
+			continue
+		var q := Vector2(w.x, w.z)
+		var need := tall_near if (w.y - gy > tall_h and tall_near > hard) else hard
+		var de := S01Wall.path_edge_d(lib, q) - need
+		if de < worst:
+			worst = de
+			wp = q
+	if worst >= 0.0:
+		return Vector2.ZERO
+	hard = 0.0
+	var g := Vector2(S01Wall.path_edge_d(lib, wp + Vector2(0.5, 0)) - S01Wall.path_edge_d(lib, wp - Vector2(0.5, 0)),
+		S01Wall.path_edge_d(lib, wp + Vector2(0, 0.5)) - S01Wall.path_edge_d(lib, wp - Vector2(0, 0.5)))
+	if g.length() < 1e-4:
+		g = Vector2(xf.origin.x, xf.origin.z) - wp
+	return g.normalized() * (-worst + 0.15)
+
+
+## 荒野化 R3：件的淨空規格
+##   _soft（無碰撞輪廓：巨根末端、倒木、遺跡碎塊）：地上頂點離主路路緣 ≥ soft_near（1.0 m）；離地 > 1.2 m 的部分 ≥ 2.5 m（不擋相機／玩家）
+##   _flat（舊鋪石殘片）：可以壓在路面上，但高出地面不超過 5 cm（踩得過、不擋腳）
+##   其餘 _r2：有碰撞，≥ clear.hard（3.5 m）
+static func _spec(e: Dictionary, clr: Dictionary) -> Dictionary:
+	var soft := bool(e.get("_soft", false)) or bool(e.get("_flat", false))
+	if bool(e.get("_flat", false)):
+		return {"soft": true, "flat": true, "near": 0.0, "tall_h": 1e9, "tall_near": 0.0}
+	if soft:
+		return {"soft": true, "flat": false, "near": float(clr.get("soft_near", 1.0)), "tall_h": float(clr.get("soft_tall_h", 1.2)), "tall_near": float(clr.get("soft_tall_near", 2.5))}
+	return {"soft": false, "flat": false, "near": float(clr["hard"]), "tall_h": 1e9, "tall_near": 0.0}
+
+
+## 平鋪件：把地上最高點定在離地 top 的高度（回傳要上移的量，可為負）
+static func _flat_set(lib, V: PackedVector3Array, xf: Transform3D, top: float) -> float:
+	var mx := -1e9
+	var step := maxi(1, V.size() / 1200)
+	for k in range(0, V.size(), step):
+		var w: Vector3 = xf * V[k]
+		mx = maxf(mx, w.y - lib.h_at(w.x, w.z))
+	return top - mx
+
+
+## 平鋪件：地上最高點超過 cap 的量（往下沉這麼多）
+static func _flat_excess(lib, V: PackedVector3Array, xf: Transform3D, cap: float) -> float:
+	var mx := -1e9
+	var step := maxi(1, V.size() / 1200)
+	for k in range(0, V.size(), step):
+		var w: Vector3 = xf * V[k]
+		mx = maxf(mx, w.y - lib.h_at(w.x, w.z))
+	return maxf(0.0, mx - cap)
+
+
+## 地上頂點離主路路緣的最近距離（報告用）
+static func _edge_min(lib, V: PackedVector3Array, xf: Transform3D) -> float:
+	var mn := 1e9
+	var step := maxi(1, V.size() / 900)
+	for k in range(0, V.size(), step):
+		var w: Vector3 = xf * V[k]
+		if w.y < lib.h_at(w.x, w.z) + 0.05:
+			continue
+		mn = minf(mn, S01Wall.path_edge_d(lib, Vector2(w.x, w.z)))
+	return mn
+
+
+## 穿插：地上頂點落進樹幹（半徑＋5 cm），或中心距太近其他已放的件（R2／R3 才檢查）
+static func _clash(lib, V: PackedVector3Array, xf: Transform3D, p: Vector2, rr: float, hard: Array, trunks: Array) -> String:
+	for h: Dictionary in hard:
+		if (h["p"] as Vector2).distance_to(p) < 0.45 * (rr + float(h["rr"])):
+			return "疊到 %s " % String(h["id"])
+	var near_t: Array = []
+	for t: Dictionary in trunks:
+		if (t["p"] as Vector2).distance_to(p) < rr + 1.5:
+			near_t.append(t)
+	if near_t.is_empty():
+		return ""
+	var step := maxi(1, V.size() / 900)
+	for k in range(0, V.size(), step):
+		var w: Vector3 = xf * V[k]
+		if w.y < lib.h_at(w.x, w.z) + 0.05:
+			continue
+		var q := Vector2(w.x, w.z)
+		for t: Dictionary in near_t:
+			if q.distance_to(t["p"]) < float(t["r"]) + 0.05:
+				return "穿進樹幹 %s " % String(t.get("id", "?"))
+	return ""
+
+
+static func _is_cut_stone(asset: String) -> bool:
+	return asset.begins_with("wild_ruin") or asset.begins_with("wild_jizo") or asset.contains("RockPath")
+
+
+static var _stone_mat: ShaderMaterial = null
+
+
+## 加工石（遺跡、地藏）：s01k_stone（與 S01 的燈籠／台座同一材質），比天然岩平整、偏淺；tone 0.9＝風化變暗
+static func stone_mat() -> ShaderMaterial:
+	if _stone_mat == null:
+		_stone_mat = ShaderMaterial.new()
+		_stone_mat.shader = load("res://assets/beast_path/s01_kit/mat/s01k_stone.gdshader")
+		_stone_mat.set_shader_parameter("noise_tex", load("res://assets/village_v2/_matlib/ground/V2G_noise.png"))
+		_stone_mat.set_shader_parameter("tone", 0.62)          # 審圖：0.9 在陰天林中偏白、像沒貼圖
+	return _stone_mat
+
+
+const MIST_SH := "res://assets/beast_path/s01_kit/mat/wild_mist.gdshader"
+
+
+## 局部薄霧（窪地、溪谷）：每處兩片交叉的軟邊薄片（深度柔化、近相機淡出、不投影、不碰撞）
+static func build_mist(lib, cfg: Dictionary) -> Node3D:
+	var list: Array = cfg.get("mist", [])
+	if list.is_empty():
+		return null
+	var root := Node3D.new()
+	root.name = "Mist"
+	var mat := ShaderMaterial.new()
+	mat.shader = load(MIST_SH)
+	mat.set_shader_parameter("noise_tex", load("res://assets/village_v2/_matlib/ground/V2G_noise.png"))
+	var mc: Dictionary = cfg.get("mist_style", {})
+	if mc.has("color"):
+		var cc: Array = mc["color"]
+		mat.set_shader_parameter("mist_col", Color(float(cc[0]), float(cc[1]), float(cc[2])))
+	mat.set_shader_parameter("density", float(mc.get("density", 0.32)))
+	for e: Dictionary in list:
+		var at: Variant = e["at"]
+		var p: Vector2 = lib.resolve(at)["p"] if at is Dictionary else Vector2(float(at[0]), float(at[1]))
+		var w := float(e.get("w", 10.0))
+		var h := float(e.get("h", 2.4))
+		var gy: float = lib.h_at(p.x, p.y)
+		var holder := Node3D.new()
+		holder.name = String(e["id"])
+		holder.position = Vector3(p.x, gy + h * 0.5 - 0.15, p.y)
+		holder.rotation.y = deg_to_rad(float(e.get("yaw", 0.0)))
+		for k in 3:
+			var mi := MeshInstance3D.new()
+			mi.name = "Sheet%d" % k
+			var q := QuadMesh.new()
+			q.size = Vector2(w * (0.62 if k == 0 else 0.48), h * (1.0 if k == 0 else 0.8))
+			mi.mesh = q
+			mi.rotation.y = deg_to_rad(60.0 * k)
+			mi.position = Vector3((float(k) - 1.0) * w * 0.18, 0.0, 0.0)
+			mi.material_override = mat
+			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			mi.visibility_range_end = 90.0
+			holder.add_child(mi)
+		root.add_child(holder)
 	return root

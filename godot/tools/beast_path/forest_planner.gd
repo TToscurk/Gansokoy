@@ -670,6 +670,7 @@ func plan() -> void:
 		_fill_under(sc)
 		_fill_dead(sc)
 	_zone = ""
+	_wild_pass()
 	stats = _count_stats()
 
 
@@ -877,3 +878,217 @@ func _fill_dead(sc: String) -> void:
 		_add_tree("snag_a", p, _rng.randf_range(0.9, 1.3), _rng.randf() * TAU, "dead")
 		_register(p, 0.3, 3.5, "t")
 		got += 1
+
+
+## ================================================================ 荒野化（2026-10-18 S01–S03 環境重製）
+## layout.forest.wild：在既有規劃（凍結的 S02／S03、S01 候選、S04 V1.2 凍結）之後「只加不改」——
+## 加樹（高低混種、微傾）、竹叢、枯立木；S01 的櫻換成野生闊葉／杉（櫻＝觀賞公園感）。
+## 獨立亂數（wild.seed），只落在 S01–S03；禁區與樹距沿用 _blocked／_too_close（路、支線、溪、鋪石、道具腳印、空地、陡坡），
+## 所以主路淨空、S04 的樹與所有凍結條目都不受影響。enabled＝false＝回到原規劃。
+func _wild_pass() -> void:
+	var wcfg: Dictionary = _fcfg.get("wild", {})
+	if not bool(wcfg.get("enabled", false)):
+		return
+	var rng := RandomNumberGenerator.new()
+	rng.seed = int(wcfg.get("seed", 18101))
+	var info := {"swap": 0, "tree": {}, "bamboo": {}, "dead": {}}
+	# 1) 櫻 → 野生樹（同高度）
+	var sw: Dictionary = wcfg.get("cherry_swap", {})
+	for t: Dictionary in trees:
+		var sc := String(t["scene"])
+		if not sw.has(sc) or not String(t["id"]).begins_with("sakura"):
+			continue
+		var opts: Dictionary = sw[sc]
+		var nid := ""
+		var tot := 0.0
+		for k: String in opts:
+			tot += float(opts[k])
+		var r0 := rng.randf() * tot
+		for k: String in opts:
+			r0 -= float(opts[k])
+			if r0 <= 0.0:
+				nid = k
+				break
+		if nid == "" or not kit.has(nid):
+			continue
+		var s_new := clampf(float(t["s"]) * _kit_h(String(t["id"])) / _kit_h(nid), 0.7, 1.4)
+		t["id"] = nid
+		t["s"] = s_new
+		t["r"] = float((kit[nid] as Dictionary)["r"]) * s_new
+		t.erase("xf")
+		t["frozen"] = false
+		info["swap"] = int(info["swap"]) + 1
+	# 2) 加樹
+	var zc: Dictionary = wcfg.get("zones", {})
+	var step := 2.5
+	for sc: String in ["S01", "S02", "S03"]:
+		if not zc.has(sc):
+			continue
+		var z: Dictionary = zc[sc]
+		var zr := _zone_z_range(sc)
+		var dens_pts: Array = z["dens"]              # [[z, 每 100 m² 株數], …]（z 由北往南遞增或任意順序，線性內插）
+		var mix: Dictionary = z["mix"]
+		var near_m: Array = z.get("near_m", [30.0, 48.0])   # 離路緣 near_m[0] 以內全額，到 near_m[1] 降到 far_k
+		var far_k := float(z.get("far_k", 0.3))
+		var lean_p := float(z.get("lean_p", 0.4))
+		var lean_deg := float(z.get("lean_deg", 5.0))
+		rng.seed = _wild_seed(int(wcfg.get("seed", 18101)), "tree_" + sc)
+		var cells: Array = []
+		var x := -107.0
+		while x < 107.0:
+			var zz := zr.x
+			while zz < zr.y:
+				cells.append(Vector2(x, zz))
+				zz += step
+			x += step
+		for i in range(cells.size() - 1, 0, -1):
+			var j := rng.randi_range(0, i)
+			var tmp: Vector2 = cells[i]
+			cells[i] = cells[j]
+			cells[j] = tmp
+		var n_add := 0
+		for c: Vector2 in cells:
+			var pp := c + Vector2(rng.randf() * step, rng.randf() * step)
+			if lib.scene_id_of_z(pp.y) != sc or _wild_seam(pp):
+				continue
+			var d := _wild_dens(dens_pts, pp.y)
+			var de := minf(lib.sample_arr(lib.DM, pp.x, pp.y) - lib.sample_arr(lib.WM, pp.x, pp.y), lib.sample_arr(lib.DB, pp.x, pp.y))
+			d *= lerpf(1.0, far_k, smoothstep(float(near_m[0]), float(near_m[1]), de))
+			d *= clampf(1.0 + 0.6 * _n2.get_noise_2d(pp.x * 1.3 + 211.0, pp.y * 1.3 - 77.0), 0.25, 1.6)   # 疏密成塊，不均勻撒點
+			if rng.randf() > d * step * step / 100.0:
+				continue
+			var spn := ""
+			var tot2 := 0.0
+			for k2: String in mix:
+				tot2 += float(mix[k2])
+			var r1 := rng.randf() * tot2
+			for k2: String in mix:
+				r1 -= float(mix[k2])
+				if r1 <= 0.0:
+					spn = k2
+					break
+			if spn == "" or not SPECIES.has(spn):
+				continue
+			var spec: Dictionary = SPECIES[spn]
+			var id := _wpick_r(rng, spec["v"])
+			var sc_s := lerpf(float(spec["s"][0]), float(spec["s"][1]), rng.randf())
+			var rt := float((kit[id] as Dictionary)["r"]) * sc_s
+			if _blocked(pp, rt):
+				continue
+			if spn != "sapling" and de - rt < float(z.get("big_edge_m", 0.0)):
+				continue                                    # 大樹的樹幹離路緣至少 big_edge_m：第三人稱相機（在路上、玩家後方）不貼樹幹；路緣由幼樹與林下收窄
+			var gap := float(spec["gap"]) * float(z.get("gap_k", 0.8))
+			if _too_close_wild(pp, gap, rt):
+				continue
+			_add_tree(id, pp, sc_s, rng.randf() * TAU, "tree")
+			if rng.randf() < lean_p:
+				var a := rng.randf() * TAU
+				(trees[trees.size() - 1] as Dictionary)["lean"] = [cos(a), sin(a), deg_to_rad(rng.randf_range(1.5, lean_deg))]
+			_register(pp, rt, gap, "t")
+			n_add += 1
+		(info["tree"] as Dictionary)[sc] = n_add
+	# 3) 竹叢（荒れた竹藪；loose 禁區＝可貼近林緣，但不進路／溪／道具）
+	for bz: Dictionary in wcfg.get("bamboo", []):
+		rng.seed = _wild_seed(int(wcfg.get("seed", 18101)), "bamboo_" + String(bz.get("id", "?")))
+		var c2 := _pt(bz["c"])
+		var sc2 := lib.scene_id_of_z(c2.y)
+		var R := float(bz["r"])
+		var cnt := int(float(bz["density"]) * BAMBOO_MULT * PI * R * R / 100.0 * 0.62)
+		var placed := 0
+		var tries := 0
+		while placed < cnt and tries < cnt * 12:
+			tries += 1
+			var ang := rng.randf() * TAU
+			var rad := R * sqrt(rng.randf())
+			var q := c2 + Vector2(cos(ang), sin(ang)) * rad
+			if rng.randf() > 1.0 - smoothstep(0.55 * R, R, rad):
+				continue
+			if lib.scene_id_of_z(q.y) != sc2 or _wild_seam(q) or _blocked(q, 0.1, true) or _too_close(q, 0.9, "b"):
+				continue
+			_add_tree(_wpick_r(rng, BAMBOO), q, rng.randf_range(0.9, 1.15), rng.randf() * TAU, "bamboo")
+			_register(q, 0.05, 0.9, "b")
+			placed += 1
+		(info["bamboo"] as Dictionary)[String(bz.get("id", "?"))] = placed
+	# 4) 枯立木（路緣 3 m 外起就可能出現）
+	var snags: Dictionary = wcfg.get("snags", {})
+	for sc3: String in snags:
+		var rect := Rect2()
+		for rr: Dictionary in lib.rects:
+			if String(rr["id"]) == sc3:
+				rect = rr["rect"]
+		rng.seed = _wild_seed(int(wcfg.get("seed", 18101)), "snag_" + sc3)
+		var got := 0
+		var tr := 0
+		while got < int(snags[sc3]) and tr < 2000:
+			tr += 1
+			var p3 := Vector2(rect.position.x + rng.randf() * rect.size.x, rect.position.y + rng.randf() * rect.size.y)
+			var de3 := lib.sample_arr(lib.DM, p3.x, p3.y) - lib.sample_arr(lib.WM, p3.x, p3.y)
+			if de3 < 3.0 or de3 > 26.0 or lib.scene_id_of_z(p3.y) != sc3 or _wild_seam(p3):
+				continue
+			if _blocked(p3, 0.3) or _too_close(p3, 3.0, "t", 0.3):
+				continue
+			_add_tree("snag_a", p3, rng.randf_range(0.9, 1.35), rng.randf() * TAU, "dead")
+			_register(p3, 0.3, 3.0, "t")
+			got += 1
+		(info["dead"] as Dictionary)[sc3] = got
+	stats_wild = info
+	print("[wild] ", info)
+
+
+## 荒野化的樹距：只看新樹自己的 gap（不吃既有樹存的大 gap）＋樹幹外緣至少 0.6 m——密林 2–3 m 的樹距；竹／林下照 _too_close 規則
+func _too_close_wild(p: Vector2, gap: float, rt: float) -> bool:
+	var k := _cell(p, 4.0)
+	for dx in range(-2, 3):
+		for dz in range(-2, 3):
+			var key := Vector2i(k.x + dx, k.y + dz)
+			if not _hash.has(key):
+				continue
+			for i: int in _hash[key]:
+				var q: Dictionary = _placed[i]
+				var d := p.distance_to(q["p"])
+				if String(q["layer"]) == "t":
+					if d < maxf(gap, float(q["r"]) + rt + 0.6):
+						return true
+				elif d < rt + 0.4:
+					return true
+	return false
+
+
+var stats_wild: Dictionary = {}
+
+
+## S03／S04 接縫往北 6 m 內不加東西：S04 的樹（凍結或重抽）最大樹距＋半徑 < 6 m → S04 規則改動不會改變 S03 的荒野化結果
+func _wild_seam(p: Vector2) -> bool:
+	var zr := _zone_z_range("S04")
+	return p.y < zr.y + 6.0
+
+
+func _wild_seed(base: int, key: String) -> int:
+	var h := 2166136261
+	for b: int in key.to_utf8_buffer():
+		h = ((h ^ b) * 16777619) & 0xFFFFFFFF
+	return (base * 1000003 + h) & 0x7FFFFFFF
+
+
+func _wild_dens(pts: Array, z: float) -> float:
+	var a: Array = pts.duplicate()
+	a.sort_custom(func(u: Array, v: Array) -> bool: return float(u[0]) < float(v[0]))
+	if z <= float(a[0][0]):
+		return float(a[0][1])
+	for i in range(1, a.size()):
+		if z <= float(a[i][0]):
+			var t := (z - float(a[i - 1][0])) / (float(a[i][0]) - float(a[i - 1][0]))
+			return lerpf(float(a[i - 1][1]), float(a[i][1]), t)
+	return float(a[a.size() - 1][1])
+
+
+func _wpick_r(rng: RandomNumberGenerator, weights: Dictionary) -> String:
+	var tot := 0.0
+	for k: String in weights:
+		tot += float(weights[k])
+	var r := rng.randf() * tot
+	for k: String in weights:
+		r -= float(weights[k])
+		if r <= 0.0:
+			return k
+	return String(weights.keys()[0])

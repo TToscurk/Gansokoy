@@ -465,12 +465,21 @@ func _g_trees() -> void:
 				floating += 1
 	_gate("trees.grounded", floating == 0 and forest_n > 0, "森林實例 %d 個，離地高度異常（> +0.15 或 < −0.9 m）%d 個，最大偏差 %.2f m" % [forest_n, floating, worst])
 	var plan_n := 0
+	var drop_n := 0
 	var f := FileAccess.open("res://maps/beast_path/gen/forest_plan.json", FileAccess.READ)
 	if f != null:
 		var j: Variant = JSON.parse_string(f.get_as_text())
 		if j is Dictionary:
 			plan_n = (j["trees"] as Array).size()
-	_gate("trees.match_plan", plan_n == forest_n, "forest_plan.json %d 筆＝場景實例 %d 個" % [plan_n, forest_n])
+			# 2026-10-18：generator 依 layout forest.zone_candidate.<區>.drop_kinds 刻意不載入的 V0.1 林下 prefab（林床改由 zone_dress）
+			#   不算「場景少了」——舊算法直接拿全計畫比，自 S02／S03 候選起就恆差這個數（4437 vs 3176＝差 1261＝S02 772＋S03 489）。
+			var zc: Dictionary = (lib.L.get("forest", {}) as Dictionary).get("zone_candidate", {})
+			if bool(zc.get("enabled", false)):
+				for t: Dictionary in j["trees"]:
+					var dk: Array = ((zc.get(String(t.get("scene", "")), {}) as Dictionary).get("drop_kinds", []) as Array)
+					if dk.has(String(t.get("kind", ""))):
+						drop_n += 1
+	_gate("trees.match_plan", plan_n - drop_n == forest_n, "forest_plan.json %d 筆 − 依 zone_candidate.drop_kinds 刻意不載入 %d 筆＝%d；場景實例 %d 個" % [plan_n, drop_n, plan_n - drop_n, forest_n])
 
 
 # ---------------------------------------------------------------- G BOSS 場景觀：崖面／水潭／瀑布／岩壁／石鋪

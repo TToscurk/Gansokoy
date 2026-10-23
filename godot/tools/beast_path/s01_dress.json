@@ -2,6 +2,9 @@
   "_note": "S01 R4 Demo（使用者 2026-10-16：S01 轉 Blender 資產製作；先做一個 Demo 區、停下來審圖）。Blender 資產＝assets/beast_path/s01_kit/glb（build_s01_kit.py 產生）；擺放＝tools/beast_path/s01_dress.gd；烘焙＝bake_s01_dress.gd（非 headless，MultiMesh Build Rule）→ maps/beast_path/gen/s01_dress.scn；generate_beast_path.gd 只在 enabled＝true 時把它掛進 S01。enabled＝false 或刪掉 .scn → S01 回到 R3 Stage 1。不改地形高度、不改 380 棵規劃、不碰 S02–S04。",
   "enabled": true,
   "seed": 40417,
+  "_wild_1018": "2026-10-18 荒野化：林下加密（蕨／笹／灌木／幼樹）、草坪與花草減量、非碰撞植物逼近路緣（clear 縮小＝雜草侵入的林道）；倒木／露根／岩組加量；沿路帶加寬。 S01 加 band＋bbox：林床沿整條主路／支線（原本只鋪 R4／R5 兩個矩形）。",
+  "bbox": [-110.0, -100.0, 110.0, 30.0],
+  "band": { "max_m": 30.0, "fade_m": 10.0 },
   "zones": [
     { "_why": "R4 Demo 區＝TPS 鏡位 d_tps_f1／g_rock_tps／w30_back_l 看得到的東半谷底＋東壁腳（村端 z≈+8 → 南 −48）。邊緣用噪聲打散。", "x": [-14.0, 66.0], "z": [-48.0, 14.0], "fade": 9.0 },
     { "_why": "R5 擴區：鳥居南側（z −54 → S01/S02 接縫 −99）。西北草地 → 西南林／中東林、櫻群不動（只在其下補低地被）", "x": [-44.0, 30.0], "z": [-99.0, -54.0], "fade": 11.0 }
@@ -9,70 +12,94 @@
   "clear": {
     "_why": "離主路路緣（m）：低地被可以接近、高草離遠一點；岩／木要 3.5 m 以上（碰撞與鏡頭）",
     "low": 0.35, "grass": 0.9, "tall": 1.6, "fern": 1.8, "shrub": 2.6, "hard": 3.5,
-    "foot_pad": 0.45, "trunk": 0.4, "under": 0.55, "wall_rock_pad": 0.3, "branch_db": 1.2, "stream_ds": 1.5
+    "foot_pad": 0.45, "trunk": 0.4, "under": 0.55, "wall_rock_pad": 0.3, "branch_db": 1.2, "stream_ds": 1.5, "soft_near": 1.0, "soft_tall_h": 1.2, "soft_tall_near": 2.5
   },
   "rocks": [
-    { "id": "F1", "asset": "s01_rock_cliff_a", "at": [53.5, -14.0], "lean_k": 0.35, "sink": 0.10, "s": 1.0, "yaw_add": 4.0, "moss": 0.55, "why": "東壁腳：最平滑的一段坡（30 % 回望與主路 TPS 都看得到）——節理崖面岩段，三塊不等高" },
-    { "id": "F2", "asset": "s01_rock_rib_d", "at": [60.0, -18.0], "lean_k": 0.55, "rib_out": 9.0, "sink": 0.25, "s": 1.0, "yaw_add": -6.0, "moss": 0.35, "why": "壁中段：沿落水線的岩肋，打斷整片光滑坡面（不改地形）" },
-    { "id": "F3", "asset": "s01_rock_outcrop_c", "at": [52.4, 11.0], "lean_k": 0.30, "sink": 0.15, "s": 1.0, "yaw_add": 12.0, "moss": 0.6, "why": "北段壁腳：半埋的露頭，接林緣的小樹群" },
-    { "id": "F4", "asset": "s01_rock_cliff_b", "at": [52.6, -27.6], "lean_k": 0.35, "sink": 0.10, "s": 1.0, "yaw_add": -10.0, "moss": 0.5, "why": "南段壁腳：較小的崖面岩，與 F1 錯開高度與大小" },
-    { "id": "F5", "asset": "s01_rock_rib_d", "at": [61.2, -31.5], "lean_k": 0.55, "rib_out": 12.0, "sink": 0.25, "s": 0.82, "yaw_add": 18.0, "moss": 0.35, "why": "壁中段第二條岩肋（短、轉角不同，不與 F2 平行）" },
-    { "id": "M1", "asset": "s01_mossstone_a", "at": [49.6, -9.5], "lean_k": 0.2, "sink": 0.05, "s": 1.0, "yaw_add": 40.0, "moss": 0.9, "why": "壁腳苔石" },
-    { "id": "M2", "asset": "s01_mossstone_b", "at": [50.8, -19.4], "lean_k": 0.2, "sink": 0.04, "s": 1.1, "yaw_add": 110.0, "moss": 0.9, "why": "F1 下坡側的崩落苔石" },
-    { "id": "M3", "asset": "s01_mossstone_a", "at": [48.6, 3.4], "lean_k": 0.2, "sink": 0.05, "s": 0.8, "yaw_add": -70.0, "moss": 0.95, "why": "小樹群下的苔石" },
-    { "id": "M4", "asset": "s01_mossstone_b", "at": [49.9, -24.2], "lean_k": 0.2, "sink": 0.04, "s": 0.9, "yaw_add": 15.0, "moss": 0.9, "why": "F4 北側" },
-    { "id": "M5", "asset": "s01_mossstone_b", "at": [47.2, 10.6], "lean_k": 0.2, "sink": 0.04, "s": 1.25, "yaw_add": 200.0, "moss": 0.95, "why": "F3 前的崩落石" },
-    { "id": "D1", "asset": "s01_debris_a", "at": [50.6, -15.8], "lean_k": 1.0, "sink": 0.02, "s": 1.1, "yaw_add": 0.0, "moss": 0.4, "why": "F1 坡腳碎石" },
-    { "id": "D2", "asset": "s01_debris_a", "at": [50.4, -29.8], "lean_k": 1.0, "sink": 0.02, "s": 0.9, "yaw_add": 90.0, "moss": 0.4, "why": "F4 坡腳碎石" },
-    { "id": "D3", "asset": "s01_debris_a", "at": [50.0, 9.0], "lean_k": 1.0, "sink": 0.02, "s": 0.85, "yaw_add": 40.0, "moss": 0.5, "why": "F3 坡腳碎石" }
+    {"id": "F1", "asset": "s01_rock_cliff_a", "at": [53.5, -14.0], "lean_k": 0.35, "sink": 0.1, "s": 1.0, "yaw_add": 4.0, "moss": 0.55, "why": "東壁腳：最平滑的一段坡（30 % 回望與主路 TPS 都看得到）——節理崖面岩段，三塊不等高"},
+    {"id": "F2", "asset": "s01_rock_rib_d", "at": [60.0, -18.0], "lean_k": 0.55, "rib_out": 9.0, "sink": 0.25, "s": 1.0, "yaw_add": -6.0, "moss": 0.35, "why": "壁中段：沿落水線的岩肋，打斷整片光滑坡面（不改地形）"},
+    {"id": "F3", "asset": "s01_rock_outcrop_c", "at": [52.4, 11.0], "lean_k": 0.3, "sink": 0.15, "s": 1.0, "yaw_add": 12.0, "moss": 0.6, "why": "北段壁腳：半埋的露頭，接林緣的小樹群"},
+    {"id": "F4", "asset": "s01_rock_cliff_b", "at": [52.6, -27.6], "lean_k": 0.35, "sink": 0.1, "s": 1.0, "yaw_add": -10.0, "moss": 0.5, "why": "南段壁腳：較小的崖面岩，與 F1 錯開高度與大小"},
+    {"id": "F5", "asset": "s01_rock_rib_d", "at": [61.2, -31.5], "lean_k": 0.55, "rib_out": 12.0, "sink": 0.25, "s": 0.82, "yaw_add": 18.0, "moss": 0.35, "why": "壁中段第二條岩肋（短、轉角不同，不與 F2 平行）"},
+    {"id": "M1", "asset": "s01_mossstone_a", "at": [49.6, -9.5], "lean_k": 0.2, "sink": 0.05, "s": 1.0, "yaw_add": 40.0, "moss": 0.9, "why": "壁腳苔石"},
+    {"id": "M2", "asset": "s01_mossstone_b", "at": [50.8, -19.4], "lean_k": 0.2, "sink": 0.04, "s": 1.1, "yaw_add": 110.0, "moss": 0.9, "why": "F1 下坡側的崩落苔石"},
+    {"id": "M3", "asset": "s01_mossstone_a", "at": [48.6, 3.4], "lean_k": 0.2, "sink": 0.05, "s": 0.8, "yaw_add": -70.0, "moss": 0.95, "why": "小樹群下的苔石"},
+    {"id": "M4", "asset": "s01_mossstone_b", "at": [49.9, -24.2], "lean_k": 0.2, "sink": 0.04, "s": 0.9, "yaw_add": 15.0, "moss": 0.9, "why": "F4 北側"},
+    {"id": "M5", "asset": "s01_mossstone_b", "at": [47.2, 10.6], "lean_k": 0.2, "sink": 0.04, "s": 1.25, "yaw_add": 200.0, "moss": 0.95, "why": "F3 前的崩落石"},
+    {"id": "D1", "asset": "s01_debris_a", "at": [50.6, -15.8], "lean_k": 1.0, "sink": 0.02, "s": 1.1, "yaw_add": 0.0, "moss": 0.4, "why": "F1 坡腳碎石"},
+    {"id": "D2", "asset": "s01_debris_a", "at": [50.4, -29.8], "lean_k": 1.0, "sink": 0.02, "s": 0.9, "yaw_add": 90.0, "moss": 0.4, "why": "F4 坡腳碎石"},
+    {"id": "D3", "asset": "s01_debris_a", "at": [50.0, 9.0], "lean_k": 1.0, "sink": 0.02, "s": 0.85, "yaw_add": 40.0, "moss": 0.5, "why": "F3 坡腳碎石"},
+    {"id": "WR_pillar1", "asset": "wild_ruin_pillar_a", "at": {"st": "torii", "ds": -5.0, "off": -5.4}, "lean_k": 0.15, "sink": 0.06, "s": 1.6, "yaw_add": 0.0, "moss": 0.7, "why": "鳥居前的道標石柱：上段斜斷、碎塊落在腳邊", "_r2": "2026-10-18 荒野化 R2"},
+    {"id": "WR_wall1", "asset": "wild_ruin_wall_a", "at": {"st": "torii", "ds": 12.0, "off": 5.6}, "lean_k": 0.15, "sink": 0.06, "s": 1.5, "yaw_add": 10.0, "moss": 0.85, "why": "鳥居後：舊參道石垣，一半崩落成坡", "_r2": "2026-10-18 荒野化 R2", "rr_k": 0.4},
+    {"id": "WR_wall2", "asset": "wild_ruin_wall_a", "at": {"st": "meadow", "ds": 4.0, "off": -5.6}, "lean_k": 0.15, "sink": 0.06, "s": 1.5, "yaw_add": -25.0, "moss": 0.9, "why": "林中殘存的石垣（被林吞掉的舊結界）", "_r2": "2026-10-18 荒野化 R2", "rr_k": 0.4},
+    {"id": "WR_pillarb1", "asset": "wild_ruin_pillar_b", "at": {"st": "meadow", "ds": 15.0, "off": 5.6}, "lean_k": 0.15, "sink": 0.06, "s": 1.4, "yaw_add": 30.0, "moss": 0.85, "why": "倒下斷成兩截的石柱", "_r2": "2026-10-18 荒野化 R2", "rr_k": 0.4},
+    {"id": "WR_steps1", "asset": "wild_ruin_steps_a", "at": {"st": "cherry", "ds": -6.0, "off": -5.8}, "lean_k": 0.15, "sink": 0.06, "s": 1.4, "yaw_add": 0.0, "moss": 0.9, "why": "通往林中、已無去處的廢石段", "_r2": "2026-10-18 荒野化 R2", "rr_k": 0.6},
+    {"id": "WR_cliff1", "asset": "s01_rock_cliff_b", "at": {"st": "s01_s02", "ds": -8.0, "off": 5.6}, "lean_k": 0.3, "sink": 0.15, "s": 1.3, "yaw_add": 0.0, "moss": 0.7, "why": "S01 尾段：路旁立起的苔岩，林道開始被岩夾住", "_r2": "2026-10-18 荒野化 R2", "rr_k": 0.6},
+    {"id": "S_jizo1", "asset": "wild_jizo_a", "at": {"st": "farm_edge", "ds": 9.0, "off": 3.4}, "lean_k": 0.3, "sink": 0.06, "s": 1.1, "yaw_add": 0.0, "moss": 0.85, "why": "村緣最後的路標：路邊的斷頭地藏（無碰撞、離地 1.0 m 以下）", "_r2": "2026-10-18 荒野化 R3", "rr_k": 0.0, "_soft": true},
+    {"id": "S_pillarb1", "asset": "wild_ruin_pillar_b", "at": {"st": "torii", "ds": -9.0, "off": -3.6}, "lean_k": 0.3, "sink": 0.06, "s": 1.2, "yaw_add": 0.0, "moss": 0.85, "why": "鳥居前倒下的石柱（低矮、無碰撞）", "_r2": "2026-10-18 荒野化 R3", "rr_k": 0.0, "_soft": true},
+    {"id": "S_rubble1", "asset": "wild_ruin_rubble_a", "at": {"st": "torii", "ds": 6.0, "off": 3.6}, "lean_k": 0.3, "sink": 0.06, "s": 1.5, "yaw_add": 0.0, "moss": 0.95, "why": "鳥居後：崩落的石垣碎塊", "_r2": "2026-10-18 荒野化 R3", "rr_k": 0.0, "_soft": true},
+    {"id": "S_pave1", "asset": "res://assets/nature/RockPath_Square_Wide.gltf", "at": {"st": "torii", "ds": -13.0, "off": 0.4}, "lean_k": 1.0, "sink": 0.12, "s": 1.0, "yaw_add": 0.0, "moss": 0.5, "why": "舊參道鋪石殘片（被土埋、踩得過）", "_r2": "2026-10-18 荒野化 R3", "rr_k": 0.0, "_flat": true},
+    {"id": "S_pave2", "asset": "res://assets/nature/RockPath_Square_Small_1.gltf", "at": {"st": "torii", "ds": -18.0, "off": -0.5}, "lean_k": 1.0, "sink": 0.1, "s": 1.0, "yaw_add": 0.0, "moss": 0.5, "why": "舊參道鋪石殘片", "_r2": "2026-10-18 荒野化 R3", "rr_k": 0.0, "_flat": true},
+    {"id": "S_pave3", "asset": "res://assets/nature/RockPath_Round_Wide.gltf", "at": {"st": "torii", "ds": 10.0, "off": 0.3}, "lean_k": 1.0, "sink": 0.12, "s": 1.0, "yaw_add": 0.0, "moss": 0.5, "why": "鳥居後：鋪石殘片被苔吃掉", "_r2": "2026-10-18 荒野化 R3", "rr_k": 0.0, "_flat": true}
   ],
   "wall_rocks": {
     "_why": "谷壁面（不改地形）：Blender 崖面岩／露頭／岩脊大部分埋進坡裡，只露出節理面與上緣，當作壁面的岩棚與岩脊，打斷平滑的坡（使用者：先試 Blender 岩體能否解決谷壁問題）",
-    "x": [44.0, 74.0], "z": [-46.0, 13.0], "slope": [45.0, 72.0], "y": [7.0, 21.0], "min_d": 9.0, "n": 7, "seed": 2611,
+    "x": [44.0, 74.0], "z": [-46.0, 13.0], "slope": [45.0, 72.0], "y": [7.0, 21.0], "min_d": 9.0, "n": 12, "seed": 2611,
     "assets": ["s01_rock_cliff_a", "s01_rock_outcrop_c", "s01_rock_cliff_b"], "sat_assets": ["s01_rock_cliff_b", "s01_rock_outcrop_c", "s01_mossstone_a"], "p_two": 0.5,
     "s": [1.05, 1.45], "bury": [0.52, 0.62], "lean_k": 0.6, "yaw_j": 10.0
   },
   "foot_talus": {
     "_why": "壁腳（坡度 20–34°）的崩落碎石帶：碎石＋苔石，不等距，連起壁面岩組與谷底的草",
-    "x": [44.0, 60.0], "z": [-46.0, 13.0], "slope": [18.0, 38.0], "n": 9, "min_d": 3.6, "seed": 913, "assets": ["s01_debris_a", "s01_debris_a", "s01_mossstone_b", "s01_mossstone_a"]
+    "x": [44.0, 60.0], "z": [-46.0, 13.0], "slope": [18.0, 38.0], "n": 20, "min_d": 3.6, "seed": 913, "assets": ["s01_debris_a", "s01_debris_a", "s01_mossstone_b", "s01_mossstone_a"]
   },
   "wood": [
-    { "id": "L1", "asset": "s01_log_a", "at": [46.2, 4.4], "yaw": 72.0, "sink": 0.06, "moss": 0.8, "why": "林緣小樹群下的倒木（沿等高線）" },
-    { "id": "L2", "asset": "s01_log_b", "at": [48.6, -21.4], "yaw": -14.0, "sink": 0.05, "moss": 0.6, "why": "壁腳的較細倒木，斷端朝坡" },
-    { "id": "R1", "asset": "s01_roots_a", "tree_near": [56.3, -10.0], "sink": 0.04, "moss": 0.35, "s": 1.0, "why": "坡上 konara 的露根（主根朝下坡）" },
-    { "id": "R2", "asset": "s01_roots_a", "tree_near": [54.9, 2.5], "sink": 0.04, "moss": 0.35, "s": 0.85, "why": "壁腳小闊葉樹的露根" },
-    { "id": "R3", "asset": "s01_roots_a", "tree_near": [54.4, -23.2], "sink": 0.04, "moss": 0.35, "s": 0.8, "why": "壁腳 konara 的露根" },
-    { "id": "B1", "asset": "s01_branch_a", "at": [11.2, -15.6], "yaw": 25.0, "sink": 0.0, "moss": 0.2, "why": "主路旁小杉群下的斷枝" },
-    { "id": "B2", "asset": "s01_branch_a", "at": [43.6, 8.6], "yaw": 160.0, "sink": 0.0, "moss": 0.3, "why": "林緣的斷枝" },
-    { "id": "B3", "asset": "s01_branch_a", "at": [51.6, -6.8], "yaw": 95.0, "sink": 0.0, "moss": 0.3, "why": "f02 與 F1 之間的斷枝" },
-    { "id": "E1", "asset": "s01_roots_a", "tree_near": [-13.3, -88.2], "sink": 0.04, "moss": 0.5, "s": 1.1, "why": "R5 擴區：西南林的大杉露根（e_close 畫面中心）" },
-    { "id": "E2", "asset": "s01_branch_pile_a", "at": [-8.8, -87.6], "yaw": 20.0, "sink": 0.03, "moss": 0.6, "why": "R5 擴區：林緣的枯枝堆（路與樹腳之間）" }
+    {"id": "L1", "asset": "s01_log_a", "at": [46.2, 4.4], "yaw": 72.0, "sink": 0.06, "moss": 0.8, "why": "林緣小樹群下的倒木（沿等高線）"},
+    {"id": "L2", "asset": "s01_log_b", "at": [48.6, -21.4], "yaw": -14.0, "sink": 0.05, "moss": 0.6, "why": "壁腳的較細倒木，斷端朝坡"},
+    {"id": "R1", "asset": "s01_roots_a", "tree_near": [56.3, -10.0], "sink": 0.04, "moss": 0.35, "s": 1.0, "why": "坡上 konara 的露根（主根朝下坡）"},
+    {"id": "R2", "asset": "s01_roots_a", "tree_near": [54.9, 2.5], "sink": 0.04, "moss": 0.35, "s": 0.85, "why": "壁腳小闊葉樹的露根"},
+    {"id": "R3", "asset": "s01_roots_a", "tree_near": [54.4, -23.2], "sink": 0.04, "moss": 0.35, "s": 0.8, "why": "壁腳 konara 的露根"},
+    {"id": "B1", "asset": "s01_branch_a", "at": [11.2, -15.6], "yaw": 25.0, "sink": 0.0, "moss": 0.2, "why": "主路旁小杉群下的斷枝"},
+    {"id": "B2", "asset": "s01_branch_a", "at": [43.6, 8.6], "yaw": 160.0, "sink": 0.0, "moss": 0.3, "why": "林緣的斷枝"},
+    {"id": "B3", "asset": "s01_branch_a", "at": [51.6, -6.8], "yaw": 95.0, "sink": 0.0, "moss": 0.3, "why": "f02 與 F1 之間的斷枝"},
+    {"id": "E1", "asset": "s01_roots_a", "tree_near": [-13.3, -88.2], "sink": 0.04, "moss": 0.5, "s": 1.1, "why": "R5 擴區：西南林的大杉露根（e_close 畫面中心）"},
+    {"id": "E2", "asset": "s01_branch_pile_a", "at": [-8.8, -87.6], "yaw": 20.0, "sink": 0.03, "moss": 0.6, "why": "R5 擴區：林緣的枯枝堆（路與樹腳之間）"},
+    {"id": "WW_rootg1", "asset": "wild_rootgiant_b", "at": {"st": "meadow", "ds": -6.0, "off": 5.6}, "yaw": 40.0, "s": 1.5, "sink": 0.05, "moss": 0.4, "why": "鳥居之後：第一棵折斷的巨木根座——荒野開始", "_r2": "2026-10-18 荒野化 R2", "rr_k": 0.3},
+    {"id": "WW_rootg2", "asset": "wild_rootgiant_a", "at": {"st": "cherry", "ds": 6.0, "off": 6.0}, "yaw": -70.0, "s": 1.45, "sink": 0.05, "moss": 0.4, "why": "S01 後段：巨根爬過林床", "_r2": "2026-10-18 荒野化 R2", "rr_k": 0.3},
+    {"id": "WW_plate1", "asset": "wild_log_rootplate_a", "at": {"st": "s01_s02", "ds": -10.0, "off": -6.2}, "yaw": 25.0, "s": 1.25, "sink": 0.05, "moss": 0.6, "why": "連根倒下的巨木（翻起的根盤朝路）", "_r2": "2026-10-18 荒野化 R2", "rr_k": 0.25},
+    {"id": "S_root1", "asset": "wild_rootgiant_edge_a", "at": {"st": "meadow", "ds": 2.0, "off": 3.8}, "yaw_rel": 0.0, "s": 1.0, "sink": 0.05, "moss": 0.5, "why": "鳥居之後：根爬到路邊（無碰撞、離地 ≤ 0.5 m）", "_r2": "2026-10-18 荒野化 R3", "_soft": true, "rr_k": 0.0},
+    {"id": "S_root2", "asset": "wild_rootgiant_edge_b", "at": {"st": "cherry", "ds": -4.0, "off": -3.6}, "yaw_rel": 180.0, "s": 1.0, "sink": 0.05, "moss": 0.5, "why": "根爬到路邊", "_r2": "2026-10-18 荒野化 R3", "_soft": true, "rr_k": 0.0},
+    {"id": "S_log1", "asset": "s01_log_b", "at": {"st": "meadow", "ds": 12.0, "off": -3.8}, "yaw_rel": 10.0, "s": 1.0, "sink": 0.05, "moss": 0.8, "why": "路邊倒木（低）", "_r2": "2026-10-18 荒野化 R3", "_soft": true, "rr_k": 0.0},
+    {"id": "S_rootg1", "asset": "wild_rootgiant_b", "at": {"st": "cherry", "ds": 8.0, "off": 5.0}, "yaw_rel": 0.0, "s": 1.3, "sink": 0.05, "moss": 0.4, "why": "巨根（樹幹 ≥ 2.5 m、根到路邊 1 m）", "_r2": "2026-10-18 荒野化 R3", "_soft": true, "rr_k": 0.0}
   ],
   "floor": {
     "_why": "R5 林床（tools/beast_path/s01_floor.gd）：棲地（開闊／林緣／林下／壁腳）×群落場（蕨／草本／笹消長）×林窗場×樹腳環與岩木環。spacing＝候選格距 m；pmax＝最高接受率；clear＝離主路路緣的基本淨空 m（沿路噪聲放大 0–2.2 倍）；lod＝[換 LOD1 的距離, 淡出起, 淡出終]（0＝不換）。有這段 → 不用 R4 的 cover。",
     "chunk_m": 20.0,
     "species": {
-      "grass_tall":  { "assets": ["s01_grass_tall_a", "s01_grass_tall_b", "s01_grass_tall_c", "s01_grass_tall_d"], "spacing": 0.42, "pmax": 0.95, "s": [0.75, 1.3], "freq": 0.075, "clear": 1.5, "lod": [34.0, 62.0, 80.0] },
-      "grass_short": { "assets": ["s01_grass_short_a", "s01_grass_short_b"], "spacing": 0.55, "pmax": 0.85, "s": [0.8, 1.4], "freq": 0.16, "clear": 0.8, "lod": [30.0, 40.0, 52.0] },
+      "grass_tall":  { "assets": ["s01_grass_tall_a", "s01_grass_tall_b", "s01_grass_tall_c", "s01_grass_tall_d"], "spacing": 0.42, "pmax": 0.95, "s": [0.75, 1.3], "freq": 0.075, "clear": 0.7, "lod": [34.0, 62.0, 80.0] },
+      "grass_short": { "assets": ["s01_grass_short_a", "s01_grass_short_b"], "spacing": 0.55, "pmax": 0.3, "s": [0.8, 1.4], "freq": 0.16, "clear": 0.8, "lod": [30.0, 40.0, 52.0] },
       "shadegrass":  { "assets": ["s01_shadegrass_a"], "spacing": 0.6, "pmax": 0.85, "s": [0.8, 1.4], "freq": 0.14, "clear": 0.35, "lod": [28.0, 32.0, 42.0] },
       "sedge":       { "assets": ["s01_sedge_a"], "spacing": 1.1, "pmax": 0.8, "s": [0.8, 1.25], "freq": 0.12, "clear": 1.0, "lod": [32.0, 50.0, 64.0] },
-      "fern_big":    { "assets": ["s01_fern_a", "s01_fern_c"], "spacing": 1.25, "pmax": 0.9, "s": [0.8, 1.25], "freq": 0.10, "clear": 1.6, "lod": [34.0, 62.0, 80.0], "shadow": false, "_r6": "R6：小林下不投影（陰影圖元 -24～37%，畫面幾乎不變）" },
-      "fern_small":  { "assets": ["s01_fern_b", "s01_fern_d"], "spacing": 1.1, "pmax": 0.85, "s": [0.8, 1.3], "freq": 0.16, "clear": 1.0, "lod": [30.0, 46.0, 60.0] },
-      "herb":        { "assets": ["s01_fuki_a", "s01_fuki_b", "s01_herb_broad_a"], "spacing": 0.8, "pmax": 0.88, "s": [0.8, 1.3], "freq": 0.12, "clear": 1.3, "lod": [32.0, 50.0, 64.0] },
-      "forb":        { "assets": ["s01_forb_a", "s01_forb_b"], "spacing": 0.75, "pmax": 0.85, "s": [0.65, 1.05], "freq": 0.22, "clear": 1.4, "lod": [32.0, 50.0, 66.0] },
-      "sasa":        { "assets": ["s01_sasa_b", "s01_sasa_a"], "spacing": 1.05, "pmax": 0.9, "s": [0.8, 1.2], "freq": 0.09, "clear": 1.8, "lod": [34.0, 55.0, 70.0], "shadow": false, "_r6": "R6：同上" },
-      "shrub":       { "assets": ["s01_shrub_a", "s01_shrub_b"], "spacing": 1.6, "pmax": 0.8, "s": [0.8, 1.25], "freq": 0.10, "clear": 2.6, "lod": [0.0, 75.0, 95.0], "shadow": true },
-      "sapling":     { "assets": ["s01_sapling_a", "s01_sapling_b"], "spacing": 2.2, "pmax": 0.75, "s": [0.8, 1.25], "freq": 0.12, "clear": 3.0, "lod": [0.0, 85.0, 105.0], "shadow": true },
+      "fern_big":    { "assets": ["s01_fern_a", "s01_fern_c"], "spacing": 1.0, "pmax": 1.0, "s": [0.8, 1.25], "freq": 0.10, "clear": 0.8, "lod": [34.0, 62.0, 80.0], "shadow": false, "_r6": "R6：小林下不投影（陰影圖元 -24～37%，畫面幾乎不變）" },
+      "fern_small":  { "assets": ["s01_fern_b", "s01_fern_d"], "spacing": 1.1, "pmax": 0.85, "s": [0.8, 1.3], "freq": 0.16, "clear": 0.6, "lod": [30.0, 46.0, 60.0] },
+      "herb":        { "assets": ["s01_fuki_a", "s01_fuki_b", "s01_herb_broad_a"], "spacing": 0.8, "pmax": 0.88, "s": [0.8, 1.3], "freq": 0.12, "clear": 0.8, "lod": [32.0, 50.0, 64.0] },
+      "forb":        { "assets": ["s01_forb_a", "s01_forb_b"], "spacing": 0.75, "pmax": 0.5, "s": [0.65, 1.05], "freq": 0.22, "clear": 1.4, "lod": [32.0, 50.0, 66.0] },
+      "sasa":        { "assets": ["s01_sasa_b", "s01_sasa_a"], "spacing": 0.9, "pmax": 1.0, "s": [0.8, 1.2], "freq": 0.09, "clear": 0.9, "lod": [34.0, 55.0, 70.0], "shadow": false, "_r6": "R6：同上" },
+      "shrub":       { "assets": ["s01_shrub_a", "s01_shrub_b"], "spacing": 1.2, "pmax": 0.95, "s": [0.8, 1.25], "freq": 0.10, "clear": 1.4, "lod": [0.0, 75.0, 95.0], "shadow": true },
+      "sapling":     { "assets": ["s01_sapling_a", "s01_sapling_b"], "spacing": 1.7, "pmax": 0.9, "s": [0.8, 1.25], "freq": 0.12, "clear": 2.0, "lod": [0.0, 85.0, 105.0], "shadow": true },
       "litter":      { "assets": ["s01_litter_a", "s01_litter_b"], "spacing": 1.55, "pmax": 0.9, "s": [0.85, 1.3], "freq": 0.12, "clear": 0.35, "lod": [0.0, 40.0, 52.0] },
       "moss":        { "assets": ["s01_moss_a"], "spacing": 1.25, "pmax": 0.8, "s": [0.7, 1.4], "freq": 0.15, "clear": 0.35, "lod": [0.0, 40.0, 52.0] },
-      "twigs":       { "assets": ["s01_twigs_a"], "spacing": 2.4, "pmax": 0.5, "s": [0.8, 1.2], "freq": 0.2, "clear": 0.35, "lod": [0.0, 26.0, 34.0] }
+      "twigs":       { "assets": ["s01_twigs_a"], "spacing": 2.4, "pmax": 0.5, "s": [0.8, 1.2], "freq": 0.2, "clear": 0.35, "lod": [0.0, 26.0, 34.0] },
+      "verge_litter": {"spacing": 0.5, "pmax": 0.5, "s": [0.8, 1.25], "freq": 0.12, "clear": -2.6, "verge": [-0.8, 1.6], "lod": [0.0, 30.0, 40.0], "assets": ["s01_litter_a", "s01_litter_b"], "verge_ramp_z": [8.0, -40.0], "_why": "2026-10-18 荒野化 R2：路緣侵蝕——沿路不規則地長進路面土帶（無碰撞地被）"},
+      "verge_moss": {"spacing": 0.8, "pmax": 0.35, "s": [0.45, 0.8], "freq": 0.15, "clear": -2.0, "verge": [-0.5, 1.0], "lod": [0.0, 30.0, 40.0], "assets": ["s01_moss_a"], "verge_ramp_z": [8.0, -40.0], "_why": "2026-10-18 荒野化 R2：路緣侵蝕——沿路不規則地長進路面土帶（無碰撞地被）"},
+      "verge_mud": {"spacing": 1.15, "pmax": 0.5, "s": [0.55, 0.95], "freq": 0.09, "clear": -2.4, "verge": [-0.8, 0.6], "lod": [0.0, 30.0, 40.0], "assets": ["wild_mud_a"], "verge_ramp_z": [8.0, -40.0], "_why": "2026-10-18 荒野化 R2：路緣侵蝕——沿路不規則地長進路面土帶（無碰撞地被）"},
+      "verge_grass": {"spacing": 0.45, "pmax": 0.35, "s": [0.7, 1.1], "freq": 0.16, "clear": -1.2, "verge": [-0.7, 0.9], "lod": [0.0, 30.0, 40.0], "assets": ["s01_grass_short_a", "s01_grass_short_b"], "verge_ramp_z": [8.0, -40.0], "_why": "2026-10-18 荒野化 R2：路緣侵蝕——沿路不規則地長進路面土帶（無碰撞地被）"},
+      "verge_fern": {"spacing": 1.0, "pmax": 0.8, "s": [0.6, 0.95], "freq": 0.14, "clear": -1.0, "verge": [-0.6, 1.4], "lod": [0.0, 30.0, 40.0], "assets": ["s01_fern_b", "s01_fern_d"], "_why": "2026-10-18 荒野化 R2：路緣侵蝕——小蕨從路肩伸進路面土帶（無碰撞）", "verge_ramp_z": [8.0, -40.0]}
     }
   },
   "auto_wood": {
     "_why": "R5：露根（林下的樹挑約一半，不是每棵都有；櫻與幼樹不加）、倒木／殘株／枯枝堆（林下、緩坡、離路 ≥ 4 m、彼此 ≥ 9 m、不等距）",
     "seed": 515,
-    "roots": { "p": 0.6, "max": 34, "min_trees_7m": 3, "min_road": 1.8 },
-    "dead": { "min_trees_7m": 2, "min_road": 4.0, "min_d": 8.0, "max": 18, "assets": ["s01_log_c", "s01_branch_pile_a", "s01_stump_a", "s01_log_a", "s01_branch_a", "s01_log_b"] }
+    "roots": { "p": 0.6, "max": 70, "min_trees_7m": 3, "min_road": 1.8 },
+    "dead": { "min_trees_7m": 2, "min_road": 2.6, "min_d": 5.0, "max": 45, "assets": ["s01_log_c", "s01_branch_pile_a", "s01_stump_a", "s01_log_a", "s01_branch_a", "s01_log_b"] }
   },
   "cover": {
     "_why": "地被：依 R3 地表通道（粗草／落葉／苔／乾濕）、樹冠遮蔭、坡度、離路距離與塊狀噪聲決定；同一類成塊、塊與塊之間留空（不是均勻亂撒）。spacing＝候選格距（m），pmax＝塊中心的最高接受率。",
@@ -90,5 +117,7 @@
     "_why": "meadow_grass.gdshader 的距離縮小（不用透明）＋可見距離剔除；草與落葉不投影",
     "tall": [62.0, 80.0], "short": [40.0, 52.0], "fern": [60.0, 78.0], "sasa": [55.0, 70.0], "shrub": [75.0, 95.0], "litter": [40.0, 52.0], "moss": [40.0, 52.0], "twigs": [26.0, 34.0], "forb": [50.0, 66.0],
     "shadow": ["fern", "sasa", "shrub"], "chunk_m": 16.0
-  }
+  },
+  "mist": [],
+  "mist_style": {"color": [0.48, 0.55, 0.49], "density": 0.45, "_why": "2026-10-18 荒野化 R3：S02 只留 3 處綠灰局部薄霧（溪谷／窪地），S01／S03 不放"}
 }

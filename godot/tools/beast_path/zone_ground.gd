@@ -28,6 +28,10 @@ func setup(lib_: BP) -> void:
 	for k: String in (zc.get("r3", {}) as Dictionary):
 		r3b[k] = zc["r3"][k]
 	c2["r3"] = r3b
+	if zc.has("road_vis_k"):
+		c2["road_vis_k"] = zc["road_vis_k"]               # 荒野化 R3：S02／S03 的視覺路寬
+	if zc.has("shoulder_k"):
+		c2["shoulder_k"] = zc["shoulder_k"]
 	cfg = c2
 	r3 = r3b
 	r3_on = true

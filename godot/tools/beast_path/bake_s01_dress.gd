@@ -47,7 +47,7 @@ func _go() -> void:
 	var ctx := S01Ground.build_ctx(lib, pa.trees, pa.kit, foot, pa.s01_wall)
 	var wall: Dictionary = pa.s01_wall
 	var rm: Dictionary
-	var bb := Rect2(-62, -112, 152, 142)          # R5：Demo（x −14…66, z −48…14＋東壁）＋擴區（x −44…26, z −99…−54）
+	var bb := Rect2(-112, -104, 224, 136)         # 2026-10-18 荒野化：S01 林床改沿整條路（band＋bbox）→ 範圍＝整個 S01 tile（原 R5：Rect2(-62, -112, 152, 142)）
 	var drop: Array = []
 	if zone != "":
 		ctx = ZoneGround.build_ctx_zone(lib, pa.trees, pa.kit, foot, ctx, {})
@@ -148,7 +148,18 @@ func _go() -> void:
 				n_on_road += 1
 	rep["cover_path_edge_min_m"] = pe_min
 	rep["cover_on_road"] = n_on_road
-	var f := FileAccess.open(rep_path, FileAccess.WRITE)
+	# 報告檔偶爾被外部程式暫時鎖住（FileAccess.open 回 null：第二次發生，2026-10-18）——重試；仍失敗就明確退出，不要卡在 SCRIPT ERROR 等逾時
+	var f: FileAccess = null
+	for _try in 20:
+		f = FileAccess.open(rep_path, FileAccess.WRITE)
+		if f != null:
+			break
+		OS.delay_msec(500)
+	if f == null:
+		push_error("[dress] 報告檔 %s 開不了（%s）——.scn 已存，報告未更新" % [rep_path, error_string(FileAccess.get_open_error())])
+		root.free()
+		quit(3)
+		return
 	f.store_string(JSON.stringify(rep, "  "))
 	f.close()
 	root.free()

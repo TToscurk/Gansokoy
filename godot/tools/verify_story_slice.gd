@@ -81,7 +81,7 @@ func _run() -> void:
 		if c.name == "DialogueUI":
 			ui_o = c
 	if ui_o != null:
-		var first_line: RichTextLabel = ui_o.get_node("Panel/VBox/Text")
+		var first_line: RichTextLabel = ui_o.get_node("Box/Panel/VBox/Text")
 		check("P0 第一句是「……」", first_line.text == "「……」")
 		await _press("ui_accept"); await _press("ui_accept")
 		check("P0 第二句是「這是……哪裡？」", first_line.text == "「這是……哪裡？」")
@@ -176,7 +176,7 @@ func _run() -> void:
 	for c in main.get_children():
 		if c.name == "DialogueUI":
 			ui_d = c
-	var choices_box: VBoxContainer = ui_d.get_node("Panel/VBox/Choices")
+	var choices_box: VBoxContainer = ui_d.get_node("Box/Panel/VBox/Choices")
 	# 推到選項節點。用 dm.advance()，不要送 ui_accept —— DialogueUI 在選項
 	# 顯示時把 ui_accept 當成「確定這個選項」，會在檢查之前就把選項選掉。
 	var guard := 0
@@ -274,11 +274,11 @@ func _run() -> void:
 		if c.name == "DialogueUI":
 			ui = c
 	check("T6 DialogueUI 存在且顯示", ui != null and ui.visible)
-	var name_lbl: Label = ui.get_node("Panel/VBox/Name")
-	check("T6 名字 = 博麗靈夢", name_lbl.text == "博麗靈夢")
+	var name_plate: Node = ui.get_node("Box/Nameplate")
+	check("T6 名字 = 博麗靈夢", String(name_plate.get("speaker")) == "博麗靈夢")
 	var portrait: TextureRect = ui.get_node("Portrait")
 	print("[STORY]   立繪貼圖：%s" % ("有" if portrait.texture != null else "無（assets/portraits/ 尚未放圖，路徑由 portraits.json 決定）"))
-	var text_lbl: RichTextLabel = ui.get_node("Panel/VBox/Text")
+	var text_lbl: RichTextLabel = ui.get_node("Box/Panel/VBox/Text")
 	check("T6 第一句 = 「……你誰？」", text_lbl.text == "「……你誰？」")
 
 	# Test 7：逐句推進到底

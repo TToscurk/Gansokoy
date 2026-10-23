@@ -45,20 +45,15 @@ const DISTRICTS := {
 		"seed_scene": "res://maps/village_v2/gen/enrich_w9p8.scn", "seed_zone": "ZoneA8", "supersedes": ["EnrichW9P8:ZoneA8"],
 		"arm_lanes": {"A8_cross_end": [Vector2(352.0, -35.2), Vector2(380.0, -36.0)], "A8_farmpath": [Vector2(372.0, -33.0), Vector2(372.0, -2.0)]},
 		"keep_clear": {"PORTAL_HIEDA1F": Vector2(398.0, 2.0), "akyuu_record": Vector2(398.0, -4.0)}},
-	## E2（2026-10-17 使用者）：丘腳社寺（LANDMARK_HILLFOOT_TEMPLE，社殿 12.0×11.4 m 在 (228, −170)）的境內環境。rect＝社寺整地面（y 1.20）＋西側水溝＋東／北丘腳＋丘腳街南緣。
-	## 社寺本體・碰撞不動；既有 EnvironmentP9／MeadowP9／GroundcoverP9 不改（掛載後由 HillfootPrecinctE2 可逆抑制）。無 seed（原環境不是這條管線產的）；
-	## 不設 keep_clear（石段前要鋪踏石；前庭留白由 verify_hf_precinct.gd 的前庭多邊形規則管）。
-	"HF": {"name": "丘腳社寺 境內環境（參道・前庭・境界植栽）", "rect": Rect2(206.0, -190.0, 44.0, 42.0),
+	## TASK E FINAL（2026-10-18 使用者）：丘腳社寺取消 → 原境內改為自然林（E2 的參道・踏石・前庭・境內地面全部作廢）。
+	## rect＝原社寺整地面＋西側水溝肩＋東／北丘腳＋丘腳街北緣。社寺 Hero 已自場景移除（mount_hillfoot_temple.py --cancel）。
+	## arm_lanes＝丘腳街本身（林木不可讓街上的 SpringArm 縮短）。林內沒有規定路線。
+	"HF": {"name": "丘腳林地（社寺取消後的自然林）", "rect": Rect2(206.0, -190.0, 44.0, 42.0),
 		"supersedes": [],
-		"arm_lanes": {"HF_approach": [Vector2(228.0, -148.5), Vector2(228.0, -158.0), Vector2(228.0, -165.0)],
-			"HF_front_cross": [Vector2(219.5, -161.5), Vector2(236.5, -161.5)],
-			"HF_west_flank": [Vector2(220.0, -163.0), Vector2(220.0, -176.0)],
-			"HF_east_flank": [Vector2(236.5, -163.0), Vector2(236.5, -176.0)]},
-		## 掛載後 HillfootPrecinctE2 會可逆抑制的既有 EnvironmentP9 組（hf_precinct_lib.gd SUPPRESS_GROUPS 與此相同，verify_hf_precinct.gd 檢查一致）。
+		"arm_lanes": {"HF_street": [Vector2(204.0, -148.2), Vector2(228.0, -149.1), Vector2(250.0, -150.0)]},
+		## 掛載後 HillfootPrecinctE2 會可逆抑制的既有 EnvironmentP9 組（HF_design.json suppress.groups 與此相同，verify_hf_precinct.gd 檢查一致）。
 		## context／build／verify 用 prepare_scene 在『記憶體內』先拿掉這些節點與其碰撞，W9.why 才不會把它們當占用（env）。
 		"suppress": ["Props/EnvironmentP9/edge/E082_fence_frag"],
-		## 掛載済みの境內地面 overlay（地形 +3.2 cm 的可見面）併入 W9.top_h：踏石・植栽才會座在『看得見的地面』上，而不是埋在它下面（見 attach_surface）。
-		"surface": "HillfootPrecinctE2/Ground",
 		"keep_clear": {}},
 }
 const KEEP_R := 6.0

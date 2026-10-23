@@ -740,6 +740,13 @@ func _build_root() -> void:
 		var dk: Array = atm.get("day_k", [0.40, 0.85])
 		we.set("day_k0", float(dk[0]))
 		we.set("day_k1", float(dk[1]))
+		var gl: Dictionary = atm.get("gloom", {})          # 2026-10-18 荒野化：S02／S03 林中幽暗（見 bp_atmosphere.gd）
+		if bool(gl.get("enabled", false)):
+			we.set("gloom_enabled", true)
+			we.set("gloom_z", PackedFloat32Array(gl.get("z", [-60.0, -112.0, -312.0, -336.0])))
+			we.set("gloom_fog_density", float(gl.get("fog_density", 0.008)))
+			we.set("gloom_brightness", float(gl.get("brightness", 0.88)))
+			we.set("gloom_saturation_k", float(gl.get("saturation_k", 0.88)))
 		root.add_child(we)
 		we.owner = root
 	var pk := PackedScene.new()

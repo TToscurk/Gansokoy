@@ -140,9 +140,23 @@ func _run() -> void:
 		_player.take_hit(_hit(1.0, 40.0))
 		await _frames(1)
 	check("posture breaks", _player.posture.is_broken())
-	check("stagger fires full one-shot", _full_active() and _full_sel() == "stagger", _full_sel())
+	# 注意兩件事：(1) transition_request 是唯寫屬性，讀回來是空字串，只能驗 current_state；
+	# (2) current_state 要等 xfade（combo_section_blend 0.035 s）走完才切過去。
+	await _frames(5)
+	var req: String = _full_sel()
+	# 2026-09-23：軀幹爆改成方向性（stagger → Stagger_Front/Back/Left/Right，接線驗收在
+	# tools/verify_stagger_directional.gd）。契約不變的部分照驗：一定是 full 層 one-shot，
+	# 而且「被選中那一支的長度 ÷ 播放倍率」必須等於 break_time（不再寫死 2.0 s clip）。
+	var stagger_keys := {
+		"stagger": "Stagger", "stagger_front": "Stagger_Front", "stagger_back": "Stagger_Back",
+		"stagger_left": "Stagger_Left", "stagger_right": "Stagger_Right",
+	}
+	check("stagger fires full one-shot", _full_active() and stagger_keys.has(req), req)
 	var ts: float = float(_tree.get("parameters/ts_full/scale"))
-	check("stagger scaled to break_time", absf(2.0 / ts - bt) < 0.05, "scale %.3f break %.2f" % [ts, bt])
+	var clip_name: String = stagger_keys.get(req, "Stagger")
+	var clip_len: float = _anim.get_animation(clip_name).length
+	check("stagger scaled to break_time", absf(clip_len / ts - bt) < 0.05,
+		"scale %.3f clip %.2f(%s) break %.2f" % [ts, clip_len, clip_name, bt])
 	await _frames(int(bt * 60.0) + 30)
 	check("stagger ends with break", not _full_active())
 

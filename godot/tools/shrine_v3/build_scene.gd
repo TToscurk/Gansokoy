@@ -1556,6 +1556,21 @@ func add_interactions() -> void:
 		"in_platform": Geometry2D.is_point_in_polygon(Vector2(ex, ez), poly_of("platform"))}
 
 
+## 靈夢（2026-10-23 接管第一階段）：沿用 characters/reimu，包裝同 village_v2 的 NPC 生活 HERO 結構。
+## 站在賽錢箱西側（x −1.35；賽錢箱 x ±0.62、吽形狛犬台座 z ≥ −16.19，各留 ≥0.5 m），面向參道（+z）；
+## 參道中軸與拜殿正面保持淨空；拜殿拜訪互動區（8×4×5 m）涵蓋她的站位。
+func add_npcs() -> void:
+	var g := group(sroot, "人物")
+	var x := -1.35
+	var z := -16.95
+	var inst := (load("res://maps/shrine_v3/reimu_shrine_npc.tscn") as PackedScene).instantiate() as Node3D
+	inst.name = "靈夢"
+	inst.transform = Transform3D(Basis(), Vector3(x, gy(x, z), z))
+	g.add_child(inst)
+	inst.owner = sroot
+	stats["npcs"] = 1
+
+
 func add_markers() -> void:
 	var g := group(sroot, "標記")
 	var pt: Array = L["portal"]
@@ -1727,7 +1742,7 @@ func _run() -> void:
 	var steps := [["terrain", add_terrain], ["sky", add_sky], ["boundary", add_boundary], ["architecture", add_architecture],
 		["site", add_site], ["pond", add_pond], ["rocks", add_rocks], ["trees", add_trees], ["shrubs", add_shrubs],
 		["stair_sides", add_stair_sides], ["court_dressing", add_court_dressing], ["ground_cover", add_ground_cover],
-		["interactions", add_interactions], ["markers", add_markers], ["navigation", add_navigation], ["meta", write_meta]]
+		["interactions", add_interactions], ["npcs", add_npcs], ["markers", add_markers], ["navigation", add_navigation], ["meta", write_meta]]
 	for s in steps:
 		rng.seed = 20261022 + hash(String(s[0]))
 		(s[1] as Callable).call()

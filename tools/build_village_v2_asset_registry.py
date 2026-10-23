@@ -209,8 +209,15 @@ ART_APPROVED = {
     'garden_kit': 'ART_APPROVED（使用者 2026-10-02，P9 R4 稗田邸庭園 garden_kit＋HiedaGardenP9；r2 targeted polish 後核准）',
     'school_kit': 'ART_APPROVED（使用者 2026-10-02，P9 R4-3 寺子屋周邊 school_kit＋SchoolYardP9）',
 }
+# 使用者取消的資產：檔案留在資產庫（不刪），但不登記 v2_assets → 產生器 _heroes() 不會再把它放回場景。
+CANCELLED = {
+    'hillfoot_temple': 'CANCELLED（使用者 2026-10-18 TASK E FINAL：丘腳社寺取消，原地改為自然林；GLB／來源保留於資產庫）',
+}
 v2_assets, v2_rejected = [], []
 for name in sorted(os.listdir(V2A)) if os.path.isdir(V2A) else []:
+    if name in CANCELLED:
+        v2_rejected.append({'id': name, 'why': [CANCELLED[name]]})
+        continue
     gp = f'{V2A}/{name}/gate.json'
     if not os.path.exists(gp):
         continue

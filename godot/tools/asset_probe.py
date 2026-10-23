@@ -35,7 +35,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent          # godot/
 ASSETS = REPO / "assets"
-PORT_RANGE = range(9875, 9881)
+PORT_RANGE = [9800] + list(range(9875, 9882))
 
 # 原點分類門檻（偏移量 / 模型高度）
 CENTER_TOL = 0.02       # |ratio| < 此值 → 幾何中心
@@ -213,12 +213,14 @@ def main():
     ap.add_argument("files", nargs="*", help="GLB 路徑；省略則量預設清單")
     ap.add_argument("--profile", action="store_true",
                     help="加掃剖面，揭露階梯／斜坡的真實行走落差")
+    ap.add_argument("--port", type=int, default=None,
+                    help="Blender MCP 監聽埠號（省略則自動掃描）")
     ap.add_argument("--json", metavar="OUT", help="把結果寫成 JSON")
     args = ap.parse_args()
 
-    port = find_port()
+    port = args.port or find_port()
     if port is None:
-        print(f"找不到 Blender MCP（掃過 {PORT_RANGE.start}-{PORT_RANGE.stop - 1}）。",
+        print(f"找不到 Blender MCP（掃過 {PORT_RANGE}）。",
               file=sys.stderr)
         print("請確認 Blender 已開啟且 BlenderMCP addon 正在監聽。", file=sys.stderr)
         return 1

@@ -12,8 +12,8 @@
  ],
  "band": {
   "_why": "沿主路與支線（妖獸巢穴側環）兩側 max_m 以內；外緣 fade_m 用噪聲打散。再遠的林內只有地表＋樹（玩家看不到，不付成本）。",
-  "max_m": 22.0,
-  "fade_m": 9.0
+  "max_m": 32.0,
+  "fade_m": 10.0
  },
  "clear": {
   "_why": "同 S01：離主路路緣（m）",
@@ -29,7 +29,10 @@
   "wall_rock_pad": 0.3,
   "branch_db": 0.9,
   "stream_ds": 0.8,
-  "paving_low": 0.55
+  "paving_low": 0.55,
+  "soft_near": 1.0,
+  "soft_tall_h": 1.2,
+  "soft_tall_near": 2.5
  },
  "rocks": [
   {
@@ -87,6 +90,458 @@
    "yaw_add": 40.0,
    "moss": 0.8,
    "why": "F1 前的小石"
+  },
+  {
+   "id": "WR_wall1",
+   "asset": "wild_ruin_wall_a",
+   "at": {
+    "st": "glade",
+    "ds": 4.0,
+    "off": -5.6
+   },
+   "lean_k": 0.15,
+   "sink": 0.06,
+   "s": 1.5,
+   "yaw_add": 15.0,
+   "moss": 0.9,
+   "why": "林窗邊：崩塌的石垣（這裡曾經有人）",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.4
+  },
+  {
+   "id": "WR_pillar1",
+   "asset": "wild_ruin_pillar_a",
+   "at": {
+    "st": "fork",
+    "ds": -7.0,
+    "off": 5.4
+   },
+   "lean_k": 0.15,
+   "sink": 0.06,
+   "s": 1.6,
+   "yaw_add": 0.0,
+   "moss": 0.75,
+   "why": "岔路口的道標：斷柱、碑文已讀不出",
+   "_r2": "2026-10-18 荒野化 R2"
+  },
+  {
+   "id": "WR_pillarb1",
+   "asset": "wild_ruin_pillar_b",
+   "at": {
+    "st": "fork",
+    "ds": -11.0,
+    "off": -5.6
+   },
+   "lean_k": 0.15,
+   "sink": 0.06,
+   "s": 1.4,
+   "yaw_add": -40.0,
+   "moss": 0.85,
+   "why": "岔路口倒下的石柱",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.4
+  },
+  {
+   "id": "WR_jizo1",
+   "asset": "wild_jizo_a",
+   "at": {
+    "st": "fork",
+    "ds": 3.0,
+    "off": -5.0
+   },
+   "lean_k": 0.15,
+   "sink": 0.06,
+   "s": 1.15,
+   "yaw_add": 0.0,
+   "moss": 0.85,
+   "why": "岔路的斷頭地藏",
+   "_r2": "2026-10-18 荒野化 R2"
+  },
+  {
+   "id": "WR_steps1",
+   "asset": "wild_ruin_steps_a",
+   "at": {
+    "st": "north_a",
+    "ds": -8.0,
+    "off": -5.8
+   },
+   "lean_k": 0.15,
+   "sink": 0.06,
+   "s": 1.4,
+   "yaw_add": 10.0,
+   "moss": 0.9,
+   "why": "北段：沒入林中的廢石段",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.6
+  },
+  {
+   "id": "WR_wall2",
+   "asset": "wild_ruin_wall_a",
+   "at": {
+    "st": "north_a",
+    "ds": 7.0,
+    "off": 5.6
+   },
+   "lean_k": 0.15,
+   "sink": 0.06,
+   "s": 1.5,
+   "yaw_add": -20.0,
+   "moss": 0.9,
+   "why": "北段石垣殘段",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.4
+  },
+  {
+   "id": "WR_pillar2",
+   "asset": "wild_ruin_pillar_a",
+   "at": {
+    "st": "north_b",
+    "ds": -6.0,
+    "off": 5.4
+   },
+   "lean_k": 0.15,
+   "sink": 0.06,
+   "s": 1.6,
+   "yaw_add": 0.0,
+   "moss": 0.85,
+   "why": "北段：斷柱",
+   "_r2": "2026-10-18 荒野化 R2"
+  },
+  {
+   "id": "WR_out1",
+   "asset": "s01_rock_outcrop_c",
+   "at": {
+    "st": "glade",
+    "ds": 16.0,
+    "off": 5.4
+   },
+   "lean_k": 0.3,
+   "sink": 0.18,
+   "s": 1.2,
+   "yaw_add": 0.0,
+   "moss": 1.0,
+   "why": "林窗北的苔石",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.6
+  },
+  {
+   "id": "WR_cliff1",
+   "asset": "s01_rock_cliff_b",
+   "at": {
+    "st": "north_b",
+    "ds": -14.0,
+    "off": -5.6
+   },
+   "lean_k": 0.3,
+   "sink": 0.15,
+   "s": 1.3,
+   "yaw_add": 0.0,
+   "moss": 0.95,
+   "why": "北段苔岩",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.6
+  },
+  {
+   "id": "H_gate_a1",
+   "asset": "wild_ruin_gatepost_a",
+   "at": {
+    "st": "fork",
+    "ds": -14.0,
+    "off": -5.8
+   },
+   "lean_k": 0.1,
+   "sink": 0.08,
+   "s": 1.15,
+   "yaw_add": 0.0,
+   "moss": 0.95,
+   "why": "岔路入口：廢社的石門柱（左，完整；有碰撞 ≥ 3.5 m）",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.5
+  },
+  {
+   "id": "H_gate_b1",
+   "asset": "wild_ruin_gatepost_b",
+   "at": {
+    "st": "fork",
+    "ds": -14.0,
+    "off": 5.8
+   },
+   "lean_k": 0.1,
+   "sink": 0.08,
+   "s": 1.15,
+   "yaw_add": 0.0,
+   "moss": 0.95,
+   "why": "岔路入口：石門柱（右，折斷、上半與笠石落地）",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.5
+  },
+  {
+   "id": "H_gate_b2",
+   "asset": "wild_ruin_gatepost_b",
+   "at": {
+    "st": "north_a",
+    "ds": 0.0,
+    "off": -5.6
+   },
+   "lean_k": 0.1,
+   "sink": 0.08,
+   "s": 1.15,
+   "yaw_add": 40.0,
+   "moss": 1.0,
+   "why": "北段：第二道石門（左折斷）",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.5
+  },
+  {
+   "id": "H_gate_a2",
+   "asset": "wild_ruin_gatepost_a",
+   "at": {
+    "st": "north_a",
+    "ds": 0.0,
+    "off": 5.6
+   },
+   "lean_k": 0.1,
+   "sink": 0.08,
+   "s": 1.15,
+   "yaw_add": 0.0,
+   "moss": 1.0,
+   "why": "北段：第二道石門（右）",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.5
+  },
+  {
+   "id": "S_rubble1",
+   "asset": "wild_ruin_rubble_a",
+   "at": {
+    "st": "glade",
+    "ds": 2.0,
+    "off": 3.6
+   },
+   "lean_k": 0.3,
+   "sink": 0.06,
+   "s": 1.5,
+   "yaw_add": 0.0,
+   "moss": 1.0,
+   "why": "林窗：崩落石塊（被苔吞）",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_soft": true
+  },
+  {
+   "id": "S_rubble2",
+   "asset": "wild_ruin_rubble_a",
+   "at": {
+    "st": "fork",
+    "ds": -4.0,
+    "off": -3.6
+   },
+   "lean_k": 0.3,
+   "sink": 0.06,
+   "s": 1.5,
+   "yaw_add": 60.0,
+   "moss": 1.0,
+   "why": "岔路：崩落石塊",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_soft": true
+  },
+  {
+   "id": "S_rubble3",
+   "asset": "wild_ruin_rubble_a",
+   "at": {
+    "st": "north_a",
+    "ds": 10.0,
+    "off": 3.6
+   },
+   "lean_k": 0.3,
+   "sink": 0.06,
+   "s": 1.5,
+   "yaw_add": -30.0,
+   "moss": 1.0,
+   "why": "北段：崩落石塊",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_soft": true
+  },
+  {
+   "id": "S_rubble4",
+   "asset": "wild_ruin_rubble_a",
+   "at": {
+    "st": "north_b",
+    "ds": -8.0,
+    "off": -3.6
+   },
+   "lean_k": 0.3,
+   "sink": 0.06,
+   "s": 1.5,
+   "yaw_add": 120.0,
+   "moss": 1.0,
+   "why": "北段：崩落石塊",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_soft": true
+  },
+  {
+   "id": "S_pillarb1",
+   "asset": "wild_ruin_pillar_b",
+   "at": {
+    "st": "glade",
+    "ds": 12.0,
+    "off": -3.8
+   },
+   "lean_k": 0.3,
+   "sink": 0.06,
+   "s": 1.3,
+   "yaw_add": 0.0,
+   "moss": 1.0,
+   "why": "林窗：倒柱",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_soft": true
+  },
+  {
+   "id": "S_pillarb2",
+   "asset": "wild_ruin_pillar_b",
+   "at": {
+    "st": "north_a",
+    "ds": -4.0,
+    "off": 3.8
+   },
+   "lean_k": 0.3,
+   "sink": 0.06,
+   "s": 1.3,
+   "yaw_add": 70.0,
+   "moss": 1.0,
+   "why": "北段：倒柱",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_soft": true
+  },
+  {
+   "id": "S_jizo1",
+   "asset": "wild_jizo_a",
+   "at": {
+    "st": "fork",
+    "ds": 4.0,
+    "off": 3.4
+   },
+   "lean_k": 0.3,
+   "sink": 0.06,
+   "s": 1.1,
+   "yaw_add": 0.0,
+   "moss": 0.95,
+   "why": "岔路：路邊的斷頭地藏",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_soft": true
+  },
+  {
+   "id": "S_pave1",
+   "asset": "res://assets/nature/RockPath_Square_Wide.gltf",
+   "at": {
+    "st": "glade",
+    "ds": -6.0,
+    "off": 0.2
+   },
+   "lean_k": 1.0,
+   "sink": 0.12,
+   "s": 1.0,
+   "yaw_add": 0.0,
+   "moss": 0.5,
+   "why": "古道鋪石殘片",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_flat": true
+  },
+  {
+   "id": "S_pave2",
+   "asset": "res://assets/nature/RockPath_Round_Wide.gltf",
+   "at": {
+    "st": "glade",
+    "ds": 6.0,
+    "off": -0.4
+   },
+   "lean_k": 1.0,
+   "sink": 0.12,
+   "s": 1.0,
+   "yaw_add": 0.0,
+   "moss": 0.5,
+   "why": "古道鋪石殘片",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_flat": true
+  },
+  {
+   "id": "S_pave3",
+   "asset": "res://assets/nature/RockPath_Square_Wide.gltf",
+   "at": {
+    "st": "north_a",
+    "ds": -10.0,
+    "off": 0.3
+   },
+   "lean_k": 1.0,
+   "sink": 0.12,
+   "s": 1.0,
+   "yaw_add": 0.0,
+   "moss": 0.5,
+   "why": "古道鋪石殘片",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_flat": true
+  },
+  {
+   "id": "S_pave4",
+   "asset": "res://assets/nature/RockPath_Square_Small_1.gltf",
+   "at": {
+    "st": "north_a",
+    "ds": 4.0,
+    "off": -0.3
+   },
+   "lean_k": 1.0,
+   "sink": 0.1,
+   "s": 1.0,
+   "yaw_add": 0.0,
+   "moss": 0.5,
+   "why": "古道鋪石殘片",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_flat": true
+  },
+  {
+   "id": "S_pave5",
+   "asset": "res://assets/nature/RockPath_Round_Wide.gltf",
+   "at": {
+    "st": "north_b",
+    "ds": -12.0,
+    "off": 0.2
+   },
+   "lean_k": 1.0,
+   "sink": 0.12,
+   "s": 1.0,
+   "yaw_add": 0.0,
+   "moss": 0.5,
+   "why": "古道鋪石殘片",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_flat": true
+  },
+  {
+   "id": "S_pave6",
+   "asset": "res://assets/nature/RockPath_Square_Wide.gltf",
+   "at": {
+    "st": "north_b",
+    "ds": 2.0,
+    "off": -0.2
+   },
+   "lean_k": 1.0,
+   "sink": 0.12,
+   "s": 1.0,
+   "yaw_add": 0.0,
+   "moss": 0.5,
+   "why": "古道鋪石殘片",
+   "_r2": "2026-10-18 荒野化 R3",
+   "rr_k": 0.0,
+   "_flat": true
   }
  ],
  "wall_rocks": {
@@ -108,7 +563,7 @@
    60.0
   ],
   "min_d": 9.0,
-  "n": 18,
+  "n": 26,
   "seed": 8317,
   "assets": [
    "s01_rock_outcrop_c",
@@ -147,7 +602,7 @@
    8.0,
    30.0
   ],
-  "n": 34,
+  "n": 55,
   "min_d": 3.8,
   "seed": 5227,
   "assets": [
@@ -181,6 +636,136 @@
    "sink": 0.02,
    "moss": 0.3,
    "why": "F1 旁的枯枝堆"
+  },
+  {
+   "id": "WW_rootg1",
+   "asset": "wild_rootgiant_a",
+   "at": {
+    "st": "glade",
+    "ds": -4.0,
+    "off": 6.0
+   },
+   "yaw": 30.0,
+   "s": 1.45,
+   "sink": 0.05,
+   "moss": 0.4,
+   "why": "林窗：交錯的巨根",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.3
+  },
+  {
+   "id": "WW_rootg2",
+   "asset": "wild_rootgiant_b",
+   "at": {
+    "st": "glade",
+    "ds": 10.0,
+    "off": -5.6
+   },
+   "yaw": -80.0,
+   "s": 1.5,
+   "sink": 0.05,
+   "moss": 0.4,
+   "why": "林窗：巨根",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.3
+  },
+  {
+   "id": "WW_rootg3",
+   "asset": "wild_rootgiant_a",
+   "at": {
+    "st": "fork",
+    "ds": 14.0,
+    "off": -6.0
+   },
+   "yaw": 150.0,
+   "s": 1.45,
+   "sink": 0.05,
+   "moss": 0.4,
+   "why": "岔路北的巨根",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.3
+  },
+  {
+   "id": "WW_rootg4",
+   "asset": "wild_rootgiant_b",
+   "at": {
+    "st": "north_a",
+    "ds": 2.0,
+    "off": 5.6
+   },
+   "yaw": 60.0,
+   "s": 1.5,
+   "sink": 0.05,
+   "moss": 0.4,
+   "why": "北段巨根",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.3
+  },
+  {
+   "id": "WW_plate1",
+   "asset": "wild_log_rootplate_a",
+   "at": {
+    "st": "north_a",
+    "ds": 14.0,
+    "off": -6.2
+   },
+   "yaw": 60.0,
+   "s": 1.25,
+   "sink": 0.05,
+   "moss": 0.7,
+   "why": "連根倒木：擋住視線",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.25
+  },
+  {
+   "id": "WW_plate2",
+   "asset": "wild_log_rootplate_a",
+   "at": {
+    "st": "rootstep",
+    "ds": 10.0,
+    "off": -6.2
+   },
+   "yaw": -30.0,
+   "s": 1.25,
+   "sink": 0.05,
+   "moss": 0.7,
+   "why": "S03 起點的連根倒木",
+   "_r2": "2026-10-18 荒野化 R2",
+   "rr_k": 0.25
+  },
+  {
+   "id": "S_root1",
+   "asset": "wild_rootgiant_edge_a",
+   "at": {
+    "st": "glade",
+    "ds": 10.0,
+    "off": -3.6
+   },
+   "yaw_rel": 0.0,
+   "s": 1.0,
+   "sink": 0.05,
+   "moss": 0.6,
+   "why": "根爬過遺跡與路緣",
+   "_r2": "2026-10-18 荒野化 R3",
+   "_soft": true,
+   "rr_k": 0.0
+  },
+  {
+   "id": "S_root2",
+   "asset": "wild_rootgiant_edge_b",
+   "at": {
+    "st": "north_b",
+    "ds": 2.0,
+    "off": 3.6
+   },
+   "yaw_rel": 180.0,
+   "s": 1.0,
+   "sink": 0.05,
+   "moss": 0.6,
+   "why": "根",
+   "_r2": "2026-10-18 荒野化 R3",
+   "_soft": true,
+   "rr_k": 0.0
   }
  ],
  "floor": {
@@ -195,13 +780,13 @@
      "s01_grass_tall_d"
     ],
     "spacing": 0.5,
-    "pmax": 0.8,
+    "pmax": 0.7,
     "s": [
      0.75,
      1.25
     ],
     "freq": 0.07,
-    "clear": 1.1,
+    "clear": 0.7,
     "lod": [
      26.0,
      46.0,
@@ -214,7 +799,7 @@
      "s01_grass_short_b"
     ],
     "spacing": 0.6,
-    "pmax": 0.65,
+    "pmax": 0.3,
     "s": [
      0.8,
      1.4
@@ -268,14 +853,14 @@
      "s01_fern_a",
      "s01_fern_c"
     ],
-    "spacing": 1.2,
-    "pmax": 0.6,
+    "spacing": 1.05,
+    "pmax": 0.9,
     "s": [
      0.8,
      1.15
     ],
     "freq": 0.085,
-    "clear": 1.3,
+    "clear": 0.8,
     "lod": [
      24.0,
      44.0,
@@ -289,13 +874,13 @@
      "s01_fern_d"
     ],
     "spacing": 1.05,
-    "pmax": 0.65,
+    "pmax": 0.85,
     "s": [
      0.75,
      1.15
     ],
     "freq": 0.15,
-    "clear": 0.8,
+    "clear": 0.6,
     "lod": [
      22.0,
      36.0,
@@ -309,13 +894,13 @@
      "s01_herb_broad_a"
     ],
     "spacing": 0.8,
-    "pmax": 0.7,
+    "pmax": 0.85,
     "s": [
      0.8,
      1.15
     ],
     "freq": 0.11,
-    "clear": 1.0,
+    "clear": 0.8,
     "lod": [
      22.0,
      38.0,
@@ -353,7 +938,7 @@
      1.25
     ],
     "freq": 0.05,
-    "clear": 1.3,
+    "clear": 0.9,
     "lod": [
      24.0,
      44.0,
@@ -366,14 +951,14 @@
      "s01_shrub_a",
      "s01_shrub_b"
     ],
-    "spacing": 1.6,
-    "pmax": 0.6,
+    "spacing": 1.3,
+    "pmax": 0.85,
     "s": [
      0.8,
      1.3
     ],
     "freq": 0.1,
-    "clear": 2.2,
+    "clear": 1.4,
     "lod": [
      0.0,
      60.0,
@@ -386,14 +971,14 @@
      "s01_sapling_a",
      "s01_sapling_b"
     ],
-    "spacing": 2.0,
-    "pmax": 0.45,
+    "spacing": 1.8,
+    "pmax": 0.8,
     "s": [
      0.8,
      1.3
     ],
     "freq": 0.12,
-    "clear": 2.6,
+    "clear": 1.8,
     "lod": [
      0.0,
      70.0,
@@ -455,23 +1040,142 @@
      22.0,
      28.0
     ]
+   },
+   "verge_litter": {
+    "spacing": 0.5,
+    "pmax": 0.5,
+    "s": [
+     0.8,
+     1.25
+    ],
+    "freq": 0.12,
+    "clear": -2.6,
+    "verge": [
+     -0.8,
+     1.6
+    ],
+    "lod": [
+     0.0,
+     30.0,
+     40.0
+    ],
+    "assets": [
+     "s01_litter_a",
+     "s01_litter_b"
+    ],
+    "_why": "2026-10-18 荒野化 R2：路緣侵蝕——沿路不規則地長進路面土帶（無碰撞地被）"
+   },
+   "verge_moss": {
+    "spacing": 0.8,
+    "pmax": 0.35,
+    "s": [
+     0.45,
+     0.8
+    ],
+    "freq": 0.15,
+    "clear": -2.0,
+    "verge": [
+     -0.5,
+     1.0
+    ],
+    "lod": [
+     0.0,
+     30.0,
+     40.0
+    ],
+    "assets": [
+     "s01_moss_a"
+    ],
+    "_why": "2026-10-18 荒野化 R2：路緣侵蝕——沿路不規則地長進路面土帶（無碰撞地被）"
+   },
+   "verge_mud": {
+    "spacing": 1.15,
+    "pmax": 0.5,
+    "s": [
+     0.55,
+     0.95
+    ],
+    "freq": 0.09,
+    "clear": -2.4,
+    "verge": [
+     -0.8,
+     0.6
+    ],
+    "lod": [
+     0.0,
+     30.0,
+     40.0
+    ],
+    "assets": [
+     "wild_mud_a"
+    ],
+    "_why": "2026-10-18 荒野化 R2：路緣侵蝕——沿路不規則地長進路面土帶（無碰撞地被）"
+   },
+   "verge_grass": {
+    "spacing": 0.45,
+    "pmax": 0.35,
+    "s": [
+     0.7,
+     1.1
+    ],
+    "freq": 0.16,
+    "clear": -1.2,
+    "verge": [
+     -0.7,
+     0.9
+    ],
+    "lod": [
+     0.0,
+     30.0,
+     40.0
+    ],
+    "assets": [
+     "s01_grass_short_a",
+     "s01_grass_short_b"
+    ],
+    "_why": "2026-10-18 荒野化 R2：路緣侵蝕——沿路不規則地長進路面土帶（無碰撞地被）"
+   },
+   "verge_fern": {
+    "spacing": 1.0,
+    "pmax": 0.8,
+    "s": [
+     0.6,
+     0.95
+    ],
+    "freq": 0.14,
+    "clear": -1.0,
+    "verge": [
+     -0.6,
+     1.4
+    ],
+    "lod": [
+     0.0,
+     30.0,
+     40.0
+    ],
+    "assets": [
+     "s01_fern_b",
+     "s01_fern_d"
+    ],
+    "_why": "2026-10-18 荒野化 R2：路緣侵蝕——小蕨從路肩伸進路面土帶（無碰撞）"
    }
-  }
+  },
+  "_why_wild_1018": "2026-10-18 荒野化：林下加密（蕨／笹／灌木／幼樹）、草坪與花草減量、非碰撞植物逼近路緣（clear 縮小＝雜草侵入的林道）；倒木／露根／岩組加量；沿路帶加寬。"
  },
  "auto_wood": {
   "_why": "S03：老樹多露根、倒木比 S02 少",
   "seed": 2903,
   "roots": {
    "p": 0.75,
-   "max": 60,
+   "max": 100,
    "min_trees_7m": 2,
    "min_road": 1.6
   },
   "dead": {
    "min_trees_7m": 2,
-   "min_road": 3.5,
-   "min_d": 10.0,
-   "max": 14,
+   "min_road": 2.6,
+   "min_d": 5.0,
+   "max": 55,
    "assets": [
     "s01_log_c",
     "s01_log_a",
@@ -489,5 +1193,15 @@
   ],
   "chunk_m": 20.0
  },
- "_perf": "全區總審效能（2026-10-17，GTX 1070、1600×900）：S02 林床初版 8 ms（47.9 FPS）→ 縮 LOD 換手／淡出距離（近景 20 m 內不變）、落葉間距 1.45→1.7、沿路帶 30→24 m（S03 26→22 m）。"
+ "_perf": "全區總審效能（2026-10-17，GTX 1070、1600×900）：S02 林床初版 8 ms（47.9 FPS）→ 縮 LOD 換手／淡出距離（近景 20 m 內不變）、落葉間距 1.45→1.7、沿路帶 30→24 m（S03 26→22 m）。",
+ "mist": [],
+ "mist_style": {
+  "color": [
+   0.48,
+   0.55,
+   0.49
+  ],
+  "density": 0.45,
+  "_why": "2026-10-18 荒野化 R3：S02 只留 3 處綠灰局部薄霧（溪谷／窪地），S01／S03 不放"
+ }
 }

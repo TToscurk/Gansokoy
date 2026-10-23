@@ -77,7 +77,9 @@ static func torii(pb, poi: Dictionary) -> Node3D:
 	r.position.y = minf(gl, gr) + 0.02
 	var wood := MeshInstance3D.new()
 	wood.name = "Torii"
-	wood.mesh = _arr_mesh("s01_torii_a", paint_mat())
+	var pm := paint_mat()
+	pm.set_shader_parameter("tone", float(poi.get("paint_tone", 1.0)))     # 2026-10-18 荒野化：朱漆褪暗（< 1＝暗、髒）
+	wood.mesh = _arr_mesh(String(poi.get("model", "s01_torii_a")), pm)         # 2026-10-18 荒野化 R2：model＝wild_torii_ruin（柱位／柱徑相同，碰撞不變）
 	wood.set_instance_shader_parameter("ground_y", r.position.y)
 	r.add_child(wood)
 	var st := _stone(pb, "s01_torii_a_base", r.transform, float(poi.get("moss", 0.35)), absi(String(poi["id"]).hash()) % 100000, Callable(), 0.95)
@@ -87,7 +89,7 @@ static func torii(pb, poi: Dictionary) -> Node3D:
 	for sx in [-1.0, 1.0]:
 		pb.col_cyl(sb, 0.26, 4.45, Vector3(sx * (span * 0.5 - 0.05), 0.30 + 2.225, 0))
 		pb.col_box(sb, Vector3(0.92, 0.62, 0.92), Vector3(sx * span * 0.5, -0.01, 0))
-	r.set_meta("s01_model", "s01_torii_a")
+	r.set_meta("s01_model", String(poi.get("model", "s01_torii_a")))
 	r.set_meta("ground_lr", [snappedf(gl, 0.01), snappedf(gr, 0.01)])
 	pb._fp(String(poi["id"]), p, span * 0.5 + 2.2)
 	pb.anchors[String(poi["id"])] = {"p": r.position, "h": float(poi.get("h", T_TOP))}

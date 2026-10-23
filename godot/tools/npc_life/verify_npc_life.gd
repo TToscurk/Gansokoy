@@ -135,6 +135,7 @@ func case_b() -> void:
 	var max_d := 0.0
 	var end_state := ""
 	var talking := false
+	var anims := {}
 	var end_b := Time.get_ticks_msec() + 220000
 	while Time.get_ticks_msec() < end_b and end_state == "":
 		await physics_frame
@@ -146,6 +147,7 @@ func case_b() -> void:
 					talk_dist = float(r[5].get("dist", -1))
 		if talking:
 			max_d = maxf(max_d, _xz(m.global_position).distance_to(_xz(k.global_position)))
+			for h in [m, k]: anims[String(h.call("_anim_name"))] = true
 			if face_a == INF and _count_log(mark, "", "SAY") >= 1:
 				face_a = _face_err(m, k)
 				face_b = _face_err(k, m)
@@ -165,6 +167,15 @@ func case_b() -> void:
 	_check("B", "雙方都有說話（輪流）", spk.size() == 2 and says.size() >= 3, "台詞 %d 句，說話者 %s" % [says.size(), spk.keys()])
 	_check("B", "交談全程距離 ≤ 2.2 m（沒有人中途走掉）", max_d <= 2.2, "最大 %.2f m" % max_d)
 	_check("B", "交談正常結束", end_state == "SESSION_COMPLETED", end_state)
+	# 2026-10-21：說話動作依情緒挑（heroes.json _shared.emo_clips）；交談中至少出現一支情緒動作池裡、非舊三支的動作
+	var emos := says.map(func(r): return String(r[5].get("emo", "")))
+	var pool := {}
+	var ec: Dictionary = (dir.get("shared") as Dictionary).get("emo_clips", {})
+	for e in ec:
+		for c in ec[e]:
+			pool[String(c)] = true
+	var hit := anims.keys().filter(func(a): return pool.has(a) and not a in ["talk_general", "talk_funny", "talk_twohands"])
+	_check("B", "說話依情緒播放對話動作（emo_clips）", ec.is_empty() or not hit.is_empty(), "情緒 %s → 動作 %s" % [emos, anims.keys()])
 	await _sleep(8.0)
 	# 這一對的交談已不在；兩人之後各自排了新事件（別人再來找她們聊天是正常生活，不算卡住）
 	var still := false
@@ -263,7 +274,7 @@ func case_e() -> void:
 	_park_player(r.global_position + Vector3(25, 0, 10))
 	var resumed: bool = await _wait(func(): return _has_log(mark, "reimu", "RESUMED"), 5.0)
 	_check("E", "E1 玩家離開 → 續做原事件", resumed, "")
-	var fin: bool = await _wait(func(): return _has_log(mark_e1, "reimu", "Completed", far_ev) or _has_log(mark_e1, "reimu", "Failed", far_ev) or _has_log(mark_e1, "reimu", "Interrupted", far_ev), 200.0)
+	var fin: bool = await _wait(func(): return _has_log(mark_e1, "reimu", "Completed", far_ev) or _has_log(mark_e1, "reimu", "Failed", far_ev) or _has_log(mark_e1, "reimu", "Interrupted", far_ev), 300.0)   # 2026-10-21：靈夢改小步走（0.99 m/s，原 1.45），全套跑完 A–D 後她可能在村子另一頭
 	_check("E", "E1 原事件仍走完（Completed，沒有卡死）", fin and _has_log(mark_e1, "reimu", "Completed", far_ev), "")
 	# E2 雙人交談中玩家插入 → 暫停 → 停留 6 s 散場 → 兩人都恢復（挑當下能聊的一對）
 	var pairs := [["marisa", "keine", "marisa_chat"], ["marisa", "kosuzu", "marisa_chat"], ["reimu", "kosuzu", "reimu_chat"], ["keine", "kosuzu", "keine_chat"], ["reimu", "marisa", "reimu_chat"]]

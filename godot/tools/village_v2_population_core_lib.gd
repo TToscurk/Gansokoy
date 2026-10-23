@@ -77,7 +77,7 @@ const ASSIGN := {
 	"Market/C12_yaoya_m01": ["Carry", "yaoya_m01", "box_idle_a030", "idle", {"crate": ["res://assets/village_v2/suzu_kit/mesh/sz_hako.res", 0.30, 0.20], "crate_forward": 0.14, "crate_up": 0.09, "crate_inset": 0.09}],
 	"MainStreet/C11_nunoya_f01": ["Talk", "nunoya_f01", "talk_general_a040", "idle"],
 	"MainStreet/C13_shufu_f01": ["Talk", "shufu_f01", "talk_general_a030", "idle"],
-	"Izakaya/C17_chaya_f01": ["Drink", "chaya_f01", "drinking_im1_a030", "idle"],
+	# C17 茶屋少女の Drink は 2026-10-16 使用者指示で削除（基線 Idle）
 	"Terakoya/C20_kozo_m01": ["YouthShortStep", "kozo_m01", "light_walk_s100_a030", "walk"],
 	"Terakoya/C21_nunoya_f01": ["Talk", "nunoya_f01", "talk_general_a040", "idle"],
 	"Terakoya/C22_yakusou_f01": ["Sit", "yakusou_f01", "sit_talk_a_a030", "idle", {"seat": "res://assets/village_v2/mise_kit/mesh/ms_endai_mousen.res", "seat_drop": 0.22, "seat_back": -0.09, "seat_depth": 0.34, "seat_len": 1.2, "seat_shift": -0.1}],

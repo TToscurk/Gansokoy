@@ -14,6 +14,7 @@ var fails := 0
 var qm: Node
 var sf: Node
 var sm: Node
+var inv: Node
 
 
 func _init() -> void:
@@ -36,24 +37,28 @@ func _run() -> void:
 	qm = root.get_node("/root/QuestManager")
 	sf = root.get_node("/root/StoryFlags")
 	sm = root.get_node("/root/SaveManager")
+	inv = root.get_node("/root/InventoryManager")
 	var slot := 2                     # 用最後一槽，不動玩家的快速槽
 	sm.call("delete_save", slot)
 
 	# ── A. 往返 ──
-	qm.call("reset"); sf.call("reset")
+	qm.call("reset"); sf.call("reset"); inv.call("reset")
 	qm.call("start_quest", "MQ03")
 	sf.call("set_flag", "woke_in_trail", true)
 	sf.call("set_flag", "spared_wounded_yokai", true)
+	inv.call("add_item", "kujiratei_room_key", 1)
 	qm.call("report_event", "REACH", "hakurei_shrine_approach")  # 早到事件 → pending
 	var want_flags: Dictionary = sf.call("serialize")
 	var want_quests: Dictionary = qm.call("serialize")
+	var want_inventory: Dictionary = inv.call("serialize")
 	var pos := Vector3(-1.54, 8.8, -90.74)
 	check("A1 存檔成功", sm.call("save_game", slot, "trail", pos, 1.25))
 	check("A2 檔案存在", sm.call("has_save", slot))
 	# 洗掉記憶體狀態，確認真的是從檔案讀回來的
-	qm.call("reset"); sf.call("reset")
+	qm.call("reset"); sf.call("reset"); inv.call("reset")
 	check("A3 洗掉後確實是空的", sf.call("serialize").is_empty() \
-		and (qm.get("_progress") as Dictionary).is_empty())
+		and (qm.get("_progress") as Dictionary).is_empty() \
+		and (inv.call("serialize") as Dictionary).is_empty())
 	var got_map := ""
 	var got_pos := Vector3.ZERO
 	var got_yaw := 0.0
@@ -69,6 +74,7 @@ func _run() -> void:
 		and absf(float(seen[0][2]) - 1.25) < 0.001)
 	check("A6 旗標完全還原", sf.call("serialize") == want_flags)
 	check("A7 任務進度完全還原", qm.call("serialize") == want_quests)
+	check("A7b 背包完全還原", inv.call("serialize") == want_inventory)
 	# MQ03 只剩「受傷妖怪」一格（果實那一格已於 2026-09-17 刪除）。
 	check("A8 MQ03 仍停在受傷妖怪那一格（不是從頭來）",
 		qm.call("is_active", "MQ03") \
@@ -154,6 +160,23 @@ func _run() -> void:
 	}))
 	check("F2 未來版本照讀不擋", sm.call("load_game", slot))
 	check("F3 slot_info 回摘要", (sm.call("slot_info", slot) as Dictionary).has("saved_at"))
+
+	# ── G. v1 → v2 背包遷移 ──
+	_write(sm.call("slot_path", slot), JSON.stringify({
+		"version": 1, "map": "slice", "pos": {"x": 0, "y": 0, "z": 0}, "yaw": 0,
+		"flags": {"met_keine": true}, "quests": {"progress": {}, "tracked": "", "pending": {}},
+	}))
+	inv.call("reset")
+	check("G1 v1 慧音已交書的存檔可升級", sm.call("load_game", slot) \
+		and inv.call("has_item", "terakoya_book"))
+	_write(sm.call("slot_path", slot), JSON.stringify({
+		"version": 1, "map": "slice", "pos": {"x": 0, "y": 0, "z": 0}, "yaw": 0,
+		"flags": {"met_keine": true, "met_kosuzu": true, "has_village_lodging": true},
+		"quests": {"progress": {}, "tracked": "", "pending": {}},
+	}))
+	check("G2 已還書且已住宿的舊檔只補客房鑰匙", sm.call("load_game", slot) \
+		and not inv.call("has_item", "terakoya_book") \
+		and inv.call("has_item", "kujiratei_room_key"))
 	sm.call("delete_save", slot)
 	check("F4 delete_save 清掉主檔與備份", not sm.call("has_save", slot))
 	check("F5 沒有存檔時 slot_info 回空字典", (sm.call("slot_info", slot) as Dictionary).is_empty())

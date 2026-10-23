@@ -322,6 +322,8 @@ func channels(ix: int, iz: int, ctx: Dictionary) -> PackedFloat32Array:
 	var hw_vis := hw * (0.58 + 0.66 * (0.5 + 0.5 * n_wid))                      # 0.58–1.24 倍的物理半寬：忽寬忽窄（V1.3 的白模是等寬色帶）
 	hw_vis *= lerpf(1.0, 1.12, vil) * lerpf(1.0, 0.80, forest_k)
 	hw_vis *= 1.0 - 0.34 * smoothstep(0.12, 0.5, can)
+	# 荒野化 R3：視覺路寬（只動著色，不動路線／碰撞）。S01 村端照舊、u 0.25→0.55（鳥居一帶）漸窄到 road_vis_k；S02／S03（u≡1）全量
+	hw_vis *= lerpf(1.0, float(cfg.get("road_vis_k", 1.0)), smoothstep(float(cfg.get("road_vis_u0", 0.25)), float(cfg.get("road_vis_u1", 0.55)), u))
 	var tuft := smoothstep(0.50, 0.80, _n_tuft.get_noise_2d(x * 1.0, z * 1.0))                                 # 約 1 m 的草簇：邊緣處零星探進土路
 	var d_eff := absf(off - 0.55 * n_drift) + 0.60 * n_edge + 0.34 * n_fine - 0.55 * tuft * (0.35 + 0.65 * smoothstep(0.0, 1.0, 1.0 - absf(absf(off) - hw * 0.75) / 1.6))
 	var tongue := smoothstep(0.28, 0.58, n_tongue + 0.30 * n_big) * (0.60 + 0.40 * forest_k)
@@ -329,6 +331,7 @@ func channels(ix: int, iz: int, ctx: Dictionary) -> PackedFloat32Array:
 	var road := 1.0 - smoothstep(hw_vis - 0.28, hw_vis + 0.24, d_eff)
 	var edge_band := 1.0 - smoothstep(0.0, 1.3, absf(d_eff - hw_vis))
 	var shoulder := (1.0 - smoothstep(hw_vis + 0.1, hw_vis + 2.1, d_eff)) * (0.26 + 0.24 * (0.5 + 0.5 * n_mid))
+	shoulder *= lerpf(1.0, float(cfg.get("shoulder_k", 1.0)), smoothstep(float(cfg.get("road_vis_u0", 0.25)), float(cfg.get("road_vis_u1", 0.55)), u))   # 荒野化 R3：路肩踩實土變少
 	# ---- 鋪石／壓實地（鳥居腳、石燈籠）：邊界打散，只成斑塊
 	var pv := lib.sample_arr(lib.PV, x, z) + 0.30 * n_mid + 0.16 * n_fine
 	var earth := smoothstep(0.12, 0.55, pv)

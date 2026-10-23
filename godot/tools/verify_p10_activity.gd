@@ -1,5 +1,5 @@
 extends SceneTree
-## ACT coverage: 16 identities, 8 private assignments (R3c.1), 5 types, evaluated animation and small prop placement.
+## ACT coverage: 16 identities, 7 private assignments (R3c.1; W3 Drink removed by user 2026-10-16), 4 types, evaluated animation and small prop placement.
 const ACT=preload("res://scripts/npc_activity_overlay.gd")
 const POP=preload("res://tools/verify_village_v2_population.gd")
 const PL=preload("res://tools/village_v2_population_lib.gd")
@@ -126,7 +126,7 @@ func run():
  var known=[]
  for a in snapshot.actors: known.append(a.node_path)
  var types={}
- var plan_ok=snapshot.count==16 and ACT.ASSIGN.size()==8
+ var plan_ok=snapshot.count==16 and ACT.ASSIGN.size()==7
  for path in ACT.ASSIGN:
   var a=ACT.ASSIGN[path]
   types[a[0]]=true
@@ -134,7 +134,7 @@ func run():
   var good=path in known and clip!=null and clip.length>0.5 and clip.get_track_count()>30 and a[3] in ["idle","walk"]
   check("plan "+path,good)
   plan_ok=plan_ok and good
- check("scope16/8 assignments/5 types",plan_ok and types.size()==5,str(types.keys()))
+ check("scope16/7 assignments/4 types",plan_ok and types.size()==4,str(types.keys()))
  if not "--plan" in args:
   var world: Node3D=load("res://maps/village_v2/village_v2.tscn").instantiate()
   root.add_child(world)
@@ -147,14 +147,14 @@ func run():
    world.get_node("Population").add_child(overlay)
    for i in 4: await process_frame
   var actors=pop.find_children("*","AnimatableBody3D",true,false)
-  check("runtime16/no duplicates",actors.size()==16 and overlay.entries.size()==8)
+  check("runtime16/no duplicates",actors.size()==16 and overlay.entries.size()==7)
   var phases={}
   for e in overlay.entries: phases[e.path]=e.ap.current_animation_position
   for i in 24: await physics_frame
   var advanced=0
   for e in overlay.entries:
    if e.ap.is_playing() and absf(float(phases[e.path])-e.ap.current_animation_position)>0.05: advanced+=1
-  check("real runtime animation advance",advanced==8,str(advanced))
+  check("real runtime animation advance",advanced==7,str(advanced))
   var excluded: Array[RID]=[]
   for b in actors:
    b.set_physics_process(false)
