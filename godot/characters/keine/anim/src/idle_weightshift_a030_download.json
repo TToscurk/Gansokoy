@@ -1,0 +1,50 @@
+{
+  "character": "keine",
+  "clip": "idle_weightshift_a030",
+  "product": "c9c79c65-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "job_uuid": "46a92a5d-a2eb-45a6-b19f-3f6db1fa0165",
+  "character_uuid": "33fd271c-74b9-48c9-95d7-00e1cc1478a1",
+  "motion": {
+    "model-id": 113410901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "overdrive": 0,
+    "params": "1,1,0,0",
+    "arm-space": 0.3,
+    "inplace": false
+  },
+  "raw_params": [
+    [
+      "Posture",
+      1
+    ],
+    [
+      "Breathing",
+      1
+    ],
+    [
+      "Stance",
+      0
+    ],
+    [
+      "Overdrive",
+      0
+    ]
+  ],
+  "name": "Idle",
+  "mixamo_frames": 425,
+  "mixamo_duration": 14.17,
+  "preferences": {
+    "format": "fbx7_2019",
+    "skin": "false",
+    "fps": "30",
+    "reducekf": "0"
+  },
+  "purpose": "JEV shortlist r2: Weight Shift Idle (113410901)",
+  "bytes": 1845440,
+  "sha256": "0ca053ad129d0b9cc7fb7aabad6ab92022e503e7c54cac82ec72288d493e8c23"
+}

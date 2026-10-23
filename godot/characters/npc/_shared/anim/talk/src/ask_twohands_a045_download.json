@@ -1,0 +1,23 @@
+{
+ "clip": "ask_twohands_a045",
+ "name": "Talking",
+ "desc": "Asking A Question With Two Hands",
+ "product": "c9c6fd7b-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 109800901,
+  "params": "-1,0,0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "f0a20c3f-8fb5-43c3-b01f-12214efb1de0",
+ "bytes": 687920,
+ "sha256": "5db65a11d42b8e50afc859fa331c4a18004750c0b7e33e5304b6db0187bcf4bd"
+}

@@ -1,0 +1,23 @@
+{
+ "clip": "whatever_a045",
+ "name": "Whatever Gesture",
+ "desc": "Aj Whatever Gesture",
+ "product": "c9cd9b85-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 127430901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "63c5178c-2c36-4f5b-b832-74f48f55d84f",
+ "bytes": 401072,
+ "sha256": "2f85e6ef1870d4bbb98ffb12f67c2d9e563b4dc3feac95c027196a19f15497b3"
+}

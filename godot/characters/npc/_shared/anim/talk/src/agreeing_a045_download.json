@@ -1,0 +1,23 @@
+{
+ "clip": "agreeing_a045",
+ "name": "Agreeing",
+ "desc": "Agreeing Yes",
+ "product": "c9c91ec4-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117330901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "4ecca7b1-f385-48fb-9a29-88df37a57fd2",
+ "bytes": 464688,
+ "sha256": "d19ebaa4b5da5243ceea0f143ff195e0157b59e14e23a13cc9fb4169f0c0f72d"
+}

@@ -1,0 +1,23 @@
+{
+ "clip": "bow_informal_a045",
+ "name": "Quick Informal Bow",
+ "desc": "Quick Informal Bow",
+ "product": "c9c9f57a-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 119110902,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "cdf52b51-4692-47cd-b212-016b1381beb2",
+ "bytes": 571680,
+ "sha256": "6151472e1ce7c2060050e67e6b4e54c742ce8d08ee2645d15a4649b045949a1f"
+}

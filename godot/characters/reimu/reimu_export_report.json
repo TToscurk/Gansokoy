@@ -1,0 +1,89 @@
+{
+ "src": "D:\\參考圖概念圖\\角色模組\\博麗靈夢_拆件\\靈夢_rig_權重v3_裙擺骨外緣.blend",
+ "target_body_height": 1.5,
+ "src_body_height": 0.9305524863302708,
+ "bones_src": 113,
+ "scale": 1.6119456151424665,
+ "facing_fix_deg": -0.0,
+ "height_all_m": 1.6119455099105835,
+ "feet_z": 0.0,
+ "body_height_m": 1.5,
+ "toon_materials_rerouted": [],
+ "slabs": 4,
+ "capsules": {
+  "LeftUpLeg": 0.085,
+  "LeftLeg": 0.0655,
+  "RightUpLeg": 0.0845,
+  "RightLeg": 0.0728
+ },
+ "bones_exported": 113,
+ "skirt_bones": 48,
+ "meshes": {
+  "右袖": {
+   "verts": 1072,
+   "tris": 1383,
+   "max_influences": 3,
+   "zero_weight_verts": 0
+  },
+  "右鞋": {
+   "verts": 489,
+   "tris": 954,
+   "max_influences": 3,
+   "zero_weight_verts": 0
+  },
+  "左袖": {
+   "verts": 1072,
+   "tris": 1383,
+   "max_influences": 3,
+   "zero_weight_verts": 0
+  },
+  "左鞋": {
+   "verts": 489,
+   "tris": 954,
+   "max_influences": 3,
+   "zero_weight_verts": 0
+  },
+  "綁髮右": {
+   "verts": 773,
+   "tris": 914,
+   "max_influences": 1,
+   "zero_weight_verts": 0
+  },
+  "綁髮左": {
+   "verts": 774,
+   "tris": 919,
+   "max_influences": 1,
+   "zero_weight_verts": 0
+  },
+  "衣服": {
+   "verts": 916,
+   "tris": 1271,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "袴": {
+   "verts": 2450,
+   "tris": 3076,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "身體": {
+   "verts": 2662,
+   "tris": 5320,
+   "max_influences": 5,
+   "zero_weight_verts": 0
+  },
+  "頭緞帶": {
+   "verts": 2147,
+   "tris": 3072,
+   "max_influences": 1,
+   "zero_weight_verts": 0
+  },
+  "頭髮": {
+   "verts": 25697,
+   "tris": 42123,
+   "max_influences": 2,
+   "zero_weight_verts": 0
+  }
+ }
+}

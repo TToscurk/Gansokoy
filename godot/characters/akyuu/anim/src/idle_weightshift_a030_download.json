@@ -1,0 +1,49 @@
+{
+  "character": "akyuu",
+  "clip": "idle_weightshift_a030",
+  "product": "c9c79c65-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "job_uuid": "623084e9-8a4e-4339-a5ba-f9ac326f1e8c",
+  "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+  "motion": {
+    "model-id": 113410901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "overdrive": 0,
+    "params": "1,1,0,0",
+    "arm-space": 0.3,
+    "inplace": false
+  },
+  "raw_params": [
+    [
+      "Posture",
+      1
+    ],
+    [
+      "Breathing",
+      1
+    ],
+    [
+      "Stance",
+      0
+    ],
+    [
+      "Overdrive",
+      0
+    ]
+  ],
+  "name": "Idle",
+  "mixamo_frames": 425,
+  "mixamo_duration": 14.17,
+  "preferences": {
+    "format": "fbx7_2019",
+    "skin": "false",
+    "fps": "30",
+    "reducekf": "0"
+  },
+  "bytes": 1630512,
+  "sha256": "574435108869b0443f0afb8701c94677e12e53fdafabb5a2b3141c5357092348"
+}

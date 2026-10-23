@@ -1,0 +1,23 @@
+{
+ "clip": "sarcastic_nod_a045",
+ "name": "Sarcastic Head Nod",
+ "desc": "Sarcastically Nodding Head Yes",
+ "product": "c9c909bc-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117110901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "c2e658ab-8758-4fda-995a-e49d48e6039d",
+ "bytes": 525888,
+ "sha256": "f9d70e98918bd6fa9c756a8bb007ddcd4d85f8a74c257eb8f5aa3d7b0398f88c"
+}

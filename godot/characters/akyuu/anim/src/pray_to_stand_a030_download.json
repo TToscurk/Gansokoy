@@ -1,0 +1,42 @@
+{
+  "status": "completed",
+  "job_uuid": "9d7aaf3a-8b74-4086-8bbe-b22a18b871c4",
+  "product": "c9c6a14d-b96c-11e4-a802-0aaa78deedf9",
+  "name": "Praying",
+  "description": "Kneeling In Prayer To Standing Up",
+  "motion": {
+    "model-id": 103130903,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "overdrive": 0,
+    "params": "0,0",
+    "arm-space": 0.3,
+    "inplace": false
+  },
+  "raw_params": [
+    [
+      "Praying Towards",
+      0
+    ],
+    [
+      "Overdrive",
+      0
+    ]
+  ],
+  "frames": 205,
+  "duration": 6.83,
+  "character": "akyuu",
+  "clip": "pray_to_stand_a030",
+  "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+  "preferences": {
+    "format": "fbx7_2019",
+    "skin": "false",
+    "fps": "30",
+    "reducekf": "0"
+  },
+  "bytes": 860528,
+  "sha256": "f1587fb2642cb6b8cc4dc2387ec27b8db7795eb1727df44d1f88c3ec9d492a15"
+}

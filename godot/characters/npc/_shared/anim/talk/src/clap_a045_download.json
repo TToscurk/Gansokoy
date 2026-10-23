@@ -1,0 +1,23 @@
+{
+ "clip": "clap_a045",
+ "name": "Clapping",
+ "desc": "Clap While Standing",
+ "product": "c9c60ef2-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 100570901,
+  "params": "0,0,0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "72be678e-d395-4253-ada0-994d93f3f527",
+ "bytes": 352000,
+ "sha256": "b83256b327f096f02629b2851ce71ca2b86d3eb273e2b114c919aee3a1ac7fe6"
+}

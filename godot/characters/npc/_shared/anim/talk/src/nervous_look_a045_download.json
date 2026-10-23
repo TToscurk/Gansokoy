@@ -1,0 +1,23 @@
+{
+ "clip": "nervous_look_a045",
+ "name": "Look Around",
+ "desc": "Look Around Nervously",
+ "product": "c9c8f860-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 137670901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "702a078b-0e7a-4c24-95df-79a804fa1070",
+ "bytes": 627760,
+ "sha256": "a6f4cd02a85204381a1daf004c880afc868a97b3b15b06a63319f749cc31fc6f"
+}

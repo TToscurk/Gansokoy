@@ -1,0 +1,38 @@
+{
+  "character": "keine",
+  "clip": "idle_thinking_a030",
+  "product": "c9c990e8-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "job_uuid": "84c70799-5a3e-4540-a721-10afddad1479",
+  "character_uuid": "33fd271c-74b9-48c9-95d7-00e1cc1478a1",
+  "motion": {
+    "model-id": 118030901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "overdrive": 0,
+    "params": "0",
+    "arm-space": 0.3,
+    "inplace": false
+  },
+  "raw_params": [
+    [
+      "Overdrive",
+      0
+    ]
+  ],
+  "name": "Thinking",
+  "mixamo_frames": 127,
+  "mixamo_duration": 4.23,
+  "preferences": {
+    "format": "fbx7_2019",
+    "skin": "false",
+    "fps": "30",
+    "reducekf": "0"
+  },
+  "purpose": "JEV shortlist r2: Thinking While Standing (118030901)",
+  "bytes": 746288,
+  "sha256": "030a1412bc974decaf1c8325828df584d0d021b1ee0e461962295fcf55c1f7f4"
+}

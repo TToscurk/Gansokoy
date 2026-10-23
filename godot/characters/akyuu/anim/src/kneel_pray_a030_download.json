@@ -1,0 +1,46 @@
+{
+  "character": "akyuu",
+  "clip": "kneel_pray_a030",
+  "product": "c9c6a211-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "job_uuid": "c41169e5-10a6-41bd-8769-4c03972190c9",
+  "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+  "motion": {
+    "model-id": 103130904,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "overdrive": 0,
+    "params": "0,0,0",
+    "arm-space": 0.3,
+    "inplace": false
+  },
+  "raw_params": [
+    [
+      "Praying Towards",
+      0
+    ],
+    [
+      "Emotion",
+      0
+    ],
+    [
+      "Overdrive",
+      0
+    ]
+  ],
+  "name": "Praying",
+  "description": "Kneeling In Prayer",
+  "mixamo_frames": 58,
+  "mixamo_duration": 1.93,
+  "preferences": {
+    "format": "fbx7_2019",
+    "skin": "false",
+    "fps": "30",
+    "reducekf": "0"
+  },
+  "bytes": 440416,
+  "sha256": "7c48293d69a9ee1eed11dc06bf6f062416a0d5c864d3dbb0ef27d286ea30e597"
+}

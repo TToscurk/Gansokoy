@@ -1,0 +1,23 @@
+{
+ "clip": "nod_yes_a045",
+ "name": "Head Nod Yes",
+ "desc": "Nodding Head Yes",
+ "product": "c9c90d7b-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117120901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "fe7e8c2e-2b43-47dc-a74c-e54a9566fe03",
+ "bytes": 556416,
+ "sha256": "6209df712b4a04466a31d9ac76e26d1ead3f8be1a6070396c85537a30f1e9ba5"
+}

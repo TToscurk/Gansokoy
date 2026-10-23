@@ -1,0 +1,23 @@
+{
+ "clip": "annoyed_headshake_a045",
+ "name": "Annoyed Head Shake",
+ "desc": "Shaking Head No Annoyed",
+ "product": "c9c90fbc-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117090901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "9da3997f-d190-484e-bdbb-544a7f412823",
+ "bytes": 511008,
+ "sha256": "4e2530b14f990c9d9961779ff345834e6bbfd606a979605c0860c553e7b089b1"
+}

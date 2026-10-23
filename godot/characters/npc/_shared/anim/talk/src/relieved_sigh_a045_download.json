@@ -1,0 +1,23 @@
+{
+ "clip": "relieved_sigh_a045",
+ "name": "Relieved Sigh",
+ "desc": "Sighing In Relief",
+ "product": "c9c92112-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117160901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "3f433a8e-2cf1-4ad5-97a6-0512cf4a5d89",
+ "bytes": 602208,
+ "sha256": "45e131b950f164a4bb6cadcc82350550111e8f3ec2108339b195cb4b9164194c"
+}

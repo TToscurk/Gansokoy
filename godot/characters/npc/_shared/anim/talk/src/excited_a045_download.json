@@ -1,0 +1,23 @@
+{
+ "clip": "excited_a045",
+ "name": "Excited",
+ "desc": "Super Excited",
+ "product": "c9c9941c-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 118000901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "71584a69-9191-47fe-8742-9264ad2debb2",
+ "bytes": 828304,
+ "sha256": "8c7ecd6c63d01a22bb6665c67ddb174559474ca0b3134161edc0815ac2b4e6fa"
+}

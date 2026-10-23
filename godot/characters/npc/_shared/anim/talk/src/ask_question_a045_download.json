@@ -1,0 +1,23 @@
+{
+ "clip": "ask_question_a045",
+ "name": "Talking",
+ "desc": "Asking A Question",
+ "product": "c9c6de72-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 108420902,
+  "params": "-1,-1,0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "632360b3-bfe6-4148-9754-b60cd6f64c02",
+ "bytes": 721840,
+ "sha256": "b4e9734fb1db28ab81f5dfd7d46939b1ef39be3f53cbeda0fdb002c482687baf"
+}

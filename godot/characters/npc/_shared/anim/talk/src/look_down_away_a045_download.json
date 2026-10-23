@@ -1,0 +1,23 @@
+{
+ "clip": "look_down_away_a045",
+ "name": "Looking Down",
+ "desc": "Looking Down And Away",
+ "product": "c9c91871-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117230901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "711e2840-afaa-4cb9-a0a4-2524daae6e22",
+ "bytes": 692608,
+ "sha256": "3f380d606dd2e7998b4e018da415a51a646beecc14f8c3c6531c500ac669dbd6"
+}

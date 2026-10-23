@@ -1,0 +1,23 @@
+{
+ "clip": "look_away_a045",
+ "name": "Look Away Gesture",
+ "desc": "Sarcastically Looking Away",
+ "product": "c9c8dd68-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117030901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "d469e8c1-da42-4507-a19d-cf4143394b5e",
+ "bytes": 525888,
+ "sha256": "3cf9f6d07310c0118af5a752d2b17e2cec187791c5e867bb3e03d0643e2622e2"
+}

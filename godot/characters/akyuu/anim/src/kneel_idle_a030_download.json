@@ -1,0 +1,38 @@
+{
+  "character": "akyuu",
+  "clip": "kneel_idle_a030",
+  "product": "c9cd9c47-b96c-11e4-a802-0aaa78deedf9",
+  "arm_space": 0.3,
+  "job_uuid": "28d21b22-2b25-4730-8e83-03f7c26a097b",
+  "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+  "motion": {
+    "model-id": 126720901,
+    "mirror": false,
+    "trim": [
+      0,
+      100
+    ],
+    "overdrive": 0,
+    "params": "0",
+    "arm-space": 0.3,
+    "inplace": false
+  },
+  "raw_params": [
+    [
+      "Overdrive",
+      0
+    ]
+  ],
+  "name": "Kneeling Idle",
+  "description": "Kneeling Idle",
+  "mixamo_frames": 127,
+  "mixamo_duration": 4.23,
+  "preferences": {
+    "format": "fbx7_2019",
+    "skin": "false",
+    "fps": "30",
+    "reducekf": "0"
+  },
+  "bytes": 627200,
+  "sha256": "17d70b1207818a9be73f536045c37735797b7bac7996d406c3a676301951bc3a"
+}

@@ -1,0 +1,23 @@
+{
+ "clip": "cocky_headturn_a045",
+ "name": "Cocky Head Turn",
+ "desc": "Turning Head To The Side In A Cocky Mann",
+ "product": "c9c911f9-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117040901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "192bbbd5-6089-4708-a86b-e4006ffa8d9e",
+ "bytes": 548784,
+ "sha256": "e226d1772ebe2008d4f144c6482b9621eb656e5b28f887be036b6ec443957149"
+}

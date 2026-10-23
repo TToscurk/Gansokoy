@@ -1,0 +1,53 @@
+{
+ "src": "D:\\參考圖概念圖\\角色模組\\霧與魔理莎\\魔理莎_rig_權重_裙擺骨.blend",
+ "target_body_height": 1.5,
+ "src_body_height": 0.9188430346548557,
+ "bones_src": 113,
+ "scale": 1.6324877519079675,
+ "facing_fix_deg": 90.0,
+ "height_all_m": 1.6324878931045532,
+ "feet_z": 0.0,
+ "body_height_m": 1.5,
+ "toon_materials_rerouted": [],
+ "slabs": 4,
+ "capsules": {
+  "LeftUpLeg": 0.0848,
+  "LeftLeg": 0.0757,
+  "RightUpLeg": 0.0875,
+  "RightLeg": 0.0793
+ },
+ "bones_exported": 113,
+ "skirt_bones": 48,
+ "meshes": {
+  "法師帽子": {
+   "verts": 1600,
+   "tris": 2828,
+   "max_influences": 1,
+   "zero_weight_verts": 0
+  },
+  "衣服": {
+   "verts": 4408,
+   "tris": 7312,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "身體": {
+   "verts": 2258,
+   "tris": 4512,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "鞋子": {
+   "verts": 1060,
+   "tris": 1984,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "頭法": {
+   "verts": 5642,
+   "tris": 6673,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  }
+ }
+}

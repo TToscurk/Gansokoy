@@ -1,0 +1,23 @@
+{
+ "clip": "laughing_a045",
+ "name": "Laughing",
+ "desc": "Laughing Standing",
+ "product": "c9c6ec22-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 109820901,
+  "params": "0,0,0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "22a727d1-5df9-4cdb-99e1-b48949cb4252",
+ "bytes": 1066080,
+ "sha256": "f02c350ab2105a6015382ce3f66292d877200eecaa332ef93f057affff24df22"
+}

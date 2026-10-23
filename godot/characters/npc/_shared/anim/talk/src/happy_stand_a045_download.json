@@ -1,0 +1,23 @@
+{
+ "clip": "happy_stand_a045",
+ "name": "Happy",
+ "desc": "Standing Happily",
+ "product": "c9c98a38-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117920901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "b97943df-4916-4cd4-acbd-c40baaa4af09",
+ "bytes": 1087168,
+ "sha256": "b3b268484fb3032ee43a78640319535378c6bf5bdb08a702f873cb545c2623ce"
+}

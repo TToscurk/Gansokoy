@@ -1,0 +1,23 @@
+{
+ "clip": "acknowledge_a045",
+ "name": "Acknowledging",
+ "desc": "Acknowledging Gesture",
+ "product": "c9c91c6e-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117150901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "a85efe50-2220-46e3-982b-2aead6e482bd",
+ "bytes": 480096,
+ "sha256": "66cb7225ec84115d0d27e04387f3b8ff8787d4a4cebe9ff68671078c61753265"
+}

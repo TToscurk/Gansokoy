@@ -1,0 +1,23 @@
+{
+ "clip": "ask_onehand_a045",
+ "name": "Talking",
+ "desc": "Asking A Question With One Hand",
+ "product": "c9c6ffbe-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 109800902,
+  "params": "-1,0,0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "8f60ca36-3fc7-43d1-ab78-4778392be6e9",
+ "bytes": 665568,
+ "sha256": "c14cb1add8af03d839e2c5d7861ba188d186d89f25da5463b1740a767bef451b"
+}

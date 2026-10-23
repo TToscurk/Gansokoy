@@ -1,0 +1,23 @@
+{
+ "clip": "happy_gesture_a045",
+ "name": "Happy Hand Gesture",
+ "desc": "Happy Forward Hand Gesture",
+ "product": "c9c91ba2-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117060901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "55d12862-e6bc-4c28-b770-ec72ff5d2f51",
+ "bytes": 594576,
+ "sha256": "eb0a6c5e606c85265f04544e2cd0fb5f2eda95e3b885deefb51eca1c2b5783b0"
+}

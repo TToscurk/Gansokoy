@@ -1,0 +1,69 @@
+{
+ "src": "D:\\參考圖概念圖\\角色模組\\稗田阿求\\阿求_rig_4K.blend",
+ "target_height": 1.6,
+ "src_height": 0.9999998150310958,
+ "bones": 65,
+ "scale": 1.6000002959503015,
+ "facing_fix_deg": 90.0,
+ "height_m": 1.600000023841858,
+ "feet_z": 0.0,
+ "左袖": {
+  "verts": 1716,
+  "edge_med_mm": 21.5,
+  "edge_max_mm": 39.9,
+  "pins_upperarm_forearm_shoulder": [
+   132,
+   150,
+   92
+  ]
+ },
+ "右袖": {
+  "verts": 1695,
+  "edge_med_mm": 21.6,
+  "edge_max_mm": 47.8,
+  "pins_upperarm_forearm_shoulder": [
+   129,
+   152,
+   52
+  ]
+ },
+ "slabs": 17,
+ "meshes": {
+  "衣身": {
+   "verts": 2500,
+   "tris": 4773,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "身體": {
+   "verts": 76171,
+   "tris": 150876,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "鞋子右": {
+   "verts": 555,
+   "tris": 1013,
+   "max_influences": 3,
+   "zero_weight_verts": 0
+  },
+  "鞋子左": {
+   "verts": 556,
+   "tris": 1018,
+   "max_influences": 3,
+   "zero_weight_verts": 0
+  },
+  "頭髮": {
+   "verts": 5278,
+   "tris": 9401,
+   "max_influences": 2,
+   "zero_weight_verts": 0
+  }
+ },
+ "materials": {
+  "M_Akyuu_Kimono_4K": "normal<-none",
+  "M_Akyuu_Body_4K": "normal<-none",
+  "M_Akyuu_Shoe": "normal<-ShaderNodeNormalMap:Normal",
+  "M_Akyuu_Hair": "normal<-none"
+ }
+}

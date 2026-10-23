@@ -1,0 +1,23 @@
+{
+ "clip": "headshake_no_a045",
+ "name": "Shaking Head No",
+ "desc": "Shaking Head No Dismissively",
+ "product": "c9c90b3c-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117080901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "e4450545-9f98-4999-ad9c-c30b3fb72142",
+ "bytes": 464832,
+ "sha256": "2742299b964401b786b28551d8da068237e0984ea01a91d110414da7aaa39baa"
+}

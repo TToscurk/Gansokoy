@@ -1,0 +1,23 @@
+{
+ "clip": "surprised_look_a045",
+ "name": "Reacting",
+ "desc": "Being Surprised And Looking Right",
+ "product": "c9c8214a-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 130820901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "cfd23264-2138-4712-ae03-a9ec5b93b786",
+ "bytes": 631008,
+ "sha256": "6ed557afda541737568a8ae72b47278e9d60c0690d2d6f4af986f1a265ce97fd"
+}

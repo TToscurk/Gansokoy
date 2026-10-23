@@ -1,0 +1,23 @@
+{
+ "clip": "thoughtful_headshake_a045",
+ "name": "Thoughtful Head Shake",
+ "desc": "Shaking Head No Thoughtfully",
+ "product": "c9c9204d-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 117070901,
+  "params": "0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "5d17b753-f7ef-406a-8208-190585603db2",
+ "bytes": 609840,
+ "sha256": "90a5d72049c45afe9fb263fbb0a21fe903c638a79e5fbd4a3cb4fef17f46d420"
+}

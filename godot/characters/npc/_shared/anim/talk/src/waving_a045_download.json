@@ -1,0 +1,23 @@
+{
+ "clip": "waving_a045",
+ "name": "Waving",
+ "desc": "Waving",
+ "product": "c9c5ed32-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 103020901,
+  "params": "0,0,0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "d035a742-21eb-40a0-8dc9-6c8beb5cd89b",
+ "bytes": 301968,
+ "sha256": "b72fcb61357a45b58b58f6e9b3eed0e74162ce2f019987e319314c017efcef59"
+}

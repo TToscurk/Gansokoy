@@ -1,0 +1,23 @@
+{
+ "clip": "greeting_a045",
+ "name": "Standing Greeting",
+ "desc": "Greeting While Standing",
+ "product": "c9c7996a-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 113350901,
+  "params": "-1,1,0,0",
+  "arm-space": 0.45,
+  "inplace": false
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "717ee824-8017-4a61-9f99-dd8d9d059211",
+ "bytes": 711808,
+ "sha256": "cdd2acc5c75195ae54bb2a9561b871cfa94ee0edd365e9f914970c04ea8a9a28"
+}

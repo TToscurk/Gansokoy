@@ -1,0 +1,23 @@
+{
+ "clip": "fwalk_sm1_a045",
+ "name": "Female Walk",
+ "desc": "Female Normal Walk",
+ "product": "c9c68b91-b96c-11e4-a802-0aaa78deedf9",
+ "character": "akyuu",
+ "character_uuid": "0e6afbff-4b87-4a69-a108-41ab3a7eff89",
+ "motion": {
+  "model-id": 102520901,
+  "params": "0,-1,0",
+  "arm-space": 0.45,
+  "inplace": true
+ },
+ "preferences": {
+  "format": "fbx7_2019",
+  "skin": "false",
+  "fps": "30",
+  "reducekf": "0"
+ },
+ "job_uuid": "dfb3a248-a482-493c-99c9-2d2867524122",
+ "bytes": 352368,
+ "sha256": "b8c46e026cedec2879f97421d2e7f1473cf42d080d581b95bdea844e4b953c0b"
+}

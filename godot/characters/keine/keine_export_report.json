@@ -1,0 +1,103 @@
+{
+ "src": "D:\\參考圖概念圖\\角色模組\\上白澤慧音\\慧音權重_v2_含頭髮鞋袴修正.blend",
+ "target_height": 1.7,
+ "src_height": 1.0000004493957775,
+ "bones": 65,
+ "scale": 1.6999992360275216,
+ "facing_fix_deg": 90.0,
+ "height_m": 1.7000000476837158,
+ "feet_z": 0.0,
+ "face_tex_lift": {
+  "skin_rgb": [
+   0.988,
+   0.882,
+   0.851
+  ],
+  "eyes_px_box": [
+   [
+    1486,
+    546,
+    1523,
+    562
+   ],
+   [
+    1568,
+    538,
+    1611,
+    547
+   ]
+  ],
+  "changed_px": 882,
+  "mean_lum_change_in_band": 0.0844596382674187
+ },
+ "eye_centers": [
+  [
+   0.0396361827458206,
+   -0.17915738726917066,
+   1.4005166982349597
+  ],
+  [
+   -0.044212913406746726,
+   -0.17821453724588668,
+   1.4044478450502669
+  ]
+ ],
+ "face_smooth": {
+  "iterations": 30,
+  "verts": 297,
+  "kept_flip_verts": 15,
+  "normal_change_deg_p50": 8.486868357965257,
+  "normal_change_deg_max": 73.80477606626324
+ },
+ "meshes": {
+  "右袖": {
+   "verts": 566,
+   "tris": 817,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "右鞋": {
+   "verts": 555,
+   "tris": 1013,
+   "max_influences": 3,
+   "zero_weight_verts": 0
+  },
+  "左袖": {
+   "verts": 576,
+   "tris": 824,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "左鞋": {
+   "verts": 555,
+   "tris": 1013,
+   "max_influences": 3,
+   "zero_weight_verts": 0
+  },
+  "帽子": {
+   "verts": 4666,
+   "tris": 9339,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "袴裙": {
+   "verts": 1756,
+   "tris": 2808,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "身體": {
+   "verts": 15240,
+   "tris": 29373,
+   "max_influences": 4,
+   "zero_weight_verts": 0
+  },
+  "頭髮": {
+   "verts": 9867,
+   "tris": 16223,
+   "max_influences": 3,
+   "zero_weight_verts": 0
+  }
+ },
+ "total_tris": 61410
+}
