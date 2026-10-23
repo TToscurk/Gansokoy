@@ -26,7 +26,13 @@ meshy_api_key.txt
 # 本機工具產物 —— 不屬於專案本身。
 # `godot/addons/` 是 godot-mcp 每次 `godot_launch` 用 copytree 覆寫進來的，
 # 權威來源在 D:\godot-mcp，不是這個 repo；改這裡的副本會被下次啟動蓋掉。
-godot/addons/
+# 2026-10-23 Git Recovery R2：遊戲執行期外掛必須進版控（乾淨 clone 才能啟動）。
+# 只有 godot_ai 是 godot-mcp 覆寫進來的開發工具，維持忽略；它的 autoload 由外掛啟用時自行寫回。
+godot/addons/*
+!godot/addons/simplegrasstextured/
+!godot/addons/proton_scatter/
+!godot/addons/godot_jev/
+godot/addons/proton_scatter/demos/
 godot/.mcp.json
 godot/.cursor/
 .codex/
