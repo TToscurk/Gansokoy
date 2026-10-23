@@ -1,0 +1,16 @@
+{
+ "character_id": "f2e0c040-48e3-43f5-a17c-a3bacd230211",
+ "product_id": "c9cc4807-b96c-11e4-a802-0aaa78deedf9",
+ "name": "Sword And Shield Jump",
+ "description": "Sword And Shield Running Jump",
+ "model_id": 122670901,
+ "params": "0",
+ "arm_space": 0.78,
+ "fps": 30,
+ "skin": false,
+ "inplace": false,
+ "job": "d25cf936-2afb-4bc4-919c-72287251c739",
+ "bytes": 332576,
+ "sha256": "dd2528fc794faa20e58be4a69190ff626d5234758248d083f3e03b960a70337c",
+ "note": "user screenshot previewed it on YORIICHI_MIXAMO_V2_4_HAORI_NO_LEG (primary 52fe3ca8…); downloaded on f2e0c040 to match the existing v24 retarget source"
+}

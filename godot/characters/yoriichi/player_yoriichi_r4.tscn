@@ -1,0 +1,78 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://characters/yoriichi/yoriichi_character.gd" id="1_e0g14"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r4/r4_idle.res" id="2_jp31c"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r4/r4_heavy_cut.res" id="3_g4gr7"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r4/r4_light_combo.res" id="4_cdv7u"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/v24/yoriichi_v24.glb" id="5_f1y0b"]
+[ext_resource type="Script" path="res://characters/yoriichi/v24/yoriichi_v24_rig.gd" id="6_0al8p"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/yoriichi_sword.glb" id="7_72a7r"]
+[ext_resource type="Script" path="res://characters/yoriichi/sheath_v2/sword_hilt_only.gd" id="8_lul1x"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/sheath_v2/yoriichi_sheath_v2.glb" id="9_187ot"]
+[ext_resource type="Script" path="res://characters/yoriichi/sheath_sway.gd" id="10_n4qa1"]
+[ext_resource type="Script" path="res://characters/yoriichi/player_camera_adapter.gd" id="11_05l66"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.3
+height = 1.7
+
+[node name="Player" type="CharacterBody3D" unique_id=983313881 node_paths=PackedStringArray("input_yaw_node")]
+floor_max_angle = 0.907571
+script = ExtResource("1_e0g14")
+grip_pose_resource = ExtResource("2_jp31c")
+drawn_idle_resource = ExtResource("2_jp31c")
+heavy_cut_resource = ExtResource("3_g4gr7")
+attack_combo_resource = ExtResource("4_cdv7u")
+heavy_charge_freeze_progress = 0.4
+input_yaw_node = NodePath("Pivot")
+
+[node name="BodyVisual" parent="." unique_id=500352667 instance=ExtResource("5_f1y0b")]
+script = ExtResource("6_0al8p")
+start_motion = ""
+
+[node name="HandSocket" type="BoneAttachment3D" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D" parent_id_path=PackedInt32Array(500352667, 1395084764) index="10" unique_id=215313517]
+bone_name = "mixamorig_RightHand"
+bone_idx = 152
+
+[node name="Sword_Hand" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D/HandSocket" unique_id=336175646 instance=ExtResource("7_72a7r")]
+transform = Transform3D(0.4384881, 0.47451672, 0.21204233, -0.5028491, 0.45747522, 0.016099079, -0.13141882, -0.16718334, 0.6458938, 0.041151483, 0.10381222, 0.011152084)
+visible = false
+
+[node name="SheathSocket" type="BoneAttachment3D" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D" parent_id_path=PackedInt32Array(500352667, 1395084764) index="11" unique_id=334379087]
+bone_name = "mixamorig_Hips"
+bone_idx = 0
+
+[node name="Sword_Sheathed" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D/SheathSocket" unique_id=1033447746 instance=ExtResource("7_72a7r")]
+transform = Transform3D(0.4002622, -0.51214236, -0.19975081, -0.5454751, -0.4006653, -0.06575904, -0.068169445, 0.19894111, -0.64666486, 0.060698036, 0.02672951, -0.25239396)
+script = ExtResource("8_lul1x")
+
+[node name="Sheath" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D/SheathSocket" unique_id=243777205 instance=ExtResource("9_187ot")]
+transform = Transform3D(0.4002622, 0.19975081, -0.51214236, -0.5454751, 0.06575904, -0.4006653, -0.068169445, 0.64666486, 0.19894111, -0.28809348, -0.23383154, -0.21540536)
+script = ExtResource("10_n4qa1")
+followers = Array[NodePath]([NodePath("../Sword_Sheathed")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=357429528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="Pivot" type="Node3D" parent="." unique_id=1926967171]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Pivot" unique_id=1057773750]
+spring_length = 7.5
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="Pivot/SpringArm3D" unique_id=339939692]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.090482235, -1.0391102)
+
+[node name="InteractionRay" type="RayCast3D" parent="Pivot" unique_id=2086420576]
+target_position = Vector3(0, 0, -4)
+collide_with_areas = true
+
+[node name="CameraAdapter" type="Node" parent="." unique_id=1515007360 node_paths=PackedStringArray("pivot", "arm", "interaction_ray")]
+script = ExtResource("11_05l66")
+pivot = NodePath("../Pivot")
+arm = NodePath("../Pivot/SpringArm3D")
+interaction_ray = NodePath("../Pivot/InteractionRay")
+
+[editable path="BodyVisual"]

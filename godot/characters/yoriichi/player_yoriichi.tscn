@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://bah0ha6b5bdvb"]
 
-[ext_resource type="PackedScene" uid="uid://tty8wlxc1tcj" path="res://characters/yoriichi/yoriichi_body.fbx" id="1_fbx"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/v24/yoriichi_v24.glb" id="1_body"]
 [ext_resource type="Script" uid="uid://uvqmbikil5ud" path="res://characters/yoriichi/yoriichi_character.gd" id="2_controller"]
 [ext_resource type="PackedScene" uid="uid://ex8kaifqd4cv" path="res://characters/yoriichi/yoriichi_sword.glb" id="3_sword"]
 [ext_resource type="Script" uid="uid://citxkgc8bcrbi" path="res://characters/yoriichi/player_camera_adapter.gd" id="4_adapter"]
-[ext_resource type="PackedScene" uid="uid://tji6hthp13vc" path="res://characters/yoriichi/yoriichi_sheath.glb" id="5_sheath"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/sheath_v2/yoriichi_sheath_v2.glb" id="5_sheath"]
+[ext_resource type="Script" path="res://characters/yoriichi/sheath_v2/sword_hilt_only.gd" id="8_hilt"]
 [ext_resource type="Script" uid="uid://gmnluve6fgu1" path="res://characters/yoriichi/sheath_sway.gd" id="6_sway"]
+[ext_resource type="Script" path="res://characters/yoriichi/v24/yoriichi_v24_rig.gd" id="7_rig"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
 radius = 0.3
@@ -16,27 +18,28 @@ floor_max_angle = 0.907571
 script = ExtResource("2_controller")
 input_yaw_node = NodePath("Pivot")
 
-[node name="BodyVisual" parent="." unique_id=500352667 instance=ExtResource("1_fbx")]
+[node name="BodyVisual" parent="." unique_id=500352667 instance=ExtResource("1_body")]
+script = ExtResource("7_rig")
+start_motion = ""
 
-[node name="HandSocket" type="BoneAttachment3D" parent="BodyVisual/Armature/Skeleton3D" parent_id_path=PackedInt32Array(500352667, 1288089896) index="1" unique_id=2000542006]
-transform = Transform3D(0.5078579, -0.3426841, 0.7903464, -0.7450698, 0.2857646, 0.6026685, -0.43237805, -0.8949335, -0.110195905, -0.4274863, -0.013478717, 0.89399266)
-bone_name = "RightHand"
-bone_idx = 19
+[node name="HandSocket" type="BoneAttachment3D" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D"]
+bone_name = "mixamorig_RightHand"
+bone_idx = 152
 
-[node name="Sword_Hand" parent="BodyVisual/Armature/Skeleton3D/HandSocket" unique_id=317976090 instance=ExtResource("3_sword")]
-transform = Transform3D(-0.14443, 0.844425, 0.515836, -0.9884, -0.0983786, -0.115699, -0.0469521, -0.526563, 0.848839, 0.126589, 0.0809044, -0.0618592)
+[node name="Sword_Hand" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D/HandSocket" instance=ExtResource("3_sword")]
+transform = Transform3D(0.6971191, 0.4365673, 0.3106439, -0.7994419, 0.42088872, 0.02358529, -0.20893286, -0.15381287, 0.94624025, 0.055218935, 0.11028737, -0.020876944)
 visible = false
 
-[node name="SheathSocket" type="BoneAttachment3D" parent="BodyVisual/Armature/Skeleton3D" parent_id_path=PackedInt32Array(500352667, 1288089896) index="2" unique_id=1601920064]
-transform = Transform3D(0.94196403, -0.3328543, 0.043722518, 0.20839559, 0.47764087, -0.8534813, 0.2632013, 0.8130602, 0.5192859, 0.0529923, -0.040105492, 0.76089936)
-bone_name = "Hips"
+[node name="SheathSocket" type="BoneAttachment3D" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D"]
+bone_name = "mixamorig_Hips"
 bone_idx = 0
 
-[node name="Sword_Sheathed" parent="BodyVisual/Armature/Skeleton3D/SheathSocket" unique_id=1002003241 instance=ExtResource("3_sword")]
-transform = Transform3D(0.74237776, 0.13080549, -0.6570915, 0.6316089, -0.4637984, 0.62126005, -0.22349477, -0.8762327, -0.4269316, 0.19541046, 0.07245487, 0.26173294)
+[node name="Sword_Sheathed" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D/SheathSocket" instance=ExtResource("3_sword")]
+transform = Transform3D(0.4002622, -0.51214236, -0.19975081, -0.5454751, -0.4006653, -0.06575904, -0.068169445, 0.19894111, -0.64666486, 0.060698036, 0.02672951, -0.25239396)
+script = ExtResource("8_hilt")
 
-[node name="Sheath" parent="BodyVisual/Armature/Skeleton3D/SheathSocket" unique_id=649161892 instance=ExtResource("5_sheath")]
-transform = Transform3D(0.9833463, 0.10973569, -0.14487725, 0.17880073, -0.44121057, 0.8794117, 0.03258128, -0.8906696, -0.4534839, 0.19721806, 0.08149356, 0.29175115)
+[node name="Sheath" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D/SheathSocket" instance=ExtResource("5_sheath")]
+transform = Transform3D(0.4002622, 0.19975081, -0.51214236, -0.5454751, 0.06575904, -0.4006653, -0.068169445, 0.64666486, 0.19894111, -0.28809348, -0.23383154, -0.21540536)
 script = ExtResource("6_sway")
 followers = Array[NodePath]([NodePath("../Sword_Sheathed")])
 

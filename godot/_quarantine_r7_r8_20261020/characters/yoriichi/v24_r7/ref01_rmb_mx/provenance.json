@@ -1,0 +1,15 @@
+{
+ "character_id": "f2e0c040-48e3-43f5-a17c-a3bacd230211",
+ "product_id": "c9cc63b7-b96c-11e4-a802-0aaa78deedf9",
+ "name": "Sword And Shield Attack",
+ "description": "Sword And Shield High Attack",
+ "model_id": 122970901,
+ "params": "0",
+ "arm_space": 0.78,
+ "fps": 30,
+ "skin": false,
+ "inplace": false,
+ "job": "5c4cbffb-9e24-468a-baf7-1705cf293688",
+ "bytes": 394784,
+ "sha256": "cc360940f78f3f12912185ae604ae7a4ff508506a3470f20f816a8edfc8ae267"
+}

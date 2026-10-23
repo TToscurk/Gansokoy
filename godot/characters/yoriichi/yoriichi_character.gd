@@ -33,15 +33,33 @@ extends CharacterBody3D
 @export var run_turn_multiplier := 1.9
 @export var blend_time := 0.2         # locomotion 狀態間預設 xfade
 
-@export var walk_anim := "Armature|Armature|walking_man|baselayer"
-## Idle／Run／側身跑一律使用衍生 .res：Hips 垂直補正過（腳底與 Walk 對齊）、
-## 水平錨定在骨架 rest（八方向切換不飄移）。
-@export var idle_grounded_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_idle_grounded.res")
-@export var run_fast_anim := "RunFast"
-@export var run_fast_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_run_fast.res")
+## 2026-10-17 換裝 v2.4（yoriichi_v24.glb，Mixamo 骨架）：舊 Meshy 24 骨動畫全部刪除，
+## 動作改由 tools/v24_anim/build_v24_anims.gd 從 Mixamo（V2.4 角色、Arm-Space 0.78 防袖子穿身）重定向，
+## 輸出在 res://characters/yoriichi/v24/anims/。欄位留空（null）時 _ready 以 idle 片段佔位。
+## 移動三段：按住 walk（Alt）= 走路 walk_speed；預設 = 跑步 speed；按住 Shift = 疾跑 run_speed。
+@export var idle_anim := "idle"
+@export var walk_anim := "walk_user"
+@export var idle_grounded_resource: Animation = null
+@export var walk_speed := 1.6
+## 動畫播放倍率 = 遊戲速度 ÷ 素材原生步速（Running 4.87 m/s、Fast Run 5.90 m/s、Walking 約 1.45 m/s）。
+@export var walk_anim_speed := 1.1
+@export var run_fast_anim := "Run_Jog"
+@export var run_anim_speed := 0.82
+@export var run_fast_resource: Animation = preload("res://characters/yoriichi/v24/anims/run.res")
+@export var sprint_anim := "Sprint"
+@export var sprint_anim_speed := 1.09
+@export var sprint_resource: Animation = preload("res://characters/yoriichi/v24/anims/sprint_std.res")
+## 待機小動作：站著不動 idle_break_after 秒後隨機播一支（呼吸、張望），一動就淡出。
+@export var idle_break_enabled := true
+@export var idle_break_after := Vector2(9.0, 15.0)
+@export var idle_break_resources: Array[Animation] = [preload("res://characters/yoriichi/v24/anims/idle_breath.res"), preload("res://characters/yoriichi/v24/anims/idle_look.res")]
+## 跑步中反向（>150°）輸入時播 180° 急轉（Running Turn 180）。
+@export var run_turn_enabled := true
+@export var run_turn_resource: Animation = preload("res://characters/yoriichi/v24/anims/run_turn180.res")
+@export var run_turn_speed := 1.3
 ## 左前 / 右前「武士側身追擊」跑姿（剝離水平偏移、保留步態擺動的衍生版）。
-@export var fl_run_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_run_fl.res")
-@export var fr_run_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_run_fr.res")
+@export var fl_run_resource: Animation = null
+@export var fr_run_resource: Animation = null
 
 @export_group("8-Direction")
 ## 8 向 sector 判定以角色 local 速度方向為準；換 sector 後最短持續時間（防抖）。
@@ -49,20 +67,56 @@ extends CharacterBody3D
 
 @export_group("Jump")
 @export var jump_anim := "Jump"
-@export var jump_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_jump.res")
-## 起跳段（clip 0~0.62 s）播放倍率——修掉「懸空被拖著走」的飄浮感。
-@export var jump_start_speed := 2.3
-## 落地段（clip 1.067~1.9 s）播放倍率。
+## Mixamo「Jumping Up」（0.83 s）：0.33 s 蹲到最低、0.567 s 腳離地。
+@export var jump_anim_resource: Animation = preload("res://characters/yoriichi/v24/anims/jump_up.res")
+@export var jump_takeoff_t := 0.567
+@export var fall_anim := "Fall"
+@export var fall_resource: Animation = preload("res://characters/yoriichi/v24/anims/fall.res")
+@export var land_anim := "Land"
+## 「Falling To Landing」從觸地格起裁（0.25 s 後）。
+@export var land_resource: Animation = preload("res://characters/yoriichi/v24/anims/land.res")
+## 起跳段播放倍率。
+@export var jump_start_speed := 1.6
+## 落地段播放倍率。
 @export var jump_land_speed := 1.5
 ## 起跳速度（物理）。空中時間 2v/g = 0.82 s，跳高 v²/2g ≈ 1.68 m。
 @export var jump_velocity := 8.2
 ## JumpStart 跳過 clip 前面這段蹲伏（Run→Jump 立即起跳的關鍵）：
-## 實際蓄力 = (0.533 - skip) / jump_start_speed ≈ 0.09 s。
-@export var jump_start_skip := 0.32
+## 實際蓄力 = (jump_takeoff_t - skip) / jump_start_speed ≈ 0.15 s。
+@export var jump_start_skip := 0.33
 ## 落地後無輸入時 Land 動畫佔用 locomotion 的時間；有輸入直接接 Run/Walk。
 @export var land_lock_time := 0.25
 ## FREE 狀態離地超過此秒數視為 Fall（走出平台邊緣）。
 @export var coyote_time := 0.12
+
+@export_group("Traversal (特技)")
+## 二段跳：空中再按跳 → 前空翻（疾跑中是轉體空翻）。落地或踩牆後重置。
+@export var double_jump_enabled := true
+@export var double_jump_velocity := 7.6
+@export var flip_resource: Animation = preload("res://characters/yoriichi/v24/anims/flip.res")
+@export var twist_flip_resource: Animation = preload("res://characters/yoriichi/v24/anims/twist_flip.res")
+@export var flip_speed := 1.35
+## 踩牆跳：空中貼牆時按跳 → 朝牆外反彈＋前空翻。可連續踩（每次需離開原牆面）。
+@export var wall_jump_enabled := true
+@export var wall_jump_push := 6.5
+@export var wall_jump_up := 8.6
+## 攀上屋簷／牆頭：空中朝牆前進、前方牆頂在腳上 ledge_min_height~ledge_max_height 內 → 自動攀上；
+## 地面朝牆按跳、牆頂在 wallrun_min_height~wallrun_max_height → 蹬牆跑上去（Wall Run 上平台）。
+@export var ledge_climb_enabled := true
+@export var ledge_min_height := 0.7
+@export var ledge_max_height := 2.0
+@export var wallrun_min_height := 1.6
+@export var wallrun_max_height := 3.4
+@export var ledge_probe_distance := 0.9
+@export var mantle_resource: Animation = preload("res://characters/yoriichi/v24/anims/mantle.res")
+@export var mantle_speed := 1.25
+@export var wallrun_resource: Animation = preload("res://characters/yoriichi/v24/anims/wall_run_up.res")
+@export var wallrun_speed := 1.35
+## 高處落地：落差 > land_roll_height 且有移動輸入 → 落地翻滾；靜止且落差 > hard_land_height → 重落地。
+@export var land_roll_height := 3.5
+@export var hard_land_height := 5.0
+@export var land_roll_resource: Animation = preload("res://characters/yoriichi/v24/anims/land_roll.res")
+@export var hard_land_resource: Animation = preload("res://characters/yoriichi/v24/anims/hard_land.res")
 
 @export_group("Air Inertia")
 ## 空中不直接覆寫水平速度：有輸入時以 air_acceleration * air_control (m/s²)
@@ -73,10 +127,11 @@ extends CharacterBody3D
 
 @export_group("Roll")
 @export var roll_anim := "Roll_Dodge"
-@export var roll_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_roll_dodge.res")
+## Mixamo「Sprinting Forward Roll」裁 0.25~1.17 s（0.93 s）。
+@export var roll_anim_resource: Animation = preload("res://characters/yoriichi/v24/anims/roll.res")
 ## 3.2 m = 原 6.4 m 縮短 50%。位移仍由 CharacterBody3D ease-out 曲線驅動。
 @export var roll_distance := 3.2
-@export var roll_animation_speed := 3.0
+@export var roll_animation_speed := 2.0
 @export var action_blend_time := 0.12
 ## Shift 按住 = 疾跑；按下後在此秒數內放開 = 翻滾。
 @export var shift_tap_time := 0.25
@@ -142,39 +197,72 @@ extends CharacterBody3D
 @export var lock_turn_speed := 9.0
 ## 忍殺可及距離：必須貼上去才能處決，不能隔空秒殺。
 @export_range(1.0, 6.0, 0.1) var deathblow_range := 3.5
+## 忍殺（處決）玩家端動作（2026-09-23）：Mixamo「Stealth Assassination」重定向版，
+## 已用 tools/align_clip_to_idle.gd 的切片模式切成「落地→起身」36 格 / 1.1667 s，並首尾
+## 對齊 Idle（Hips f0 54.6°→0.0°，腳底夾制回 +0.0230）。
+## 為什麼要切片＋對齊：來源第一格是深蹲（髖 0.79 vs Idle 0.95），直接當 full 層 OneShot 播時，
+## 入場淡化的關節角插值會讓腳底沉 50.7 mm（遊戲自己的普攻只沉 3.9 mm）；對齊後入場兩端
+## 都是 Idle 姿，同一量測降到與普攻同級（見 tools/verify_deathblow.gd 的對照組）。
+## 來源 7.0 s 的分段：0.00~1.30 貼地（接近／壓制）｜1.40~3.30 騰空（跳躍，髖 1.29 m）｜
+## 3.40~3.62 落地（髖最低 0.79 = 落刀）｜3.70~7.00 貼地（收勢起身）。
+## 要換範圍就重跑（from/to 會吸附 1/30 格）：
+##   align_clip_to_idle.gd -- --slice=res://characters/yoriichi/animations/_mixamo_gap_staging/Stealth_Assassination.res \
+##     --from=3.6 --to=4.7667 --name=yoriichi_deathblow --out=res://characters/yoriichi/animations
+@export var deathblow_anim := "Deathblow"
+@export var deathblow_resource: Animation = preload("res://characters/yoriichi/v24/anims/assassin.res")
+@export var deathblow_speed := 1.0
+
+@export_group("Drawn Locomotion（持刀移動）")
+## 拔刀後的移動改播雙手持刀版（Great Sword Idle／Walk／Strafe…）；跑／疾跑用單手提刀跑（Run With Sword）。
+## 播放倍率依 clip meta "root_speed" 對到實際速度，避免滑步。關掉 = 回到收刀的移動動作。
+@export var drawn_locomotion_enabled := true
+@export var grip_pose_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_idle.res")
+@export var drawn_idle_resource: Animation = preload("res://characters/yoriichi/v24/anims/ua_idle_b.res")
+@export var drawn_walk_resource: Animation = preload("res://characters/yoriichi/v24/anims/d_walk.res")
+@export var drawn_back_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_walk_back.res")
+@export var drawn_strafe_l_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_strafe_l.res")
+@export var drawn_strafe_r_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_strafe_r.res")
+@export var drawn_strafe_l_run_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_strafe_l_run.res")
+@export var drawn_strafe_r_run_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_strafe_r_run.res")
+@export var drawn_run_resource: Animation = preload("res://characters/yoriichi/v24/anims/sword_run.res")
+@export var drawn_run_back_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_run_back.res")
+## 持刀時右手指固定成握拳（非持刀 clip 如跳躍／翻滾／特技時手是張開的，刀會像浮在掌邊）。
+@export var grip_overlay_enabled := true
 
 @export_group("Attack")
+## RMB 聚力單斬專用 clip（Great Sword Downward Slash：舉刀過頂→直劈）。null = 退回輕連段第一刀。
+@export var heavy_cut_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_down.res")
 @export var attack_combo_anim := "Attack_Combo"
-@export var attack_combo_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_combo.res")
+@export var attack_combo_resource: Animation = preload("res://characters/yoriichi/v24/anims/attack_combo.res")
 @export var attack_spin_anim := "Attack_Spin"
-@export var attack_spin_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_spin.res")
+@export var attack_spin_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_spin_run.res")
 @export var attack_continuous_spin_anim := "Attack_Continuous_Spin"
-@export var attack_continuous_spin_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_continuous_spin.res")
+@export var attack_continuous_spin_resource: Animation = preload("res://characters/yoriichi/v24/anims/atk_onehand.res")
 @export var attack_judgment_anim := "Attack_Judgment"
-@export var attack_judgment_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_judgment.res")
+@export var attack_judgment_resource: Animation = preload("res://characters/yoriichi/v24/anims/atk_high.res")
 @export var attack_combo_1_anim := "Attack_Combo_1"
-@export var attack_combo_1_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_combo_1.res")
+@export var attack_combo_1_resource: Animation = preload("res://characters/yoriichi/v24/anims/atk_low.res")
 @export var attack_spin_jump_anim := "Attack_Spin_Jump"
-@export var attack_spin_jump_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_attack_spin_jump.res")
+@export var attack_spin_jump_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_jump_atk.res")
 ## 捌ノ型 陽華突：自製直線突刺（tools/blender/make_form08_thrust.py）。
 @export var attack_thrust_anim := "Attack_Thrust"
-@export var attack_thrust_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form08_thrust.res")
+@export var attack_thrust_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_slide.res")
 ## 日之呼吸缺件四型：自製姿勢表動畫（tools/blender/make_form_clips.py → build_react_clips.gd）。
 @export var attack_form05_anim := "Attack_Form05_Turn"
-@export var attack_form05_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form05_turn.res")
+@export var attack_form05_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_power.res")
 @export var attack_form06_anim := "Attack_Form06_Wheel"
-@export var attack_form06_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form06_wheel.res")
+@export var attack_form06_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_crouch_slash.res")
 @export var attack_form11_anim := "Attack_Form11_Halo"
-@export var attack_form11_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form11_halo.res")
+@export var attack_form11_resource: Animation = preload("res://characters/yoriichi/v24/anims/atk_outward.res")
 @export var attack_form12_anim := "Attack_Form12_Dance"
-@export var attack_form12_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_form12_dance.res")
+@export var attack_form12_resource: Animation = preload("res://characters/yoriichi/v24/anims/th_combo.res")
 ## 居合（RMB 蓄力）兩支：Blender MCP 手調（tools/blender/iai_lib.py → build_react_clips.gd）。
 ## Stance f0=Idle 姿 → t≈0.33 進到 kamae（沉腰架勢）→ 末段呼吸循環；引擎拆兩節點：
 ##   iai_in（0→KAMAE_T 進姿）＋ iai_hold（KAMAE_T→尾，loop）。Slash = 拔刀斬一整刀。
 @export var iai_stance_anim := "Iai_Stance"
-@export var iai_stance_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_iai_stance.res")
+@export var iai_stance_resource: Animation = preload("res://characters/yoriichi/v24/anims/iai_stance.res")
 @export var iai_slash_anim := "Iai_Slash"
-@export var iai_slash_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_iai_slash.res")
+@export var iai_slash_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_crouch_slash.res")
 
 @export_group("Combo Branches")
 ## 滑鼠左右鍵互搭：輕連段（LMB）某一段的取消窗口內按 RMB → 接對應的型；
@@ -213,39 +301,61 @@ extends CharacterBody3D
 ## 架勢／格擋受衝／彈刀走 upper 層（腿由 locomotion 提供，可邊走邊架）；
 ## 受擊／軀幹爆／死亡走 full 層。首尾幀 = Idle 姿，與 loco Idle 髖高一致（0.9475）。
 @export var guard_anim := "Guard_Hold"
-@export var guard_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_guard_hold.res")
+@export var guard_anim_resource: Animation = preload("res://characters/yoriichi/v24/anims/guard.res")
 @export var block_anim := "Block_Impact"
-@export var block_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_block_impact.res")
+@export var block_anim_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_block_hit.res")
 @export var deflect_anim := "Deflect"
-@export var deflect_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_deflect.res")
+@export var deflect_anim_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_block_hit.res")
 @export var hit_react_anim := "Hit_React"
-@export var hit_react_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_hit_react.res")
+@export var hit_react_anim_resource: Animation = preload("res://characters/yoriichi/v24/anims/gs_hit.res")
 @export var stagger_anim := "Stagger"
-@export var stagger_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_stagger.res")
+@export var stagger_anim_resource: Animation = preload("res://characters/yoriichi/v24/anims/react_front.res")
 ## 死亡倒地：Meshy Dead clip 衍生版（角色/緣一動作/animations/build_jump.gd，floor_clamp）。
 @export var dead_anim := "Dead"
-@export var dead_anim_resource: Animation = preload("res://characters/yoriichi/animations/yoriichi_dead.res")
+## 打坐（冥想）定格用的 clip。尚未製作時 start_meditation_pose() 退回站姿 Idle。
+## 2026-09-22：由使用者提供的「盤腿坐」FBX 重定向而來（CC_Base 101 骨 → 本骨架 24 骨），
+## 產生腳本 tools/build_meditate_clip.gd；內容是**定姿**（來源 clip 173 格骨頭全不動），
+## 所以只有兩個相同關鍵格，play 完 seek 到結尾定格。
+@export var meditate_anim := "Meditate"
+@export var meditate_anim_resource: Animation = preload("res://characters/yoriichi/v24/anims/sit_floor.res")
+@export var dead_anim_resource: Animation = preload("res://characters/yoriichi/v24/anims/death.res")
+## 開場仰躺後的起身（Getting Up From Back）；沒有就退回 Dead 反播。
+@export var get_up_resource: Animation = preload("res://characters/yoriichi/v24/anims/get_up.res")
+## 方向性軀幹爆反應（2026-09-23）：Mixamo「Standing React Large」四方向，經
+## tools/align_clip_to_idle.gd 對齊 Idle 首尾（Hips f0 偏 0.0°）＋逐格地面夾制，
+## 再以 tools/verify_mixamo_clips.gd 驗收通過（腳底 ±1 mm、23 軌、23 key/格）。
+## 播法沿用既有 Stagger：整段縮放到 posture.break_time，所以 1.0~1.7 s 的來源沒有時長衝突。
+@export var stagger_directional := true
+@export var stagger_front_anim := "Stagger_Front"
+@export var stagger_front_resource: Animation = preload("res://characters/yoriichi/v24/anims/react_front.res")
+@export var stagger_back_anim := "Stagger_Back"
+@export var stagger_back_resource: Animation = preload("res://characters/yoriichi/v24/anims/react_back.res")
+@export var stagger_left_anim := "Stagger_Left"
+@export var stagger_left_resource: Animation = preload("res://characters/yoriichi/v24/anims/react_left.res")
+@export var stagger_right_anim := "Stagger_Right"
+@export var stagger_right_resource: Animation = preload("res://characters/yoriichi/v24/anims/react_right.res")
 ## Guard_Hold clip 從這個比例起全是架勢幀（f7/f12），持續架勢循環由此切入。
-const GUARD_HOLD_FROM := 7.0 / 12.0
+## guard.res = Great Sword Standing To Block（0.5 s）＋ Blocking Idle 循環（雙手架刀）；由 build_v24_anims 的 CONCAT meta "sections" 而來。
+const GUARD_HOLD_FROM := 0.3636
 ## 架勢進場 0.5 s clip；1.6x ≈ 0.31 s 到位（比 deflect_window 稍長，刀先舉起來才算彈）。
-@export var guard_anim_speed := 1.6
+@export var guard_anim_speed := 1.2
 ## 格擋受衝 0.33 s clip；1.2x ≈ 0.28 s，對上 block 位移 0.18 s＋回架。
-@export var block_anim_speed := 1.2
+@export var block_anim_speed := 1.3
 ## 彈刀 0.42 s clip；1.8x ≈ 0.23 s —— 彈刀要比格擋更快、更脆。
 @export var deflect_anim_speed := 1.8
 ## 受擊 0.42 s clip；1.5x ≈ 0.28 s ≈ hit_stun_time 0.25。
-@export var hit_react_speed := 1.5
+@export var hit_react_speed := 1.6
 ## 死亡倒地播放倍率（clip 2.97 s）。播完停在最後一幀，不淡回 locomotion。
 @export var dead_anim_speed := 1.0
 ## 速度分級（緣一風格：出刀突然且快、收勢清楚，不是一致的機械倍率）。
 ## 輕連段第一斬：突然、快。
-@export var attack_speed_scale := 2.2
+@export var attack_speed_scale := 1.25
 ## 第二斬：維持節奏。
-@export var combo_stage2_speed := 2.0
+@export var combo_stage2_speed := 1.15
 ## 第三斬：略收（為明確收勢做準備）。
-@export var combo_stage3_speed := 1.8
+@export var combo_stage3_speed := 1.05
 ## RMB 聚力單斬：同一刀素材的慎重版 —— 預備小、落刀清楚、收勢長。
-@export var heavy_cut_speed := 1.5
+@export var heavy_cut_speed := 0.95
 ## 以下為日之呼吸框架（execute_form）保留技的倍率，不綁預設輸入：
 ## Judgment 大縱劈（柒型）。
 @export var judgment_speed_scale := 2.4
@@ -276,10 +386,11 @@ const GUARD_HOLD_FROM := 7.0 / 12.0
 @export var heavy_charge_enabled := true
 ## 滿蓄所需秒數（從按下算起）。
 @export_range(0.2, 6.0, 0.05) var heavy_charge_time := 2.0
-## 聚力單斬 clip 播到這個進度時切入居合架勢（實測 0.27 = 刀舉到右上，接 iai 進姿順）。
-@export_range(0.05, 0.6, 0.01) var heavy_charge_freeze_progress := 0.27
-## Iai_Stance 進姿段結束點（秒，.res 實測 f8@24fps = 0.3333）：之後是 kamae 循環。
-@export_range(0.05, 1.0, 0.01) var iai_kamae_t := 0.3333
+## 聚力單斬 clip 播到這個進度時切入居合架勢（gs_down 刀尖最高在 f17/38 ≈ 0.45，取 0.42 = 刀剛舉到頂）。
+@export_range(0.05, 0.6, 0.01) var heavy_charge_freeze_progress := 0.42
+## Iai_Stance 進姿段結束點（秒）：iai_stance.res = Great Sword Stand To Crouch（0.67 s）＋蹲姿持刀循環，
+## CONCAT sections[1] = 0.28 × 2.5 s = 0.70。
+@export_range(0.05, 1.0, 0.01) var iai_kamae_t := 0.70
 ## 滿蓄後停在架勢，放開才衝；打開 = 滿蓄立即發動（舊行為）。
 @export var heavy_charge_auto_release := false
 ## 衝刺距離上限（公尺）。0 = 不衝，原地落刀。
@@ -336,15 +447,14 @@ signal form13_started
 signal form13_finished
 signal interaction_prompt_changed(text: String)
 signal interaction_message(text: String)
+## attack_combo.res（第三輪「超人類武士」）= 單手三刀 Cross Slash／Inward Slash／Downward Slash 串接：
+## 挺胸、伸臂、左手握鞘口，揮砍段時間加速（snap）。段落 = 三支 clip 的接縫（builder meta sections）。
+## sun_breathing 壹／參 型用同一組值。
 const COMBO_SECTION_RANGES: Array[Vector2] = [
-	Vector2(0.00, 0.34),
-	Vector2(0.30, 0.67),
-	Vector2(0.63, 1.00),
+	Vector2(0.0, 0.3178),
+	Vector2(0.3178, 0.7442),
+	Vector2(0.7442, 1.00),
 ]
-const JUMP_TAKEOFF_CLIP := 0.533      # Jump clip 內離地時間點
-const JUMP_START_END := 0.62          # JumpStart 段結尾
-const JUMP_AIR_LOOP := Vector2(0.75, 1.05)
-const JUMP_LAND_START := 1.067
 ## OneShot filter：上半身骨骼（Spine02 以上）。下半身（Hips＋腿）留給 loco。
 const UPPER_BONES := ["Spine02", "Spine01", "Spine",
 	"LeftShoulder", "LeftArm", "LeftForeArm", "LeftHand",
@@ -361,14 +471,14 @@ enum ActionState { FREE, ATTACKING, DODGING }
 
 @export_group("Sword Draw")
 @export var draw_anim := "Draw_Sword"
-@export var draw_anim_resource: Animation = preload("res://characters/yoriichi/yoriichi_draw_sword.res")
+@export var draw_anim_resource: Animation = preload("res://characters/yoriichi/v24/anims/draw.res")
 ## 拔刀播放倍率（1.0s clip → 0.87s：看得清楚但不拖沓）。
 ## socket 切換時間依 _draw_real 自動同步。
-@export var draw_speed_scale := 1.15
+@export var draw_speed_scale := 1.1
 ## 納刀比拔刀更慢一點 —— 儀式感在收勢。
-@export var sheathe_speed_scale := 0.95
+@export var sheathe_speed_scale := 0.9
 ## 拔刀動畫進度（0~1）中「刀離開刀鞘」的時間點。反播跨過同一點刀即回鞘。
-@export_range(0.0, 1.0) var t_unsheathe := 0.65
+@export_range(0.0, 1.0) var t_unsheathe := 0.41
 
 @export_group("Attack Damage")
 ## 輕連段單段傷害。型的 FORMS.damage 倍率會乘在這上面。
@@ -472,6 +582,14 @@ var _charge_fx: HeavyChargeFX = null
 var _form_cooldowns: Dictionary = {}
 ## 軀幹被打爆後的硬直剩餘秒數（>0 = 不能動）。
 var _stagger_left := 0.0
+## 最近一次受擊的推力方向（take_hit 一收到就存）。軀幹爆是在 apply_damage 內觸發的，
+## 那時已經拿不到 hit_data，所以方向要在這裡先留下來。
+var _last_hit_dir := Vector3.ZERO
+## 忍殺演出剩餘秒數（>0 = 走「軀幹爆」那條只跑重力、不讀輸入的提早返回分支）。
+var _deathblow_left := 0.0
+## 忍殺的 input_locked 是不是我們自己鎖的 —— 是我們鎖的才由我們解，
+## 不覆蓋對話／過場已經持有的鎖。
+var _deathblow_lock_owned := false
 ## 受擊硬直剩餘秒數（>0 = 讀不到輸入，但 input_locked 保持 false）。
 var _hitstun_left := 0.0
 ## 受擊／格擋的後退速度（m/s，線性衰減）與它的總時長。
@@ -521,9 +639,11 @@ func _ready():
 	_visual = _anim.get_parent()
 	if _visual != null and is_zero_approx(_visual.rotation.y):
 		_visual.rotation.y = PI
-	_fl_anim = "Run_FL"
-	_fr_anim = "Run_FR"
-	_add_animation_resource("Idle_Grounded", idle_grounded_resource)
+	_fl_anim = "Run_FL" if fl_run_resource != null else ""
+	_fr_anim = "Run_FR" if fr_run_resource != null else ""
+	_combat_anims_ready = attack_combo_resource != null and draw_anim_resource != null
+	_fill_missing_animations()
+	_add_animation_resource(idle_anim, idle_grounded_resource)
 	_add_animation_resource(run_fast_anim, run_fast_resource)
 	_add_animation_resource(_fl_anim, fl_run_resource)
 	_add_animation_resource(_fr_anim, fr_run_resource)
@@ -548,8 +668,28 @@ func _ready():
 	_add_animation_resource(deflect_anim, deflect_anim_resource)
 	_add_animation_resource(hit_react_anim, hit_react_anim_resource)
 	_add_animation_resource(stagger_anim, stagger_anim_resource)
+	_add_animation_resource(stagger_front_anim, stagger_front_resource)
+	_add_animation_resource(stagger_back_anim, stagger_back_resource)
+	_add_animation_resource(stagger_left_anim, stagger_left_resource)
+	_add_animation_resource(stagger_right_anim, stagger_right_resource)
+	_add_animation_resource(deathblow_anim, deathblow_resource)
 	_add_animation_resource(dead_anim, dead_anim_resource)
-	for n in [walk_anim, run_fast_anim, _fl_anim, _fr_anim, "Idle_Grounded", guard_anim]:
+	_add_animation_resource(meditate_anim, meditate_anim_resource)
+	_add_animation_resource(sprint_anim, sprint_resource)
+	_add_animation_resource(fall_anim, fall_resource)
+	_add_animation_resource(land_anim, land_resource)
+	_add_animation_resource("Get_Up", get_up_resource)
+	_add_animation_resource("Run_Turn", run_turn_resource)
+	_add_animation_resource("Heavy_Cut", heavy_cut_resource)
+	for dk in DRAWN_CLIPS:
+		_add_animation_resource(dk, get(DRAWN_CLIPS[dk]))
+	for tk in TRAVERSAL_CLIPS:
+		_add_animation_resource(tk, get(TRAVERSAL_CLIPS[tk]))
+	for i in idle_break_resources.size():
+		_add_animation_resource("Idle_Break_%d" % i, idle_break_resources[i])
+	_ensure_walk_action()
+	_check_section_meta()
+	for n in [walk_anim, run_fast_anim, sprint_anim, fall_anim, _fl_anim, _fr_anim, idle_anim, guard_anim] + DRAWN_CLIPS.keys():
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_LINEAR
 	for n in [draw_anim, roll_anim, jump_anim, attack_combo_anim, attack_spin_anim,
@@ -557,7 +697,10 @@ func _ready():
 			attack_spin_jump_anim, attack_thrust_anim,
 			attack_form05_anim, attack_form06_anim, attack_form11_anim, attack_form12_anim,
 			iai_stance_anim, iai_slash_anim,
-			block_anim, deflect_anim, hit_react_anim, stagger_anim, dead_anim]:
+			block_anim, deflect_anim, hit_react_anim, stagger_anim,
+			stagger_front_anim, stagger_back_anim, stagger_left_anim, stagger_right_anim,
+			deathblow_anim, land_anim, "Get_Up", "Run_Turn", "Heavy_Cut",
+			dead_anim] + TRAVERSAL_CLIPS.keys():
 		if n != "" and _anim.has_animation(n):
 			_anim.get_animation(n).loop_mode = Animation.LOOP_NONE
 	_sword_hand = _find_first("Sword_Hand")
@@ -566,9 +709,83 @@ func _ready():
 	_build_tree()
 	_setup_combat_extensions()
 
+## 持刀 locomotion：loco 狀態名 = 動畫名 = 此表 key；值 = export 欄位。
+const DRAWN_CLIPS := {
+	"D_Idle": "drawn_idle_resource", "D_Walk": "drawn_walk_resource", "D_Back": "drawn_back_resource",
+	"D_StrafeL": "drawn_strafe_l_resource", "D_StrafeR": "drawn_strafe_r_resource",
+	"D_StrafeLRun": "drawn_strafe_l_run_resource", "D_StrafeRRun": "drawn_strafe_r_run_resource",
+	"D_Run": "drawn_run_resource", "D_RunBack": "drawn_run_back_resource",
+}
+## 收刀狀態名 → 持刀狀態名（Sprint 也走單手提刀跑，倍率另算）。
+const DRAWN_OF := {"Idle": "D_Idle", "Walk": "D_Walk", "Run": "D_Run", "Sprint": "D_Sprint", "BackPedal": "D_Back"}
+
+## 特技用全身 clip：AnimationTree full 層的 input 名 = 動畫名 = 此表 key；值 = export 欄位。
+const TRAVERSAL_CLIPS := {
+	"Trick_Flip": "flip_resource", "Trick_TwistFlip": "twist_flip_resource",
+	"Trick_Mantle": "mantle_resource", "Trick_WallRun": "wallrun_resource",
+	"Trick_LandRoll": "land_roll_resource", "Trick_HardLand": "hard_land_resource",
+}
+
+## 走路鍵：專案 InputMap 沒有 walk 時，執行期補一個（Left Alt），不改 project.godot。
+func _ensure_walk_action() -> void:
+	if InputMap.has_action("walk"):
+		return
+	InputMap.add_action("walk")
+	var ev := InputEventKey.new()
+	ev.keycode = KEY_ALT
+	InputMap.action_add_event("walk", ev)
+
+## 動畫串接段落（meta "sections"）與程式常數不符時警告：重建 attack_combo／guard 後要同步常數。
+func _check_section_meta() -> void:
+	if attack_combo_resource != null and attack_combo_resource.has_meta("sections"):
+		var sec: PackedFloat32Array = attack_combo_resource.get_meta("sections")
+		for i in mini(sec.size(), COMBO_SECTION_RANGES.size()):
+			if absf(sec[i] - COMBO_SECTION_RANGES[i].x) > 0.003:
+				push_warning("attack_combo sections %s 與 COMBO_SECTION_RANGES 不符" % [sec])
+				break
+	if guard_anim_resource != null and guard_anim_resource.has_meta("sections"):
+		var gs: PackedFloat32Array = guard_anim_resource.get_meta("sections")
+		if gs.size() > 1 and absf(gs[1] - GUARD_HOLD_FROM) > 0.003:
+			push_warning("guard sections %s 與 GUARD_HOLD_FROM 不符" % [gs])
+
 func _find_first(n: String) -> Node3D:
 	var r := find_children(n, "", true, false)
 	return r[0] if r.size() > 0 else null
+
+## 戰鬥動畫（輕連段＋拔刀）是否已指定。v2.4 換裝後尚未製作 → false：
+## 停用拔刀／攻擊／格擋／翻滾／型等輸入，只保留移動、疾跑、跳躍、鎖定。
+var _combat_anims_ready := false
+
+## 把留空（null）的動作欄位補成 idle 片段佔位，讓 AnimationTree 節點與各處 .length
+## 計時都有合法對象（不會 null 崩潰）。佔位不代表動作完成：戰鬥輸入由 _combat_anims_ready 擋住；
+## 被動觸發（受擊／死亡／開場倒地／打坐）時角色只會維持站姿。
+func _fill_missing_animations() -> void:
+	if not _anim.has_animation(idle_anim):
+		push_warning("yoriichi_character: 找不到 idle 動畫 '%s'，無法建立佔位" % idle_anim)
+		return
+	var idle_src := _anim.get_animation(idle_anim)
+	var short_ph: Animation = idle_src.duplicate(true)
+	short_ph.length = minf(0.4, idle_src.length)
+	short_ph.loop_mode = Animation.LOOP_NONE
+	# Jump 的三段 custom timeline 讀到 1.9 s，佔位要夠長。
+	var jump_ph: Animation = idle_src.duplicate(true)
+	jump_ph.length = minf(1.9, idle_src.length)
+	jump_ph.loop_mode = Animation.LOOP_NONE
+	if jump_anim_resource == null:
+		jump_anim_resource = jump_ph
+	for prop in ["roll_anim_resource", "deathblow_resource",
+			"attack_combo_resource", "attack_spin_resource", "attack_continuous_spin_resource",
+			"attack_judgment_resource", "attack_combo_1_resource", "attack_spin_jump_resource",
+			"attack_thrust_resource", "attack_form05_resource", "attack_form06_resource",
+			"attack_form11_resource", "attack_form12_resource",
+			"iai_stance_resource", "iai_slash_resource", "draw_anim_resource",
+			"guard_anim_resource", "block_anim_resource", "deflect_anim_resource",
+			"hit_react_anim_resource", "stagger_anim_resource",
+			"stagger_front_resource", "stagger_back_resource",
+			"stagger_left_resource", "stagger_right_resource",
+			"dead_anim_resource", "meditate_anim_resource"]:
+		if get(prop) == null:
+			set(prop, short_ph)
 
 var _character_audio: CharacterAudio
 ## 腳步音效（依地表切音庫）。見 footstep_audio.gd。
@@ -627,10 +844,13 @@ func _setup_combat_extensions() -> void:
 		_hitbox.collision_mask = 3
 		_hitbox.monitoring = false
 		var col := CollisionShape3D.new()
-		var cap := CapsuleShape3D.new()
-		cap.radius = 0.40
-		cap.height = 1.10
-		col.shape = cap
+		# ⚠ 刀手骨繼承非等比縮放（實測約 1.08×0.63×1.0）。Jolt 的膠囊不支援非等比縮放
+		#   （會強制改成等比 0.90，判定體積走樣），凸包可以——所以用同尺寸膠囊網格
+		#   生成凸包，判定體積與舊 GodotPhysics 下的縮放膠囊一致。
+		var cap_mesh := CapsuleMesh.new()
+		cap_mesh.radius = 0.40
+		cap_mesh.height = 1.10
+		col.shape = cap_mesh.create_convex_shape(true, false)
 		col.position = Vector3(0, 0.55, 0)
 		_hitbox.add_child(col)
 		_sword_hand.add_child(_hitbox)
@@ -730,7 +950,46 @@ func try_deathblow() -> bool:
 	# 忍殺的份量：鏡頭震動比任何一刀都大（走既有 HitFeedback，不新增系統）。
 	if _hit_feedback != null:
 		_hit_feedback.shake(hit_shake_strength * 0.9, 0.3)
+	# 玩家端動作（2026-09-23）：原本這裡完全沒有動畫，敵人在爆散的同時玩家站著不動。
+	_play_deathblow()
 	return true
+
+
+## 忍殺演出：面向目標 → 播落刀段 → 鎖住操作直到放完。
+## 只走既有機制：full 層 OneShot（子區段，同 iai_in/iai_hold）＋ input_locked（對話／過場
+## 用的那個鎖）＋ 軀幹爆那條「只跑重力、不讀輸入」的提早返回分支。沒有新增系統。
+func _play_deathblow() -> void:
+	# 面向目標：處決是對著敵人做的，背對很突兀。朝向慣例同 _update_lock_facing（atan2(x, z)）。
+	var t: Node3D = lock_target if lock_target != null else _nearest_enemy()
+	if t != null and is_instance_valid(t):
+		var to := t.global_position - global_position
+		to.y = 0.0
+		if to.length_squared() > 0.0004:
+			var want := atan2(to.x, to.z)
+			if _visual != null:
+				_visual.global_rotation.y = want
+			global_rotation.y = want
+	var spd := maxf(deathblow_speed, 0.01)
+	var dur := 1.1667
+	if _anim.has_animation(deathblow_anim):
+		dur = _anim.get_animation(deathblow_anim).length
+	_deathblow_left = maxf(dur, 0.05) / spd
+	velocity.x = 0.0
+	velocity.z = 0.0
+	# 演出期間不讀操作；是我們鎖的才由我們解，不覆蓋對話／過場已持有的鎖。
+	if not input_locked:
+		input_locked = true
+		_deathblow_lock_owned = true
+	if _tree != null:
+		# 忍殺是全身技：上半身的架勢／居合同時淡掉，否則會疊在舉刀姿勢上。
+		_fade_upper()
+		if _anim.has_animation(deathblow_anim):
+			# fadein 縮到 0.04：素材開頭 3 格已經壓成 Idle 姿（見 align 工具的 --head-hold），
+			# 進場幾乎無姿差，淡得短就不會有「半彎膝＋半高髖」的混合過渡把腳往下推
+			# （實測 fadein 0.10 時入場沉 25 mm，遊戲自己的普攻只沉 4 mm）。
+			if _full_node:
+				_full_node.fadein_time = 0.04
+			_fire_full("deathblow", spd)
 
 
 # ---------------------------------------------------------------------------
@@ -856,6 +1115,7 @@ func take_hit(hit_data: Dictionary) -> Dictionary:
 	var perilous: bool = bool(hit_data.get("perilous", false))
 	var hit_pos: Vector3 = hit_data.get("hit_pos", global_position + Vector3(0, 1.1, 0))
 	var hit_dir: Vector3 = hit_data.get("hit_dir", -global_transform.basis.z)
+	_last_hit_dir = hit_dir
 
 	var result := "hit"
 	var dealt := damage
@@ -1078,12 +1338,13 @@ func _build_tree() -> void:
 	# --- loco state machine ---
 	var sm := AnimationNodeStateMachine.new()
 	var states := {
-		"Idle": _anim_node("Idle_Grounded"),
-		"Walk": _anim_node(walk_anim),
-		"Run": _anim_node(run_fast_anim),
-		"JumpStart": _scaled_state(_clip_node(jump_anim, jump_start_skip, JUMP_START_END)),
-		"Fall": _clip_node(jump_anim, JUMP_AIR_LOOP.x, JUMP_AIR_LOOP.y, true),
-		"Land": _scaled_state(_clip_node(jump_anim, JUMP_LAND_START, jump_anim_resource.length)),
+		"Idle": _anim_node(idle_anim),
+		"Walk": _scaled_state(_anim_node(walk_anim)),
+		"Run": _scaled_state(_anim_node(run_fast_anim)),
+		"Sprint": _scaled_state(_anim_node(sprint_anim)),
+		"JumpStart": _scaled_state(_clip_node(jump_anim, jump_start_skip, jump_anim_resource.length)),
+		"Fall": _anim_node(fall_anim),
+		"Land": _scaled_state(_anim_node(land_anim)),
 	}
 	if _fl_anim != "" and _anim.has_animation(_fl_anim):
 		states["RunFL"] = _anim_node(_fl_anim)
@@ -1091,6 +1352,12 @@ func _build_tree() -> void:
 		states["RunFR"] = _anim_node(_fr_anim)
 	# 後退步：Walking 是零位移的完美循環，反播即為合法 backpedal，不需新動畫。
 	states["BackPedal"] = _anim_node(walk_anim, true)
+	if drawn_locomotion_enabled:
+		for dk in DRAWN_CLIPS:
+			if _anim.has_animation(dk):
+				states[dk] = _scaled_state(_anim_node(dk))
+		if _anim.has_animation("D_Run"):
+			states["D_Sprint"] = _scaled_state(_anim_node("D_Run"))
 	for s in states:
 		sm.add_node(s, states[s])
 	for a in states:
@@ -1115,6 +1382,7 @@ func _build_tree() -> void:
 		"atk1": _clip_node(attack_combo_anim, combo_len * COMBO_SECTION_RANGES[0].x, combo_len * COMBO_SECTION_RANGES[0].y),
 		"atk2": _clip_node(attack_combo_anim, combo_len * COMBO_SECTION_RANGES[1].x, combo_len * COMBO_SECTION_RANGES[1].y),
 		"atk3": _clip_node(attack_combo_anim, combo_len * COMBO_SECTION_RANGES[2].x, combo_len * COMBO_SECTION_RANGES[2].y),
+		"heavy": _anim_node("Heavy_Cut") if _anim.has_animation("Heavy_Cut") else _clip_node(attack_combo_anim, 0.0, combo_len * COMBO_SECTION_RANGES[0].y),
 		"guard": _anim_node(guard_anim),
 		# 持續架勢：Guard_Hold 末段（f7~f12 全是架勢幀）循環 —— OneShot 有循環子節點就不會自己結束。
 		"guard_hold": _clip_node(guard_anim, guard_anim_resource.length * GUARD_HOLD_FROM, guard_anim_resource.length, true),
@@ -1129,8 +1397,8 @@ func _build_tree() -> void:
 	upper.fadein_time = 0.06
 	upper.fadeout_time = 0.1
 	upper.filter_enabled = true
-	for b in UPPER_BONES:
-		upper.set_filter_path("Armature/Skeleton3D:" + b, true)
+	for path in _upper_filter_paths():
+		upper.set_filter_path(path, true)
 	root.add_node("upper", upper)
 	root.connect_node("upper", 0, "loco")
 	root.connect_node("upper", 1, "ts_upper")
@@ -1157,8 +1425,19 @@ func _build_tree() -> void:
 		"iai_slash": _anim_node(iai_slash_anim),
 		"hit": _anim_node(hit_react_anim),
 		"stagger": _anim_node(stagger_anim),
+		"stagger_front": _anim_node(stagger_front_anim),
+		"stagger_back": _anim_node(stagger_back_anim),
+		"stagger_left": _anim_node(stagger_left_anim),
+		"stagger_right": _anim_node(stagger_right_anim),
+		# 忍殺：素材本身已經是切好並對齊 Idle 的 1.17 s，不必再用子區段。
+		"deathblow": _anim_node(deathblow_anim),
 		"dead": _anim_node(dead_anim),
+		"run_turn": _anim_node("Run_Turn"),
 	}
+	for tk in TRAVERSAL_CLIPS:
+		full_inputs[tk] = _anim_node(tk)
+	for i in idle_break_resources.size():
+		full_inputs["idle_break_%d" % i] = _anim_node("Idle_Break_%d" % i)
 	_setup_transition(root, full_sel, "full_sel", full_inputs)
 	var ts_full := AnimationNodeTimeScale.new()
 	root.add_node("ts_full", ts_full)
@@ -1170,7 +1449,18 @@ func _build_tree() -> void:
 	root.add_node("full", full)
 	root.connect_node("full", 0, "upper")
 	root.connect_node("full", 1, "ts_full")
-	root.connect_node("output", 0, "full")
+	# --- 握拳覆蓋：持刀時右手五指固定成 Great Sword Idle 的握拳（Blend2 + 右手指 filter）。
+	var grip := AnimationNodeBlend2.new()
+	grip.filter_enabled = true
+	for path in _grip_filter_paths():
+		grip.set_filter_path(path, true)
+	root.add_node("grip", grip)
+	# 握拳來源固定用 Great Sword Idle（持刀待機已改單手垂刀 ua_idle_b，其手指是空手鬆開的）。
+	_add_animation_resource("D_Grip", grip_pose_resource)
+	root.add_node("grip_pose", _anim_node("D_Grip" if _anim.has_animation("D_Grip") else idle_anim))
+	root.connect_node("grip", 0, "full")
+	root.connect_node("grip", 1, "grip_pose")
+	root.connect_node("output", 0, "grip")
 	_full_node = full
 
 	_tree = AnimationTree.new()
@@ -1183,7 +1473,67 @@ func _build_tree() -> void:
 	_tree.active = true
 	_tree.set("parameters/loco/JumpStart/ts/scale", jump_start_speed)
 	_tree.set("parameters/loco/Land/ts/scale", jump_land_speed)
+	_tree.set("parameters/loco/Run/ts/scale", run_anim_speed)
+	_tree.set("parameters/loco/Walk/ts/scale", walk_anim_speed)
+	_tree.set("parameters/loco/Sprint/ts/scale", sprint_anim_speed)
+	_tree.set("parameters/grip/blend_amount", 0.0)
+	_apply_drawn_speeds()
 	_playback().start("Idle")
+
+## 持刀 locomotion 倍率：clip 步速（meta root_speed）對到角色實際速度；原地 clip 維持 1.0。
+func _apply_drawn_speeds() -> void:
+	if _tree == null or not drawn_locomotion_enabled:
+		return
+	var want := {"D_Walk": walk_speed, "D_Back": walk_speed, "D_StrafeL": walk_speed, "D_StrafeR": walk_speed,
+		"D_StrafeLRun": speed, "D_StrafeRRun": speed, "D_Run": speed, "D_RunBack": speed, "D_Sprint": run_speed}
+	for st in want:
+		var clip: String = "D_Run" if st == "D_Sprint" else st
+		if not _anim.has_animation(clip):
+			continue
+		var a := _anim.get_animation(clip)
+		var rs: float = a.get_meta("root_speed", 0.0)
+		var sc := clampf(want[st] / rs, 0.6, 1.8) if rs > 0.3 else 1.0
+		_tree.set("parameters/loco/%s/ts/scale" % st, sc)
+
+## 右手五指骨（握拳覆蓋用），路徑相對 AnimationTree root_node = _visual。
+func _grip_filter_paths() -> Array[String]:
+	var out: Array[String] = []
+	var sk := _visual.find_children("*", "Skeleton3D", true, false)
+	if sk.is_empty():
+		return out
+	var skel := sk[0] as Skeleton3D
+	var base := str(_visual.get_path_to(skel)) + ":"
+	for i in skel.get_bone_count():
+		var bn := skel.get_bone_name(i)
+		if bn.begins_with("mixamorig_RightHand") and bn != "mixamorig_RightHand":
+			out.append(base + bn)
+	return out
+
+## upper OneShot 的骨骼 filter 路徑（相對 AnimationTree root_node = _visual）。
+## 舊 Meshy 骨架用 UPPER_BONES；v2.4 Mixamo 骨架取 mixamorig_Spine 以下所有骨，
+## 排除彈簧骨鏈（Haori／Hair／Cuff／Sleeve，由 SpringBoneSimulator3D 驅動）。
+func _upper_filter_paths() -> Array[String]:
+	var out: Array[String] = []
+	var sks := _visual.find_children("*", "Skeleton3D", true, false)
+	if sks.is_empty():
+		return out
+	var sk: Skeleton3D = sks[0]
+	var prefix := str(_visual.get_path_to(sk)) + ":"
+	var spine := sk.find_bone("mixamorig_Spine")
+	if spine < 0:
+		for b in UPPER_BONES:
+			out.append(prefix + b)
+		return out
+	for i in sk.get_bone_count():
+		var bn := sk.get_bone_name(i)
+		if bn.begins_with("Haori") or bn.begins_with("Hair") or bn.begins_with("Cuff") or bn.begins_with("Sleeve"):
+			continue
+		var p := i
+		while p >= 0 and p != spine:
+			p = sk.get_bone_parent(p)
+		if p == spine:
+			out.append(prefix + bn)
+	return out
 
 func _setup_transition(root: AnimationNodeBlendTree, sel: AnimationNodeTransition, sel_name: String, inputs: Dictionary) -> void:
 	sel.xfade_time = combo_section_blend
@@ -1215,6 +1565,9 @@ func _fire_upper(input_name: String, time_scale: float) -> void:
 ## 全身技的 fadeout 就是「收勢」：結束後姿勢停留在收尾幀、按此時間淡回
 ## locomotion —— Judgment / Combo_1 收勢長，Roll 要能立刻接行動。
 func _fire_full(input_name: String, time_scale: float) -> void:
+	if not input_name.begins_with("idle_break"):
+		_idle_break_on = false   # 別的全身動作接手：待機小動作的淡出不能再去關它
+		_run_turn_left = 0.0
 	if _full_node:
 		match input_name:
 			"judgment":
@@ -1245,12 +1598,20 @@ func _fire_full(input_name: String, time_scale: float) -> void:
 				_full_node.fadeout_time = 0.30
 			"hit":
 				_full_node.fadeout_time = 0.14
-			"stagger":
+			"stagger", "stagger_front", "stagger_back", "stagger_left", "stagger_right":
 				_full_node.fadeout_time = 0.30
+			"deathblow":
+				# 忍殺收勢用短淡出：素材最後 8 格已對齊 Idle（見 align 工具的 --tail），所以短淡
+				# 就夠。淡出視窗越長越糟 —— 「clip 姿 ↔ Idle」在關節角上混合會把腳往下推，
+				# 實測 0.22 s 沉 25 mm、0.06 s 沉 5.6 mm、硬切 6.3 mm（硬切沒比較好，且換素材會跳）。
+				_full_node.fadeout_time = 0.06
 			"dead":
 				_full_node.fadeout_time = 0.0
 			_:
 				_full_node.fadeout_time = 0.12
+		# 忍殺會把 fadein 調短；這裡還原成標準值，避免後面的招式沿用（只還原，不覆寫特殊值）。
+		if input_name != "deathblow":
+			_full_node.fadein_time = 0.10
 	_tree.set("parameters/full_sel/transition_request", input_name)
 	_tree.set("parameters/ts_full/scale", time_scale)
 	_tree.set("parameters/full/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
@@ -1277,6 +1638,48 @@ func _switch_full(input_name: String, time_scale: float) -> void:
 	if not _tree.get("parameters/full/internal_active"):
 		_tree.set("parameters/full/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
+## 軀幹被打爆時要播哪一支方向性反應。dir = 受擊推力方向（玩家被推走的方向），
+## 所以攻擊來自 -dir；以角色的前／右為軸切四個 45° 楔形。
+## 回傳的是 AnimationTree 的**段落鍵**（full_sel_<鍵>），不是 clip 名稱 ——
+## _fire_full() 吃的是段落鍵；給錯會噴 "No such input" 且整個反應不會播。
+## 關掉 stagger_directional、或沒有方向資料（例如非戰鬥來源直接打爆軀幹）時，
+## 退回原本單一的 stagger 段落。
+func stagger_key_for_dir(dir: Vector3) -> String:
+	if not stagger_directional:
+		return "stagger"
+	var flat := Vector3(dir.x, 0.0, dir.z)
+	if flat.length_squared() < 0.0001:
+		return "stagger"
+	var from := -flat.normalized()
+	var bf := -global_transform.basis.z
+	var br := global_transform.basis.x
+	var f := Vector3(bf.x, 0.0, bf.z)
+	var r := Vector3(br.x, 0.0, br.z)
+	if f.length_squared() < 0.0001 or r.length_squared() < 0.0001:
+		return "stagger"
+	f = f.normalized()
+	r = r.normalized()
+	var fd := f.dot(from)
+	var rd := r.dot(from)
+	if absf(fd) >= absf(rd):
+		return "stagger_front" if fd > 0.0 else "stagger_back"
+	return "stagger_right" if rd > 0.0 else "stagger_left"
+
+
+## 段落鍵 → clip 名稱（量長度、檢查是否註冊時用）。
+func stagger_anim_for_key(key: String) -> String:
+	match key:
+		"stagger_front":
+			return stagger_front_anim
+		"stagger_back":
+			return stagger_back_anim
+		"stagger_left":
+			return stagger_left_anim
+		"stagger_right":
+			return stagger_right_anim
+	return stagger_anim
+
+
 ## 玩家軀幹被打爆：硬直，攻防全斷。隻狼的規則是此時可被忍殺 ——
 ## 敵人的處決動畫還沒有，先做成「動不了的懲罰窗口」，破綻結束自動恢復。
 func _on_self_posture_broken() -> void:
@@ -1289,9 +1692,11 @@ func _on_self_posture_broken() -> void:
 	velocity.x = 0.0
 	velocity.z = 0.0
 	# 軀幹爆動畫 2.0 s 對上 break_time；break_time 被改時等比縮放，破綻結束正好站回。
-	if _tree != null and _anim.has_animation(stagger_anim):
-		var clip_len := _anim.get_animation(stagger_anim).length
-		_fire_full("stagger", clip_len / maxf(posture.break_time, 0.05))
+	var key := stagger_key_for_dir(_last_hit_dir)
+	var clip_name := stagger_anim_for_key(key)
+	if _tree != null and _anim.has_animation(clip_name):
+		var clip_len := _anim.get_animation(clip_name).length
+		_fire_full(key, clip_len / maxf(posture.break_time, 0.05))
 	player_posture_broken.emit()
 
 
@@ -1338,6 +1743,70 @@ func _freeze_dead_pose() -> void:
 		# 不用 pause()（會清掉 current_animation，存讀檔／除錯看不出停在哪）：
 		# 以 speed_scale 0 定格在末幀；復活流程要記得還原 speed_scale 與 Tree.active。
 		_anim.speed_scale = 0.0
+
+
+## 開場仰躺定格：關閉 Tree，定格在 Dead 末幀（平躺面朝天），鎖定輸入與速度。
+func start_opening_lie_down() -> void:
+	input_locked = true
+	velocity = Vector3.ZERO
+	_freeze_dead_pose()
+
+
+## 爬起動作：從仰躺反向播放 Dead clip，撐地挺身站立，隨後平滑切回 Idle 與 AnimationTree。
+func play_get_up(speed: float = 1.15) -> float:
+	# v2.4：有專用起身（Getting Up From Back）就正播它；首格＝仰躺，接得上 Dead 末格。
+	if _anim != null and _anim.has_animation("Get_Up"):
+		_anim.speed_scale = speed * get_up_speed
+		_anim.play("Get_Up")
+		var gdur: float = _anim.get_animation("Get_Up").length / maxf(speed * get_up_speed, 0.1)
+		get_tree().create_timer(gdur).timeout.connect(finish_get_up)
+		return gdur
+	if _anim != null and _anim.has_animation(dead_anim):
+		_anim.speed_scale = speed
+		_anim.play_backwards(dead_anim)
+		var dur: float = _anim.get_animation(dead_anim).length / maxf(speed, 0.1)
+		get_tree().create_timer(dur).timeout.connect(finish_get_up)
+		return dur
+	finish_get_up()
+	return 0.0
+
+
+func finish_get_up() -> void:
+	if _anim != null:
+		_anim.speed_scale = 1.0
+		_anim.stop()
+	if _tree != null:
+		_tree.active = true
+		_tree.set("parameters/full/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
+		_tree.set("parameters/upper/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
+		_playback().start("Idle")
+	input_locked = false
+
+
+## ── 冥想擺姿 ────────────────────────────────────────────────────────────
+## 坐下調息：關掉 AnimationTree、AnimationPlayer 直接播打坐 clip 並定格
+## （跟倒地定格同一招）。有循環的 clip（呼吸）就讓它繼續跑。
+## ⚠ 打坐 clip 還沒生出來時**退回站姿**：冥想系統（時間快轉、運鏡）不該被
+##   一個動畫卡住，姿勢是可以獨立補的。
+func start_meditation_pose() -> void:
+	input_locked = true
+	velocity = Vector3.ZERO
+	if _anim == null or not _anim.has_animation(meditate_anim):
+		return
+	if _tree != null:
+		_tree.active = false
+	var clip := _anim.get_animation(meditate_anim)
+	_anim.play(meditate_anim)
+	if clip.loop_mode == Animation.LOOP_NONE:
+		_anim.seek(clip.length, true)
+		_anim.speed_scale = 0.0     # speed_scale 0 定格（不用 pause，除錯看得到停在哪）
+	else:
+		_anim.speed_scale = 1.0
+
+
+## 出定：跟爬起共用同一條收尾（還原 speed_scale、開回 Tree、回 Idle、解鎖）。
+func end_meditation_pose() -> void:
+	finish_get_up()
 
 
 func _on_self_posture_recovered() -> void:
@@ -1404,9 +1873,15 @@ func _physics_process(delta):
 				_form_cooldowns.erase(id)
 			else:
 				_form_cooldowns[id] = left
-	# 軀幹爆掉的硬直：只跑重力，不讀輸入、不動作。
-	if _stagger_left > 0.0:
+	# 軀幹爆掉的硬直／忍殺演出：只跑重力，不讀輸入、不動作。
+	if _stagger_left > 0.0 or _deathblow_left > 0.0:
 		_stagger_left = maxf(_stagger_left - delta, 0.0)
+		# 忍殺演出走同一條（不新增系統）；放完才把操作權還回去。
+		if _deathblow_left > 0.0:
+			_deathblow_left = maxf(_deathblow_left - delta, 0.0)
+			if _deathblow_left <= 0.0 and _deathblow_lock_owned:
+				input_locked = false
+				_deathblow_lock_owned = false
 		velocity.x = 0.0
 		velocity.z = 0.0
 		if not is_on_floor():
@@ -1439,8 +1914,12 @@ func _physics_process(delta):
 		return
 	var grounded := is_on_floor()
 	var running := Input.is_action_pressed("sprint") and not input_locked
-	var cur_speed := run_speed if running else speed
+	_walking = not running and InputMap.has_action("walk") and Input.is_action_pressed("walk") and not input_locked
+	var cur_speed := run_speed if running else (walk_speed if _walking else speed)
 	var moving := input_dir.length_squared() > 0.0
+	# 特技（攀牆／翻越）期間位置由 root_path 驅動，不跑一般物理。
+	if _update_traversal(delta, input_dir, grounded, moving, running):
+		return
 
 	# --- 水平速度 ---
 	if action_state == ActionState.DODGING:
@@ -1469,9 +1948,15 @@ func _physics_process(delta):
 		else:
 			velocity.x = input_dir.x * cur_speed * f
 			velocity.z = input_dir.z * cur_speed * f
+	elif _land_lock_move > 0.0:
+		# 落地翻滾：沿落地前的面向往前滾；重落地：原地蹲穩。
+		var roll_v := _land_roll_dir * speed
+		velocity.x = roll_v.x
+		velocity.z = roll_v.z
 	else:
-		velocity.x = input_dir.x * cur_speed
-		velocity.z = input_dir.z * cur_speed
+		var tf := _run_turn_speed_factor()
+		velocity.x = input_dir.x * cur_speed * tf
+		velocity.z = input_dir.z * cur_speed * tf
 
 	# 受擊位移優先於一切水平控制：被打退時不能靠輸入走回來。
 	_apply_knockback(delta)
@@ -1503,9 +1988,11 @@ func _physics_process(delta):
 		_update_attack(delta, input_dir)
 
 	_update_sword(delta)
-	_update_visual_yaw(delta, input_dir, moving, running)
+	if _run_turn_left <= 0.0 and _trick_lock_yaw <= 0.0:
+		_update_visual_yaw(delta, input_dir, moving, running)
 	if _tree:
 		_update_locomotion(delta, input_dir, is_on_floor(), moving, running)
+		_update_idle_break(delta, moving)
 	# 腳步：用實際水平速度而不是輸入 —— 撞牆、被擊退、踩斜坡時速度才是真的。
 	if _footstep_audio != null:
 		var flat := Vector2(velocity.x, velocity.z).length()
@@ -1683,10 +2170,13 @@ func _update_locomotion(delta: float, input_dir: Vector3, grounded: bool, moving
 		return   # 全身 override 顯示中
 	var pb := _playback()
 	if _iai_dash_remaining > 0.0 and grounded:
-		pb.travel("Run")   # 拔刀斬衝刺：腿要跑，不能滑著走（moving 是看輸入的，沒按方向會變 Idle 滑行）
+		pb.travel(_drawn_state("Run"))   # 拔刀斬衝刺：腿要跑，不能滑著走（moving 是看輸入的，沒按方向會變 Idle 滑行）
 		return
 	if not grounded:
+		if not _was_airborne:
+			_air_peak_y = global_position.y
 		_was_airborne = true
+		_air_peak_y = maxf(_air_peak_y, global_position.y)
 		_air_t += delta
 		# 上升期維持 JumpStart 姿勢；velocity.y <= 0（或走出邊緣過 coyote）→ Fall。
 		if velocity.y <= 0.0 and _air_t > coyote_time and pb.get_current_node() != &"Fall":
@@ -1697,7 +2187,16 @@ func _update_locomotion(delta: float, input_dir: Vector3, grounded: bool, moving
 		return   # 蓄力蹲伏：JumpStart 播放中，locomotion 不搶
 	if _was_airborne:
 		_was_airborne = false
+		_double_jump_used = false
+		_last_wall_normal = Vector3.ZERO
 		CombatVFX.spawn_land_dust(self, global_position)
+		if _trick_left > 0.0 and _climb_left <= 0.0:
+			_trick_left = 0.0   # 空翻還沒播完就著地：直接收掉，交給落地
+			_fade_full()
+		var drop := _air_peak_y - global_position.y
+		_air_peak_y = -INF
+		if _try_heavy_landing(drop, moving):
+			return
 		if not moving:
 			_land_lock = land_lock_time
 			pb.travel("Land")
@@ -1711,12 +2210,30 @@ func _update_locomotion(delta: float, input_dir: Vector3, grounded: bool, moving
 			return
 	_sector_hold = maxf(_sector_hold - delta, 0.0)
 	if not moving:
-		pb.travel("Idle")
+		pb.travel(_drawn_state("Idle"))
 		return
 	# 急轉不再播獨立 turn clip（素材整段懸空、Hips 帶 1.15 m 偏移）：
 	# 60°~112.5° 由 RunFL/FR 側身扇區接，>112.5° 交給 BackPedal，
 	# 視覺朝向仍由 _update_visual_yaw 的 turn_speed lerp 跟上。
-	pb.travel(_locomotion_target(running))
+	pb.travel(_drawn_state(_locomotion_target(running)))
+
+## 刀在手上（拔刀完成、或拔刀途中已出鞘）就換持刀版 locomotion。
+func _sword_in_hand() -> bool:
+	return sword_state == SwordState.DRAWN or ((sword_state == SwordState.DRAWING or sword_state == SwordState.SHEATHING) and _draw_t >= t_unsheathe)
+
+func _drawn_state(st: String) -> String:
+	if not drawn_locomotion_enabled or not _sword_in_hand():
+		return st
+	if st == "RunFL" or st == "RunFR":
+		var run := Vector2(velocity.x, velocity.z).length() > walk_speed + 0.8
+		var sname := ("D_StrafeL" if st == "RunFL" else "D_StrafeR") + ("Run" if run else "")
+		return sname if _anim.has_animation(sname) else st
+	if st == "BackPedal" and Vector2(velocity.x, velocity.z).length() > walk_speed + 0.8 and _anim.has_animation("D_RunBack"):
+		return "D_RunBack"
+	var d: String = DRAWN_OF.get(st, "")
+	if d == "D_Sprint":
+		return d if _anim.has_animation("D_Run") else st
+	return d if d != "" and _anim.has_animation(d) else st
 
 ## 8 向 locomotion：以角色 local 速度方向分 sector（不是世界座標、不是輸入鍵）。
 ## 0°=前、+90°=左、180°=後。Forward |a|<22.5 → Run/Walk；22.5~112.5 → RunFL
@@ -1724,7 +2241,7 @@ func _update_locomotion(delta: float, input_dir: Vector3, grounded: bool, moving
 ## |a|>112.5 → BackPedal（Walking 反播）。sector_min_hold 防抖。
 func _locomotion_target(running: bool) -> String:
 	var lv := Vector2(velocity.x, velocity.z)
-	var forward_state := "Run" if running else "Walk"
+	var forward_state := "Sprint" if running else ("Walk" if _walking else "Run")
 	if lv.length() < 0.5 or _visual == null:
 		return forward_state
 	var yaw: float = _visual.global_rotation.y
@@ -1735,8 +2252,13 @@ func _locomotion_target(running: bool) -> String:
 	var nd := lv.normalized()
 	var ang := rad_to_deg(atan2(nd.dot(left), nd.dot(fwd)))
 	var target := forward_state
+	var drawn := drawn_locomotion_enabled and _sword_in_hand()
 	if absf(ang) > 112.5:
 		target = "BackPedal"
+	elif drawn and ang > 60.0:
+		target = "RunFL"
+	elif drawn and ang < -60.0:
+		target = "RunFR"
 	elif running and _fl_anim != "" and ang > 22.5:
 		target = "RunFL"
 	elif running and _fr_anim != "" and ang < -22.5:
@@ -1756,6 +2278,9 @@ func _unhandled_input(event):
 	# Actions from project.godot [input]; the camera / interaction adapter
 	# (player_yoriichi.gd) handles mouse-look and "interact" on top of this.
 	if input_locked:
+		return
+	if not _combat_anims_ready:
+		_unhandled_input_locomotion_only(event)
 		return
 	if event.is_action_pressed("draw_sword"):
 		if _active_attack_name == attack_continuous_spin_anim:
@@ -1829,6 +2354,279 @@ func _unhandled_input(event):
 		else:
 			request_continuous_spin()
 
+## 戰鬥動畫未就緒（v2.4 換裝過渡期）：只處理跳躍與鎖定；疾跑由 _physics_process 讀按住狀態。
+## 拔刀、攻擊、格擋、翻滾（快按 Shift）、忍殺、型全部不觸發，避免播佔位動畫卻判定命中。
+func _unhandled_input_locomotion_only(event: InputEvent) -> void:
+	if event.is_action_pressed("jump"):
+		request_jump()
+	elif event.is_action_pressed("lock_on"):
+		toggle_lock_on()
+
+# ---------------------------------------------------------------------------
+# Traversal（v2.4 特技）：二段空翻、踩牆跳、攀牆頂、蹬牆跑上平台、高處落地翻滾、跑步急轉、待機小動作
+# ---------------------------------------------------------------------------
+var _walking := false
+var _double_jump_used := false
+var _last_wall_normal := Vector3.ZERO
+var _air_peak_y := -INF
+## 特技 clip 剩餘秒數（>0 = full 層特技播放中；到點淡出）。
+var _trick_left := 0.0
+## 特技期間鎖住視覺朝向（踩牆跳要面向離牆方向，不被輸入拉回）。
+var _trick_lock_yaw := 0.0
+## 攀爬：root_path 驅動。
+var _climb_left := 0.0
+var _climb_total := 0.0
+var _climb_path := PackedVector3Array()
+var _climb_scale := Vector3.ONE
+var _climb_end := Vector3.ZERO
+var _climb_basis := Basis()
+## 重落地鎖移動剩餘秒數；落地翻滾的前衝方向。
+var _land_lock_move := 0.0
+var _land_roll_dir := Vector3.ZERO
+var _run_turn_left := 0.0
+var _run_turn_yaw := 0.0
+var _idle_time := 0.0
+var _idle_break_at := -1.0
+var _idle_break_on := false
+## 起身速度倍率（Getting Up From Back 原片 8.3 s 偏長）。
+@export var get_up_speed := 1.6
+
+func _facing() -> Vector3:
+	var yaw: float = _visual.global_rotation.y if _visual else 0.0
+	return Vector3(sin(yaw), 0.0, cos(yaw))
+
+func _face_dir(d: Vector3) -> void:
+	if _visual != null and Vector2(d.x, d.z).length() > 0.01:
+		_visual.global_rotation.y = atan2(d.x, d.z)
+
+func _play_trick(key: String, spd: float, lock_yaw := 0.0) -> void:
+	if not _anim.has_animation(key):
+		return
+	_fade_idle_break()
+	_fire_full(key, spd)
+	_trick_left = _anim.get_animation(key).length / maxf(spd, 0.01)
+	_trick_lock_yaw = lock_yaw
+
+## 回傳 true = 本幀被特技接管（攀爬中）。
+func _update_traversal(delta: float, input_dir: Vector3, grounded: bool, moving: bool, running: bool) -> bool:
+	if _trick_left > 0.0:
+		_trick_left -= delta
+		if _trick_left <= 0.0 and _climb_left <= 0.0:
+			_fade_full()
+	_trick_lock_yaw = maxf(_trick_lock_yaw - delta, 0.0)
+	if _climb_left > 0.0:
+		_climb_left = maxf(_climb_left - delta, 0.0)
+		var u := 1.0 - _climb_left / maxf(_climb_total, 0.001)
+		var f := u * float(_climb_path.size() - 1)
+		var i0 := clampi(int(f), 0, _climb_path.size() - 1)
+		var i1 := mini(i0 + 1, _climb_path.size() - 1)
+		var p := _climb_path[i0].lerp(_climb_path[i1], f - float(i0)) * _climb_scale
+		# 還在牆頂以下時，身體中心不得比「牆面 + 膠囊半徑」更靠牆（牆面在終點後方 LEDGE_INSET）；
+		# 越接近牆頂越放開，上到頂面後就照 clip 往前走。避免 root_path 縮放後提早前移、身體埋進牆。
+		var below := clampf(-p.y / 0.12, 0.0, 1.0)
+		var zmax := lerpf(1.0, -(LEDGE_INSET + climb_wall_clearance), below)
+		p.z = minf(p.z, zmax)
+		global_position = _climb_end + _climb_basis * p
+		velocity = Vector3.ZERO
+		if _climb_left <= 0.0:
+			global_position = _climb_end
+			_fade_full()
+			_trick_left = 0.0
+		_update_sword(delta)
+		return true
+	if _land_lock_move > 0.0:
+		_land_lock_move -= delta
+	if _run_turn_left > 0.0:
+		_run_turn_left -= delta
+		if _run_turn_left <= 0.0:
+			_visual.global_rotation.y = _run_turn_yaw
+			_tree.set("parameters/full/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT)
+	# 跑步急轉：地面、自由狀態、速度夠快、輸入與面向夾角 > 150°。
+	elif run_turn_enabled and grounded and moving and action_state == ActionState.FREE and _anim.has_animation("Run_Turn") \
+			and Vector2(velocity.x, velocity.z).length() > speed * 0.8 and _trick_left <= 0.0:
+		var fwd := _facing()
+		if fwd.dot(input_dir.normalized()) < -0.86:
+			_run_turn_yaw = atan2(input_dir.x, input_dir.z)
+			_fire_full("run_turn", run_turn_speed)
+			_full_node.fadeout_time = 0.0
+			_run_turn_left = _anim.get_animation("Run_Turn").length / run_turn_speed
+	# 空中朝牆前進時自動攀上牆頂（屋簷、石垣、木箱）。
+	if ledge_climb_enabled and not grounded and moving and action_state == ActionState.FREE and _jump_charge < 0.0:
+		var ledge := _find_ledge(input_dir.normalized(), ledge_min_height, ledge_max_height)
+		if not ledge.is_empty():
+			_start_climb(ledge, "Trick_Mantle", mantle_speed)
+			return true
+	return false
+
+## 跑步急轉期間不讓輸入改面向；水平速度先煞再出。
+func _run_turn_speed_factor() -> float:
+	return 0.35 if _run_turn_left > 0.0 else 1.0
+
+## 牆頂站立點離牆面的深度（m）。
+const LEDGE_INSET := 0.3
+## 攀爬時身體中心離牆面的最小距離（m）＝膠囊半徑。
+@export var climb_wall_clearance := 0.3
+
+## 前方牆頂偵測。dir＝水平前進方向。回傳 {top, normal, h} 或 {}。
+## 1) 胸口／膝蓋兩條水平射線找牆（法線接近水平）；2) 從牆內 0.3 m、上方往下打找頂面（法線朝上）；
+## 3) 頂面站得下膠囊（上方淨空）。h＝頂面相對腳底的高度。
+func _find_ledge(dir: Vector3, min_h: float, max_h: float) -> Dictionary:
+	if dir.length_squared() < 0.01:
+		return {}
+	var space := get_world_3d().direct_space_state
+	var o := global_position
+	var wall := {}
+	for hh in [1.2, 0.6, 1.8]:
+		var q := PhysicsRayQueryParameters3D.create(o + Vector3(0, hh, 0), o + Vector3(0, hh, 0) + dir * ledge_probe_distance, collision_mask)
+		q.exclude = [get_rid()]
+		var r := space.intersect_ray(q)
+		if not r.is_empty() and absf((r.normal as Vector3).y) < 0.35:
+			wall = r
+			break
+	if wall.is_empty():
+		return {}
+	var n: Vector3 = wall.normal
+	n.y = 0.0
+	n = n.normalized()
+	var inside: Vector3 = (wall.position as Vector3) - n * LEDGE_INSET
+	var dq := PhysicsRayQueryParameters3D.create(Vector3(inside.x, o.y + max_h + 0.4, inside.z), Vector3(inside.x, o.y + min_h - 0.05, inside.z), collision_mask)
+	dq.exclude = [get_rid()]
+	var top := space.intersect_ray(dq)
+	if top.is_empty() or (top.normal as Vector3).y < 0.75:
+		return {}
+	var h: float = (top.position as Vector3).y - o.y
+	if h < min_h or h > max_h:
+		return {}
+	var stand: Vector3 = top.position
+	var shp := PhysicsShapeQueryParameters3D.new()
+	shp.shape = _capsule_shape()
+	if shp.shape == null:
+		return {}
+	shp.transform = Transform3D(Basis(), stand + Vector3(0, 0.05, 0)) * _capsule_local()
+	shp.collision_mask = collision_mask
+	shp.exclude = [get_rid()]
+	if not space.intersect_shape(shp, 1).is_empty():
+		return {}
+	return {"top": stand, "normal": n, "h": h}
+
+## 攀上：位置沿 clip 的 root_path 走（y 依實際牆高、前進依實際距離縮放），終點＝牆頂站立點。
+func _start_climb(ledge: Dictionary, key: String, spd: float) -> void:
+	var a: Animation = _anim.get_animation(key)
+	if a == null or not a.has_meta("root_path"):
+		return
+	_climb_path = a.get_meta("root_path")
+	var n: Vector3 = ledge.normal
+	var fwd := -n
+	_face_dir(fwd)
+	_climb_basis = Basis(Vector3.UP, atan2(fwd.x, fwd.z))
+	var start := _climb_path[0]
+	_climb_end = ledge.top as Vector3
+	var rel := _climb_basis.inverse() * (global_position - _climb_end)
+	_climb_scale = Vector3(0.0,
+		rel.y / start.y if absf(start.y) > 0.05 else 1.0,
+		rel.z / start.z if absf(start.z) > 0.05 else 1.0)
+	# 橫向維持目前位置（不往側邊瞬移），終點跟著平移。
+	_climb_end += _climb_basis * Vector3(rel.x, 0.0, 0.0)
+	_climb_scale.y = clampf(_climb_scale.y, 0.2, 2.5)
+	_climb_scale.z = clampf(_climb_scale.z, 0.0, 3.0)
+	_climb_total = a.length / maxf(spd, 0.01)
+	_climb_left = _climb_total
+	velocity = Vector3.ZERO
+	_jump_charge = -1.0
+	_double_jump_used = false
+	_play_trick(key, spd)
+	_full_node.fadeout_time = 0.18
+
+## 地面朝牆按跳：牆頂在 wallrun 高度範圍 → 蹬牆跑上去；更低的牆頂交給一般跳＋空中攀爬。
+func _try_start_wallrun() -> bool:
+	if not ledge_climb_enabled:
+		return false
+	var dir := _read_input_dir()
+	if dir.length_squared() < 0.01:
+		return false
+	var ledge := _find_ledge(dir.normalized(), wallrun_min_height, wallrun_max_height)
+	if ledge.is_empty():
+		return false
+	_start_climb(ledge, "Trick_WallRun", wallrun_speed)
+	return true
+
+## 空中再按跳：貼牆 → 踩牆跳；否則 → 二段空翻。
+func _request_air_jump() -> void:
+	if _heavy_charging or _iai_unfreeze_in >= 0.0 or _iai_dash_remaining > 0.0:
+		return
+	if wall_jump_enabled and is_on_wall():
+		var n := get_wall_normal()
+		n.y = 0.0
+		if n.length() > 0.5 and (n.normalized().dot(_last_wall_normal) < 0.7):
+			n = n.normalized()
+			_last_wall_normal = n
+			velocity.x = n.x * wall_jump_push
+			velocity.z = n.z * wall_jump_push
+			velocity.y = wall_jump_up
+			_double_jump_used = false
+			_face_dir(n)
+			_play_trick("Trick_Flip", flip_speed, 0.45)
+			CombatVFX.spawn_jump_dust(self, global_position + Vector3(0, 0.9, 0) - n * 0.3)
+			return
+	if double_jump_enabled and not _double_jump_used and _air_t > 0.05:
+		_double_jump_used = true
+		velocity.y = double_jump_velocity
+		var dir := _read_input_dir()
+		if dir.length_squared() > 0.01:
+			_face_dir(dir)
+		var twist := Input.is_action_pressed("sprint")
+		_play_trick("Trick_TwistFlip" if twist else "Trick_Flip", flip_speed)
+		CombatVFX.spawn_jump_dust(self, global_position)
+
+## 高處落地：移動中 → 落地翻滾（往前滾、不吃硬直）；靜止 → 重落地（短暫鎖移動）。
+func _try_heavy_landing(drop: float, moving: bool) -> bool:
+	if action_state != ActionState.FREE:
+		return false
+	if moving and drop > land_roll_height and _anim.has_animation("Trick_LandRoll"):
+		_land_roll_dir = _facing()
+		_play_trick("Trick_LandRoll", 1.35)
+		_land_lock_move = _trick_left * 0.55
+		return true
+	if not moving and drop > hard_land_height and _anim.has_animation("Trick_HardLand"):
+		_land_roll_dir = Vector3.ZERO
+		_play_trick("Trick_HardLand", 1.0)
+		_land_lock_move = _trick_left * 0.6
+		return true
+	return false
+
+## 待機小動作：只在地面、自由、收刀、站著不動時累積；一動或有任何動作就淡出。
+func _update_idle_break(delta: float, moving: bool) -> void:
+	if not idle_break_enabled or idle_break_resources.is_empty():
+		return
+	var calm := not moving and is_on_floor() and _jump_charge < 0.0 and action_state == ActionState.FREE and sword_state == SwordState.SHEATHED \
+		and _trick_left <= 0.0 and not input_locked and _guard_held == false
+	if not calm:
+		_idle_time = 0.0
+		_idle_break_at = -1.0
+		_fade_idle_break()
+		return
+	_idle_time += delta
+	if _idle_break_at < 0.0:
+		_idle_break_at = randf_range(idle_break_after.x, idle_break_after.y)
+	if not _idle_break_on and _idle_time >= _idle_break_at:
+		var i := randi() % idle_break_resources.size()
+		_fire_full("idle_break_%d" % i, 1.0)
+		_full_node.fadeout_time = 0.45
+		_idle_break_on = true
+		var dur := _anim.get_animation("Idle_Break_%d" % i).length
+		_idle_time = -dur   # 播完後重新計時
+		_idle_break_at = -1.0
+	elif _idle_break_on and _idle_time >= 0.0:
+		_idle_break_on = false
+		_fade_full()
+
+func _fade_idle_break() -> void:
+	if _idle_break_on:
+		_idle_break_on = false
+		_idle_time = 0.0
+		_full_node.fadeout_time = 0.25
+		_fade_full()
+
 # ---------------------------------------------------------------------------
 # Jump
 # ---------------------------------------------------------------------------
@@ -1838,6 +2636,13 @@ func _unhandled_input(event):
 func request_jump() -> void:
 	if sword_state == SwordState.DRAWING or sword_state == SwordState.SHEATHING:
 		return
+	if _climb_left > 0.0:
+		return
+	if action_state == ActionState.FREE and not is_on_floor() and _jump_charge < 0.0:
+		_request_air_jump()
+		return
+	if action_state == ActionState.FREE and is_on_floor() and _try_start_wallrun():
+		return
 	if action_state == ActionState.DODGING or not is_on_floor() or _jump_charge >= 0.0:
 		return
 	# 蓄力／衝刺中不能起跳：離地後 dash 段不會執行，姿勢會凍在半空。
@@ -1845,7 +2650,8 @@ func request_jump() -> void:
 		return
 	if action_state == ActionState.ATTACKING and can_cancel_continuous_spin():
 		cancel_continuous_spin()
-	_jump_charge = (JUMP_TAKEOFF_CLIP - jump_start_skip) / jump_start_speed
+	_jump_charge = maxf(jump_takeoff_t - jump_start_skip, 0.0) / jump_start_speed
+	_fade_idle_break()
 	_air_t = 0.0
 	if action_state != ActionState.ATTACKING or _attack_layer != "full":
 		_playback().travel("JumpStart")
@@ -2205,11 +3011,10 @@ func request_heavy_cut() -> void:
 	combo_stage = 0
 	_combo_queued_inputs = 0
 	combo_input_buffered = false
-	var section_len := attack_combo_resource.length * (COMBO_SECTION_RANGES[0].y - COMBO_SECTION_RANGES[0].x)
-	_action_real = section_len / heavy_cut_speed
+	_action_real = _heavy_len() / heavy_cut_speed
 	_action_elapsed = 0.0
 	_upper_finish_fade = 0.24
-	_fire_upper("atk1", heavy_cut_speed)
+	_fire_upper("heavy", heavy_cut_speed)
 	_hit_targets_this_swing.clear()
 	if _heavy_charge_arming:
 		# 蓄力入口：舉刀段不是砍 —— 不出聲、不拖刀光、不判定；放開／落刀時再開。
@@ -2223,6 +3028,11 @@ func request_heavy_cut() -> void:
 		_sword_trail.start_trail()
 	if _hitbox != null:
 		_hitbox.monitoring = true
+
+func _heavy_len() -> float:
+	if _anim != null and _anim.has_animation("Heavy_Cut"):
+		return _anim.get_animation("Heavy_Cut").length
+	return attack_combo_resource.length * (COMBO_SECTION_RANGES[0].y - COMBO_SECTION_RANGES[0].x)
 
 func _attack_progress() -> float:
 	return clampf(_action_elapsed / _action_real, 0.0, 1.0) if _action_real > 0.0 else 1.0
@@ -2368,11 +3178,10 @@ func _resume_heavy_cut() -> void:
 			_iai_full_active = false
 			_fade_full()
 		_attack_layer = "upper"
-		var section_len := attack_combo_resource.length * (COMBO_SECTION_RANGES[0].y - COMBO_SECTION_RANGES[0].x)
-		_action_real = section_len / heavy_cut_speed
+		_action_real = _heavy_len() / heavy_cut_speed
 		_action_elapsed = 0.0
 		_upper_finish_fade = 0.24
-		_fire_upper("atk1", heavy_cut_speed)
+		_fire_upper("heavy", heavy_cut_speed)
 	_hit_targets_this_swing.clear()
 	if _hitbox != null:
 		_hitbox.monitoring = true
@@ -2712,6 +3521,8 @@ func _apply_sword_visibility():
 		_sword_sheathed.visible = not in_hand
 	if _sword_hand:
 		_sword_hand.visible = in_hand
+	if _tree != null:
+		_tree.set("parameters/grip/blend_amount", 1.0 if in_hand and grip_overlay_enabled else 0.0)
 
 # ---------------------------------------------------------------------------
 # Sun Breathing（data-driven；定義見 sun_breathing.gd）

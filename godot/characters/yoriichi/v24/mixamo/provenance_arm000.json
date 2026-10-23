@@ -1,0 +1,349 @@
+{
+ "character_id": "f2e0c040-48e3-43f5-a17c-a3bacd230211",
+ "arm_space": 0,
+ "fps": 30,
+ "format": "fbx7_2019",
+ "skin": false,
+ "inplace": false,
+ "note": "雙手刀／持刀動作：Arm-Space 0（Mixamo 預設）才會兩手在同一握把軸上；0.78 版兩手軸線差約 80°。",
+ "files": {
+  "gs_idle": {
+   "file": "gs_idle.fbx",
+   "bytes": 429200,
+   "sha256": "671d4f101480b8dc6ccdf8ca0a3fcea031dc362bcfcc1246254b74cbe4127f9c",
+   "job": "6c0159cf-3cc6-49c9-937a-b603dc3eba6a",
+   "model_id": 122190901
+  },
+  "gs_hit": {
+   "file": "gs_hit.fbx",
+   "bytes": 362672,
+   "sha256": "347a63c2e7499e39b3d03aab20d18c4057cfe3af917fd96e0b99f3996d61ac14",
+   "job": "333ec703-5885-4695-bc18-193c670fb57a",
+   "model_id": 122420901
+  },
+  "gs_walk_back": {
+   "file": "gs_walk_back.fbx",
+   "bytes": 370992,
+   "sha256": "38ff680689fdd4ff3577189b49251661c1e20ce57eabe3ca266ad666f1c5da57",
+   "job": "6e1cd7fa-5e7c-435a-b580-f5a4f032f22c",
+   "model_id": 122210901
+  },
+  "gs_run_jump": {
+   "file": "gs_run_jump.fbx",
+   "bytes": 316272,
+   "sha256": "b7a6f29f3e1c6134592a3b7aab6f5435008a34646f6a3d7c808e3283be41c8ae",
+   "job": "b3a1688b-9c49-4143-9304-5b2713fc4dfb",
+   "model_id": 122320901
+  },
+  "gs_strafe_l": {
+   "file": "gs_strafe_l.fbx",
+   "bytes": 354368,
+   "sha256": "c3f7eb353bb7cc3aa950b89a84ca11f340fe30f851c47391b5ceff16e3b1b974",
+   "job": "86eddc3a-c6dc-48bb-9c00-ea58f5c4bf18",
+   "model_id": 122220901
+  },
+  "gs_strafe_r_run": {
+   "file": "gs_strafe_r_run.fbx",
+   "bytes": 316096,
+   "sha256": "c357dcda15bf7a0c3c919f08afddb38e9219838923b18f3bf50df71c5d733dd7",
+   "job": "6073a8d1-a5fe-425f-89af-5894e11492a4",
+   "model_id": 122310901
+  },
+  "gs_jump": {
+   "file": "gs_jump.fbx",
+   "bytes": 337728,
+   "sha256": "b516a50e9f8f2afeaa9f54ac860dbd1dc40cf94c0d0c790f44c665cc5ad82e74",
+   "job": "0e716e81-8574-4bf5-b318-c2edb81e29f0",
+   "model_id": 122330901
+  },
+  "gs_spin_kick": {
+   "file": "gs_spin_kick.fbx",
+   "bytes": 389568,
+   "sha256": "96bd7405dc87ea36924e3904d0e88cf2f294c1ee3d50bf8ed4590029431b8bf1",
+   "job": "56c4b3de-1bb3-4db4-8a1c-6a27b2be2c3a",
+   "model_id": 122560901
+  },
+  "gs_crouch_idle": {
+   "file": "gs_crouch_idle.fbx",
+   "bytes": 413360,
+   "sha256": "9349aff95ce29655cbf9c8a6bd04ba0a75ab7de673213a5bc75236d16f5e6c56",
+   "job": "7d5f41c5-8d66-4a80-8995-5bd481cca48a",
+   "model_id": 122460901
+  },
+  "gs_guard_out": {
+   "file": "gs_guard_out.fbx",
+   "bytes": 411920,
+   "sha256": "e21ccad7e5ff4857427a69aa282dd5d6fdfcaf5262423bbc3a8b304df973f0ea",
+   "job": "39cbf9e2-40ba-4728-863d-a9a441fa0f47",
+   "model_id": 122400901
+  },
+  "gs_spin_run": {
+   "file": "gs_spin_run.fbx",
+   "bytes": 484128,
+   "sha256": "666ebeb59a260163804e37354158c69704722c4621bfab88239902d33da516e2",
+   "job": "860378b7-4199-47fa-86c5-a98733f5c9d3",
+   "model_id": 122550901
+  },
+  "gs_combo": {
+   "file": "gs_combo.fbx",
+   "bytes": 586416,
+   "sha256": "d6ed830208c4cb6f01620195f47ccac6bd4c83426dde9a5e8d31ea492038db5d",
+   "job": "d9e90cef-eb28-4287-bb09-bdb74bb796da",
+   "model_id": 122350901
+  },
+  "gs_sheath1": {
+   "file": "gs_sheath1.fbx",
+   "bytes": 347632,
+   "sha256": "f2358fe8d22426d8de5746a2d35f27dff1ebca79dac20dd19486de66fb843d78",
+   "job": "f771ac23-a90d-43f5-a58c-d2da8c5d8753",
+   "model_id": 123290901
+  },
+  "gs_walk": {
+   "file": "gs_walk.fbx",
+   "bytes": 376528,
+   "sha256": "38cffb3bd8620b1bd1b4a54ce9930207939ef9544f3fd6efb018ad25d9e5ae85",
+   "job": "ad5c6a08-0c7d-4532-864a-2e68bb499bcd",
+   "model_id": 122200901
+  },
+  "gs_low": {
+   "file": "gs_low.fbx",
+   "bytes": 426048,
+   "sha256": "624e27f2466a93aa905de14d1e3c3efc82a2a1fd0fc57152d0846cf4ebfc2ffc",
+   "job": "f7b8e72e-6888-4f7c-89dc-00e2d29d1364",
+   "model_id": 122360901
+  },
+  "gs_hilt": {
+   "file": "gs_hilt.fbx",
+   "bytes": 362672,
+   "sha256": "055d0752e70fc87809c67c1486a5ad6de15e51b7ff57a5376e5e4ebbed5d3540",
+   "job": "749b0adc-3e4d-4706-8612-6494cf2855bb",
+   "model_id": 122640901
+  },
+  "gs_run": {
+   "file": "gs_run.fbx",
+   "bytes": 313936,
+   "sha256": "96054ebe5ec3cab90eb1bcd45075deac2223eb48802ab01e91018d6a03f8bfec",
+   "job": "3a0ccef7-2181-4f0d-9a3a-fe3b285a44ab",
+   "model_id": 122270902
+  },
+  "gs_run_back": {
+   "file": "gs_run_back.fbx",
+   "bytes": 323936,
+   "sha256": "3c5a5dd18961222bddb90b10934934892f5e5ea940605a03987909f6d14a3574",
+   "job": "4ded49d4-807d-40af-998f-bc9ae296016f",
+   "model_id": 122280901
+  },
+  "gs_power": {
+   "file": "gs_power.fbx",
+   "bytes": 418320,
+   "sha256": "d492848b3993f315d2d1c7c4645d67b41fe3a61fd02c3204ca980b703b437a8c",
+   "job": "2852f6e6-675a-46a0-8272-1307697bdb01",
+   "model_id": 122370901
+  },
+  "gs_side_kick": {
+   "file": "gs_side_kick.fbx",
+   "bytes": 414944,
+   "sha256": "7c04886159a3d58a393a6fd309e61d181be7ac89c879f4c24550c412783cc696",
+   "job": "d0256bc0-99ed-4c48-9e4c-4ee172b63fee",
+   "model_id": 122570901
+  },
+  "gs_down": {
+   "file": "gs_down.fbx",
+   "bytes": 376560,
+   "sha256": "2af665cc21e985aeb78744aaea4df62cfb50f4ad1ed948ce0391b58a8ad7d4bd",
+   "job": "3b8046c9-d097-415b-a1e6-345a881a29bd",
+   "model_id": 122340901
+  },
+  "gs_crouch_slash": {
+   "file": "gs_crouch_slash.fbx",
+   "bytes": 382080,
+   "sha256": "d3add97520bfe8944781a0a46bab132d973dde34621fb9c2135577de7b5622c2",
+   "job": "a094b836-733f-4de6-9b12-e2d36c089cb4",
+   "model_id": 122470901
+  },
+  "gs_slide": {
+   "file": "gs_slide.fbx",
+   "bytes": 512096,
+   "sha256": "424dcb69c5d5dc3877de8a92d734ee9c81c30ff611d072cbf119f6457e17e5b3",
+   "job": "127d88f5-9a4a-42da-9238-c981d2ea9c3f",
+   "model_id": 122540901
+  },
+  "gs_head_hit": {
+   "file": "gs_head_hit.fbx",
+   "bytes": 387376,
+   "sha256": "a8c603aa5a3bd216deb683accdff3a412a701b9be46cce3df1ad4b7cb025bbbb",
+   "job": "d429dbc5-a1af-4b6a-892b-e7cb9d5f5625",
+   "model_id": 122430901
+  },
+  "gs_strafe_r": {
+   "file": "gs_strafe_r.fbx",
+   "bytes": 360400,
+   "sha256": "ccaef94d595b691217f7c6ac439dfbf0d1ae4a229ab91d0ac57eb9ddc4bc3394",
+   "job": "2ed7246a-1689-4bc1-a898-186ebe16a9c5",
+   "model_id": 122230901
+  },
+  "gs_strafe_l_run": {
+   "file": "gs_strafe_l_run.fbx",
+   "bytes": 310688,
+   "sha256": "9c11d0467e9f4f2e2ae6532bd697301f736f5e9541edb8c86cf72971d0994ed3",
+   "job": "7f178736-25da-49a5-b67d-c3c754d6d8ad",
+   "model_id": 122300901
+  },
+  "gs_turn_r": {
+   "file": "gs_turn_r.fbx",
+   "bytes": 323872,
+   "sha256": "020230c4899fd76fe9f1f68e4b72a773b82fc1f1989283a49eaf1cb71d8334eb",
+   "job": "691712f0-78f2-4b84-90ac-2a2ea778a302",
+   "model_id": 122250901
+  },
+  "gs_turn_l": {
+   "file": "gs_turn_l.fbx",
+   "bytes": 332192,
+   "sha256": "2ffa223b8dd544d3300afa8ef40ae112b8df9407fe99cdd146b3338749e4f9c1",
+   "job": "cd3fd109-858f-41ce-ad45-99b2adce892f",
+   "model_id": 122260901
+  },
+  "gs_powerup": {
+   "file": "gs_powerup.fbx",
+   "bytes": 569056,
+   "sha256": "07e400539e0ae47926682aabfbba97e0512c5e087d8f6c525ebdc907dc1f89f1",
+   "job": "38199248-766f-470e-bfdd-7a88847bfd3f",
+   "model_id": 122630901
+  },
+  "gs_run180": {
+   "file": "gs_run180.fbx",
+   "bytes": 310400,
+   "sha256": "c841d787107b9620504694d1a2ffaa8dc5cddda911fbd5f0c01b91db63fde44f",
+   "job": "cb8b28e2-9111-49cb-b2fa-ba4dd46dff28",
+   "model_id": 122290901
+  },
+  "gs_jump_atk": {
+   "file": "gs_jump_atk.fbx",
+   "bytes": 517648,
+   "sha256": "642e2b9f924e6b2c604f7d1d2d2b44075edafdff9e65bfa758de89681eb7b14f",
+   "job": "14749569-739e-491e-8a52-e5f9b91f2d6a",
+   "model_id": 122530901
+  },
+  "gs_sheath2": {
+   "file": "gs_sheath2.fbx",
+   "bytes": 394032,
+   "sha256": "e53c40f2bc6bf1304bcc601f33ff463fd29833a7e3acbf5f61ee6c88e24588e4",
+   "job": "ac222eaa-8741-4b79-9a31-e10b90417214",
+   "model_id": 123290902
+  },
+  "gs_draw1": {
+   "file": "gs_draw1.fbx",
+   "bytes": 410048,
+   "sha256": "9156a14378c655a938008774955190f3ab8d212376af23279df79d09e9f51a52",
+   "job": "c3262bed-1509-4c88-9639-39a88e782057",
+   "model_id": 123280901
+  },
+  "sheath2": {
+   "file": "sheath2.fbx",
+   "bytes": 359184,
+   "sha256": "47fbb4b199d003b5845ef8ddc4f8897dd7996ce15de9558b85bb74b7b0dea762",
+   "job": "0a865be3-831e-40f9-8dc8-3c279953d92a",
+   "model_id": 123270902
+  },
+  "sheathing": {
+   "file": "sheathing.fbx",
+   "bytes": 451888,
+   "sha256": "bddf64b4ca087aa0f1b95d60c876b1944dbdf54e3daeb99547724be98409cb07",
+   "job": "de9d22fd-c4c9-498b-86a9-37ae5fb6b923",
+   "model_id": 115270902
+  },
+  "gs_draw2": {
+   "file": "gs_draw2.fbx",
+   "bytes": 356672,
+   "sha256": "04b6bf0b8608e70a28631cc573d892ff26ddcf872c7e5a8e57286a416ebf1855",
+   "job": "c963e92e-18cd-4111-87db-3d7f42f00440",
+   "model_id": 123280902
+  },
+  "withdraw": {
+   "file": "withdraw.fbx",
+   "bytes": 436112,
+   "sha256": "cb8a9aac1debccd9f85399ac7549138157cca4bcec9415e48d48059fa651b8b8",
+   "job": "ae571343-d476-427a-9716-b698069e4d41",
+   "model_id": 115270901
+  },
+  "th_combo": {
+   "file": "th_combo.fbx",
+   "bytes": 600336,
+   "sha256": "d100eacc4a7984f13cf69a1bf331a6a92bffad9873bc601edc34a2e035d042d6",
+   "job": "8dfce042-f893-45a1-b2f0-e50f1f56733a",
+   "model_id": 128140901
+  },
+  "th_death_back": {
+   "file": "th_death_back.fbx",
+   "bytes": 502432,
+   "sha256": "2c1334e805609f4c9fd55887f42bac20602bffce08f56b1f3d064f9defcddd5f",
+   "job": "ad9228e3-9f18-47f1-9317-28b900769e12",
+   "model_id": 123120901
+  },
+  "draw1": {
+   "file": "draw1.fbx",
+   "bytes": 435504,
+   "sha256": "d8de8a3cb378c026046f96336df676b56ffc455c947f79550ec14164ebc85c4e",
+   "job": "6d4f4483-c53e-4b27-b89f-6d7e1f13ad07",
+   "model_id": 123260901
+  },
+  "draw2": {
+   "file": "draw2.fbx",
+   "bytes": 339056,
+   "sha256": "a1b495da9cc1ada0d1d8313f1c9cb439a4eaed8e8507ff19560c501776a03481",
+   "job": "f0511fe3-2585-49f6-9eec-65cc1ff83943",
+   "model_id": 123260902
+  },
+  "sheath1": {
+   "file": "sheath1.fbx",
+   "bytes": 392848,
+   "sha256": "d2948e18a4358d0d80b3724982d8567b285f6411bd25c997e7ac0be22b5a87b5",
+   "job": "a2e5c12e-7295-4d01-a808-3d8525c3d1cf",
+   "model_id": 123270901
+  },
+  "assassin": {
+   "file": "assassin.fbx",
+   "bytes": 901024,
+   "sha256": "e5b62c28cad0e413742c8fc3cedd67671a42d938f939f7e23722006741349f08",
+   "job": "6fcb2a58-dc86-43e2-be4d-55842eebeebc",
+   "model_id": 123990901
+  },
+  "gs_guard_in": {
+   "file": "gs_guard_in.fbx",
+   "bytes": 428128,
+   "sha256": "e05b9ca4fe703ce467ce8cb5b63eda989dd639d0a2e2587769ace848d462b884",
+   "job": "baaa0146-e68a-44c2-b271-a5ba90d9f8e0",
+   "model_id": 122380901
+  },
+  "gs_guard_idle": {
+   "file": "gs_guard_idle.fbx",
+   "bytes": 341184,
+   "sha256": "4a9fef826e142457086ca7cd71d9df228c41902050ca98ca98b7e97ef4eaa83f",
+   "job": "a616fa4e-63ab-4b55-acca-cf587d641d2e",
+   "model_id": 122390901
+  },
+  "gs_block_hit": {
+   "file": "gs_block_hit.fbx",
+   "bytes": 334016,
+   "sha256": "c84b937f0ffa90deb16a9e9606f35b10fb7ac8959fdc22cb3bd48a04fadc01f1",
+   "job": "d671c5cf-38ae-437e-a91c-a56a3429df5e",
+   "model_id": 122410901
+  },
+  "gs_to_crouch": {
+   "file": "gs_to_crouch.fbx",
+   "bytes": 329120,
+   "sha256": "d642dcd6c7b5ca6339d3c771eb730a8c62523c23f5deb2ed13c5957d2841e705",
+   "job": "d9d41fe1-1731-43a8-a7bf-2c6da5a9ea7a",
+   "model_id": 122440901,
+   "params": "0"
+  },
+  "sword_run": {
+   "file": "sword_run.fbx",
+   "bytes": 329952,
+   "sha256": "43baaabb82bbfd4b54c3b65271c9ac72c8cdb90f1a360e0e74485312b88c5d5d",
+   "job": "2b878e08-4575-4656-ba8a-df5a1b74f765",
+   "model_id": 116470901,
+   "params": "0"
+  }
+ }
+}

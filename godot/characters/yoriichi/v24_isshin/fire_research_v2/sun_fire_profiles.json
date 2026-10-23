@@ -1,0 +1,1703 @@
+{
+ "_doc": "日之呼吸火焰系統（統一版）的每型資料。新增一型＝加一筆：刀路（R9 trail 的時間窗與寬度）、Blender 造型（GLB 與要用的部件）、時序、規模、命中。共用 sun_fire.gd 一套實作。",
+ "sun_enbu": {
+  "name": "日之呼吸・壹ノ型 圓舞",
+  "trail": {
+   "_doc": "第一層＋第三層：原始 R9 程式刀光（sun_trail_r9.gd）的取樣與幾何；核心＝刀尖側白金刀線、火焰帶＝V2 噪聲撕裂。",
+   "emit": [
+    [
+     0.47,
+     0.72
+    ]
+   ],
+   "lifetime": 0.22,
+   "extend": 0.1,
+   "inset": -0.3,
+   "lift": 0.06,
+   "core_ratio": 0.55,
+   "core_root_skip": 0.45,
+   "head_fade": 0.035,
+   "max_step_deg": 4.0,
+   "core_gain": 0.42,
+   "flame_heat": 0.95,
+   "flame_occlusion": 0.5
+  },
+  "mesh": {
+   "_doc": "第二層：R9-C2 流焰（同一條實測刀路建模）。只取火舌 Flames、主體 Sheet、交叉立面 Fin、殘焰 Embers、刀身火 BladeFlame；不取 Core（R9 負責）、Layer0/1（避免同形火帶重疊）、Ring（霓虹圓環）、Hit*（由命中層負責）。",
+   "glb": "res://characters/yoriichi/v24_isshin/r9c/enbu_vfx_C2.glb",
+   "freeze_t": 0.7,
+   "drift": [
+    0.62,
+    1.35
+   ],
+   "end_t": 1.6,
+   "parts": {
+    "flames": {
+     "tex": "tongue",
+     "life": 0.5,
+     "grow": 0.04,
+     "hold": 0.35,
+     "cool": 0.55,
+     "heat_gain": 1.1,
+     "occlusion": 0.78,
+     "flow_speed": 1.0,
+     "noise_amt": 0.45
+    },
+    "sheet": {
+     "tex": "body",
+     "life": 0.32,
+     "use_reveal": 0.0,
+     "hold": 0.3,
+     "cool": 0.5,
+     "heat_gain": 1.0,
+     "occlusion": 0.7,
+     "flow_speed": 0.8,
+     "noise_amt": 0.55
+    },
+    "fin": {
+     "tex": "body",
+     "life": 0.22,
+     "use_reveal": 0.0,
+     "hold": 0.2,
+     "cool": 0.5,
+     "heat_gain": 0.85,
+     "occlusion": 0.45,
+     "flow_speed": 0.8,
+     "noise_amt": 0.8
+    },
+    "embers": {
+     "tex": "ember",
+     "life": 0.7,
+     "use_reveal": 0.0,
+     "hold": 0.45,
+     "cool": 0.6,
+     "heat_gain": 1.0,
+     "occlusion": 0.6,
+     "flow_speed": 0.5,
+     "noise_amt": 0.3
+    },
+    "blade": {
+     "tex": "tongue",
+     "fixed_age": 0.0,
+     "use_reveal": 0.0,
+     "cool": 0.0,
+     "heat_gain": 1.15,
+     "occlusion": 0.7,
+     "flow_speed": 1.6,
+     "noise_amt": 0.35,
+     "soft_dist": 0.0
+    }
+   },
+   "blade_env": [
+    [
+     0.05,
+     0.0
+    ],
+    [
+     0.25,
+     0.7
+    ],
+    [
+     0.45,
+     1.0
+    ],
+    [
+     0.75,
+     1.0
+    ],
+    [
+     1.1,
+     0.0
+    ]
+   ],
+   "edge_height": 0.13
+  },
+  "sparks": {
+   "window": [
+    0.48,
+    0.72
+   ],
+   "min_speed": 8.0,
+   "spacing": 0.14,
+   "cap": 20
+  },
+  "hit": {
+   "tongues": 5,
+   "sparks": 12,
+   "flash_len": 0.42,
+   "flash_w": 0.1,
+   "flash_life": 0.16,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "_doc": "蓄勢點燃的刀身小火舌（每招上限，刀快時不發）",
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "sun_hekiraten": {
+  "name": "日之呼吸・貳ノ型 碧羅天",
+  "_doc": "主視覺＝包圍角色的風格化火環（stroke）。路徑＝R11 實測刀尖 0.53–0.95 s（角色根本地座標），收 50% 半徑變圓、0.95–1.00 s 用短弧閉合；環面與地面夾 32.5°（動作本身是斜環，不是垂直環）。不用 Blender 火焰層、不用 R9 噪聲火帶；R9 只留白金刀線（刀刃位置）。",
+  "trail": {
+   "emit": [
+    [
+     0.53,
+     0.92
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.5,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：只用刀身熱邊的時間包絡。end_t＝這之前被中斷才整體淡出（1.05 s 的移動取消在完整火環之後，不淡出）",
+   "blade_env": [
+    [
+     0.22,
+     0.0
+    ],
+    [
+     0.32,
+     0.7
+    ],
+    [
+     0.42,
+     1.0
+    ],
+    [
+     0.92,
+     1.0
+    ],
+    [
+     1.15,
+     0.0
+    ]
+   ],
+   "edge_height": 0.13,
+   "end_t": 1.3
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/hekira_ring_path.json",
+   "inner": 0.22,
+   "outer": 0.62,
+   "grow": 0.07,
+   "head_len": 0.06,
+   "tear_t": 1.1,
+   "gone_t": 1.5,
+   "tear_lag": 0.3,
+   "end_t": 1.9,
+   "yellow_cut": 0.8,
+   "orange_cut": 0.4,
+   "outline_w": 0.08,
+   "opacity": 0.95,
+   "near_fade": 0.65,
+   "col_yellow": [
+    1.0,
+    0.5,
+    0.05
+   ],
+   "yellow_gain": 1.2,
+   "col_orange": [
+    1.0,
+    0.26,
+    0.02
+   ],
+   "orange_gain": 1.1,
+   "col_red": [
+    0.55,
+    0.035,
+    0.008
+   ],
+   "red_gain": 0.95,
+   "col_white": [
+    1.0,
+    0.92,
+    0.7
+   ],
+   "white_gain": 2.0,
+   "head_gain": 0.3
+  },
+  "sparks": {
+   "window": [
+    0.55,
+    0.9
+   ],
+   "min_speed": 8.0,
+   "spacing": 0.16,
+   "cap": 16
+  },
+  "hit": {
+   "tongues": 5,
+   "sparks": 12,
+   "flash_len": 0.42,
+   "flash_w": 0.1,
+   "flash_life": 0.16,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "sun_kasha": {
+  "name": "日之呼吸・火車",
+  "_doc": "R12 火車（2026-10-22 由碧羅天改歸火車，技能 ID sun_kasha）：動作＝梟 c5060 a000_003003 改造（蓄勢→壓抑→起跳前空翻→下劈→落地，r12/kasha_r12.json）。刀身火（熱邊＋少量上竄火舌）隨真實刀身、蓄勢時就點燃；主火環＝角色縱向平面內的設計圓（kasha_r12_ring_path.json），依技能時間隨翻轉展開，不要求刀尖經過每一段；翻轉中火環跟著角色根走（follow_until），下劈後留在原地撕裂消散；靠近地面的那段火帶變窄（路徑第 5 欄），不穿進地面。命中爆燃照實際命中事件。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     0.54,
+     1.34
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.5,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：只用刀身熱邊的時間包絡（蓄勢 0.08 s 起點燃）。end_t＝這之前被中斷才整體淡出。",
+   "blade_env": [
+    [
+     0.08,
+     0.0
+    ],
+    [
+     0.24,
+     0.55
+    ],
+    [
+     0.42,
+     1.0
+    ],
+    [
+     1.3,
+     1.0
+    ],
+    [
+     1.65,
+     0.0
+    ]
+   ],
+   "edge_height": 0.13,
+   "end_t": 1.75
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/kasha_r12_ring_path.json",
+   "inner": 0.22,
+   "outer": 0.55,
+   "grow": 0.07,
+   "head_len": 0.06,
+   "tear_t": 1.55,
+   "gone_t": 1.95,
+   "tear_lag": 0.3,
+   "end_t": 2.3,
+   "yellow_cut": 0.8,
+   "orange_cut": 0.4,
+   "outline_w": 0.08,
+   "opacity": 0.95,
+   "near_fade": 0.65,
+   "col_yellow": [
+    1.0,
+    0.5,
+    0.05
+   ],
+   "yellow_gain": 1.2,
+   "col_orange": [
+    1.0,
+    0.26,
+    0.02
+   ],
+   "orange_gain": 1.1,
+   "col_red": [
+    0.55,
+    0.035,
+    0.008
+   ],
+   "red_gain": 0.95,
+   "col_white": [
+    1.0,
+    0.92,
+    0.7
+   ],
+   "white_gain": 2.0,
+   "head_gain": 0.3,
+   "follow_until": 1.3
+  },
+  "sparks": {
+   "window": [
+    1.15,
+    1.34
+   ],
+   "min_speed": 8.0,
+   "spacing": 0.16,
+   "cap": 16
+  },
+  "hit": {
+   "tongues": 5,
+   "sparks": 12,
+   "flash_len": 0.42,
+   "flash_w": 0.1,
+   "flash_life": 0.16,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "sun_enbu_double": {
+  "name": "日之呼吸・炎舞",
+  "_doc": "R13 炎舞（技能 ID sun_enbu_double；梟 c5060 a000_003000→003001 原生連段，r13/enbu_r13.json）：連續雙刀＝一招。刀身火（熱邊＋少量上竄火舌）在蓄勢時點燃、兩刀之間不熄；主火帶＝每刀一道（第一道＝袈裟斬下的新月、第二道＝水平橫斬的橫向火帶（刀尖高 1.10 m）），依技能時間沿該刀刀尖實際走過的高速段點燃（enbu_r13_stroke_path.json；兩段之間 break_gap 斷開），每一段點燃後 0.22 s 由外往內撕裂、0.36–0.50 s 淡出消失（tear_lag 1＋vanish_age＝每段照自己的點燃時間計），所以第一道在第二刀出手前散完、兩刀不會連成一條。命中爆燃照實際命中事件（每刀一次）。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     0.55,
+     0.72
+    ],
+    [
+     1.23,
+     1.41
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.5,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：只用刀身熱邊的時間包絡（蓄勢 0.10 s 起點燃，第二刀後收）。end_t＝這之前被中斷才整體淡出。",
+   "blade_env": [
+    [
+     0.1,
+     0.0
+    ],
+    [
+     0.3,
+     0.6
+    ],
+    [
+     0.5,
+     1.0
+    ],
+    [
+     1.45,
+     1.0
+    ],
+    [
+     1.95,
+     0.0
+    ]
+   ],
+   "edge_height": 0.13,
+   "end_t": 2.0
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/enbu_r13_stroke_path.json",
+   "break_gap": 0.1,
+   "inner": 0.14,
+   "outer": 0.36,
+   "grow": 0.06,
+   "head_len": 0.05,
+   "tear_t": 0.775,
+   "gone_t": 1.015,
+   "tear_lag": 1.0,
+   "vanish_age": 0.5,
+   "vanish_soft": 0.14,
+   "end_t": 2.0,
+   "yellow_cut": 0.8,
+   "orange_cut": 0.4,
+   "outline_w": 0.08,
+   "opacity": 0.95,
+   "near_fade": 0.65,
+   "col_yellow": [
+    1.0,
+    0.5,
+    0.05
+   ],
+   "yellow_gain": 1.2,
+   "col_orange": [
+    1.0,
+    0.26,
+    0.02
+   ],
+   "orange_gain": 1.1,
+   "col_red": [
+    0.55,
+    0.035,
+    0.008
+   ],
+   "red_gain": 0.95,
+   "col_white": [
+    1.0,
+    0.92,
+    0.7
+   ],
+   "white_gain": 2.0,
+   "head_gain": 0.3
+  },
+  "sparks": {
+   "window": [
+    0.56,
+    1.41
+   ],
+   "min_speed": 15.0,
+   "spacing": 0.16,
+   "cap": 22
+  },
+  "hit": {
+   "tongues": 7,
+   "sparks": 16,
+   "flash_len": 0.52,
+   "flash_w": 0.12,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "sun_youkatotsu": {
+  "name": "日之呼吸・陽華突",
+  "_doc": "R14 陽華突（技能 ID sun_youkatotsu；r14/youka_r14.json）：刀身火（熱邊＋少量上竄火舌）在後跳收刀時點燃；主火焰＝沿突刺時刀尖實際走過的直線（仰角 43°）逐段點燃的窄火槍，完全伸出後 0.05 s 內再往前上方多燒 0.75 m（槍尖，只是視覺，判定不延伸）；每段點燃 0.16 s 後撕裂、0.45 s 消失。命中爆燃照實際命中事件（一次）。第 2 版：刀身火與刀身拖尾延長到跳躍頂點（0.88 s），刀身熱邊到收刀後才熄。不用弧形火帶或火環。",
+  "trail": {
+   "emit": [
+    [
+     0.576,
+     0.88
+    ]
+   ],
+   "lifetime": 0.12,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.6,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：只用刀身熱邊的時間包絡（後跳收刀 0.12 s 起點燃、蹲身時全燃，伸直停留後收）。end_t＝這之前被中斷才整體淡出。",
+   "blade_env": [
+    [
+     0.12,
+     0.0
+    ],
+    [
+     0.3,
+     0.6
+    ],
+    [
+     0.45,
+     1.0
+    ],
+    [
+     1.3,
+     1.0
+    ],
+    [
+     1.65,
+     0.0
+    ]
+   ],
+   "edge_height": 0.13,
+   "end_t": 1.75
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/youka_r14_stroke_path.json",
+   "inner": 0.1,
+   "outer": 0.16,
+   "grow": 0.03,
+   "head_len": 0.04,
+   "tear_t": 0.743,
+   "gone_t": 0.943,
+   "tear_lag": 1.0,
+   "vanish_age": 0.45,
+   "vanish_soft": 0.12,
+   "end_t": 1.5,
+   "yellow_cut": 0.62,
+   "orange_cut": 0.32,
+   "outline_w": 0.07,
+   "opacity": 0.95,
+   "near_fade": 0.5,
+   "col_yellow": [
+    1.0,
+    0.62,
+    0.12
+   ],
+   "yellow_gain": 1.6,
+   "col_orange": [
+    1.0,
+    0.3,
+    0.03
+   ],
+   "orange_gain": 1.15,
+   "col_red": [
+    0.55,
+    0.035,
+    0.008
+   ],
+   "red_gain": 0.95,
+   "col_white": [
+    1.0,
+    0.93,
+    0.75
+   ],
+   "white_gain": 2.6,
+   "head_gain": 0.6
+  },
+  "sparks": {
+   "window": [
+    0.58,
+    0.88
+   ],
+   "min_speed": 6.0,
+   "spacing": 0.12,
+   "cap": 20
+  },
+  "hit": {
+   "tongues": 8,
+   "sparks": 18,
+   "flash_len": 0.62,
+   "flash_w": 0.11,
+   "flash_life": 0.2,
+   "flash_ahead": 0.22,
+   "flash_out": 0.06,
+   "flare_time": 0.15
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "sun_hirin_kagerou": {
+  "name": "日之呼吸・飛輪陽炎",
+  "_doc": "R15 飛輪陽炎：第一擊（旋身快揮）只有 R9 刀身刀光＝短；第二擊（實際橫斬）刀光＋沿刀尖往外竄出 0–1.05 m 的長火帶（hirin_r15_stroke_path.json，越後段越長＝陽炎錯覺），白金偏淡的熱浪色、帶抖動；殘留比第一擊久（每段 0.62 s）。命中爆燃照實際命中（一次）。視覺不延伸判定。",
+  "trail": {
+   "emit": [
+    [
+     0.5927,
+     0.7601
+    ],
+    [
+     1.135,
+     1.316
+    ]
+   ],
+   "lifetime": 0.12,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.6,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：只用刀身熱邊的時間包絡（蓄勢 0.04 s 起點燃，落地後收）。",
+   "blade_env": [
+    [
+     0.04,
+     0.0
+    ],
+    [
+     0.2,
+     0.6
+    ],
+    [
+     0.32,
+     1.0
+    ],
+    [
+     1.446,
+     1.0
+    ],
+    [
+     2.1796,
+     0.0
+    ]
+   ],
+   "edge_height": 0.13,
+   "end_t": 2.2796
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/hirin_r15_stroke_path.json",
+   "inner": 0.2,
+   "outer": 0.3,
+   "grow": 0.04,
+   "head_len": 0.05,
+   "tear_t": 1.2656,
+   "gone_t": 1.6256,
+   "tear_lag": 1.0,
+   "vanish_age": 0.62,
+   "vanish_soft": 0.2,
+   "end_t": 2.8167,
+   "wobble": 1.6,
+   "yellow_cut": 0.7,
+   "orange_cut": 0.35,
+   "outline_w": 0.06,
+   "opacity": 0.9,
+   "near_fade": 0.55,
+   "col_yellow": [
+    1.0,
+    0.72,
+    0.28
+   ],
+   "yellow_gain": 1.5,
+   "col_orange": [
+    1.0,
+    0.38,
+    0.06
+   ],
+   "orange_gain": 1.1,
+   "col_red": [
+    0.6,
+    0.06,
+    0.01
+   ],
+   "red_gain": 0.9,
+   "col_white": [
+    1.0,
+    0.95,
+    0.82
+   ],
+   "white_gain": 2.8,
+   "head_gain": 0.8
+  },
+  "sparks": {
+   "window": [
+    1.155,
+    1.316
+   ],
+   "min_speed": 15.0,
+   "spacing": 0.14,
+   "cap": 18
+  },
+  "hit": {
+   "tongues": 7,
+   "sparks": 16,
+   "flash_len": 0.75,
+   "flash_w": 0.1,
+   "flash_life": 0.2,
+   "flash_ahead": 0.3,
+   "flash_out": 0.12,
+   "flare_time": 0.15
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "sun_enbu_issen": {
+  "name": "日之呼吸・圓舞一閃",
+  "_doc": "R15 圓舞一閃：蓄勢時刀身點燃；瞬步段＝胸口高的白金光帶（沿實際衝刺路線，issen_r15_stroke_path.json 第一段）＋4 個淡金殘影（試玩場景姿勢快照）；一閃＝細而極亮的白金斬線（第二段）；命中爆燃一次（停格 6 格）。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     0.633,
+     0.796
+    ]
+   ],
+   "lifetime": 0.1,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.8,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（下蹲時點燃）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.12,
+     0.8
+    ],
+    [
+     0.2,
+     1.0
+    ],
+    [
+     0.876,
+     1.0
+    ],
+    [
+     1.226,
+     0.0
+    ]
+   ],
+   "edge_height": 0.12,
+   "end_t": 1.326
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/issen_r15_stroke_path.json",
+   "break_gap": 0.1,
+   "inner": 0.12,
+   "outer": 0.2,
+   "grow": 0.03,
+   "head_len": 0.04,
+   "tear_t": 0.34,
+   "gone_t": 0.62,
+   "tear_lag": 1.0,
+   "vanish_age": 0.42,
+   "vanish_soft": 0.12,
+   "end_t": 1.45,
+   "yellow_cut": 0.6,
+   "orange_cut": 0.28,
+   "outline_w": 0.05,
+   "opacity": 0.9,
+   "near_fade": 0.55,
+   "col_yellow": [
+    1.0,
+    0.8,
+    0.4
+   ],
+   "yellow_gain": 1.7,
+   "col_orange": [
+    1.0,
+    0.45,
+    0.1
+   ],
+   "orange_gain": 1.0,
+   "col_red": [
+    0.6,
+    0.08,
+    0.02
+   ],
+   "red_gain": 0.8,
+   "col_white": [
+    1.0,
+    0.97,
+    0.9
+   ],
+   "white_gain": 3.6,
+   "head_gain": 1.2
+  },
+  "sparks": {
+   "window": [
+    0.653,
+    0.776
+   ],
+   "min_speed": 15.0,
+   "spacing": 0.15,
+   "cap": 14
+  },
+  "hit": {
+   "tongues": 6,
+   "sparks": 16,
+   "flash_len": 0.7,
+   "flash_w": 0.08,
+   "flash_life": 0.2,
+   "flash_ahead": 0.2,
+   "flash_out": 0.1,
+   "flare_time": 0.15
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "sun_enbu_r15": {
+  "name": "日之呼吸・圓舞（R15 新）",
+  "_doc": "R15 圓舞（新）：蓄勢即點燃刀身；主火帶＝兩道寬新月（沿兩刀袈裟刀尖實際路線，中段最寬、兩端收尖；enbu_r15_stroke_path.json，break_gap 斷開），明亮橘紅、每段 0.45 s 後碎散；命中爆燃每刀一次。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     0.375,
+     0.52
+    ],
+    [
+     0.583,
+     0.806
+    ]
+   ],
+   "lifetime": 0.16,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.55,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（蓄勢點燃，第二刀後收）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.12,
+     0.7
+    ],
+    [
+     0.25,
+     1.0
+    ],
+    [
+     0.886,
+     1.0
+    ],
+    [
+     1.286,
+     0.0
+    ]
+   ],
+   "edge_height": 0.14,
+   "end_t": 1.386
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/enbu_r15_stroke_path.json",
+   "break_gap": 0.1,
+   "inner": 0.24,
+   "outer": 0.52,
+   "grow": 0.06,
+   "head_len": 0.05,
+   "tear_t": 0.6007,
+   "gone_t": 0.8507,
+   "tear_lag": 1.0,
+   "vanish_age": 0.5,
+   "vanish_soft": 0.15,
+   "end_t": 2.0,
+   "yellow_cut": 0.78,
+   "orange_cut": 0.38,
+   "outline_w": 0.08,
+   "opacity": 0.95,
+   "near_fade": 0.65,
+   "col_yellow": [
+    1.0,
+    0.55,
+    0.08
+   ],
+   "yellow_gain": 1.3,
+   "col_orange": [
+    1.0,
+    0.28,
+    0.02
+   ],
+   "orange_gain": 1.15,
+   "col_red": [
+    0.6,
+    0.04,
+    0.01
+   ],
+   "red_gain": 1.0,
+   "col_white": [
+    1.0,
+    0.92,
+    0.7
+   ],
+   "white_gain": 2.2,
+   "head_gain": 0.35
+  },
+  "sparks": {
+   "window": [
+    0.375,
+    0.786
+   ],
+   "min_speed": 15.0,
+   "spacing": 0.15,
+   "cap": 22
+  },
+  "hit": {
+   "tongues": 6,
+   "sparks": 14,
+   "flash_len": 0.5,
+   "flash_w": 0.12,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "sun_genjitsu": {
+  "name": "日之呼吸・幻日紅",
+  "_doc": "R15 幻日紅：刀身火低（只在出刀前後微亮）；繞行滑步沿路 3 個紅色殘影（試玩場景的姿勢快照，0.2 s 淡出）；主特效＝側後方那一刀的短而利的斬線（genjitsu_r15_stroke_path.json，細、白熱核心、0.3 s 內散）。命中爆燃照實際命中（一次）。",
+  "trail": {
+   "emit": [
+    [
+     0.611,
+     0.837
+    ]
+   ],
+   "lifetime": 0.1,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.7,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊只在出刀前後微亮。",
+   "blade_env": [
+    [
+     0.5,
+     0.0
+    ],
+    [
+     0.62,
+     0.55
+    ],
+    [
+     0.867,
+     0.55
+    ],
+    [
+     1.167,
+     0.0
+    ]
+   ],
+   "edge_height": 0.1,
+   "end_t": 1.267
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/genjitsu_r15_stroke_path.json",
+   "inner": 0.05,
+   "outer": 0.11,
+   "grow": 0.02,
+   "head_len": 0.03,
+   "tear_t": 0.721,
+   "gone_t": 0.941,
+   "tear_lag": 1.0,
+   "vanish_age": 0.3,
+   "vanish_soft": 0.08,
+   "end_t": 1.417,
+   "yellow_cut": 0.55,
+   "orange_cut": 0.25,
+   "outline_w": 0.05,
+   "opacity": 0.95,
+   "near_fade": 0.45,
+   "col_yellow": [
+    1.0,
+    0.55,
+    0.2
+   ],
+   "yellow_gain": 1.6,
+   "col_orange": [
+    1.0,
+    0.18,
+    0.04
+   ],
+   "orange_gain": 1.25,
+   "col_red": [
+    0.7,
+    0.02,
+    0.02
+   ],
+   "red_gain": 1.1,
+   "col_white": [
+    1.0,
+    0.9,
+    0.85
+   ],
+   "white_gain": 3.4,
+   "head_gain": 1.0
+  },
+  "sparks": {
+   "window": [
+    0.631,
+    0.817
+   ],
+   "min_speed": 20.0,
+   "spacing": 0.2,
+   "cap": 10
+  },
+  "hit": {
+   "tongues": 4,
+   "sparks": 12,
+   "flash_len": 0.5,
+   "flash_w": 0.07,
+   "flash_life": 0.14,
+   "flash_ahead": 0.1,
+   "flash_out": 0.08,
+   "flare_time": 0.1
+  },
+  "ignite": {
+   "rate": 8.0,
+   "cap": 5,
+   "max_speed": 12.0
+  }
+ },
+ "sun_hekiraten_r15": {
+  "name": "日之呼吸・碧羅天（R15 新）",
+  "_doc": "R15 碧羅天（新）：蓄勢舉刀時刀身逐漸點燃（熱邊 0.1→0.6 s 漸強）；主火環＝依技能時間在主斬內展開的接近垂直大圓（半徑 1.75 m、環面 75°，hekira_r15_ring_path.json），主斬結束前跟角色走、之後留在原地由外往內撕裂、0.5 s 內散；R9 刀線只標刀刃位置；命中爆燃一次。不用火車的縱向火輪、不用 R11 的斜環。只是視覺，判定照實際刀身。",
+  "trail": {
+   "emit": [
+    [
+     0.6222,
+     0.972
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.45,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊由蓄勢慢慢點燃。",
+   "blade_env": [
+    [
+     0.08,
+     0.0
+    ],
+    [
+     0.3,
+     0.35
+    ],
+    [
+     0.5722,
+     1.0
+    ],
+    [
+     1.072,
+     1.0
+    ],
+    [
+     1.472,
+     0.0
+    ]
+   ],
+   "edge_height": 0.14,
+   "end_t": 1.572
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/hekira_r15_ring_path.json",
+   "inner": 0.24,
+   "outer": 0.6,
+   "grow": 0.07,
+   "head_len": 0.06,
+   "tear_t": 1.052,
+   "gone_t": 1.482,
+   "tear_lag": 0.25,
+   "end_t": 2.1667,
+   "follow_until": 0.932,
+   "yellow_cut": 0.8,
+   "orange_cut": 0.4,
+   "outline_w": 0.08,
+   "opacity": 0.95,
+   "near_fade": 0.65,
+   "col_yellow": [
+    1.0,
+    0.6,
+    0.12
+   ],
+   "yellow_gain": 1.35,
+   "col_orange": [
+    1.0,
+    0.3,
+    0.03
+   ],
+   "orange_gain": 1.15,
+   "col_red": [
+    0.55,
+    0.035,
+    0.008
+   ],
+   "red_gain": 0.95,
+   "col_white": [
+    1.0,
+    0.94,
+    0.75
+   ],
+   "white_gain": 2.4,
+   "head_gain": 0.5
+  },
+  "sparks": {
+   "window": [
+    0.6222,
+    0.972
+   ],
+   "min_speed": 12.0,
+   "spacing": 0.15,
+   "cap": 22
+  },
+  "hit": {
+   "tongues": 7,
+   "sparks": 16,
+   "flash_len": 0.55,
+   "flash_w": 0.12,
+   "flash_life": 0.18,
+   "flash_ahead": 0.14,
+   "flash_out": 0.1,
+   "flare_time": 0.14
+  },
+  "ignite": {
+   "rate": 26.0,
+   "cap": 18,
+   "max_speed": 12.0
+  }
+ },
+ "sun_kiki_onkou": {
+  "name": "日之呼吸・輝輝恩光",
+  "_doc": "R15 輝輝恩光：起跳時刀身點燃；主特效＝下撲螺旋：刀尖實際走過的螺旋路線（kiki_r15_spiral_path.json），由細到粗、由淡金到亮橘，主斬那一段最寬；命中才大爆燃（停格 6 格），火帶在主斬後由頭往尾撕散。只是視覺，判定只有下劈。",
+  "trail": {
+   "emit": [
+    [
+     0.751,
+     1.004
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.55,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（下蹲點燃，主斬後收）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.12,
+     0.7
+    ],
+    [
+     0.2345,
+     1.0
+    ],
+    [
+     1.104,
+     1.0
+    ],
+    [
+     1.504,
+     0.0
+    ]
+   ],
+   "edge_height": 0.14,
+   "end_t": 1.604
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/kiki_r15_spiral_path.json",
+   "inner": 0.18,
+   "outer": 0.44,
+   "grow": 0.05,
+   "head_len": 0.06,
+   "tear_t": 0.871,
+   "gone_t": 1.454,
+   "tear_lag": 0.6,
+   "end_t": 2.35,
+   "yellow_cut": 0.78,
+   "orange_cut": 0.38,
+   "outline_w": 0.07,
+   "opacity": 0.92,
+   "near_fade": 0.6,
+   "col_yellow": [
+    1.0,
+    0.72,
+    0.25
+   ],
+   "yellow_gain": 1.5,
+   "col_orange": [
+    1.0,
+    0.36,
+    0.06
+   ],
+   "orange_gain": 1.1,
+   "col_red": [
+    0.6,
+    0.06,
+    0.02
+   ],
+   "red_gain": 0.9,
+   "col_white": [
+    1.0,
+    0.95,
+    0.8
+   ],
+   "white_gain": 2.6,
+   "head_gain": 0.7
+  },
+  "sparks": {
+   "window": [
+    0.771,
+    1.004
+   ],
+   "min_speed": 10.0,
+   "spacing": 0.12,
+   "cap": 22
+  },
+  "hit": {
+   "tongues": 9,
+   "sparks": 24,
+   "flash_len": 0.7,
+   "flash_w": 0.14,
+   "flash_life": 0.22,
+   "flash_ahead": 0.12,
+   "flash_out": 0.14,
+   "flare_time": 0.18
+  },
+  "ignite": {
+   "rate": 24.0,
+   "cap": 16,
+   "max_speed": 12.0
+  }
+ },
+ "sun_nichirin_dragon": {
+  "name": "日之呼吸・日暈之龍・頭舞",
+  "_doc": "R15 日暈之龍：蓄勢 0.3 s 刀身點燃；主特效＝龍身：沿緣一實際路線的一條長火帶（nichirin_r15_dragon_path.json，五刀時段變粗），每一步的殘影，收尾縱劈時既有 sun_dragon 龍頭升起（不改該檔）；命中爆燃每刀一次、收尾最大。整招亮度不拉滿畫面（不靠過曝）。只是視覺，判定只有五刀。",
+  "trail": {
+   "emit": [
+    [
+     0.397,
+     0.57
+    ],
+    [
+     0.83,
+     1.017
+    ],
+    [
+     1.23,
+     1.418
+    ],
+    [
+     2.01,
+     2.2
+    ],
+    [
+     2.31,
+     2.54
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.6,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（蓄勢點燃，收尾後收）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.2,
+     0.9
+    ],
+    [
+     0.3,
+     1.0
+    ],
+    [
+     2.62,
+     1.0
+    ],
+    [
+     3.02,
+     0.0
+    ]
+   ],
+   "edge_height": 0.15,
+   "end_t": 3.12
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/nichirin_r15_dragon_path.json",
+   "inner": 0.26,
+   "outer": 0.62,
+   "grow": 0.08,
+   "head_len": 0.1,
+   "tear_t": 2.57,
+   "gone_t": 3.22,
+   "tear_lag": 0.8,
+   "vanish_age": 0.9,
+   "vanish_soft": 0.25,
+   "end_t": 3.35,
+   "yellow_cut": 0.8,
+   "orange_cut": 0.4,
+   "outline_w": 0.09,
+   "opacity": 0.9,
+   "near_fade": 0.7,
+   "col_yellow": [
+    1.0,
+    0.6,
+    0.15
+   ],
+   "yellow_gain": 1.3,
+   "col_orange": [
+    1.0,
+    0.3,
+    0.04
+   ],
+   "orange_gain": 1.1,
+   "col_red": [
+    0.55,
+    0.04,
+    0.01
+   ],
+   "red_gain": 1.0,
+   "col_white": [
+    1.0,
+    0.92,
+    0.72
+   ],
+   "white_gain": 2.0,
+   "head_gain": 0.8
+  },
+  "sparks": {
+   "window": [
+    0.417,
+    2.52
+   ],
+   "min_speed": 14.0,
+   "spacing": 0.14,
+   "cap": 30
+  },
+  "hit": {
+   "tongues": 7,
+   "sparks": 16,
+   "flash_len": 0.6,
+   "flash_w": 0.11,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.14
+  },
+  "ignite": {
+   "rate": 26.0,
+   "cap": 18,
+   "max_speed": 12.0
+  }
+ },
+ "sun_shakkotsu": {
+  "name": "日之呼吸・灼骨炎陽",
+  "_doc": "R15 灼骨炎陽（方案 B）：雙手預備時點燃刀身；空中三刀只有 R9 刀線；主特效＝五個水平火環由上往下逐圈點燃（下墜時）、半徑由大到小收成漏斗壓向目標（shakkotsu_r15_rings_path.json），落地下斬命中才大爆燃（停格 6 格），火環由外往內撕開、0.5 s 內散。深紅偏橘、粗。只是視覺，判定只有下斬。",
+  "trail": {
+   "emit": [
+    [
+     0.3268,
+     0.6253
+    ],
+    [
+     0.9694,
+     1.1476
+    ],
+    [
+     1.312,
+     1.529
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.5,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（雙手預備即點燃，落地後收）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.12,
+     0.8
+    ],
+    [
+     0.22,
+     1.0
+    ],
+    [
+     1.629,
+     1.0
+    ],
+    [
+     2.029,
+     0.0
+    ]
+   ],
+   "edge_height": 0.15,
+   "end_t": 2.129
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/shakkotsu_r15_rings_path.json",
+   "break_gap": 0.012,
+   "inner": 0.2,
+   "outer": 0.5,
+   "grow": 0.05,
+   "head_len": 0.04,
+   "tear_t": 1.392,
+   "gone_t": 1.882,
+   "tear_lag": 0.0,
+   "end_t": 2.6667,
+   "follow_until": -1.0,
+   "yellow_cut": 0.82,
+   "orange_cut": 0.42,
+   "outline_w": 0.09,
+   "opacity": 0.95,
+   "near_fade": 0.6,
+   "col_yellow": [
+    1.0,
+    0.45,
+    0.05
+   ],
+   "yellow_gain": 1.25,
+   "col_orange": [
+    0.95,
+    0.2,
+    0.02
+   ],
+   "orange_gain": 1.2,
+   "col_red": [
+    0.6,
+    0.02,
+    0.005
+   ],
+   "red_gain": 1.15,
+   "col_white": [
+    1.0,
+    0.85,
+    0.6
+   ],
+   "white_gain": 2.2,
+   "head_gain": 0.4
+  },
+  "sparks": {
+   "window": [
+    1.332,
+    1.579
+   ],
+   "min_speed": 6.0,
+   "spacing": 0.1,
+   "cap": 26
+  },
+  "hit": {
+   "tongues": 10,
+   "sparks": 26,
+   "flash_len": 0.7,
+   "flash_w": 0.16,
+   "flash_life": 0.24,
+   "flash_ahead": 0.1,
+   "flash_out": 0.16,
+   "flare_time": 0.2
+  },
+  "ignite": {
+   "rate": 24.0,
+   "cap": 16,
+   "max_speed": 12.0
+  }
+ },
+ "sun_shayou_tenshin": {
+  "name": "日之呼吸・斜陽轉身",
+  "_doc": "R15 斜陽轉身：下蹲收刀時刀身點燃；主特效＝倒立橫斬那一刀的水平落日弧（刀尖實際路線＋沿刀身外延，shayou_r15_stroke_path.json），金紅色、薄而長，斬完由外往內撕散；命中爆燃一次。只是視覺，判定照實際刀身。",
+  "trail": {
+   "emit": [
+    [
+     0.4049,
+     0.63
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.6,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（蹲下時點燃，落地後收）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.15,
+     0.8
+    ],
+    [
+     0.2664,
+     1.0
+    ],
+    [
+     0.7,
+     1.0
+    ],
+    [
+     1.06,
+     0.0
+    ]
+   ],
+   "edge_height": 0.13,
+   "end_t": 1.16
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/shayou_r15_stroke_path.json",
+   "inner": 0.16,
+   "outer": 0.42,
+   "grow": 0.04,
+   "head_len": 0.05,
+   "tear_t": 0.7,
+   "gone_t": 1.1,
+   "tear_lag": 0.3,
+   "end_t": 1.95,
+   "yellow_cut": 0.75,
+   "orange_cut": 0.36,
+   "outline_w": 0.07,
+   "opacity": 0.95,
+   "near_fade": 0.6,
+   "col_yellow": [
+    1.0,
+    0.62,
+    0.18
+   ],
+   "yellow_gain": 1.45,
+   "col_orange": [
+    1.0,
+    0.32,
+    0.05
+   ],
+   "orange_gain": 1.15,
+   "col_red": [
+    0.62,
+    0.06,
+    0.03
+   ],
+   "red_gain": 0.9,
+   "col_white": [
+    1.0,
+    0.9,
+    0.7
+   ],
+   "white_gain": 2.6,
+   "head_gain": 0.6
+  },
+  "sparks": {
+   "window": [
+    0.4249,
+    0.63
+   ],
+   "min_speed": 12.0,
+   "spacing": 0.12,
+   "cap": 18
+  },
+  "hit": {
+   "tongues": 7,
+   "sparks": 16,
+   "flash_len": 0.6,
+   "flash_w": 0.1,
+   "flash_life": 0.2,
+   "flash_ahead": 0.14,
+   "flash_out": 0.1,
+   "flare_time": 0.14
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ }
+}

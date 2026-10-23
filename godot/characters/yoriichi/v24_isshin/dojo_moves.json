@@ -1,0 +1,203 @@
+{
+ "moves": [
+  {
+   "key": "slash_v",
+   "label": "縱斬→橫斬→袈裟（一心；連按接連段）",
+   "req": "drawn",
+   "dist": 2.4,
+   "src": "c5400 3038/3071/3031",
+   "status": "既有"
+  },
+  {
+   "key": "pairx",
+   "label": "雙手 X 斬（主城劍客 3072→3056）",
+   "req": "drawn",
+   "dist": 3.0,
+   "src": "c1400 3072+3056",
+   "status": "既有"
+  },
+  {
+   "key": "thrust",
+   "label": "前衝突刺（主城劍客 3014）",
+   "req": "drawn",
+   "dist": 3.0,
+   "src": "c1400 3014",
+   "status": "既有"
+  },
+  {
+   "key": "backcut",
+   "label": "退步縱斬（主城劍客 3009）",
+   "req": "drawn",
+   "dist": 1.1,
+   "src": "c1400 3009",
+   "status": "既有"
+  },
+  {
+   "key": "iai",
+   "label": "居合斬（葦名流 a100_3021）",
+   "req": "sheathed",
+   "noto_t": 1.1,
+   "dist": 1.8,
+   "src": "c1400 a100 3021",
+   "status": "既有"
+  },
+  {
+   "key": "twocut",
+   "label": "葦名流二連斬（a100_3010）",
+   "req": "sheathed",
+   "noto_t": 2.47,
+   "dist": 2.0,
+   "src": "c1400 a100 3010",
+   "status": "既有"
+  },
+  {
+   "key": "q_sidecut",
+   "label": "側閃橫斬（永真 3015）",
+   "use": "閃避後反擊：左跨步再單手橫斬",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 1.8,
+   "src": "c7400 TAE 3015",
+   "status": "OK"
+  },
+  {
+   "key": "q_sidevert",
+   "label": "側跨縱斬（一心 3084）",
+   "use": "大幅右跨 4.6 m 繞側後縱斬",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 1.6,
+   "src": "c5400 TAE 3084",
+   "status": "OK"
+  },
+  {
+   "key": "q_spinpass",
+   "label": "旋身穿身斬（永真 3021）",
+   "use": "衝刺中旋身 180° 橫斬",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 2.0,
+   "src": "c7400 TAE 3021",
+   "status": "弱"
+  },
+  {
+   "key": "q_jumpcut",
+   "label": "躍斬（弦一郎 3022）",
+   "use": "躍起 0.9 m 雙手縱斬",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 3.6,
+   "src": "c7100 TAE 3022",
+   "status": "OK"
+  },
+  {
+   "key": "q_aerial3",
+   "label": "空中二連（弦一郎 3026）",
+   "use": "躍起 1.5 m 空中兩記橫斬（原動作第一刀突刺搆不到木樁，判定只留空中兩刀）",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 3.1,
+   "src": "c7100 TAE 3026",
+   "status": "OK",
+   "knock": [
+    0.6,
+    0.45
+   ]
+  },
+  {
+   "key": "q_gen3",
+   "label": "三連斬（弦一郎 3041）",
+   "use": "突→袈裟→逆袈裟的快速三連",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 1.2,
+   "src": "c7100 TAE 3041",
+   "status": "OK"
+  },
+  {
+   "key": "q_emma2",
+   "label": "快速二連（永真 3019）",
+   "use": "0.13 s 間隔的逆袈裟＋袈裟",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 2.5,
+   "src": "c7400 TAE 3019",
+   "status": "手偏近"
+  },
+  {
+   "key": "q_emmacut",
+   "label": "單手袈裟快斬（永真 3067）",
+   "use": "單手袈裟、0.67 s 可取消",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 2.9,
+   "src": "c7400 TAE 3067",
+   "status": "OK"
+  },
+  {
+   "key": "q_dashcut",
+   "label": "突進逆袈裟（永真 3027）",
+   "use": "前衝 5 m 單手由右下往左上斬（弦一郎 3038 突進橫斬因刀身穿過軀幹 15 cm 淘汰）",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 4.6,
+   "src": "c7400 TAE 3027",
+   "status": "OK"
+  },
+  {
+   "key": "q_iaiup",
+   "label": "居合上撩（葦名流 a100_3011，刀留手上）",
+   "use": "拔刀由左腰往右上撩斬、不納刀直接轉一般架勢",
+   "req": "sheathed",
+   "ends_drawn": true,
+   "dist": 1.45,
+   "src": "c1400 TAE 100003011",
+   "status": "OK"
+  },
+  {
+   "key": "q_retreat",
+   "label": "邊退邊斬（主城劍客 3013）",
+   "use": "先退再於後退中劈下",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 1.3,
+   "src": "c1400 TAE 3013",
+   "status": "需追擊",
+   "chase": 2.5
+  },
+  {
+   "key": "q_c_emma",
+   "label": "進身二連：突進逆袈裟→袈裟（永真 3027→3067）",
+   "use": "衝刺上撩後順勢袈裟斬回（銜接殘差：手 0.03 m、刀 76°、肩 5°）",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 3.5,
+   "src": "c7400 TAE 3067",
+   "status": "OK"
+  },
+  {
+   "key": "q_c_retthrust",
+   "label": "退斬反刺：邊退邊斬→前衝突刺（主城劍客 3013→3014）",
+   "use": "先退開斬一刀、回到架勢立即前衝突刺（銜接殘差：手 0.05 m、刀 0°、腳 0.06 m）",
+   "req": "drawn",
+   "ends_drawn": false,
+   "dist": 1.3,
+   "src": "c1400 TAE 3014",
+   "status": "需追擊",
+   "chase": 2.5,
+   "chase_until": 1.0
+  }
+ ],
+ "overrides": {
+  "iai": {
+   "move_cancel": 0.45,
+   "dodge_cancel": 0.45,
+   "cancel_until": 1.1
+  },
+  "twocut": {
+   "move_cancel": 0.75,
+   "dodge_cancel": 0.75,
+   "cancel_until": 2.47
+  }
+ }
+}

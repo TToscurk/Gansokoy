@@ -22,13 +22,13 @@
 ##   next            十三型循環中的下一型
 
 const FORMS := {
-	1: {status = "READY", name = "壹ノ型 圓舞", anim = "Attack_Combo", section = Vector2(0.0, 0.34), layer = "upper",
+	1: {status = "READY", name = "壹ノ型 圓舞", anim = "Attack_Combo", section = Vector2(0.0, 0.3178), layer = "upper",
 		speed = 2.0, damage = 1.0, breath_cost = 10.0, cooldown = 0.0, impulse = 1.5,
 		allowed_airborne = true, required_mastery = 0, vfx = "", cancel = Vector2(0.35, 0.65), next = 2, trail = {lifetime = 0.28, extend = 0.55}},
 	2: {status = "READY", name = "貳ノ型 碧羅天", anim = "Attack_Spin", section = Vector2(0.0, 1.0), layer = "full",
 		speed = 1.7, damage = 1.3, breath_cost = 18.0, cooldown = 1.0, impulse = 0.0,
 		allowed_airborne = false, required_mastery = 1, vfx = "", cancel = Vector2(0.6, 0.9), next = 3, trail = {lifetime = 0.60, extend = 0.70}},
-	3: {status = "READY", name = "參ノ型 烈日紅鏡", anim = "Attack_Combo", section = Vector2(0.30, 0.67), layer = "upper",
+	3: {status = "READY", name = "參ノ型 烈日紅鏡", anim = "Attack_Combo", section = Vector2(0.3178, 0.7442), layer = "upper",
 		speed = 2.0, damage = 1.1, breath_cost = 12.0, cooldown = 0.0, impulse = 0.5,
 		allowed_airborne = true, required_mastery = 0, vfx = "", cancel = Vector2(0.35, 0.65), next = 4, trail = {lifetime = 0.28, extend = 0.55}},
 	4: {status = "READY", name = "肆ノ型 灼骨炎陽", anim = "Attack_Combo_1", section = Vector2(0.0, 1.0), layer = "full",

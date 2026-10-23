@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://characters/yoriichi/v24_isshin/r13/r13_enbu_demo.gd" id="1_demo"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/v24_r62/yoriichi_v24_r62.glb" id="2_body"]
+[ext_resource type="Script" path="res://characters/yoriichi/v24/yoriichi_v24_rig.gd" id="3_rig"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/yoriichi_sword.glb" id="4_sword"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/sheath_v2/yoriichi_sheath_v2.glb" id="5_sheath"]
+[ext_resource type="Script" path="res://characters/yoriichi/sheath_sway.gd" id="6_sway"]
+
+[node name="Demo" type="Node3D"]
+script = ExtResource("1_demo")
+
+[node name="Actor" type="Node3D" parent="."]
+
+[node name="BodyVisual" parent="Actor" instance=ExtResource("2_body")]
+script = ExtResource("3_rig")
+start_motion = ""
+
+[node name="HandSocket" type="BoneAttachment3D" parent="Actor/BodyVisual/緣一_fbx/Armature/Skeleton3D"]
+bone_name = "mixamorig_RightHand"
+
+[node name="Sword_Hand" parent="Actor/BodyVisual/緣一_fbx/Armature/Skeleton3D/HandSocket" instance=ExtResource("4_sword")]
+transform = Transform3D(0.38902235, 0.52828616, 0.17881614, -0.5553484, 0.38703501, 0.06474634, -0.05147571, -0.18307817, 0.652865, -0.005918, 0.045036, 0.026901)
+
+[node name="SheathSocket" type="BoneAttachment3D" parent="Actor/BodyVisual/緣一_fbx/Armature/Skeleton3D"]
+bone_name = "mixamorig_Hips"
+
+[node name="Sheath" parent="Actor/BodyVisual/緣一_fbx/Armature/Skeleton3D/SheathSocket" instance=ExtResource("5_sheath")]
+transform = Transform3D(0.4002622, 0.19975081, -0.51214236, -0.5454751, 0.06575904, -0.4006653, -0.068169445, 0.64666486, 0.19894111, -0.28809348, -0.23383154, -0.21540536)
+script = ExtResource("6_sway")

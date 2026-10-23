@@ -1,0 +1,14 @@
+{
+ "character_id": "f2e0c040-48e3-43f5-a17c-a3bacd230211",
+ "product_id": "c9cc62ee-b96c-11e4-a802-0aaa78deedf9",
+ "name": "Sword And Shield Attack",
+ "model_id": 122960901,
+ "params": "0",
+ "arm_space": 0.78,
+ "fps": 30,
+ "skin": false,
+ "inplace": false,
+ "job": "4988bc03-6793-4a32-b014-4bec510711ce",
+ "bytes": 497360,
+ "sha256": "f32ab6b0e43f160d0389ea541e94e008d353bcb7c94d9fe0775cd8974dad7b17"
+}

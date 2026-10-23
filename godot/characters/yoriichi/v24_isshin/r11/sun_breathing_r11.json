@@ -1,0 +1,4516 @@
+{
+ "_doc": "R11 日之呼吸技能資料（由 notes/r11/gen_r11_data.py 產生；R10 版 r10/sun_breathing_r10.json 保留不動）。貳ノ型 碧羅天改用 R11 動作（一心 c5400 a000_003031 時間重配：刀從前下方沿身體正面往上、過頭頂到背後、從左側落下、一刀袈裟斬過正面到右下、再繞到右後方；起手先退左腳 0.49 m 入架——一個由身體轉動帶出的完整刀圓；雙手、著地、不空翻）。圓舞、烈日紅鏡與 R10 相同。",
+ "version": "R10",
+ "order": [
+  "sun_enbu",
+  "sun_hekiraten",
+  "sun_retsujitsu"
+ ],
+ "vfx_variant": "R10",
+ "skills": {
+  "sun_enbu": {
+   "name": "日之呼吸・壹ノ型 圓舞",
+   "input": "skill1",
+   "requires": "drawn",
+   "damage": 3,
+   "cooldown": 1.0,
+   "shot": {
+    "anim": "isshin_sun_enbu",
+    "angle": 0.0,
+    "fade_in": 0.1,
+    "fade_out": 0.35,
+    "travel_scale": 1.107,
+    "two_hand": false,
+    "attack": true,
+    "strikes": [
+     [
+      0.5,
+      0.7
+     ]
+    ],
+    "swings": [
+     0.47
+    ],
+    "lockout": 0.1,
+    "lunges": [
+     [
+      0.0,
+      0.68
+     ]
+    ],
+    "min_dist": 1.0,
+    "move_cancel": 1.05,
+    "dodge_cancel": 0.85,
+    "attack_cancel": 1.05,
+    "end_t": 1.75,
+    "freeze_hit_frame": true,
+    "hitstop_frames": 4
+   },
+   "_anim": "永真 c7400 a000_003008（單手迴旋袈裟：刀尖在正面平面畫 -36°→240° 的圓弧，半徑 0.9–1.2 m，髖下沉 0.5 m、根前進 0.40 m）重新配時：0–0.40 s 蓄勢（原 0–0.25 s 放慢）、0.40–0.48 s 落刀到右後下、0.48–0.68 s 主斬圓弧（原速）、0.68–0.96 s 隨揮停在左下、之後殘心；notes/r9/build_enbu.py",
+   "link_from": {
+    "slash_v": 0.633,
+    "slash_vh": 1.25,
+    "slash_vhx": 2.1,
+    "slash_vhg": 2.267,
+    "thrust": 0.7,
+    "backcut": 1.0,
+    "pairx": 1.417,
+    "q_sidecut": 0.767,
+    "q_emmacut": 0.667,
+    "q_dashcut": 1.0,
+    "q_jumpcut": 1.1,
+    "q_iaiup": 0.767,
+    "q_gen3": 2.267,
+    "dodge_l": 0.2,
+    "dodge_r": 0.2,
+    "r9_jump": 1.0,
+    "sun_hekiraten": 0.97,
+    "sun_retsujitsu": 1.15
+   },
+   "vfx": {
+    "blade": {
+     "env": [
+      [
+       0.1,
+       0.0
+      ],
+      [
+       0.42,
+       1.0
+      ],
+      [
+       0.8,
+       1.0
+      ],
+      [
+       1.3,
+       0.0
+      ]
+     ],
+     "height": 0.1,
+     "emission": 1.0,
+     "core_emission": 0.55,
+     "tongue": 0.9,
+     "tile": 6.0,
+     "flow": 3.0,
+     "core_width": 0.3,
+     "u0": 0.1
+    },
+    "trail": {
+     "emit": [
+      [
+       0.5,
+       0.72
+      ]
+     ],
+     "lifetime": 0.22,
+     "extend": 0.1,
+     "inset": -0.3,
+     "lift": 0.04,
+     "emission": 1.0,
+     "core_emission": 0.6,
+     "opacity": 0.85,
+     "core_root_skip": 0.4,
+     "core_ratio": 0.45,
+     "head_fade": 0.04,
+     "max_step_deg": 4.0,
+     "_note": "inset 負值＝刀光從離護手 0.30 m 處才開始（只描刀身外段）；寬刀光會蓋住刀與木樁的接觸（R9 第一輪審圖）"
+    },
+    "sparks": {
+     "windows": [
+      [
+       0.46,
+       0.8
+      ]
+     ],
+     "min_speed": 6.0,
+     "full_speed": 25.0,
+     "max_ratio": 1.0,
+     "lifetime": 0.4
+    },
+    "hit": {
+     "particles": 16,
+     "offset": 0.05,
+     "normal_w": 0.7,
+     "cut_w": 0.5,
+     "flash_size": 0.1,
+     "flash_time": 0.08
+    }
+   },
+   "audio": {
+    "breath": {
+     "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+     "at": 0.02,
+     "db": -12.0,
+     "pitch": 0.7
+    },
+    "ignite": {
+     "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+     "at": 0.3,
+     "db": -9.0,
+     "pitch": 0.8
+    },
+    "swing": {
+     "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+     "at": 0.47,
+     "db": 0.0,
+     "pitch": 1.0
+    },
+    "flame": {
+     "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+     "loop_from": 0.3,
+     "loop_to": 0.95,
+     "db": -16.0
+    },
+    "hit": {
+     "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+     "on": "hit",
+     "db": 0.0
+    }
+   },
+   "vfx_variant": "L1",
+   "_vfx_variants_doc": "R9-C Blender 特效候選（r9c/）：A＝銳利火焰刀光（亮核心、細長火舌、快消散）、B＝流動火焰刀光（層次、尾焰、分岔、殘焰）；r9＝原本的程式刀光（sun_vfx.gd，保留可回退）。試玩按 C 切換；--vfx=r9|A|B。",
+   "vfx_variants": {
+    "A": {
+     "core": {
+      "life": 0.1,
+      "head_fade": 0.015,
+      "hold": 0.25,
+      "emission": 1.1,
+      "col_hot": [
+       1.0,
+       0.82,
+       0.35,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.52,
+       0.08,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.2,
+      "grow": 0.035,
+      "hold": 0.18,
+      "emission": 2.2,
+      "cool": 0.6,
+      "rim_k": 0.6
+     },
+     "embers": {
+      "life": 0.35,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 2.0
+     },
+     "hit": {
+      "life": 0.18,
+      "grow": 0.04,
+      "hold": 0.3,
+      "emission": 3.0
+     },
+     "freeze_t": 0.7,
+     "drift_from": 0.6,
+     "drift_to": 0.95,
+     "end_t": 1.2,
+     "blade_env": [
+      [
+       0.05,
+       0.0
+      ],
+      [
+       0.25,
+       0.6
+      ],
+      [
+       0.45,
+       1.0
+      ],
+      [
+       0.72,
+       1.0
+      ],
+      [
+       1.05,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.5,
+      "to": 0.7,
+      "min_speed": 12.0,
+      "max_ratio": 0.5
+     }
+    },
+    "B": {
+     "core": {
+      "life": 0.14,
+      "head_fade": 0.02,
+      "hold": 0.3,
+      "emission": 1.0,
+      "col_hot": [
+       1.0,
+       0.82,
+       0.35,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.52,
+       0.08,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.36,
+      "grow": 0.05,
+      "hold": 0.22,
+      "emission": 2.0,
+      "cool": 0.5,
+      "rim_k": 0.7
+     },
+     "embers": {
+      "life": 0.6,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.2
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 1.8
+     },
+     "hit": {
+      "life": 0.26,
+      "grow": 0.05,
+      "hold": 0.35,
+      "emission": 2.8
+     },
+     "freeze_t": 0.7,
+     "drift_from": 0.6,
+     "drift_to": 1.25,
+     "end_t": 1.6,
+     "blade_env": [
+      [
+       0.05,
+       0.0
+      ],
+      [
+       0.25,
+       0.7
+      ],
+      [
+       0.45,
+       1.0
+      ],
+      [
+       0.8,
+       1.0
+      ],
+      [
+       1.25,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.5,
+      "to": 0.72,
+      "min_speed": 10.0,
+      "max_ratio": 0.7
+     }
+    },
+    "C1": {
+     "core": {
+      "life": 0.12,
+      "head_fade": 0.015,
+      "hold": 0.3,
+      "emission": 1.4,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.55,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.58,
+       0.1,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.16,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 2.4,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "grow": 0.03,
+      "ignite_flash": 0.7,
+      "flash_t": 0.07,
+      "ignite_from": 0.6,
+      "ignite_speed": 40.0,
+      "ignite_lead": 0.03
+     },
+     "flames": {
+      "life": 0.22,
+      "grow": 0.04,
+      "hold": 0.25,
+      "emission": 2.4,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.48999999999999994,
+      "flash_t": 0.07,
+      "ignite_from": 0.6,
+      "ignite_speed": 40.0,
+      "ignite_lead": 0.03
+     },
+     "embers": {
+      "life": 0.4,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 2.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 4.0,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 4.0,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_light": {
+      "energy": 3.5,
+      "range": 3.0,
+      "time": 0.12
+     },
+     "hit_scale": 1.1,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 0.7,
+     "drift_from": 0.6,
+     "drift_to": 1.0,
+     "end_t": 1.25,
+     "blade_env": [
+      [
+       0.05,
+       0.0
+      ],
+      [
+       0.25,
+       0.7
+      ],
+      [
+       0.45,
+       1.0
+      ],
+      [
+       0.8,
+       1.0
+      ],
+      [
+       1.25,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.5,
+      "to": 0.72,
+      "min_speed": 10.0,
+      "max_ratio": 0.9
+     },
+     "core_on_top": true,
+     "burst": {
+      "life": 0.2,
+      "grow": 0.035,
+      "hold": 0.25,
+      "emission": 2.8,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.5,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.6,
+      "flash_t": 0.06
+     }
+    },
+    "C2": {
+     "core": {
+      "life": 0.16,
+      "head_fade": 0.015,
+      "hold": 0.2,
+      "emission": 1.4,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.55,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.58,
+       0.1,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.28,
+      "use_reveal": 0.0,
+      "hold": 0.3,
+      "emission": 2.4,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.42,
+      "grow": 0.04,
+      "hold": 0.25,
+      "emission": 2.4,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "embers": {
+      "life": 0.7,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 2.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 2.5600000000000005,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 4.0,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_light": {
+      "energy": 2.5,
+      "range": 3.0,
+      "time": 0.12
+     },
+     "hit_scale": 0.95,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 0.7,
+     "drift_from": 0.62,
+     "drift_to": 1.35,
+     "end_t": 1.6,
+     "blade_env": [
+      [
+       0.05,
+       0.0
+      ],
+      [
+       0.25,
+       0.7
+      ],
+      [
+       0.45,
+       1.0
+      ],
+      [
+       0.8,
+       1.0
+      ],
+      [
+       1.25,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.5,
+      "to": 0.72,
+      "min_speed": 10.0,
+      "max_ratio": 0.9
+     },
+     "core_on_top": true
+    },
+    "C3": {
+     "core": {
+      "life": 0.16,
+      "head_fade": 0.015,
+      "hold": 0.12,
+      "emission": 1.4,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.55,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.58,
+       0.1,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.3,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 2.4,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "grow": 0.03,
+      "ignite_flash": 0.6,
+      "flash_t": 0.07,
+      "ignite_from": 0.6,
+      "ignite_speed": 6.0,
+      "ignite_lead": 0.03
+     },
+     "flames": {
+      "life": 0.4,
+      "grow": 0.04,
+      "hold": 0.25,
+      "emission": 2.4,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.42,
+      "flash_t": 0.07,
+      "ignite_from": 0.6,
+      "ignite_speed": 6.0,
+      "ignite_lead": 0.03
+     },
+     "embers": {
+      "life": 0.7,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 2.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 4.5,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 3.6,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 4.0,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_light": {
+      "energy": 4.5,
+      "range": 3.5,
+      "time": 0.14
+     },
+     "hit_scale": 1.25,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 0.7,
+     "drift_from": 0.6,
+     "drift_to": 1.4,
+     "end_t": 1.7,
+     "blade_env": [
+      [
+       0.05,
+       0.0
+      ],
+      [
+       0.25,
+       0.7
+      ],
+      [
+       0.45,
+       1.0
+      ],
+      [
+       0.8,
+       1.0
+      ],
+      [
+       1.25,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.5,
+      "to": 0.72,
+      "min_speed": 10.0,
+      "max_ratio": 1.0
+     },
+     "ring": {
+      "life": 0.22,
+      "grow": 0.06,
+      "hold": 0.1,
+      "emission": 2.6,
+      "cool": 0.6,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "tear_heat": 0.0
+     },
+     "core_on_top": true
+    },
+    "L1": {
+     "core": {
+      "life": 0.16,
+      "head_fade": 0.015,
+      "hold": 0.2,
+      "emission": 1.4,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.55,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.58,
+       0.1,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.28,
+      "use_reveal": 0.0,
+      "hold": 0.3,
+      "emission": 2.4,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.42,
+      "grow": 0.04,
+      "hold": 0.25,
+      "emission": 2.4,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "embers": {
+      "life": 0.7,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 2.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 4.0,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 4.0,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_scale": 1.1,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 0.7,
+     "drift_from": 0.62,
+     "drift_to": 1.35,
+     "end_t": 1.6,
+     "blade_env": [
+      [
+       0.05,
+       0.0
+      ],
+      [
+       0.25,
+       0.7
+      ],
+      [
+       0.45,
+       1.0
+      ],
+      [
+       0.8,
+       1.0
+      ],
+      [
+       1.25,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.5,
+      "to": 0.72,
+      "min_speed": 10.0,
+      "max_ratio": 0.9
+     },
+     "core_on_top": true,
+     "burst": {
+      "life": 0.2,
+      "grow": 0.035,
+      "hold": 0.25,
+      "emission": 2.8,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.5,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.6,
+      "flash_t": 0.06
+     },
+     "mesh": "C2",
+     "extra": {
+      "C1": [
+       "burst",
+       "hit",
+       "hitring",
+       "hitstar"
+      ]
+     },
+     "_note": "R9-C3：火焰 mesh＝C2 流焰（主體）＋C1 命中爆燃（Burst＋命中三層）；L1／L2 用同一套 mesh 與材質，只差光照｜L1 自然火光",
+     "lights": {
+      "blade": {
+       "energy": 1.9,
+       "range": 2.8,
+       "attn": 1.0,
+       "pos_u": 0.4,
+       "flicker": 0.1,
+       "color": [
+        1.0,
+        0.66,
+        0.3
+       ],
+       "env": [
+        [
+         0.08,
+         0.0
+        ],
+        [
+         0.3,
+         0.18
+        ],
+        [
+         0.46,
+         0.4
+        ],
+        [
+         0.56,
+         0.8
+        ],
+        [
+         0.6,
+         1.0
+        ],
+        [
+         0.66,
+         0.85
+        ],
+        [
+         0.76,
+         0.35
+        ],
+        [
+         0.9,
+         0.06
+        ],
+        [
+         1.0,
+         0.0
+        ]
+       ]
+      },
+      "trail": {
+       "energy": 1.1,
+       "range": 2.4,
+       "attn": 1.0,
+       "flicker": 0.22,
+       "lag": [
+        0.05,
+        0.13
+       ],
+       "color": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "env": [
+        [
+         0.46,
+         0.0
+        ],
+        [
+         0.54,
+         0.7
+        ],
+        [
+         0.6,
+         1.0
+        ],
+        [
+         0.72,
+         0.75
+        ],
+        [
+         0.95,
+         0.2
+        ],
+        [
+         1.15,
+         0.0
+        ]
+       ],
+       "min_y": 0.9
+      },
+      "hit": {
+       "flash_e": 3.2,
+       "flash_col": [
+        1.0,
+        0.8,
+        0.5
+       ],
+       "burn_e": 2.2,
+       "burn_col": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "xfade": 0.06,
+       "burn_t": 0.24,
+       "range": 2.8,
+       "off": 0.25,
+       "up": 0.05,
+       "min_flash": 0.05,
+       "flicker": 0.12
+      },
+      "flare_time": 0.12,
+      "flare_gain": 1.0
+     }
+    },
+    "L2": {
+     "core": {
+      "life": 0.16,
+      "head_fade": 0.015,
+      "hold": 0.2,
+      "emission": 1.4,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.55,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.58,
+       0.1,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.28,
+      "use_reveal": 0.0,
+      "hold": 0.3,
+      "emission": 2.4,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.42,
+      "grow": 0.04,
+      "hold": 0.25,
+      "emission": 2.4,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "embers": {
+      "life": 0.7,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 2.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 4.0,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 4.0,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_scale": 1.1,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 0.7,
+     "drift_from": 0.62,
+     "drift_to": 1.35,
+     "end_t": 1.6,
+     "blade_env": [
+      [
+       0.05,
+       0.0
+      ],
+      [
+       0.25,
+       0.7
+      ],
+      [
+       0.45,
+       1.0
+      ],
+      [
+       0.8,
+       1.0
+      ],
+      [
+       1.25,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.5,
+      "to": 0.72,
+      "min_speed": 10.0,
+      "max_ratio": 0.9
+     },
+     "core_on_top": true,
+     "burst": {
+      "life": 0.2,
+      "grow": 0.035,
+      "hold": 0.25,
+      "emission": 2.8,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.5,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.6,
+      "flash_t": 0.06
+     },
+     "mesh": "C2",
+     "extra": {
+      "C1": [
+       "burst",
+       "hit",
+       "hitring",
+       "hitstar"
+      ]
+     },
+     "_note": "R9-C3：火焰 mesh＝C2 流焰（主體）＋C1 命中爆燃（Burst＋命中三層）；L1／L2 用同一套 mesh 與材質，只差光照｜L2 動畫爆發（命中白金強光更強、橘紅爆燃更久、餘燼光、熱浪、火焰命中脈衝 ×1.6）",
+     "lights": {
+      "blade": {
+       "energy": 1.9,
+       "range": 2.8,
+       "attn": 1.0,
+       "pos_u": 0.4,
+       "flicker": 0.1,
+       "color": [
+        1.0,
+        0.66,
+        0.3
+       ],
+       "env": [
+        [
+         0.08,
+         0.0
+        ],
+        [
+         0.3,
+         0.18
+        ],
+        [
+         0.46,
+         0.4
+        ],
+        [
+         0.56,
+         0.8
+        ],
+        [
+         0.6,
+         1.0
+        ],
+        [
+         0.66,
+         0.85
+        ],
+        [
+         0.76,
+         0.35
+        ],
+        [
+         0.9,
+         0.06
+        ],
+        [
+         1.0,
+         0.0
+        ]
+       ]
+      },
+      "trail": {
+       "energy": 1.1,
+       "range": 2.4,
+       "attn": 1.0,
+       "flicker": 0.22,
+       "lag": [
+        0.05,
+        0.13
+       ],
+       "color": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "env": [
+        [
+         0.46,
+         0.0
+        ],
+        [
+         0.54,
+         0.7
+        ],
+        [
+         0.6,
+         1.0
+        ],
+        [
+         0.72,
+         0.75
+        ],
+        [
+         0.95,
+         0.2
+        ],
+        [
+         1.15,
+         0.0
+        ]
+       ],
+       "min_y": 0.9
+      },
+      "hit": {
+       "flash_e": 6.0,
+       "flash_col": [
+        1.0,
+        0.95,
+        0.82
+       ],
+       "burn_e": 3.2,
+       "burn_col": [
+        1.0,
+        0.4,
+        0.1
+       ],
+       "xfade": 0.07,
+       "burn_t": 0.32,
+       "range": 2.2,
+       "off": 0.25,
+       "up": 0.15,
+       "min_flash": 0.05,
+       "flicker": 0.18,
+       "attn": 1.6
+      },
+      "ember": {
+       "energy": 1.3,
+       "time": 0.6,
+       "range": 1.8,
+       "color": [
+        1.0,
+        0.26,
+        0.05
+       ],
+       "off": 0.35,
+       "y": 0.35,
+       "flicker": 0.35
+      },
+      "haze": {
+       "strength": 1.0,
+       "time": 0.45,
+       "size": 1.1,
+       "amount": 0.006,
+       "off": 0.15,
+       "up": 0.4
+      },
+      "flare_time": 0.22,
+      "flare_gain": 1.6
+     }
+    },
+    "R10": {
+     "core": {
+      "life": 0.16,
+      "head_fade": 0.015,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.97,
+       0.86,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.66,
+       0.16,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.28,
+      "use_reveal": 0.0,
+      "hold": 0.3,
+      "emission": 3.48,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.93,
+       0.7,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.42,
+      "grow": 0.04,
+      "hold": 0.25,
+      "emission": 3.48,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.93,
+       0.7,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "embers": {
+      "life": 0.7,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 3.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 5.6,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 5.6,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_scale": 1.1,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 0.7,
+     "drift_from": 0.62,
+     "drift_to": 1.35,
+     "end_t": 1.6,
+     "blade_env": [
+      [
+       0.05,
+       0.0
+      ],
+      [
+       0.25,
+       0.7
+      ],
+      [
+       0.45,
+       1.0
+      ],
+      [
+       0.8,
+       1.0
+      ],
+      [
+       1.25,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.5,
+      "to": 0.72,
+      "min_speed": 10.0,
+      "max_ratio": 0.9
+     },
+     "core_on_top": true,
+     "burst": {
+      "life": 0.2,
+      "grow": 0.035,
+      "hold": 0.25,
+      "emission": 4.06,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.93,
+       0.7,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.6,
+      "flash_t": 0.06
+     },
+     "mesh": "C2",
+     "extra": {
+      "C1": [
+       "burst",
+       "hit",
+       "hitring",
+       "hitstar"
+      ]
+     },
+     "_note": "R10 熱發光：L1 的空間照明＋火焰自發光加強（核心 emission 1.4→3.2、白金色；火體 ×1.45；命中 ×1.4），配合 R10 場景的泛光（門檻 0.95、強度 0.75）",
+     "lights": {
+      "blade": {
+       "energy": 1.9,
+       "range": 2.8,
+       "attn": 1.0,
+       "pos_u": 0.4,
+       "flicker": 0.1,
+       "color": [
+        1.0,
+        0.66,
+        0.3
+       ],
+       "env": [
+        [
+         0.08,
+         0.0
+        ],
+        [
+         0.3,
+         0.18
+        ],
+        [
+         0.46,
+         0.4
+        ],
+        [
+         0.56,
+         0.8
+        ],
+        [
+         0.6,
+         1.0
+        ],
+        [
+         0.66,
+         0.85
+        ],
+        [
+         0.76,
+         0.35
+        ],
+        [
+         0.9,
+         0.06
+        ],
+        [
+         1.0,
+         0.0
+        ]
+       ]
+      },
+      "trail": {
+       "energy": 1.1,
+       "range": 2.4,
+       "attn": 1.0,
+       "flicker": 0.22,
+       "lag": [
+        0.05,
+        0.13
+       ],
+       "color": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "env": [
+        [
+         0.46,
+         0.0
+        ],
+        [
+         0.54,
+         0.7
+        ],
+        [
+         0.6,
+         1.0
+        ],
+        [
+         0.72,
+         0.75
+        ],
+        [
+         0.95,
+         0.2
+        ],
+        [
+         1.15,
+         0.0
+        ]
+       ],
+       "min_y": 0.9
+      },
+      "hit": {
+       "flash_e": 3.2,
+       "flash_col": [
+        1.0,
+        0.8,
+        0.5
+       ],
+       "burn_e": 2.2,
+       "burn_col": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "xfade": 0.06,
+       "burn_t": 0.24,
+       "range": 2.8,
+       "off": 0.25,
+       "up": 0.05,
+       "min_flash": 0.05,
+       "flicker": 0.12
+      },
+      "flare_time": 0.12,
+      "flare_gain": 1.0
+     }
+    }
+   }
+  },
+  "sun_hekiraten": {
+   "name": "日之呼吸・貳ノ型 碧羅天",
+   "input": "skill1",
+   "requires": "drawn",
+   "damage": 3,
+   "cooldown": 1.2,
+   "shot": {
+    "anim": "isshin_sun_hekira_r11",
+    "angle": 0.0,
+    "fade_in": 0.08,
+    "fade_out": 0.2,
+    "travel_scale": 0.78,
+    "two_hand": true,
+    "attack": true,
+    "strikes": [
+     [
+      0.6,
+      0.81
+     ]
+    ],
+    "swings": [
+     0.61
+    ],
+    "lockout": 0.1,
+    "lunges": [
+     [
+      0.25,
+      0.675
+     ]
+    ],
+    "min_dist": 1.05,
+    "lunge_min_dist": [
+     1.05
+    ],
+    "move_cancel": 1.05,
+    "dodge_cancel": 0.87,
+    "attack_cancel": 0.97,
+    "end_t": 2.62,
+    "freeze_hit_frame": true,
+    "hitstop_frames": 4,
+    "root_pose_sync": true
+   },
+   "_anim": "R11：葦名一心 c5400 a000_003031（重定向刀法庫 lib_c5400_a000_003031）時間重配（notes/r11/build_hekira_r11.py）：原動作 0.10–0.60 s 的慢速上舉壓成 0.24 s，讓刀尖由前下→頭頂→背後→左側→袈裟斬過正面（左上→右下）→右後方連成一個圓；主斬原速；殘心 ×3；收勢用原動作自己的回架（刀回到正面、左腳上步、身體站回中段，×1.4）。根位移＝原動作的踏步：出刀前 0.65 m、回架上步 0.55 m，×0.78（不額外突進）。R10 版（梟 a000_003012）資料在 r10/sun_breathing_r10.json。",
+   "link_from": {
+    "slash_v": 0.633,
+    "slash_vh": 1.25,
+    "slash_vhx": 2.1,
+    "slash_vhg": 2.267,
+    "thrust": 0.7,
+    "backcut": 1.0,
+    "pairx": 1.417,
+    "q_sidecut": 0.767,
+    "q_emmacut": 0.667,
+    "q_dashcut": 1.0,
+    "q_jumpcut": 1.1,
+    "q_iaiup": 0.767,
+    "q_gen3": 2.267,
+    "dodge_l": 0.2,
+    "dodge_r": 0.2,
+    "r9_jump": 1.0,
+    "sun_retsujitsu": 0.92
+   },
+   "audio": {
+    "breath": {
+     "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+     "at": 0.0,
+     "db": -12.0,
+     "pitch": 0.7
+    },
+    "ignite": {
+     "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+     "at": 0.31,
+     "db": -9.0,
+     "pitch": 0.8
+    },
+    "swing": {
+     "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+     "at": 0.61,
+     "db": 0.0,
+     "pitch": 1.0
+    },
+    "flame": {
+     "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+     "loop_from": 0.31,
+     "loop_to": 1.052,
+     "db": -16.0
+    },
+    "hit": {
+     "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+     "on": "hit",
+     "db": 0.0
+    }
+   },
+   "vfx": {
+    "blade": {
+     "env": [
+      [
+       0.262,
+       0.0
+      ],
+      [
+       0.352,
+       1.0
+      ],
+      [
+       0.947,
+       1.0
+      ],
+      [
+       1.296,
+       0.0
+      ]
+     ],
+     "height": 0.1,
+     "emission": 1.0,
+     "core_emission": 0.55,
+     "tongue": 0.9,
+     "tile": 6.0,
+     "flow": 3.0,
+     "core_width": 0.3,
+     "u0": 0.1
+    },
+    "trail": {
+     "emit": [
+      [
+       0.39,
+       0.87
+      ]
+     ],
+     "lifetime": 0.22,
+     "extend": 0.1,
+     "inset": -0.3,
+     "lift": 0.04,
+     "emission": 1.0,
+     "core_emission": 0.6,
+     "opacity": 0.85,
+     "core_root_skip": 0.4,
+     "core_ratio": 0.45,
+     "head_fade": 0.04,
+     "max_step_deg": 4.0,
+     "_note": "inset 負值＝刀光從離護手 0.30 m 處才開始（只描刀身外段）；寬刀光會蓋住刀與木樁的接觸（R9 第一輪審圖）"
+    },
+    "sparks": {
+     "windows": [
+      [
+       0.377,
+       0.926
+      ]
+     ],
+     "min_speed": 6.0,
+     "full_speed": 25.0,
+     "max_ratio": 1.0,
+     "lifetime": 0.4
+    },
+    "hit": {
+     "particles": 16,
+     "offset": 0.05,
+     "normal_w": 0.7,
+     "cut_w": 0.5,
+     "flash_size": 0.1,
+     "flash_time": 0.08
+    }
+   },
+   "vfx_variants": {
+    "HK11_L1": {
+     "core": {
+      "life": 0.24,
+      "head_fade": 0.015,
+      "hold": 0.2,
+      "emission": 1.4,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.55,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.58,
+       0.1,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.55,
+      "use_reveal": 0.0,
+      "hold": 0.35,
+      "emission": 2.4,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.6,
+      "grow": 0.04,
+      "hold": 0.3,
+      "emission": 2.4,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "embers": {
+      "life": 0.7,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 2.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 4.0,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 4.0,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_scale": 1.1,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 0.884,
+     "drift_from": 0.722,
+     "drift_to": 1.331,
+     "end_t": 1.75,
+     "blade_env": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.298,
+       0.7
+      ],
+      [
+       0.363,
+       1.0
+      ],
+      [
+       0.947,
+       1.0
+      ],
+      [
+       1.261,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.38,
+      "to": 0.891,
+      "min_speed": 10.0,
+      "max_ratio": 0.9
+     },
+     "core_on_top": true,
+     "burst": {
+      "life": 0.2,
+      "grow": 0.035,
+      "hold": 0.25,
+      "emission": 2.8,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.5,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.6,
+      "flash_t": 0.06
+     },
+     "mesh": "HK11",
+     "extra": {},
+     "_note": "R11：同 R10 HK_L1 的材質／光照設定，時間依新動作重配（含 0.25 s 退步入架）；mesh＝沿 R11 實測刀路重建的 HK11",
+     "lights": {
+      "blade": {
+       "energy": 1.9,
+       "range": 2.8,
+       "attn": 1.0,
+       "pos_u": 0.4,
+       "flicker": 0.1,
+       "color": [
+        1.0,
+        0.66,
+        0.3
+       ],
+       "env": [
+        [
+         0.257,
+         0.0
+        ],
+        [
+         0.31,
+         0.18
+        ],
+        [
+         0.366,
+         0.4
+        ],
+        [
+         0.514,
+         0.8
+        ],
+        [
+         0.68,
+         1.0
+        ],
+        [
+         0.807,
+         0.85
+        ],
+        [
+         0.919,
+         0.35
+        ],
+        [
+         1.017,
+         0.06
+        ],
+        [
+         1.087,
+         0.0
+        ]
+       ]
+      },
+      "trail": {
+       "energy": 1.1,
+       "range": 2.4,
+       "attn": 1.0,
+       "flicker": 0.22,
+       "lag": [
+        0.05,
+        0.13
+       ],
+       "color": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "env": [
+        [
+         0.366,
+         0.0
+        ],
+        [
+         0.431,
+         0.7
+        ],
+        [
+         0.68,
+         1.0
+        ],
+        [
+         0.891,
+         0.75
+        ],
+        [
+         1.052,
+         0.2
+        ],
+        [
+         1.191,
+         0.0
+        ]
+       ],
+       "min_y": 0.9
+      },
+      "hit": {
+       "flash_e": 3.2,
+       "flash_col": [
+        1.0,
+        0.8,
+        0.5
+       ],
+       "burn_e": 2.2,
+       "burn_col": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "xfade": 0.06,
+       "burn_t": 0.24,
+       "range": 2.8,
+       "off": 0.25,
+       "up": 0.05,
+       "min_flash": 0.05,
+       "flicker": 0.12
+      },
+      "flare_time": 0.12,
+      "flare_gain": 1.0
+     }
+    },
+    "HK11_L2": {
+     "core": {
+      "life": 0.24,
+      "head_fade": 0.015,
+      "hold": 0.2,
+      "emission": 1.4,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.55,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.58,
+       0.1,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.55,
+      "use_reveal": 0.0,
+      "hold": 0.35,
+      "emission": 2.4,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.6,
+      "grow": 0.04,
+      "hold": 0.3,
+      "emission": 2.4,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "embers": {
+      "life": 0.7,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 2.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 4.0,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 4.0,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_scale": 1.1,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 0.884,
+     "drift_from": 0.722,
+     "drift_to": 1.331,
+     "end_t": 1.75,
+     "blade_env": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.298,
+       0.7
+      ],
+      [
+       0.363,
+       1.0
+      ],
+      [
+       0.947,
+       1.0
+      ],
+      [
+       1.261,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.38,
+      "to": 0.891,
+      "min_speed": 10.0,
+      "max_ratio": 0.9
+     },
+     "core_on_top": true,
+     "burst": {
+      "life": 0.2,
+      "grow": 0.035,
+      "hold": 0.25,
+      "emission": 2.8,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.5,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.6,
+      "flash_t": 0.06
+     },
+     "mesh": "HK11",
+     "extra": {},
+     "_note": "R11：同 R10 HK_L2 的材質／光照設定，時間依新動作重配（含 0.25 s 退步入架）；mesh＝沿 R11 實測刀路重建的 HK11",
+     "lights": {
+      "blade": {
+       "energy": 1.9,
+       "range": 2.8,
+       "attn": 1.0,
+       "pos_u": 0.4,
+       "flicker": 0.1,
+       "color": [
+        1.0,
+        0.66,
+        0.3
+       ],
+       "env": [
+        [
+         0.257,
+         0.0
+        ],
+        [
+         0.31,
+         0.18
+        ],
+        [
+         0.366,
+         0.4
+        ],
+        [
+         0.514,
+         0.8
+        ],
+        [
+         0.68,
+         1.0
+        ],
+        [
+         0.807,
+         0.85
+        ],
+        [
+         0.919,
+         0.35
+        ],
+        [
+         1.017,
+         0.06
+        ],
+        [
+         1.087,
+         0.0
+        ]
+       ]
+      },
+      "trail": {
+       "energy": 1.1,
+       "range": 2.4,
+       "attn": 1.0,
+       "flicker": 0.22,
+       "lag": [
+        0.05,
+        0.13
+       ],
+       "color": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "env": [
+        [
+         0.366,
+         0.0
+        ],
+        [
+         0.431,
+         0.7
+        ],
+        [
+         0.68,
+         1.0
+        ],
+        [
+         0.891,
+         0.75
+        ],
+        [
+         1.052,
+         0.2
+        ],
+        [
+         1.191,
+         0.0
+        ]
+       ],
+       "min_y": 0.9
+      },
+      "hit": {
+       "flash_e": 6.0,
+       "flash_col": [
+        1.0,
+        0.95,
+        0.82
+       ],
+       "burn_e": 3.2,
+       "burn_col": [
+        1.0,
+        0.4,
+        0.1
+       ],
+       "xfade": 0.07,
+       "burn_t": 0.32,
+       "range": 2.2,
+       "off": 0.25,
+       "up": 0.15,
+       "min_flash": 0.05,
+       "flicker": 0.18,
+       "attn": 1.6
+      },
+      "ember": {
+       "energy": 1.3,
+       "time": 0.6,
+       "range": 1.8,
+       "color": [
+        1.0,
+        0.26,
+        0.05
+       ],
+       "off": 0.35,
+       "y": 0.35,
+       "flicker": 0.35
+      },
+      "haze": {
+       "strength": 1.0,
+       "time": 0.45,
+       "size": 1.1,
+       "amount": 0.006,
+       "off": 0.15,
+       "up": 0.4
+      },
+      "flare_time": 0.22,
+      "flare_gain": 1.6
+     }
+    },
+    "HK11_R10": {
+     "core": {
+      "life": 0.24,
+      "head_fade": 0.015,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.97,
+       0.86,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.66,
+       0.16,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.55,
+      "use_reveal": 0.0,
+      "hold": 0.35,
+      "emission": 3.48,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.93,
+       0.7,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.6,
+      "grow": 0.04,
+      "hold": 0.3,
+      "emission": 3.48,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.93,
+       0.7,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "embers": {
+      "life": 0.7,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 3.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 5.6,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 5.6,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_scale": 1.1,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 0.884,
+     "drift_from": 0.722,
+     "drift_to": 1.331,
+     "end_t": 1.75,
+     "blade_env": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       0.298,
+       0.7
+      ],
+      [
+       0.363,
+       1.0
+      ],
+      [
+       0.947,
+       1.0
+      ],
+      [
+       1.261,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.38,
+      "to": 0.891,
+      "min_speed": 10.0,
+      "max_ratio": 0.9
+     },
+     "core_on_top": true,
+     "burst": {
+      "life": 0.2,
+      "grow": 0.035,
+      "hold": 0.25,
+      "emission": 4.06,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.93,
+       0.7,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.6,
+      "flash_t": 0.06
+     },
+     "mesh": "HK11",
+     "extra": {},
+     "_note": "R11：同 R10 HK_R10 的材質／光照設定，時間依新動作重配（含 0.25 s 退步入架）；mesh＝沿 R11 實測刀路重建的 HK11",
+     "lights": {
+      "blade": {
+       "energy": 1.9,
+       "range": 2.8,
+       "attn": 1.0,
+       "pos_u": 0.4,
+       "flicker": 0.1,
+       "color": [
+        1.0,
+        0.66,
+        0.3
+       ],
+       "env": [
+        [
+         0.257,
+         0.0
+        ],
+        [
+         0.31,
+         0.18
+        ],
+        [
+         0.366,
+         0.4
+        ],
+        [
+         0.514,
+         0.8
+        ],
+        [
+         0.68,
+         1.0
+        ],
+        [
+         0.807,
+         0.85
+        ],
+        [
+         0.919,
+         0.35
+        ],
+        [
+         1.017,
+         0.06
+        ],
+        [
+         1.087,
+         0.0
+        ]
+       ]
+      },
+      "trail": {
+       "energy": 1.1,
+       "range": 2.4,
+       "attn": 1.0,
+       "flicker": 0.22,
+       "lag": [
+        0.05,
+        0.13
+       ],
+       "color": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "env": [
+        [
+         0.366,
+         0.0
+        ],
+        [
+         0.431,
+         0.7
+        ],
+        [
+         0.68,
+         1.0
+        ],
+        [
+         0.891,
+         0.75
+        ],
+        [
+         1.052,
+         0.2
+        ],
+        [
+         1.191,
+         0.0
+        ]
+       ],
+       "min_y": 0.9
+      },
+      "hit": {
+       "flash_e": 3.2,
+       "flash_col": [
+        1.0,
+        0.8,
+        0.5
+       ],
+       "burn_e": 2.2,
+       "burn_col": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "xfade": 0.06,
+       "burn_t": 0.24,
+       "range": 2.8,
+       "off": 0.25,
+       "up": 0.05,
+       "min_flash": 0.05,
+       "flicker": 0.12
+      },
+      "flare_time": 0.12,
+      "flare_gain": 1.0
+     }
+    }
+   },
+   "vfx_map": {
+    "L1": "HK11_L1",
+    "L2": "HK11_L2",
+    "R10": "HK11_R10",
+    "*": "HK11_R10"
+   }
+  },
+  "sun_retsujitsu": {
+   "name": "日之呼吸・參ノ型 烈日紅鏡",
+   "input": "skill1",
+   "requires": "drawn",
+   "damage": 2,
+   "cooldown": 1.0,
+   "shot": {
+    "anim": "isshin_sun_retsujitsu",
+    "angle": 0.0,
+    "fade_in": 0.1,
+    "fade_out": 0.35,
+    "travel_scale": 0.852,
+    "two_hand": false,
+    "attack": true,
+    "strikes": [
+     [
+      0.5,
+      0.69
+     ],
+     [
+      0.86,
+      0.99
+     ]
+    ],
+    "swings": [
+     0.46
+    ],
+    "lockout": 0.1,
+    "lunges": [
+     [
+      0.0,
+      0.99
+     ]
+    ],
+    "min_dist": 1.0,
+    "move_cancel": 1.15,
+    "dodge_cancel": 1.02,
+    "attack_cancel": 1.15,
+    "end_t": 1.9,
+    "freeze_hit_frame": true,
+    "hitstop_frames": 3
+   },
+   "_anim": "葦名弦一郎（c7100）a000_003068：左右連續橫斬——先右→左橫斬、0.37 s 後左→右橫斬回來（第二刀刀尖在胸口高度），前進 1.85 m（×0.85）；從第 12 格（0.40 s）起播，縮短起手",
+   "link_from": {
+    "slash_v": 0.633,
+    "slash_vh": 1.25,
+    "slash_vhx": 2.1,
+    "slash_vhg": 2.267,
+    "thrust": 0.7,
+    "backcut": 1.0,
+    "pairx": 1.417,
+    "q_sidecut": 0.767,
+    "q_emmacut": 0.667,
+    "q_dashcut": 1.0,
+    "q_jumpcut": 1.1,
+    "q_iaiup": 0.767,
+    "q_gen3": 2.267,
+    "dodge_l": 0.2,
+    "dodge_r": 0.2,
+    "r9_jump": 1.0,
+    "sun_hekiraten": 0.97
+   },
+   "audio": {
+    "breath": {
+     "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+     "at": 0.037,
+     "db": -12.0,
+     "pitch": 0.7
+    },
+    "ignite": {
+     "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+     "at": 0.317,
+     "db": -9.0,
+     "pitch": 0.8
+    },
+    "swing": {
+     "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+     "at": 0.487,
+     "db": 0.0,
+     "pitch": 1.0
+    },
+    "flame": {
+     "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+     "loop_from": 0.317,
+     "loop_to": 0.967,
+     "db": -16.0
+    },
+    "hit": {
+     "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+     "on": "hit",
+     "db": 0.0
+    }
+   },
+   "vfx": {
+    "blade": {
+     "env": [
+      [
+       0.117,
+       0.0
+      ],
+      [
+       0.437,
+       1.0
+      ],
+      [
+       0.817,
+       1.0
+      ],
+      [
+       1.317,
+       0.0
+      ]
+     ],
+     "height": 0.1,
+     "emission": 1.0,
+     "core_emission": 0.55,
+     "tongue": 0.9,
+     "tile": 6.0,
+     "flow": 3.0,
+     "core_width": 0.3,
+     "u0": 0.1
+    },
+    "trail": {
+     "emit": [
+      [
+       0.5,
+       1.0
+      ]
+     ],
+     "lifetime": 0.22,
+     "extend": 0.1,
+     "inset": -0.3,
+     "lift": 0.04,
+     "emission": 1.0,
+     "core_emission": 0.6,
+     "opacity": 0.85,
+     "core_root_skip": 0.4,
+     "core_ratio": 0.45,
+     "head_fade": 0.04,
+     "max_step_deg": 4.0,
+     "_note": "inset 負值＝刀光從離護手 0.30 m 處才開始（只描刀身外段）；寬刀光會蓋住刀與木樁的接觸（R9 第一輪審圖）"
+    },
+    "sparks": {
+     "windows": [
+      [
+       0.46,
+       1.08
+      ]
+     ],
+     "min_speed": 6.0,
+     "full_speed": 25.0,
+     "max_ratio": 1.0,
+     "lifetime": 0.4
+    },
+    "hit": {
+     "particles": 16,
+     "offset": 0.05,
+     "normal_w": 0.7,
+     "cut_w": 0.5,
+     "flash_size": 0.1,
+     "flash_time": 0.08
+    }
+   },
+   "vfx_variants": {
+    "RJ_L1": {
+     "core": {
+      "life": 0.16,
+      "head_fade": 0.015,
+      "hold": 0.2,
+      "emission": 1.4,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.55,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.58,
+       0.1,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.28,
+      "use_reveal": 0.0,
+      "hold": 0.3,
+      "emission": 2.4,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.42,
+      "grow": 0.04,
+      "hold": 0.25,
+      "emission": 2.4,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "embers": {
+      "life": 0.7,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 2.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 4.0,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 4.0,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_scale": 1.1,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 1.02,
+     "drift_from": 0.637,
+     "drift_to": 1.367,
+     "end_t": 1.9,
+     "blade_env": [
+      [
+       0.067,
+       0.0
+      ],
+      [
+       0.267,
+       0.7
+      ],
+      [
+       0.467,
+       1.0
+      ],
+      [
+       0.817,
+       1.0
+      ],
+      [
+       1.267,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.517,
+      "to": 0.737,
+      "min_speed": 10.0,
+      "max_ratio": 0.9
+     },
+     "core_on_top": true,
+     "burst": {
+      "life": 0.2,
+      "grow": 0.035,
+      "hold": 0.25,
+      "emission": 2.8,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.5,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.6,
+      "flash_t": 0.06
+     },
+     "mesh": "RJ",
+     "extra": {},
+     "_note": "R9-C3：火焰 mesh＝C2 流焰（主體）＋C1 命中爆燃（Burst＋命中三層）；L1／L2 用同一套 mesh 與材質，只差光照｜L1 自然火光",
+     "lights": {
+      "blade": {
+       "energy": 1.9,
+       "range": 2.8,
+       "attn": 1.0,
+       "pos_u": 0.4,
+       "flicker": 0.1,
+       "color": [
+        1.0,
+        0.66,
+        0.3
+       ],
+       "env": [
+        [
+         0.097,
+         0.0
+        ],
+        [
+         0.317,
+         0.18
+        ],
+        [
+         0.477,
+         0.4
+        ],
+        [
+         0.577,
+         0.8
+        ],
+        [
+         0.617,
+         1.0
+        ],
+        [
+         0.677,
+         0.85
+        ],
+        [
+         0.777,
+         0.35
+        ],
+        [
+         0.917,
+         0.06
+        ],
+        [
+         1.017,
+         0.0
+        ]
+       ]
+      },
+      "trail": {
+       "energy": 1.1,
+       "range": 2.4,
+       "attn": 1.0,
+       "flicker": 0.22,
+       "lag": [
+        0.05,
+        0.13
+       ],
+       "color": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "env": [
+        [
+         0.477,
+         0.0
+        ],
+        [
+         0.557,
+         0.7
+        ],
+        [
+         0.617,
+         1.0
+        ],
+        [
+         0.737,
+         0.75
+        ],
+        [
+         0.967,
+         0.2
+        ],
+        [
+         1.167,
+         0.0
+        ]
+       ],
+       "min_y": 0.9
+      },
+      "hit": {
+       "flash_e": 3.2,
+       "flash_col": [
+        1.0,
+        0.8,
+        0.5
+       ],
+       "burn_e": 2.2,
+       "burn_col": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "xfade": 0.06,
+       "burn_t": 0.24,
+       "range": 2.8,
+       "off": 0.25,
+       "up": 0.05,
+       "min_flash": 0.05,
+       "flicker": 0.12
+      },
+      "flare_time": 0.12,
+      "flare_gain": 1.0
+     }
+    },
+    "RJ_L2": {
+     "core": {
+      "life": 0.16,
+      "head_fade": 0.015,
+      "hold": 0.2,
+      "emission": 1.4,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.55,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.58,
+       0.1,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.28,
+      "use_reveal": 0.0,
+      "hold": 0.3,
+      "emission": 2.4,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.42,
+      "grow": 0.04,
+      "hold": 0.25,
+      "emission": 2.4,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "embers": {
+      "life": 0.7,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 2.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 4.0,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 4.0,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_scale": 1.1,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 1.02,
+     "drift_from": 0.637,
+     "drift_to": 1.367,
+     "end_t": 1.9,
+     "blade_env": [
+      [
+       0.067,
+       0.0
+      ],
+      [
+       0.267,
+       0.7
+      ],
+      [
+       0.467,
+       1.0
+      ],
+      [
+       0.817,
+       1.0
+      ],
+      [
+       1.267,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.517,
+      "to": 0.737,
+      "min_speed": 10.0,
+      "max_ratio": 0.9
+     },
+     "core_on_top": true,
+     "burst": {
+      "life": 0.2,
+      "grow": 0.035,
+      "hold": 0.25,
+      "emission": 2.8,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.9,
+       0.5,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.6,
+      "flash_t": 0.06
+     },
+     "mesh": "RJ",
+     "extra": {},
+     "_note": "R9-C3：火焰 mesh＝C2 流焰（主體）＋C1 命中爆燃（Burst＋命中三層）；L1／L2 用同一套 mesh 與材質，只差光照｜L2 動畫爆發（命中白金強光更強、橘紅爆燃更久、餘燼光、熱浪、火焰命中脈衝 ×1.6）",
+     "lights": {
+      "blade": {
+       "energy": 1.9,
+       "range": 2.8,
+       "attn": 1.0,
+       "pos_u": 0.4,
+       "flicker": 0.1,
+       "color": [
+        1.0,
+        0.66,
+        0.3
+       ],
+       "env": [
+        [
+         0.097,
+         0.0
+        ],
+        [
+         0.317,
+         0.18
+        ],
+        [
+         0.477,
+         0.4
+        ],
+        [
+         0.577,
+         0.8
+        ],
+        [
+         0.617,
+         1.0
+        ],
+        [
+         0.677,
+         0.85
+        ],
+        [
+         0.777,
+         0.35
+        ],
+        [
+         0.917,
+         0.06
+        ],
+        [
+         1.017,
+         0.0
+        ]
+       ]
+      },
+      "trail": {
+       "energy": 1.1,
+       "range": 2.4,
+       "attn": 1.0,
+       "flicker": 0.22,
+       "lag": [
+        0.05,
+        0.13
+       ],
+       "color": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "env": [
+        [
+         0.477,
+         0.0
+        ],
+        [
+         0.557,
+         0.7
+        ],
+        [
+         0.617,
+         1.0
+        ],
+        [
+         0.737,
+         0.75
+        ],
+        [
+         0.967,
+         0.2
+        ],
+        [
+         1.167,
+         0.0
+        ]
+       ],
+       "min_y": 0.9
+      },
+      "hit": {
+       "flash_e": 6.0,
+       "flash_col": [
+        1.0,
+        0.95,
+        0.82
+       ],
+       "burn_e": 3.2,
+       "burn_col": [
+        1.0,
+        0.4,
+        0.1
+       ],
+       "xfade": 0.07,
+       "burn_t": 0.32,
+       "range": 2.2,
+       "off": 0.25,
+       "up": 0.15,
+       "min_flash": 0.05,
+       "flicker": 0.18,
+       "attn": 1.6
+      },
+      "ember": {
+       "energy": 1.3,
+       "time": 0.6,
+       "range": 1.8,
+       "color": [
+        1.0,
+        0.26,
+        0.05
+       ],
+       "off": 0.35,
+       "y": 0.35,
+       "flicker": 0.35
+      },
+      "haze": {
+       "strength": 1.0,
+       "time": 0.45,
+       "size": 1.1,
+       "amount": 0.006,
+       "off": 0.15,
+       "up": 0.4
+      },
+      "flare_time": 0.22,
+      "flare_gain": 1.6
+     }
+    },
+    "RJ_R10": {
+     "core": {
+      "life": 0.16,
+      "head_fade": 0.015,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.97,
+       0.86,
+       1.0
+      ],
+      "col_gold": [
+       1.0,
+       0.66,
+       0.16,
+       1.0
+      ]
+     },
+     "body": {
+      "life": 0.28,
+      "use_reveal": 0.0,
+      "hold": 0.3,
+      "emission": 3.48,
+      "cool": 0.45,
+      "rim_k": 0.85,
+      "col_hot": [
+       1.0,
+       0.93,
+       0.7,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "flames": {
+      "life": 0.42,
+      "grow": 0.04,
+      "hold": 0.25,
+      "emission": 3.48,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.93,
+       0.7,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "embers": {
+      "life": 0.7,
+      "use_reveal": 0.0,
+      "hold": 0.5,
+      "emission": 2.4
+     },
+     "blade": {
+      "fixed_age": 0.0,
+      "use_reveal": 0.0,
+      "flow": 0.0,
+      "emission": 3.4
+     },
+     "hit": {
+      "life": 0.3,
+      "grow": 0.035,
+      "hold": 0.3,
+      "emission": 5.6,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitring": {
+      "life": 0.16,
+      "use_reveal": 0.0,
+      "hold": 0.2,
+      "emission": 3.2,
+      "col_hot": [
+       1.0,
+       0.86,
+       0.42,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ]
+     },
+     "hitstar": {
+      "life": 0.14,
+      "grow": 0.02,
+      "use_reveal": 1.0,
+      "hold": 0.3,
+      "emission": 5.6,
+      "cool": 0.3,
+      "col_hot": [
+       1,
+       0.95,
+       0.75,
+       1
+      ],
+      "col_mid": [
+       1,
+       0.75,
+       0.3,
+       1
+      ],
+      "col_out": [
+       1,
+       0.45,
+       0.1,
+       1
+      ]
+     },
+     "hit_scale": 1.1,
+     "hit_off": 0.1,
+     "hitring_t": 0.22,
+     "freeze_t": 1.02,
+     "drift_from": 0.637,
+     "drift_to": 1.367,
+     "end_t": 1.9,
+     "blade_env": [
+      [
+       0.067,
+       0.0
+      ],
+      [
+       0.267,
+       0.7
+      ],
+      [
+       0.467,
+       1.0
+      ],
+      [
+       0.817,
+       1.0
+      ],
+      [
+       1.267,
+       0.0
+      ]
+     ],
+     "sparks": {
+      "from": 0.517,
+      "to": 0.737,
+      "min_speed": 10.0,
+      "max_ratio": 0.9
+     },
+     "core_on_top": true,
+     "burst": {
+      "life": 0.2,
+      "grow": 0.035,
+      "hold": 0.25,
+      "emission": 4.06,
+      "cool": 0.5,
+      "rim_k": 0.8,
+      "col_hot": [
+       1.0,
+       0.93,
+       0.7,
+       1.0
+      ],
+      "col_mid": [
+       1.0,
+       0.46,
+       0.06,
+       1.0
+      ],
+      "col_out": [
+       0.62,
+       0.06,
+       0.02,
+       1.0
+      ],
+      "ignite_flash": 0.6,
+      "flash_t": 0.06
+     },
+     "mesh": "RJ",
+     "extra": {},
+     "_note": "R10 熱發光：L1 的空間照明＋火焰自發光加強（核心 emission 1.4→3.2、白金色；火體 ×1.45；命中 ×1.4），配合 R10 場景的泛光（門檻 0.95、強度 0.75）",
+     "lights": {
+      "blade": {
+       "energy": 1.9,
+       "range": 2.8,
+       "attn": 1.0,
+       "pos_u": 0.4,
+       "flicker": 0.1,
+       "color": [
+        1.0,
+        0.66,
+        0.3
+       ],
+       "env": [
+        [
+         0.097,
+         0.0
+        ],
+        [
+         0.317,
+         0.18
+        ],
+        [
+         0.477,
+         0.4
+        ],
+        [
+         0.577,
+         0.8
+        ],
+        [
+         0.617,
+         1.0
+        ],
+        [
+         0.677,
+         0.85
+        ],
+        [
+         0.777,
+         0.35
+        ],
+        [
+         0.917,
+         0.06
+        ],
+        [
+         1.017,
+         0.0
+        ]
+       ]
+      },
+      "trail": {
+       "energy": 1.1,
+       "range": 2.4,
+       "attn": 1.0,
+       "flicker": 0.22,
+       "lag": [
+        0.05,
+        0.13
+       ],
+       "color": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "env": [
+        [
+         0.477,
+         0.0
+        ],
+        [
+         0.557,
+         0.7
+        ],
+        [
+         0.617,
+         1.0
+        ],
+        [
+         0.737,
+         0.75
+        ],
+        [
+         0.967,
+         0.2
+        ],
+        [
+         1.167,
+         0.0
+        ]
+       ],
+       "min_y": 0.9
+      },
+      "hit": {
+       "flash_e": 3.2,
+       "flash_col": [
+        1.0,
+        0.8,
+        0.5
+       ],
+       "burn_e": 2.2,
+       "burn_col": [
+        1.0,
+        0.45,
+        0.14
+       ],
+       "xfade": 0.06,
+       "burn_t": 0.24,
+       "range": 2.8,
+       "off": 0.25,
+       "up": 0.05,
+       "min_flash": 0.05,
+       "flicker": 0.12
+      },
+      "flare_time": 0.12,
+      "flare_gain": 1.0
+     }
+    }
+   },
+   "vfx_map": {
+    "L1": "RJ_L1",
+    "L2": "RJ_L2",
+    "R10": "RJ_R10",
+    "*": "RJ_R10"
+   }
+  }
+ }
+}

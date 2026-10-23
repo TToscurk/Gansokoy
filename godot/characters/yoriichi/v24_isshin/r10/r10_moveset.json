@@ -1,0 +1,234 @@
+{
+ "_doc": "R10：沿用 R9 派生表；居合斬 a100_003021（key iai）從預設攻擊路由移除（enabled=false，動畫與設定保留，可改回 true 重新啟用）；居合構＋攻擊＝明確選定的居合招（二連斬／居合上撩），不再「選到不是居合系就出居合斬」",
+ "version": 1,
+ "sprint": {
+  "anim": "isshin_r9_sprint",
+  "speed": 4.19,
+  "min_sprint": 0.25,
+  "src": "弦一郎 c7100 a000_405010 跑步循環（刀身推離右大腿 2.4 cm 的 _fx 版）；速度＝重定向後站立腳接觸速度"
+ },
+ "buffer": {
+  "attack": 0.2,
+  "dodge": 0.15,
+  "skill": 0.25,
+  "jump": 0.12
+ },
+ "shots": {
+  "r9_jump": {
+   "anim": "isshin_r9_jump",
+   "angle": 0.0,
+   "fade_in": 0.06,
+   "fade_out": 0.3,
+   "travel_scale": 0.852,
+   "two_hand": true,
+   "attack": true,
+   "strikes": [],
+   "swings": [],
+   "lockout": 0.1,
+   "lunges": [
+    [
+     0.0,
+     0.93
+    ]
+   ],
+   "min_dist": 1.1,
+   "grip_off": 0.8,
+   "next": {
+    "key": "q_jumpcut",
+    "open": 0.1,
+    "close": 0.73,
+    "seam": 0.733
+   },
+   "move_cancel": 1.1,
+   "dodge_cancel": 1.0,
+   "attack_cancel": 1.0,
+   "_src": "弦一郎 c7100 TAE 3022 起跳（與 q_jumpcut 逐格相同到 0.733 s）＋不攻擊的落地（上半身 0.33 s 回一心待機）；notes/r9/build_jump.py"
+  }
+ },
+ "overrides": {
+  "dodge_l": {
+   "attack_cancel": 0.2
+  },
+  "dodge_r": {
+   "attack_cancel": 0.2
+  },
+  "thrust": {
+   "attack_cancel": 0.7
+  },
+  "backcut": {
+   "attack_cancel": 1.0
+  },
+  "pairx": {
+   "attack_cancel": 1.417
+  },
+  "slash_vhx": {
+   "attack_cancel": 2.1
+  },
+  "slash_vhg": {
+   "attack_cancel": 2.267
+  },
+  "q_jumpcut": {
+   "attack_cancel": 1.1
+  }
+ },
+ "branches": [
+  {
+   "id": "sheathed",
+   "label": "居合構＋攻擊＝目前選定的居合招（1–0 選到居合系的招就換成它；預設二連斬）",
+   "when": {
+    "weapon": "sheathed"
+   },
+   "move": "$iai",
+   "_why": "R10：刀在鞘中可以走／跑／衝刺，居合構與居合攻擊分開；攻擊鍵只出明確選定的居合招"
+  },
+  {
+   "id": "dodge_counter_l",
+   "label": "左閃避中／後反擊＝單手袈裟快斬",
+   "when": {
+    "after": [
+     "dodge_l"
+    ],
+    "within": 0.35
+   },
+   "move": "q_emmacut",
+   "fire": {
+    "fade_in": 0.12
+   }
+  },
+  {
+   "id": "dodge_counter_r",
+   "label": "右閃避中／後反擊＝前衝突刺（拉近距離）",
+   "when": {
+    "after": [
+     "dodge_r"
+    ],
+    "within": 0.35
+   },
+   "move": "thrust",
+   "fire": {
+    "fade_in": 0.12
+   },
+   "_why": "閃避後敵人在斜前方 2.6–3.7 m：實測 q_sidecut（自帶左跨步）兩側都空揮；q_emmacut／thrust／q_dashcut 在 2.0–3.2 m 全中（雙手離木樁軸 ≥ 0.52 m）。左右各用不同招，戰術上一快一長"
+  },
+  {
+   "id": "link_iaiup",
+   "label": "居合上撩後再按＝單手袈裟快斬",
+   "when": {
+    "ctx": "cancel",
+    "after": [
+     "q_iaiup"
+    ]
+   },
+   "move": "q_emmacut",
+   "fire": {
+    "fade_in": 0.12
+   }
+  },
+  {
+   "id": "dash_attack",
+   "label": "衝刺中攻擊＝突進逆袈裟（從突進段開始，接住跑步的速度）",
+   "when": {
+    "ctx": "loco",
+    "loco": "sprint"
+   },
+   "move": "q_dashcut",
+   "fire": {
+    "start_t": 0.1,
+    "fade_in": 0.12
+   }
+  },
+  {
+   "id": "back_attack",
+   "label": "後退＋攻擊＝退步縱斬（近身斬後脫離）",
+   "when": {
+    "loco": "back"
+   },
+   "move": "backcut"
+  },
+  {
+   "id": "ground",
+   "label": "一般攻擊＝選中的起手招（預設一心三刀，連按接連段）",
+   "when": {},
+   "move": "$selected"
+  }
+ ],
+ "moves": {
+  "_doc": "19 招全部保留（狀態沿用動作庫驗收結果）；enabled＝false 的招不進試玩清單，但動畫與設定不刪",
+  "slash_v": {
+   "status": "既有",
+   "enabled": true
+  },
+  "pairx": {
+   "status": "既有",
+   "enabled": true
+  },
+  "thrust": {
+   "status": "既有",
+   "enabled": true
+  },
+  "backcut": {
+   "status": "既有",
+   "enabled": true
+  },
+  "iai": {
+   "status": "R10 停用：從預設攻擊路由移除（動畫 isshin_iai／isshin_draw 保留；isshin_draw 仍當拔刀過渡）",
+   "enabled": false
+  },
+  "twocut": {
+   "status": "既有",
+   "enabled": true
+  },
+  "q_sidecut": {
+   "status": "OK",
+   "enabled": true
+  },
+  "q_sidevert": {
+   "status": "OK",
+   "enabled": true
+  },
+  "q_spinpass": {
+   "status": "弱（只切進 6 cm）",
+   "enabled": true
+  },
+  "q_jumpcut": {
+   "status": "OK（R9 起兼作空中攻擊）",
+   "enabled": true
+  },
+  "q_aerial3": {
+   "status": "OK",
+   "enabled": true
+  },
+  "q_gen3": {
+   "status": "OK",
+   "enabled": true
+  },
+  "q_emma2": {
+   "status": "停用：第二刀刀根命中、右手離木樁表面 9 cm",
+   "enabled": false
+  },
+  "q_emmacut": {
+   "status": "OK",
+   "enabled": true
+  },
+  "q_dashcut": {
+   "status": "OK",
+   "enabled": true
+  },
+  "q_iaiup": {
+   "status": "OK",
+   "enabled": true
+  },
+  "q_retreat": {
+   "status": "需追擊的敵人",
+   "enabled": true
+  },
+  "q_c_emma": {
+   "status": "OK",
+   "enabled": true
+  },
+  "q_c_retthrust": {
+   "status": "需追擊的敵人",
+   "enabled": true
+  }
+ }
+}

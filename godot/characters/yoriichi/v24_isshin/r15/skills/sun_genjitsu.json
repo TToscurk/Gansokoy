@@ -1,0 +1,235 @@
+{
+ "_doc": "R15 日之呼吸・幻日紅（ART_REVIEW 候選，notes/r15/build_genjitsu_r15.py）。來源 #521 女奏者 c7000 a000_003014（備選 A000_003068 在庫內有 7 個角色，來源不明 → 依規定用已確認的 #521）。原動作：雙腳略離地邊轉 2.25 圈邊往右前滑 2.8 m，0.81–1.0 s 一刀大橫掃（單手）。改造：旋轉壓縮成 0.46 s 的滑步；根路徑改成繞目標的弧（設計距離 2.6 m → 繞到目標右後方 130°、半徑 1.35 m，最近不小於 1.0 m）；角色朝向隨弧轉 130° 面向目標；旋轉中多轉 -250° 讓那一刀掃過目標。執行期由試玩場景依「實際目標位置」畫同一條弧（arc；動畫根位移不用），牆照樣擋；沿路 3 個殘影。",
+ "name": "日之呼吸・幻日紅",
+ "status": "ART_REVIEW",
+ "batch": 1,
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r15_genjitsu.json",
+ "source": "#521 女奏者 c7000 a000_003014（TS 1.056）",
+ "timeline": "起步 0–0.16 s（Space 可取消）→ 繞行滑步 0.16–0.62（3 個殘影）→ 側後方一刀 0.63–0.82 → 收勢",
+ "damage": 3,
+ "cooldown": 1.0,
+ "charge_cancel": 0.16,
+ "targets": [
+  {
+   "name": "木樁 2.6 m（設計距離）",
+   "pos": [
+    0.0,
+    0.0,
+    2.6
+   ]
+  },
+  {
+   "name": "木樁 1.8 m（近）",
+   "pos": [
+    0.0,
+    0.0,
+    1.8
+   ]
+  },
+  {
+   "name": "木樁 3.6 m（遠）",
+   "pos": [
+    0.0,
+    0.0,
+    3.6
+   ]
+  }
+ ],
+ "arc": {
+  "t0": 0.16,
+  "t1": 0.62,
+  "phi_deg": 130.0,
+  "r_end": 1.2,
+  "r_min": 1.0,
+  "d0": 2.6,
+  "ease_out": 0.55
+ },
+ "afterimage": {
+  "times": [
+   0.275,
+   0.39,
+   0.505
+  ],
+  "life": 0.2,
+  "alpha": 0.42,
+  "color": [
+   1.0,
+   0.32,
+   0.1
+  ]
+ },
+ "shot": {
+  "anim": "isshin_sun_genjitsu_r15",
+  "angle": 0.0,
+  "fade_in": 0.05,
+  "fade_out": 0.25,
+  "travel_scale": 0.0,
+  "root_yaw": true,
+  "two_hand": false,
+  "attack": true,
+  "strikes": [
+   [
+    0.631,
+    0.817
+   ]
+  ],
+  "swings": [
+   0.631
+  ],
+  "lockout": 0.1,
+  "min_dist": 0.9,
+  "dodge_cancel": 0.937,
+  "move_cancel": 1.117,
+  "attack_cancel": 1.117,
+  "end_t": 1.7667,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 4,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -12.0,
+   "pitch": 0.7
+  },
+  "dash": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.16,
+   "db": -3.0,
+   "pitch": 1.35
+  },
+  "ghost": {
+   "stream": "res://assets/audio/sfx/dragon_wind_loop.wav",
+   "at": 0.21,
+   "db": -14.0,
+   "pitch": 1.6
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 0.611,
+   "db": 0.0,
+   "pitch": 1.2
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_light_2.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・幻日紅",
+  "_doc": "R15 幻日紅：刀身火低（只在出刀前後微亮）；繞行滑步沿路 3 個紅色殘影（試玩場景的姿勢快照，0.2 s 淡出）；主特效＝側後方那一刀的短而利的斬線（genjitsu_r15_stroke_path.json，細、白熱核心、0.3 s 內散）。命中爆燃照實際命中（一次）。",
+  "trail": {
+   "emit": [
+    [
+     0.611,
+     0.837
+    ]
+   ],
+   "lifetime": 0.1,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.7,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊只在出刀前後微亮。",
+   "blade_env": [
+    [
+     0.5,
+     0.0
+    ],
+    [
+     0.62,
+     0.55
+    ],
+    [
+     0.867,
+     0.55
+    ],
+    [
+     1.167,
+     0.0
+    ]
+   ],
+   "edge_height": 0.1,
+   "end_t": 1.267
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/genjitsu_r15_stroke_path.json",
+   "inner": 0.05,
+   "outer": 0.11,
+   "grow": 0.02,
+   "head_len": 0.03,
+   "tear_t": 0.721,
+   "gone_t": 0.941,
+   "tear_lag": 1.0,
+   "vanish_age": 0.3,
+   "vanish_soft": 0.08,
+   "end_t": 1.417,
+   "yellow_cut": 0.55,
+   "orange_cut": 0.25,
+   "outline_w": 0.05,
+   "opacity": 0.95,
+   "near_fade": 0.45,
+   "col_yellow": [
+    1.0,
+    0.55,
+    0.2
+   ],
+   "yellow_gain": 1.6,
+   "col_orange": [
+    1.0,
+    0.18,
+    0.04
+   ],
+   "orange_gain": 1.25,
+   "col_red": [
+    0.7,
+    0.02,
+    0.02
+   ],
+   "red_gain": 1.1,
+   "col_white": [
+    1.0,
+    0.9,
+    0.85
+   ],
+   "white_gain": 3.4,
+   "head_gain": 1.0
+  },
+  "sparks": {
+   "window": [
+    0.631,
+    0.817
+   ],
+   "min_speed": 20.0,
+   "spacing": 0.2,
+   "cap": 10
+  },
+  "hit": {
+   "tongues": 4,
+   "sparks": 12,
+   "flash_len": 0.5,
+   "flash_w": 0.07,
+   "flash_life": 0.14,
+   "flash_ahead": 0.1,
+   "flash_out": 0.08,
+   "flare_time": 0.1
+  },
+  "ignite": {
+   "rate": 8.0,
+   "cap": 5,
+   "max_speed": 12.0
+  }
+ },
+ "id": "sun_genjitsu"
+}

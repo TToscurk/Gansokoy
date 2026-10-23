@@ -1,0 +1,238 @@
+{
+ "_doc": "R15 日之呼吸・圓舞（新候選；R9 圓舞 sun_enbu 原樣保留可比較；ART_REVIEW，notes/r15/build_enbu_r15.py）。來源 #533 狼 c0000 a050_309050。原動作在第一刀時身體前撲、0.40–0.55 s 前滾翻（頭下腳上）再起身砍第二刀 → 前滾拿掉：第一刀砍完（0.355 s）停在收刀姿勢，接 0.58 s 起身舉刀那一格（0.15 s 交叉淡入、髖部朝向與位置對齊），變成「下沉前衝 → 雙手袈裟 → 身體回正上步 → 第二刀雙手袈裟（低姿）→ 起身」。低姿停留縮短、收勢回待機。雙手握到第二刀收刀後。",
+ "name": "日之呼吸・圓舞（R15 新）",
+ "status": "ART_REVIEW",
+ "batch": 1,
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r15_enbu.json",
+ "source": "#533 狼 c0000 a050_309050（TS 1.017；前滾移除）",
+ "timeline": "蓄勢 0–0.14 s（Space 可取消）→ 下沉前衝 → 第一刀袈裟 0.38–0.52 → 回正上步 → 第二刀袈裟 0.60–0.79 → 低姿 → 起身收勢（Shift+L＝圓舞一閃）",
+ "damage": 2,
+ "cooldown": 1.0,
+ "charge_cancel": 0.14,
+ "targets": [
+  {
+   "name": "木樁 3.1 m（設計距離）",
+   "pos": [
+    0.0,
+    0.0,
+    3.1
+   ]
+  },
+  {
+   "name": "木樁 2.5 m（近）",
+   "pos": [
+    0.0,
+    0.0,
+    2.5
+   ]
+  }
+ ],
+ "shot": {
+  "anim": "isshin_sun_enbu_r15",
+  "angle": 0.0,
+  "fade_in": 0.06,
+  "fade_out": 0.25,
+  "travel_scale": 1.0,
+  "two_hand": true,
+  "grip_off": 1.0561,
+  "attack": true,
+  "strikes": [
+   [
+    0.375,
+    0.52
+   ],
+   [
+    0.603,
+    0.786
+   ]
+  ],
+  "swings": [
+   0.375,
+   0.603
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.1,
+    0.48
+   ],
+   [
+    0.48,
+    0.786
+   ]
+  ],
+  "lunge_min_dist": [
+   1.2,
+   1.1
+  ],
+  "min_dist": 0.85,
+  "dodge_cancel": 0.936,
+  "move_cancel": 1.0,
+  "attack_cancel": 1.0,
+  "end_t": 2.0,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 4,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.6
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.05,
+   "db": -10.0,
+   "pitch": 0.8
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 0.405,
+   "db": 0.0,
+   "pitch": 1.0
+  },
+  "swing2": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 0.583,
+   "db": 0.0,
+   "pitch": 0.95
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.1,
+   "loop_to": 1.3,
+   "db": -16.0
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・圓舞（R15 新）",
+  "_doc": "R15 圓舞（新）：蓄勢即點燃刀身；主火帶＝兩道寬新月（沿兩刀袈裟刀尖實際路線，中段最寬、兩端收尖；enbu_r15_stroke_path.json，break_gap 斷開），明亮橘紅、每段 0.45 s 後碎散；命中爆燃每刀一次。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     0.375,
+     0.52
+    ],
+    [
+     0.583,
+     0.806
+    ]
+   ],
+   "lifetime": 0.16,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.55,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（蓄勢點燃，第二刀後收）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.12,
+     0.7
+    ],
+    [
+     0.25,
+     1.0
+    ],
+    [
+     0.886,
+     1.0
+    ],
+    [
+     1.286,
+     0.0
+    ]
+   ],
+   "edge_height": 0.14,
+   "end_t": 1.386
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/enbu_r15_stroke_path.json",
+   "break_gap": 0.1,
+   "inner": 0.24,
+   "outer": 0.52,
+   "grow": 0.06,
+   "head_len": 0.05,
+   "tear_t": 0.6007,
+   "gone_t": 0.8507,
+   "tear_lag": 1.0,
+   "vanish_age": 0.5,
+   "vanish_soft": 0.15,
+   "end_t": 2.0,
+   "yellow_cut": 0.78,
+   "orange_cut": 0.38,
+   "outline_w": 0.08,
+   "opacity": 0.95,
+   "near_fade": 0.65,
+   "col_yellow": [
+    1.0,
+    0.55,
+    0.08
+   ],
+   "yellow_gain": 1.3,
+   "col_orange": [
+    1.0,
+    0.28,
+    0.02
+   ],
+   "orange_gain": 1.15,
+   "col_red": [
+    0.6,
+    0.04,
+    0.01
+   ],
+   "red_gain": 1.0,
+   "col_white": [
+    1.0,
+    0.92,
+    0.7
+   ],
+   "white_gain": 2.2,
+   "head_gain": 0.35
+  },
+  "sparks": {
+   "window": [
+    0.375,
+    0.786
+   ],
+   "min_speed": 15.0,
+   "spacing": 0.15,
+   "cap": 22
+  },
+  "hit": {
+   "tongues": 6,
+   "sparks": 14,
+   "flash_len": 0.5,
+   "flash_w": 0.12,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "id": "sun_enbu_r15"
+}

@@ -1,0 +1,1680 @@
+{
+ "isshin_sh_walk": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_sh_walk.json"
+ },
+ "isshin_sh_back": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_sh_back.json"
+ },
+ "isshin_sh_strafe_l": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_sh_strafe_l.json"
+ },
+ "isshin_sh_strafe_r": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_sh_strafe_r.json"
+ },
+ "isshin_sh_run": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_sh_run.json"
+ },
+ "isshin_sh_turn_l90": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_sh_turn_l90.json"
+ },
+ "isshin_sh_turn_r90": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_sh_turn_r90.json"
+ },
+ "isshin_sun_hekiraten": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003012.json"
+ },
+ "isshin_sun_retsujitsu": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003068.json",
+  "start": 12
+ },
+ "isshin_lib_c0000_a050_304121": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_304121.json"
+ },
+ "isshin_lib_c0000_a050_305101": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_305101.json"
+ },
+ "isshin_lib_c0000_a050_308000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_308000.json"
+ },
+ "isshin_lib_c0000_a050_308010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_308010.json"
+ },
+ "isshin_lib_c0000_a050_308060": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_308060.json"
+ },
+ "isshin_lib_c0000_a050_308910": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_308910.json"
+ },
+ "isshin_lib_c0000_a050_309000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_309000.json"
+ },
+ "isshin_lib_c0000_a050_310000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_310000.json"
+ },
+ "isshin_lib_c0000_a050_310110": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_310110.json"
+ },
+ "isshin_lib_c0000_a050_310200": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_310200.json"
+ },
+ "isshin_lib_c0000_a050_310201": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_310201.json"
+ },
+ "isshin_lib_c0000_a050_311000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_311000.json"
+ },
+ "isshin_lib_c0000_a050_311200": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_311200.json"
+ },
+ "isshin_lib_c0000_a050_311201": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_311201.json"
+ },
+ "isshin_lib_c0000_a050_313002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_313002.json"
+ },
+ "isshin_lib_c0000_a050_314000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_314000.json"
+ },
+ "isshin_lib_c0000_a050_314010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_314010.json"
+ },
+ "isshin_lib_c0000_a050_390000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_390000.json"
+ },
+ "isshin_lib_c0000_a101_316001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a101_316001.json"
+ },
+ "isshin_lib_c0000_a101_316002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a101_316002.json"
+ },
+ "isshin_lib_c0000_a101_316200": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a101_316200.json"
+ },
+ "isshin_lib_c0000_a101_316210": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a101_316210.json"
+ },
+ "isshin_lib_c0000_a101_316230": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a101_316230.json"
+ },
+ "isshin_lib_c0000_a102_316000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a102_316000.json"
+ },
+ "isshin_lib_c0000_a102_316010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a102_316010.json"
+ },
+ "isshin_lib_c0000_a102_316100": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a102_316100.json"
+ },
+ "isshin_lib_c0000_a102_316200": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a102_316200.json"
+ },
+ "isshin_lib_c0000_a102_316210": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a102_316210.json"
+ },
+ "isshin_lib_c0000_a102_316300": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a102_316300.json"
+ },
+ "isshin_lib_c0000_a103_316000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a103_316000.json"
+ },
+ "isshin_lib_c0000_a103_316100": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a103_316100.json"
+ },
+ "isshin_lib_c0000_a103_316210": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a103_316210.json"
+ },
+ "isshin_lib_c0000_a103_316300": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a103_316300.json"
+ },
+ "isshin_lib_c0000_a104_316000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a104_316000.json"
+ },
+ "isshin_lib_c0000_a105_316010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a105_316010.json"
+ },
+ "isshin_lib_c0000_a105_317020": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a105_317020.json"
+ },
+ "isshin_lib_c0000_a106_316000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a106_316000.json"
+ },
+ "isshin_lib_c0000_a106_316010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a106_316010.json"
+ },
+ "isshin_lib_c0000_a106_316100": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a106_316100.json"
+ },
+ "isshin_lib_c0000_a106_316110": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a106_316110.json"
+ },
+ "isshin_lib_c0000_a106_316200": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a106_316200.json"
+ },
+ "isshin_lib_c0000_a106_316210": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a106_316210.json"
+ },
+ "isshin_lib_c0000_a106_316300": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a106_316300.json"
+ },
+ "isshin_lib_c0000_a107_316010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a107_316010.json"
+ },
+ "isshin_lib_c0000_a107_316020": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a107_316020.json"
+ },
+ "isshin_lib_c0000_a107_316030": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a107_316030.json"
+ },
+ "isshin_lib_c0000_a107_316200": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a107_316200.json"
+ },
+ "isshin_lib_c0000_a107_316210": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a107_316210.json"
+ },
+ "isshin_lib_c0000_a107_316720": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a107_316720.json"
+ },
+ "isshin_lib_c0000_a107_316740": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a107_316740.json"
+ },
+ "isshin_lib_c0000_a108_316010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a108_316010.json"
+ },
+ "isshin_lib_c0000_a108_316100": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a108_316100.json"
+ },
+ "isshin_lib_c0000_a109_316000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a109_316000.json"
+ },
+ "isshin_lib_c0000_a109_316100": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a109_316100.json"
+ },
+ "isshin_lib_c0000_a109_316210": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a109_316210.json"
+ },
+ "isshin_lib_c0000_a109_316300": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a109_316300.json"
+ },
+ "isshin_lib_c5060_a000_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003000.json"
+ },
+ "isshin_lib_c5060_a000_003012": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003012.json"
+ },
+ "isshin_lib_c7100_a000_003068": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003068.json"
+ },
+ "isshin_lib_c0000_a100_316000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a100_316000.json"
+ },
+ "isshin_lib_c0000_a100_316200": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a100_316200.json"
+ },
+ "isshin_lib_c0000_a050_300000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_300000.json"
+ },
+ "isshin_lib_c0000_a050_300001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_300001.json"
+ },
+ "isshin_lib_c0000_a050_300011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_300011.json"
+ },
+ "isshin_lib_c0000_a050_300020": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_300020.json"
+ },
+ "isshin_lib_c0000_a050_300100": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_300100.json"
+ },
+ "isshin_lib_c0000_a050_300101": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_300101.json"
+ },
+ "isshin_lib_c0000_a050_300110": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_300110.json"
+ },
+ "isshin_lib_c0000_a050_300111": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_300111.json"
+ },
+ "isshin_lib_c0000_a050_301000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_301000.json"
+ },
+ "isshin_lib_c0000_a050_301100": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_301100.json"
+ },
+ "isshin_lib_c0000_a050_302010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_302010.json"
+ },
+ "isshin_lib_c0000_a050_302011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_302011.json"
+ },
+ "isshin_lib_c0000_a050_304011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_304011.json"
+ },
+ "isshin_lib_c0000_a050_304012": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_304012.json"
+ },
+ "isshin_lib_c0000_a050_304021": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_304021.json"
+ },
+ "isshin_lib_c0000_a050_304022": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_304022.json"
+ },
+ "isshin_lib_c0000_a050_304122": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_304122.json"
+ },
+ "isshin_lib_c0000_a050_305100": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_305100.json"
+ },
+ "isshin_lib_c0000_a109_316200": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a109_316200.json"
+ },
+ "isshin_lib_c0000_a109_316600": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a109_316600.json"
+ },
+ "isshin_lib_c0000_a109_316650": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a109_316650.json"
+ },
+ "isshin_lib_c0000_a109_316660": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a109_316660.json"
+ },
+ "isshin_lib_c0000_a110_316210": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a110_316210.json"
+ },
+ "isshin_lib_c5060_a000_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003001.json"
+ },
+ "isshin_lib_c5060_a000_003002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003002.json"
+ },
+ "isshin_lib_c5060_a000_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003003.json"
+ },
+ "isshin_lib_c5060_a000_003004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003004.json"
+ },
+ "isshin_lib_c5060_a000_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003005.json"
+ },
+ "isshin_lib_c5060_a000_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003011.json"
+ },
+ "isshin_lib_c5060_a000_003013": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003013.json"
+ },
+ "isshin_lib_c5060_a000_003016": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003016.json"
+ },
+ "isshin_lib_c5060_a000_003017": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003017.json"
+ },
+ "isshin_lib_c5060_a000_003018": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003018.json"
+ },
+ "isshin_lib_c5060_a000_003019": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003019.json"
+ },
+ "isshin_lib_c5060_a000_003024": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003024.json"
+ },
+ "isshin_lib_c5060_a000_003026": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003026.json"
+ },
+ "isshin_lib_c5060_a000_003027": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003027.json"
+ },
+ "isshin_lib_c5060_a000_003028": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003028.json"
+ },
+ "isshin_lib_c5060_a000_003029": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003029.json"
+ },
+ "isshin_lib_c5060_a000_003033": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003033.json"
+ },
+ "isshin_lib_c5060_a000_003034": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003034.json"
+ },
+ "isshin_lib_c5060_a000_003035": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003035.json"
+ },
+ "isshin_lib_c5060_a000_003036": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003036.json"
+ },
+ "isshin_lib_c5060_a000_003037": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003037.json"
+ },
+ "isshin_lib_c5060_a000_003038": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003038.json"
+ },
+ "isshin_lib_c5060_a000_003039": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003039.json"
+ },
+ "isshin_lib_c5060_a000_003041": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003041.json"
+ },
+ "isshin_lib_c5060_a000_003046": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003046.json"
+ },
+ "isshin_lib_c5060_a000_003047": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003047.json"
+ },
+ "isshin_lib_c5060_a000_003048": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003048.json"
+ },
+ "isshin_lib_c5060_a000_003060": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003060.json"
+ },
+ "isshin_lib_c5060_a000_003061": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003061.json"
+ },
+ "isshin_lib_c5060_a000_003065": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003065.json"
+ },
+ "isshin_lib_c5060_a000_003066": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003066.json"
+ },
+ "isshin_lib_c5060_a000_003090": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003090.json"
+ },
+ "isshin_lib_c5060_a000_003092": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5060_a000_003092.json"
+ },
+ "isshin_lib_c5400_a000_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003000.json"
+ },
+ "isshin_lib_c5400_a000_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003001.json"
+ },
+ "isshin_lib_c5400_a000_003002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003002.json"
+ },
+ "isshin_lib_c5400_a000_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003003.json"
+ },
+ "isshin_lib_c5400_a000_003004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003004.json"
+ },
+ "isshin_lib_c5400_a000_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003005.json"
+ },
+ "isshin_lib_c5400_a000_003008": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003008.json"
+ },
+ "isshin_lib_c5400_a000_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003009.json"
+ },
+ "isshin_lib_c5400_a000_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003011.json"
+ },
+ "isshin_lib_c5400_a000_003012": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003012.json"
+ },
+ "isshin_lib_c5400_a000_003013": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003013.json"
+ },
+ "isshin_lib_c5400_a000_003014": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003014.json"
+ },
+ "isshin_lib_c5400_a000_003016": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003016.json"
+ },
+ "isshin_lib_c5400_a000_003017": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003017.json"
+ },
+ "isshin_lib_c5400_a000_003020": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003020.json"
+ },
+ "isshin_lib_c5400_a000_003021": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003021.json"
+ },
+ "isshin_lib_c5400_a000_003022": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003022.json"
+ },
+ "isshin_lib_c5400_a000_003023": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003023.json"
+ },
+ "isshin_lib_c5400_a000_003024": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003024.json"
+ },
+ "isshin_lib_c5400_a000_003025": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003025.json"
+ },
+ "isshin_lib_c5400_a000_003026": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003026.json"
+ },
+ "isshin_lib_c5400_a000_003027": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003027.json"
+ },
+ "isshin_lib_c5400_a000_003028": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003028.json"
+ },
+ "isshin_lib_c5400_a000_003031": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003031.json"
+ },
+ "isshin_lib_c5400_a000_003032": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003032.json"
+ },
+ "isshin_lib_c5400_a000_003035": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003035.json"
+ },
+ "isshin_lib_c5400_a000_003036": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003036.json"
+ },
+ "isshin_lib_c5400_a000_003041": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003041.json"
+ },
+ "isshin_lib_c5400_a000_003044": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003044.json"
+ },
+ "isshin_lib_c5400_a000_003045": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003045.json"
+ },
+ "isshin_lib_c5400_a000_003047": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003047.json"
+ },
+ "isshin_lib_c5400_a000_003050": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003050.json"
+ },
+ "isshin_lib_c5400_a000_003060": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003060.json"
+ },
+ "isshin_lib_c5400_a000_003065": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003065.json"
+ },
+ "isshin_lib_c5400_a000_003070": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003070.json"
+ },
+ "isshin_lib_c5400_a000_003071": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003071.json"
+ },
+ "isshin_lib_c5400_a000_003075": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003075.json"
+ },
+ "isshin_lib_c5400_a000_003076": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003076.json"
+ },
+ "isshin_lib_c5400_a000_003077": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003077.json"
+ },
+ "isshin_lib_c5400_a000_003078": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003078.json"
+ },
+ "isshin_lib_c5400_a000_003079": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003079.json"
+ },
+ "isshin_lib_c5400_a000_003081": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003081.json"
+ },
+ "isshin_lib_c5400_a000_003083": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003083.json"
+ },
+ "isshin_lib_c5400_a000_003084": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003084.json"
+ },
+ "isshin_lib_c5400_a000_003085": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003085.json"
+ },
+ "isshin_lib_c5400_a000_003090": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003090.json"
+ },
+ "isshin_lib_c5400_a000_003091": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003091.json"
+ },
+ "isshin_lib_c5400_a000_003104": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a000_003104.json"
+ },
+ "isshin_lib_c5400_a100_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003000.json"
+ },
+ "isshin_lib_c5400_a100_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003001.json"
+ },
+ "isshin_lib_c5400_a100_003002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003002.json"
+ },
+ "isshin_lib_c5400_a100_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003005.json"
+ },
+ "isshin_lib_c5400_a100_003006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003006.json"
+ },
+ "isshin_lib_c5400_a100_003007": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003007.json"
+ },
+ "isshin_lib_c5400_a100_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003009.json"
+ },
+ "isshin_lib_c5400_a100_003010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003010.json"
+ },
+ "isshin_lib_c5400_a100_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003011.json"
+ },
+ "isshin_lib_c5400_a100_003012": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003012.json"
+ },
+ "isshin_lib_c5400_a100_003014": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003014.json"
+ },
+ "isshin_lib_c5400_a100_003015": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003015.json"
+ },
+ "isshin_lib_c5400_a100_003022": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003022.json"
+ },
+ "isshin_lib_c5400_a100_003024": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003024.json"
+ },
+ "isshin_lib_c5400_a100_003026": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003026.json"
+ },
+ "isshin_lib_c5400_a100_003027": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003027.json"
+ },
+ "isshin_lib_c5400_a100_003028": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003028.json"
+ },
+ "isshin_lib_c5400_a100_003029": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003029.json"
+ },
+ "isshin_lib_c5400_a100_003031": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003031.json"
+ },
+ "isshin_lib_c5400_a100_003032": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003032.json"
+ },
+ "isshin_lib_c5400_a100_003040": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003040.json"
+ },
+ "isshin_lib_c5400_a100_003055": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003055.json"
+ },
+ "isshin_lib_c5400_a100_003065": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003065.json"
+ },
+ "isshin_lib_c5400_a100_003090": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c5400_a100_003090.json"
+ },
+ "isshin_lib_c7100_a000_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003000.json"
+ },
+ "isshin_lib_c7100_a000_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003001.json"
+ },
+ "isshin_lib_c7100_a000_003002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003002.json"
+ },
+ "isshin_lib_c7100_a000_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003003.json"
+ },
+ "isshin_lib_c7100_a000_003004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003004.json"
+ },
+ "isshin_lib_c7100_a000_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003005.json"
+ },
+ "isshin_lib_c7100_a000_003006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003006.json"
+ },
+ "isshin_lib_c7100_a000_003007": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003007.json"
+ },
+ "isshin_lib_c7100_a000_003010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003010.json"
+ },
+ "isshin_lib_c7100_a000_003015": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003015.json"
+ },
+ "isshin_lib_c7100_a000_003016": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003016.json"
+ },
+ "isshin_lib_c7100_a000_003019": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003019.json"
+ },
+ "isshin_lib_c7100_a000_003020": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003020.json"
+ },
+ "isshin_lib_c7100_a000_003021": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003021.json"
+ },
+ "isshin_lib_c7100_a000_003022": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003022.json"
+ },
+ "isshin_lib_c7100_a000_003025": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003025.json"
+ },
+ "isshin_lib_c7100_a000_003026": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003026.json"
+ },
+ "isshin_lib_c7100_a000_003027": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003027.json"
+ },
+ "isshin_lib_c7100_a000_003029": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003029.json"
+ },
+ "isshin_lib_c7100_a000_003030": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003030.json"
+ },
+ "isshin_lib_c7100_a000_003032": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003032.json"
+ },
+ "isshin_lib_c7100_a000_003035": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003035.json"
+ },
+ "isshin_lib_c7100_a000_003037": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003037.json"
+ },
+ "isshin_lib_c7100_a000_003038": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003038.json"
+ },
+ "isshin_lib_c7100_a000_003040": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003040.json"
+ },
+ "isshin_lib_c7100_a000_003041": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003041.json"
+ },
+ "isshin_lib_c7100_a000_003042": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003042.json"
+ },
+ "isshin_lib_c7100_a000_003043": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003043.json"
+ },
+ "isshin_lib_c7100_a000_003045": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003045.json"
+ },
+ "isshin_lib_c7100_a000_003048": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003048.json"
+ },
+ "isshin_lib_c7100_a000_003049": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003049.json"
+ },
+ "isshin_lib_c7100_a000_003050": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003050.json"
+ },
+ "isshin_lib_c7100_a000_003055": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003055.json"
+ },
+ "isshin_lib_c7100_a000_003060": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003060.json"
+ },
+ "isshin_lib_c7100_a000_003062": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003062.json"
+ },
+ "isshin_lib_c7100_a000_003063": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003063.json"
+ },
+ "isshin_lib_c7100_a000_003065": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003065.json"
+ },
+ "isshin_lib_c7100_a000_003067": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003067.json"
+ },
+ "isshin_lib_c7100_a000_003070": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003070.json"
+ },
+ "isshin_lib_c7100_a000_003071": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003071.json"
+ },
+ "isshin_lib_c7100_a000_003076": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003076.json"
+ },
+ "isshin_lib_c7100_a000_003080": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_003080.json"
+ },
+ "isshin_lib_c7100_a000_008602": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_008602.json"
+ },
+ "isshin_lib_c7100_a000_008603": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7100_a000_008603.json"
+ },
+ "isshin_lib_c7110_a000_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003000.json"
+ },
+ "isshin_lib_c7110_a000_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003001.json"
+ },
+ "isshin_lib_c7110_a000_003002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003002.json"
+ },
+ "isshin_lib_c7110_a000_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003003.json"
+ },
+ "isshin_lib_c7110_a000_003004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003004.json"
+ },
+ "isshin_lib_c7110_a000_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003005.json"
+ },
+ "isshin_lib_c7110_a000_003006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003006.json"
+ },
+ "isshin_lib_c7110_a000_003007": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003007.json"
+ },
+ "isshin_lib_c7110_a000_003008": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003008.json"
+ },
+ "isshin_lib_c7110_a000_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003009.json"
+ },
+ "isshin_lib_c7110_a000_003010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003010.json"
+ },
+ "isshin_lib_c7110_a000_003015": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003015.json"
+ },
+ "isshin_lib_c7110_a000_003016": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003016.json"
+ },
+ "isshin_lib_c7110_a000_003019": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003019.json"
+ },
+ "isshin_lib_c7110_a000_003021": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003021.json"
+ },
+ "isshin_lib_c7110_a000_003022": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003022.json"
+ },
+ "isshin_lib_c7110_a000_003025": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003025.json"
+ },
+ "isshin_lib_c7110_a000_003026": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003026.json"
+ },
+ "isshin_lib_c7110_a000_003027": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003027.json"
+ },
+ "isshin_lib_c7110_a000_003029": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003029.json"
+ },
+ "isshin_lib_c7110_a000_003030": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003030.json"
+ },
+ "isshin_lib_c7110_a000_003032": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003032.json"
+ },
+ "isshin_lib_c7110_a000_003035": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003035.json"
+ },
+ "isshin_lib_c7110_a000_003037": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003037.json"
+ },
+ "isshin_lib_c7110_a000_003038": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003038.json"
+ },
+ "isshin_lib_c7110_a000_003040": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003040.json"
+ },
+ "isshin_lib_c7110_a000_003041": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003041.json"
+ },
+ "isshin_lib_c7110_a000_003042": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003042.json"
+ },
+ "isshin_lib_c7110_a000_003043": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003043.json"
+ },
+ "isshin_lib_c7110_a000_003044": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003044.json"
+ },
+ "isshin_lib_c7110_a000_003045": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003045.json"
+ },
+ "isshin_lib_c7110_a000_003050": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003050.json"
+ },
+ "isshin_lib_c7110_a000_003055": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003055.json"
+ },
+ "isshin_lib_c7110_a000_003062": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003062.json"
+ },
+ "isshin_lib_c7110_a000_003063": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003063.json"
+ },
+ "isshin_lib_c7110_a000_003067": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003067.json"
+ },
+ "isshin_lib_c7110_a000_003068": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003068.json"
+ },
+ "isshin_lib_c7110_a000_003076": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003076.json"
+ },
+ "isshin_lib_c7110_a000_003080": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003080.json"
+ },
+ "isshin_lib_c7110_a000_003085": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003085.json"
+ },
+ "isshin_lib_c7110_a000_003086": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003086.json"
+ },
+ "isshin_lib_c7110_a000_003087": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_003087.json"
+ },
+ "isshin_lib_c7110_a000_008602": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_008602.json"
+ },
+ "isshin_lib_c7110_a000_008603": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7110_a000_008603.json"
+ },
+ "isshin_lib_c7400_a000_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003000.json"
+ },
+ "isshin_lib_c7400_a000_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003001.json"
+ },
+ "isshin_lib_c7400_a000_003002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003002.json"
+ },
+ "isshin_lib_c7400_a000_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003003.json"
+ },
+ "isshin_lib_c7400_a000_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003005.json"
+ },
+ "isshin_lib_c7400_a000_003006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003006.json"
+ },
+ "isshin_lib_c7400_a000_003008": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003008.json"
+ },
+ "isshin_lib_c7400_a000_003010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003010.json"
+ },
+ "isshin_lib_c7400_a000_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003011.json"
+ },
+ "isshin_lib_c7400_a000_003012": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003012.json"
+ },
+ "isshin_lib_c7400_a000_003013": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003013.json"
+ },
+ "isshin_lib_c7400_a000_003015": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003015.json"
+ },
+ "isshin_lib_c7400_a000_003016": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003016.json"
+ },
+ "isshin_lib_c7400_a000_003019": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003019.json"
+ },
+ "isshin_lib_c7400_a000_003021": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003021.json"
+ },
+ "isshin_lib_c7400_a000_003026": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003026.json"
+ },
+ "isshin_lib_c7400_a000_003027": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003027.json"
+ },
+ "isshin_lib_c7400_a000_003061": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003061.json"
+ },
+ "isshin_lib_c7400_a000_003062": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003062.json"
+ },
+ "isshin_lib_c7400_a000_003066": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003066.json"
+ },
+ "isshin_lib_c7400_a000_003067": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003067.json"
+ },
+ "isshin_lib_c7400_a000_003068": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003068.json"
+ },
+ "isshin_lib_c7400_a000_003070": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003070.json"
+ },
+ "isshin_lib_c7400_a000_003075": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7400_a000_003075.json"
+ },
+ "isshin_lib_c1400_a000_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003001.json"
+ },
+ "isshin_lib_c1400_a000_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003003.json"
+ },
+ "isshin_lib_c1400_a000_003004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003004.json"
+ },
+ "isshin_lib_c1400_a000_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003005.json"
+ },
+ "isshin_lib_c1400_a000_003006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003006.json"
+ },
+ "isshin_lib_c1400_a000_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003009.json"
+ },
+ "isshin_lib_c1400_a000_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003011.json"
+ },
+ "isshin_lib_c1400_a000_003012": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003012.json"
+ },
+ "isshin_lib_c1400_a000_003013": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003013.json"
+ },
+ "isshin_lib_c1400_a000_003014": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003014.json"
+ },
+ "isshin_lib_c1400_a000_003015": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003015.json"
+ },
+ "isshin_lib_c1400_a000_003016": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003016.json"
+ },
+ "isshin_lib_c1400_a000_003017": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003017.json"
+ },
+ "isshin_lib_c1400_a000_003050": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003050.json"
+ },
+ "isshin_lib_c1400_a000_003051": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003051.json"
+ },
+ "isshin_lib_c1400_a000_003056": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003056.json"
+ },
+ "isshin_lib_c1400_a000_003057": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003057.json"
+ },
+ "isshin_lib_c1400_a000_003060": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003060.json"
+ },
+ "isshin_lib_c1400_a000_003071": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003071.json"
+ },
+ "isshin_lib_c1400_a000_003072": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003072.json"
+ },
+ "isshin_lib_c1400_a000_003073": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003073.json"
+ },
+ "isshin_lib_c1400_a000_003076": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003076.json"
+ },
+ "isshin_lib_c1400_a000_003078": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003078.json"
+ },
+ "isshin_lib_c1400_a000_003079": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003079.json"
+ },
+ "isshin_lib_c1400_a000_003083": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003083.json"
+ },
+ "isshin_lib_c1400_a000_003087": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a000_003087.json"
+ },
+ "isshin_lib_c1400_a100_003010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a100_003010.json"
+ },
+ "isshin_lib_c1400_a100_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a100_003011.json"
+ },
+ "isshin_lib_c1400_a100_003021": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a100_003021.json"
+ },
+ "isshin_lib_c1400_a100_003022": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1400_a100_003022.json"
+ },
+ "isshin_lib_c1470_a000_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003000.json"
+ },
+ "isshin_lib_c1470_a000_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003001.json"
+ },
+ "isshin_lib_c1470_a000_003002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003002.json"
+ },
+ "isshin_lib_c1470_a000_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003003.json"
+ },
+ "isshin_lib_c1470_a000_003004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003004.json"
+ },
+ "isshin_lib_c1470_a000_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003005.json"
+ },
+ "isshin_lib_c1470_a000_003006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003006.json"
+ },
+ "isshin_lib_c1470_a000_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003009.json"
+ },
+ "isshin_lib_c1470_a000_003010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003010.json"
+ },
+ "isshin_lib_c1470_a000_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003011.json"
+ },
+ "isshin_lib_c1470_a000_003014": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003014.json"
+ },
+ "isshin_lib_c1470_a000_003015": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003015.json"
+ },
+ "isshin_lib_c1470_a000_003017": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003017.json"
+ },
+ "isshin_lib_c1470_a000_003018": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003018.json"
+ },
+ "isshin_lib_c1470_a000_003020": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003020.json"
+ },
+ "isshin_lib_c1470_a000_003023": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003023.json"
+ },
+ "isshin_lib_c1470_a000_003026": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003026.json"
+ },
+ "isshin_lib_c1470_a000_003027": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003027.json"
+ },
+ "isshin_lib_c1470_a000_003028": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003028.json"
+ },
+ "isshin_lib_c1470_a000_003029": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003029.json"
+ },
+ "isshin_lib_c1470_a000_003032": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003032.json"
+ },
+ "isshin_lib_c1470_a000_003033": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003033.json"
+ },
+ "isshin_lib_c1470_a000_003035": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003035.json"
+ },
+ "isshin_lib_c1470_a000_003050": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003050.json"
+ },
+ "isshin_lib_c1470_a000_003051": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003051.json"
+ },
+ "isshin_lib_c1470_a000_003055": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003055.json"
+ },
+ "isshin_lib_c1470_a000_003056": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003056.json"
+ },
+ "isshin_lib_c1470_a000_003058": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003058.json"
+ },
+ "isshin_lib_c1470_a000_003060": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003060.json"
+ },
+ "isshin_lib_c1470_a000_003062": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003062.json"
+ },
+ "isshin_lib_c1470_a000_003063": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003063.json"
+ },
+ "isshin_lib_c1470_a000_003064": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003064.json"
+ },
+ "isshin_lib_c1470_a000_003066": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003066.json"
+ },
+ "isshin_lib_c1470_a000_003067": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003067.json"
+ },
+ "isshin_lib_c1470_a000_003068": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003068.json"
+ },
+ "isshin_lib_c1470_a000_003069": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003069.json"
+ },
+ "isshin_lib_c1470_a000_003222": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1470_a000_003222.json"
+ },
+ "isshin_lib_c1700_a000_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003000.json"
+ },
+ "isshin_lib_c1700_a000_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003001.json"
+ },
+ "isshin_lib_c1700_a000_003004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003004.json"
+ },
+ "isshin_lib_c1700_a000_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003005.json"
+ },
+ "isshin_lib_c1700_a000_003007": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003007.json"
+ },
+ "isshin_lib_c1700_a000_003010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003010.json"
+ },
+ "isshin_lib_c1700_a000_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003011.json"
+ },
+ "isshin_lib_c1700_a000_003012": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003012.json"
+ },
+ "isshin_lib_c1700_a000_003015": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003015.json"
+ },
+ "isshin_lib_c1700_a000_003016": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003016.json"
+ },
+ "isshin_lib_c1700_a000_003050": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003050.json"
+ },
+ "isshin_lib_c1700_a000_003053": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003053.json"
+ },
+ "isshin_lib_c1700_a000_003061": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003061.json"
+ },
+ "isshin_lib_c1700_a000_003065": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003065.json"
+ },
+ "isshin_lib_c1700_a000_003066": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003066.json"
+ },
+ "isshin_lib_c1700_a000_003068": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a000_003068.json"
+ },
+ "isshin_lib_c1700_a100_003021": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a100_003021.json"
+ },
+ "isshin_lib_c1700_a100_003022": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a100_003022.json"
+ },
+ "isshin_lib_c1700_a100_003030": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a100_003030.json"
+ },
+ "isshin_lib_c1700_a100_003031": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a100_003031.json"
+ },
+ "isshin_lib_c1700_a100_003038": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a100_003038.json"
+ },
+ "isshin_lib_c1700_a100_003046": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a100_003046.json"
+ },
+ "isshin_lib_c1700_a100_003057": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a100_003057.json"
+ },
+ "isshin_lib_c1700_a100_003067": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a100_003067.json"
+ },
+ "isshin_lib_c1700_a100_003080": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a100_003080.json"
+ },
+ "isshin_lib_c1700_a100_003085": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a100_003085.json"
+ },
+ "isshin_lib_c1700_a200_003015": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a200_003015.json"
+ },
+ "isshin_lib_c1700_a200_003016": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a200_003016.json"
+ },
+ "isshin_lib_c1700_a200_003017": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a200_003017.json"
+ },
+ "isshin_lib_c1700_a300_003006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1700_a300_003006.json"
+ },
+ "isshin_lib_c1020_a000_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003000.json"
+ },
+ "isshin_lib_c1020_a000_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003001.json"
+ },
+ "isshin_lib_c1020_a000_003002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003002.json"
+ },
+ "isshin_lib_c1020_a000_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003003.json"
+ },
+ "isshin_lib_c1020_a000_003004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003004.json"
+ },
+ "isshin_lib_c1020_a000_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003005.json"
+ },
+ "isshin_lib_c1020_a000_003006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003006.json"
+ },
+ "isshin_lib_c1020_a000_003007": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003007.json"
+ },
+ "isshin_lib_c1020_a000_003008": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003008.json"
+ },
+ "isshin_lib_c1020_a000_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003009.json"
+ },
+ "isshin_lib_c1020_a000_003010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003010.json"
+ },
+ "isshin_lib_c1020_a000_003015": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003015.json"
+ },
+ "isshin_lib_c1020_a000_003051": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003051.json"
+ },
+ "isshin_lib_c1020_a000_003054": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003054.json"
+ },
+ "isshin_lib_c1020_a000_003056": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003056.json"
+ },
+ "isshin_lib_c1020_a000_003057": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003057.json"
+ },
+ "isshin_lib_c1020_a000_003060": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003060.json"
+ },
+ "isshin_lib_c1020_a000_003061": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003061.json"
+ },
+ "isshin_lib_c1020_a000_003062": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003062.json"
+ },
+ "isshin_lib_c1020_a000_003063": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003063.json"
+ },
+ "isshin_lib_c1020_a000_003067": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003067.json"
+ },
+ "isshin_lib_c1020_a000_003068": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003068.json"
+ },
+ "isshin_lib_c1020_a000_003071": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003071.json"
+ },
+ "isshin_lib_c1020_a000_003083": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003083.json"
+ },
+ "isshin_lib_c1020_a000_003088": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1020_a000_003088.json"
+ },
+ "isshin_lib_c1310_a000_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003000.json"
+ },
+ "isshin_lib_c1310_a000_003002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003002.json"
+ },
+ "isshin_lib_c1310_a000_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003003.json"
+ },
+ "isshin_lib_c1310_a000_003006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003006.json"
+ },
+ "isshin_lib_c1310_a000_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003009.json"
+ },
+ "isshin_lib_c1310_a000_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003011.json"
+ },
+ "isshin_lib_c1310_a000_003012": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003012.json"
+ },
+ "isshin_lib_c1310_a000_003013": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003013.json"
+ },
+ "isshin_lib_c1310_a000_003014": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003014.json"
+ },
+ "isshin_lib_c1310_a000_003015": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003015.json"
+ },
+ "isshin_lib_c1310_a000_003016": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003016.json"
+ },
+ "isshin_lib_c1310_a000_003018": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003018.json"
+ },
+ "isshin_lib_c1310_a000_003022": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003022.json"
+ },
+ "isshin_lib_c1310_a000_003023": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003023.json"
+ },
+ "isshin_lib_c1310_a000_003060": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003060.json"
+ },
+ "isshin_lib_c1310_a000_003061": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003061.json"
+ },
+ "isshin_lib_c1310_a000_003063": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a000_003063.json"
+ },
+ "isshin_lib_c1310_a100_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a100_003000.json"
+ },
+ "isshin_lib_c1310_a100_003002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a100_003002.json"
+ },
+ "isshin_lib_c1310_a100_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a100_003003.json"
+ },
+ "isshin_lib_c1310_a100_003004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a100_003004.json"
+ },
+ "isshin_lib_c1310_a100_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a100_003005.json"
+ },
+ "isshin_lib_c1310_a100_003006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a100_003006.json"
+ },
+ "isshin_lib_c1310_a100_003007": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a100_003007.json"
+ },
+ "isshin_lib_c1310_a100_003008": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a100_003008.json"
+ },
+ "isshin_lib_c1310_a100_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a100_003009.json"
+ },
+ "isshin_lib_c1310_a100_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a100_003011.json"
+ },
+ "isshin_lib_c1310_a100_003061": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a100_003061.json"
+ },
+ "isshin_lib_c1310_a200_003031": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1310_a200_003031.json"
+ },
+ "isshin_lib_c1070_a000_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003000.json"
+ },
+ "isshin_lib_c1070_a000_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003001.json"
+ },
+ "isshin_lib_c1070_a000_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003003.json"
+ },
+ "isshin_lib_c1070_a000_003004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003004.json"
+ },
+ "isshin_lib_c1070_a000_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003005.json"
+ },
+ "isshin_lib_c1070_a000_003006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003006.json"
+ },
+ "isshin_lib_c1070_a000_003007": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003007.json"
+ },
+ "isshin_lib_c1070_a000_003008": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003008.json"
+ },
+ "isshin_lib_c1070_a000_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003009.json"
+ },
+ "isshin_lib_c1070_a000_003010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003010.json"
+ },
+ "isshin_lib_c1070_a000_003013": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003013.json"
+ },
+ "isshin_lib_c1070_a000_003016": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003016.json"
+ },
+ "isshin_lib_c1070_a000_003017": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003017.json"
+ },
+ "isshin_lib_c1070_a000_003019": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003019.json"
+ },
+ "isshin_lib_c1070_a000_003020": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003020.json"
+ },
+ "isshin_lib_c1070_a000_003021": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003021.json"
+ },
+ "isshin_lib_c1070_a000_003061": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003061.json"
+ },
+ "isshin_lib_c1070_a000_003062": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003062.json"
+ },
+ "isshin_lib_c1070_a000_003067": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003067.json"
+ },
+ "isshin_lib_c1070_a000_003068": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003068.json"
+ },
+ "isshin_lib_c1070_a000_003090": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1070_a000_003090.json"
+ },
+ "isshin_lib_c1350_a000_003010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1350_a000_003010.json"
+ },
+ "isshin_lib_c1350_a000_003012": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1350_a000_003012.json"
+ },
+ "isshin_lib_c1350_a000_003014": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1350_a000_003014.json"
+ },
+ "isshin_lib_c1350_a000_003033": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1350_a000_003033.json"
+ },
+ "isshin_lib_c1350_a000_003050": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1350_a000_003050.json"
+ },
+ "isshin_lib_c1350_a000_003055": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1350_a000_003055.json"
+ },
+ "isshin_lib_c1350_a000_003060": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1350_a000_003060.json"
+ },
+ "isshin_lib_c1350_a000_003061": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1350_a000_003061.json"
+ },
+ "isshin_lib_c1350_a000_003070": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1350_a000_003070.json"
+ },
+ "isshin_lib_c1350_a000_003071": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1350_a000_003071.json"
+ },
+ "isshin_lib_c1350_a000_020006": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1350_a000_020006.json"
+ },
+ "isshin_lib_c1550_a000_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003000.json"
+ },
+ "isshin_lib_c1550_a000_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003001.json"
+ },
+ "isshin_lib_c1550_a000_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003003.json"
+ },
+ "isshin_lib_c1550_a000_003004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003004.json"
+ },
+ "isshin_lib_c1550_a000_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003005.json"
+ },
+ "isshin_lib_c1550_a000_003008": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003008.json"
+ },
+ "isshin_lib_c1550_a000_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003009.json"
+ },
+ "isshin_lib_c1550_a000_003013": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003013.json"
+ },
+ "isshin_lib_c1550_a000_003018": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003018.json"
+ },
+ "isshin_lib_c1550_a000_003019": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003019.json"
+ },
+ "isshin_lib_c1550_a000_003020": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003020.json"
+ },
+ "isshin_lib_c1550_a000_003021": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003021.json"
+ },
+ "isshin_lib_c1550_a000_003024": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003024.json"
+ },
+ "isshin_lib_c1550_a000_003025": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003025.json"
+ },
+ "isshin_lib_c1550_a000_003026": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003026.json"
+ },
+ "isshin_lib_c1550_a000_003028": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003028.json"
+ },
+ "isshin_lib_c1550_a000_003029": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003029.json"
+ },
+ "isshin_lib_c1550_a000_003061": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003061.json"
+ },
+ "isshin_lib_c1550_a000_003065": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003065.json"
+ },
+ "isshin_lib_c1550_a000_003072": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a000_003072.json"
+ },
+ "isshin_lib_c1550_a100_003000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a100_003000.json"
+ },
+ "isshin_lib_c1550_a100_003001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a100_003001.json"
+ },
+ "isshin_lib_c1550_a100_003002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a100_003002.json"
+ },
+ "isshin_lib_c1550_a100_003003": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a100_003003.json"
+ },
+ "isshin_lib_c1550_a100_003005": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a100_003005.json"
+ },
+ "isshin_lib_c1550_a100_003008": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a100_003008.json"
+ },
+ "isshin_lib_c1550_a100_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a100_003009.json"
+ },
+ "isshin_lib_c1550_a100_003010": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a100_003010.json"
+ },
+ "isshin_lib_c1550_a100_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a100_003011.json"
+ },
+ "isshin_lib_c1550_a100_003012": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a100_003012.json"
+ },
+ "isshin_lib_c1550_a200_003071": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a200_003071.json"
+ },
+ "isshin_lib_c1550_a200_503000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a200_503000.json"
+ },
+ "isshin_lib_c1550_a200_503001": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a200_503001.json"
+ },
+ "isshin_lib_c1550_a200_503002": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a200_503002.json"
+ },
+ "isshin_lib_c1550_a200_503004": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c1550_a200_503004.json"
+ },
+ "isshin_lib_c7000_a000_003009": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7000_a000_003009.json"
+ },
+ "isshin_lib_c7000_a000_003011": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7000_a000_003011.json"
+ },
+ "isshin_lib_c7000_a000_003013": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7000_a000_003013.json"
+ },
+ "isshin_lib_c7000_a000_003014": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7000_a000_003014.json"
+ },
+ "isshin_lib_c7000_a000_003022": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7000_a000_003022.json"
+ },
+ "isshin_lib_c7000_a000_003023": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7000_a000_003023.json"
+ },
+ "isshin_lib_c7000_a000_003061": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7000_a000_003061.json"
+ },
+ "isshin_lib_c7000_a000_003083": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c7000_a000_003083.json"
+ },
+ "isshin_lib_c0000_a050_300030": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_300030.json"
+ },
+ "isshin_lib_c0000_a050_300040": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_300040.json"
+ },
+ "isshin_lib_c0000_a050_308050": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_308050.json"
+ },
+ "isshin_lib_c0000_a050_308070": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_308070.json"
+ },
+ "isshin_lib_c0000_a050_308911": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_308911.json"
+ },
+ "isshin_lib_c0000_a050_309050": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_309050.json"
+ },
+ "isshin_lib_c0000_a050_310100": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a050_310100.json"
+ },
+ "isshin_lib_c0000_a100_316210": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a100_316210.json"
+ },
+ "isshin_lib_c0000_a100_316300": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a100_316300.json"
+ },
+ "isshin_lib_c0000_a105_316000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a105_316000.json"
+ },
+ "isshin_lib_c0000_a105_316030": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a105_316030.json"
+ },
+ "isshin_lib_c0000_a105_316040": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a105_316040.json"
+ },
+ "isshin_lib_c0000_a105_316200": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a105_316200.json"
+ },
+ "isshin_lib_c0000_a105_316210": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a105_316210.json"
+ },
+ "isshin_lib_c0000_a105_316300": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a105_316300.json"
+ },
+ "isshin_lib_c0000_a108_316000": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a108_316000.json"
+ },
+ "isshin_lib_c0000_a108_316020": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a108_316020.json"
+ },
+ "isshin_lib_c0000_a108_316300": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a108_316300.json"
+ },
+ "isshin_lib_c0000_a110_316200": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a110_316200.json"
+ },
+ "isshin_lib_c0000_a110_316260": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a110_316260.json"
+ },
+ "isshin_lib_c0000_a110_316270": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a110_316270.json"
+ },
+ "isshin_lib_c0000_a110_316710": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a110_316710.json"
+ },
+ "isshin_lib_c0000_a110_316720": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_lib_c0000_a110_316720.json"
+ }
+}

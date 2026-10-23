@@ -1,0 +1,85 @@
+{
+ "_doc": "R14 日之呼吸・陽華突（ART_REVIEW 第 2 版，待使用者驗收）：技能 ID sun_youkatotsu。使用者文字檔原文「221 陽突華 A000 003062 _刀路要往空中打」；顯示名稱用「陽華突」。動作 anims/isshin_sun_youka_r14.res（D:/research/sekiro_r8_p0/notes/r14/build_youka_r14.py）：#221 葦名弦一郎 c7100 a000_003062 改造；腿、髖、軀幹、腳步與節奏沿用（側身蹲→後腳蹬地→剪刀腳躍起）。第 2 版（使用者：往前跳高可以，跳躍太弱）：蹬地後真的跳起——髖部拋物線再高 0.55 m、滯空 0.55 s、空中前進 1.8 m（起跳爆發、落地前減速），腳離地最高約 0.7 m，落地屈膝 0.07 m；雙臂兩骨 IK：刀身 42° 沿一直線刺出，刺完伸直的刀隨身體繼續往前上方升到頂點；前臂／手腕扭轉修正（第 1 版有單格 150–177° 翻轉）。時間：0–0.42 後跳收刀（刀身點燃）→ 0.42–0.58 蹲身 → 0.58–0.71 突刺＋起跳（刀尖 1.42→2.26 m、峰值 17 m/s、反差 9 倍）→ 0.71–0.88 隨身體升到頂點（刀尖 2.56 m）→ 1.15 落地 → 1.33 收刀 → 1.99–2.44 收勢。",
+ "_name_map": "文字檔原文「陽突華」＝本技能「陽華突」（舊全套規格 REF07 陽華突 sun_youkatotsu；兩支參考影片都寫「陽華突」）。",
+ "name": "日之呼吸・陽華突",
+ "damage": 3,
+ "cooldown": 1.2,
+ "charge_cancel": 0.55,
+ "_charge_cancel": "突刺出手前（shot_t < 0.55 s：後跳＋蹲身蓄勢）按閃避＝取消技能直接閃避（r14_youka_demo.gd）；之後到伸直停留結束（0.98 s）前不能取消。",
+ "shot": {
+  "anim": "isshin_sun_youka_r14",
+  "angle": 0.0,
+  "fade_in": 0.05,
+  "fade_out": 0.3,
+  "travel_scale": 1.0,
+  "two_hand": true,
+  "grip_off": 1.05,
+  "attack": true,
+  "strikes": [
+   [
+    0.59,
+    0.85
+   ]
+  ],
+  "_strikes": "一個判定窗＝一次突刺，最多命中一次（共用 blade_hit_judge.gd 立體刀身取樣）。判定 0.59–0.85 s：刺出＋伸直的刀隨跳躍上升到頂點前；過了頂點（刀開始下降）不算。",
+  "swings": [
+   0.575
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.556,
+    1.151
+   ]
+  ],
+  "lunge_min_dist": [
+   0.4
+  ],
+  "min_dist": 0.4,
+  "dodge_cancel": 1.33,
+  "move_cancel": 1.45,
+  "attack_cancel": 1.45,
+  "end_t": 2.441,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 5,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.6
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.2,
+   "db": -10.0,
+   "pitch": 0.75
+  },
+  "thrust": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 0.575,
+   "db": 0.0,
+   "pitch": 1.2
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.15,
+   "loop_to": 1.3,
+   "db": -16.0
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  },
+  "land": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 1.15,
+   "db": -8.0,
+   "pitch": 0.5
+  }
+ },
+ "_fade_in": "fade_in 0.05：動畫第 0 格已經是緣一待機姿勢，執行期淡入縮短，避免淡入把起步的抬腳稀釋成滑步（0.12 時起步有 3 格 3–7 m/s 的貼地滑動）。"
+}

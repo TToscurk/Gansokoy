@@ -1,0 +1,501 @@
+{
+ "_doc": "R12 日之呼吸・火車（候選 ART_REVIEW；2026-10-22 由原本暫定的碧羅天改歸火車，動作不變）：獨立技能 sun_kasha，R11 的碧羅天 sun_hekiraten 原樣保留。動作 anims/isshin_sun_kasha_r12.res（notes/r12/build_kasha_r12.py；梟 c5060 a000_003003 改造）。時間：0–0.22 入架（左腳退 0.42 m、雙手舉刀）、0.22–0.46 壓抑（髖 0.79→0.63 m）、0.46–0.54 爆發起跳、0.54–1.32 空中前空翻（滯空 0.78 s）、1.15–1.32 下劈、1.32 落地、1.32–1.65 吸收、之後起身。位移總計約 2.2 m（起跳 0.30＋空中 1.68＋落地 0.18）。",
+ "shot": {
+  "anim": "isshin_sun_kasha_r12",
+  "angle": 0.0,
+  "fade_in": 0.12,
+  "fade_out": 0.35,
+  "travel_scale": 1.0,
+  "two_hand": true,
+  "attack": true,
+  "strikes": [
+   [
+    1.19,
+    1.36
+   ]
+  ],
+  "swings": [
+   1.15
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.46,
+    1.32
+   ]
+  ],
+  "lunge_min_dist": [
+   1.2
+  ],
+  "min_dist": 0.95,
+  "dodge_cancel": 1.62,
+  "move_cancel": 1.85,
+  "attack_cancel": 1.85,
+  "end_t": 2.45,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 5,
+  "root_pose_sync": true
+ },
+ "charge_cancel": 0.44,
+ "_charge_cancel": "蓄勢段（起跳前，shot_t < 0.44 s）按閃避＝取消技能直接閃避（r12_kasha_demo.gd）；起跳後到落地吸收結束（1.62 s）前不能取消。",
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.6
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.2,
+   "db": -10.0,
+   "pitch": 0.75
+  },
+  "launch": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.47,
+   "db": -4.0,
+   "pitch": 1.15
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 1.16,
+   "db": 0.0,
+   "pitch": 0.95
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.2,
+   "loop_to": 1.6,
+   "db": -16.0
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_variants": {
+  "KS12_R10": {
+   "core": {
+    "life": 0.3,
+    "head_fade": 0.015,
+    "hold": 0.2,
+    "emission": 3.2,
+    "col_hot": [
+     1.0,
+     0.97,
+     0.86,
+     1.0
+    ],
+    "col_gold": [
+     1.0,
+     0.66,
+     0.16,
+     1.0
+    ]
+   },
+   "body": {
+    "life": 0.85,
+    "use_reveal": 0.0,
+    "hold": 0.5,
+    "emission": 3.48,
+    "cool": 0.45,
+    "rim_k": 0.85,
+    "col_hot": [
+     1.0,
+     0.93,
+     0.7,
+     1.0
+    ],
+    "col_mid": [
+     1.0,
+     0.46,
+     0.06,
+     1.0
+    ],
+    "col_out": [
+     0.62,
+     0.06,
+     0.02,
+     1.0
+    ]
+   },
+   "flames": {
+    "life": 0.9,
+    "grow": 0.04,
+    "hold": 0.45,
+    "emission": 3.48,
+    "cool": 0.5,
+    "rim_k": 0.8,
+    "col_hot": [
+     1.0,
+     0.93,
+     0.7,
+     1.0
+    ],
+    "col_mid": [
+     1.0,
+     0.46,
+     0.06,
+     1.0
+    ],
+    "col_out": [
+     0.62,
+     0.06,
+     0.02,
+     1.0
+    ]
+   },
+   "embers": {
+    "life": 0.7,
+    "use_reveal": 0.0,
+    "hold": 0.5,
+    "emission": 2.4
+   },
+   "blade": {
+    "fixed_age": 0.0,
+    "use_reveal": 0.0,
+    "flow": 0.0,
+    "emission": 3.4
+   },
+   "hit": {
+    "life": 0.3,
+    "grow": 0.035,
+    "hold": 0.3,
+    "emission": 5.6,
+    "col_hot": [
+     1.0,
+     0.86,
+     0.42,
+     1.0
+    ],
+    "col_mid": [
+     1.0,
+     0.46,
+     0.06,
+     1.0
+    ],
+    "col_out": [
+     0.62,
+     0.06,
+     0.02,
+     1.0
+    ]
+   },
+   "hitring": {
+    "life": 0.16,
+    "use_reveal": 0.0,
+    "hold": 0.2,
+    "emission": 3.2,
+    "col_hot": [
+     1.0,
+     0.86,
+     0.42,
+     1.0
+    ],
+    "col_mid": [
+     1.0,
+     0.46,
+     0.06,
+     1.0
+    ],
+    "col_out": [
+     0.62,
+     0.06,
+     0.02,
+     1.0
+    ]
+   },
+   "hitstar": {
+    "life": 0.14,
+    "grow": 0.02,
+    "use_reveal": 1.0,
+    "hold": 0.3,
+    "emission": 5.6,
+    "cool": 0.3,
+    "col_hot": [
+     1,
+     0.95,
+     0.75,
+     1
+    ],
+    "col_mid": [
+     1,
+     0.75,
+     0.3,
+     1
+    ],
+    "col_out": [
+     1,
+     0.45,
+     0.1,
+     1
+    ]
+   },
+   "hit_scale": 1.1,
+   "hit_off": 0.1,
+   "hitring_t": 0.22,
+   "freeze_t": 0.0,
+   "drift_from": 1.38,
+   "drift_to": 2.1,
+   "end_t": 2.45,
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.1,
+     0.7
+    ],
+    [
+     0.291,
+     1.0
+    ],
+    [
+     1.428,
+     1.0
+    ],
+    [
+     1.769,
+     0.0
+    ]
+   ],
+   "sparks": {
+    "from": 0.353,
+    "to": 1.368,
+    "min_speed": 10.0,
+    "max_ratio": 0.9
+   },
+   "core_on_top": true,
+   "burst": {
+    "life": 0.2,
+    "grow": 0.035,
+    "hold": 0.25,
+    "emission": 4.06,
+    "cool": 0.5,
+    "rim_k": 0.8,
+    "col_hot": [
+     1.0,
+     0.93,
+     0.7,
+     1.0
+    ],
+    "col_mid": [
+     1.0,
+     0.46,
+     0.06,
+     1.0
+    ],
+    "col_out": [
+     0.62,
+     0.06,
+     0.02,
+     1.0
+    ],
+    "ignite_flash": 0.6,
+    "flash_t": 0.06
+   },
+   "mesh": "KS12",
+   "extra": {},
+   "_note": "R12：R11 原版 HK11_R10 的材質／顏色／壽命／光照，時間依 R12 動作重配（gen_r12_vfx.py）；mesh＝沿 R12 實際刀路（施放時的世界座標）重建的 KS12（notes/r12/build_kasha_vfx.py，與 R11 同一套 Blender 建造腳本）。網格施放時就固定在世界，火焰留在刀經過的地方。",
+   "lights": {
+    "blade": {
+     "energy": 1.9,
+     "range": 2.8,
+     "attn": 1.0,
+     "pos_u": 0.4,
+     "flicker": 0.1,
+     "color": [
+      1.0,
+      0.66,
+      0.3
+     ],
+     "env": [
+      [
+       0.086,
+       0.0
+      ],
+      [
+       0.135,
+       0.18
+      ],
+      [
+       0.3,
+       0.4
+      ],
+      [
+       0.795,
+       0.8
+      ],
+      [
+       1.3,
+       1.0
+      ],
+      [
+       1.337,
+       0.85
+      ],
+      [
+       1.398,
+       0.35
+      ],
+      [
+       1.504,
+       0.06
+      ],
+      [
+       1.58,
+       0.0
+      ]
+     ]
+    },
+    "trail": {
+     "energy": 1.1,
+     "range": 2.4,
+     "attn": 1.0,
+     "flicker": 0.22,
+     "lag": [
+      0.05,
+      0.13
+     ],
+     "color": [
+      1.0,
+      0.45,
+      0.14
+     ],
+     "env": [
+      [
+       0.3,
+       0.0
+      ],
+      [
+       0.543,
+       0.7
+      ],
+      [
+       1.3,
+       1.0
+      ],
+      [
+       1.368,
+       0.75
+      ],
+      [
+       1.542,
+       0.2
+      ],
+      [
+       1.693,
+       0.0
+      ]
+     ],
+     "min_y": 0.9
+    },
+    "hit": {
+     "flash_e": 3.2,
+     "flash_col": [
+      1.0,
+      0.8,
+      0.5
+     ],
+     "burn_e": 2.2,
+     "burn_col": [
+      1.0,
+      0.45,
+      0.14
+     ],
+     "xfade": 0.06,
+     "burn_t": 0.24,
+     "range": 2.8,
+     "off": 0.25,
+     "up": 0.05,
+     "min_flash": 0.05,
+     "flicker": 0.12
+    },
+    "flare_time": 0.12,
+    "flare_gain": 1.0
+   },
+   "light_freeze_t": 1.36
+  }
+ },
+ "vfx_map": {
+  "L1": "KS12_R10",
+  "L2": "KS12_R10",
+  "R10": "KS12_R10",
+  "*": "KS12_R10"
+ },
+ "vfx": {
+  "blade": {
+   "env": [
+    [
+     0.088,
+     0.0
+    ],
+    [
+     0.259,
+     1.0
+    ],
+    [
+     1.428,
+     1.0
+    ],
+    [
+     1.807,
+     0.0
+    ]
+   ],
+   "height": 0.1,
+   "emission": 1.0,
+   "core_emission": 0.55,
+   "tongue": 0.9,
+   "tile": 6.0,
+   "flow": 3.0,
+   "core_width": 0.3,
+   "u0": 0.1
+  },
+  "trail": {
+   "emit": [
+    [
+     0.5,
+     1.36
+    ]
+   ],
+   "lifetime": 0.22,
+   "extend": 0.1,
+   "inset": -0.3,
+   "lift": 0.04,
+   "emission": 1.0,
+   "core_emission": 0.6,
+   "opacity": 0.85,
+   "core_root_skip": 0.4,
+   "core_ratio": 0.45,
+   "head_fade": 0.04,
+   "max_step_deg": 4.0,
+   "_note": "inset 負值＝刀光從離護手 0.30 m 處才開始（只描刀身外段）；寬刀光會蓋住刀與木樁的接觸（R9 第一輪審圖）"
+  },
+  "sparks": {
+   "windows": [
+    [
+     0.341,
+     1.406
+    ]
+   ],
+   "min_speed": 6.0,
+   "full_speed": 25.0,
+   "max_ratio": 1.0,
+   "lifetime": 0.4
+  },
+  "hit": {
+   "particles": 16,
+   "offset": 0.05,
+   "normal_w": 0.7,
+   "cut_w": 0.5,
+   "flash_size": 0.1,
+   "flash_time": 0.08
+  }
+ },
+ "_vfx_doc": "R12 data: Blender-flame variant for 日之呼吸・火車 (R12) = R11's HK11_R10 (the R11 original look: C2 流焰 body + C1 cut burst + impact set,",
+ "name": "日之呼吸・火車"
+}

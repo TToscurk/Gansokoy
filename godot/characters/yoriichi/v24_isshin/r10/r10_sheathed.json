@@ -1,0 +1,85 @@
+{
+ "len": {
+  "walk": 1.1667,
+  "back": 1.9333,
+  "strafe_l": 3.5,
+  "strafe_r": 3.3333,
+  "run": 0.6,
+  "sprint": 0.6
+ },
+ "pass": {
+  "walk": [
+   0.419,
+   0.901
+  ],
+  "back": [
+   0.386,
+   0.908
+  ],
+  "strafe_l": [
+   0.278,
+   0.509
+  ],
+  "strafe_r": [
+   0.295,
+   0.489
+  ],
+  "run": [
+   0.492,
+   1.0
+  ],
+  "sprint": [
+   0.492,
+   1.0
+  ]
+ },
+ "stance": {
+  "walk": [
+   "Right",
+   "Left"
+  ],
+  "back": [
+   "Left",
+   "Right"
+  ],
+  "strafe_l": [
+   "Right",
+   "Right"
+  ],
+  "strafe_r": [
+   "Right",
+   "Left"
+  ],
+  "run": [
+   "Left",
+   "Right"
+  ],
+  "sprint": [
+   "Left",
+   "Right"
+  ]
+ },
+ "speed": {
+  "fwd": 1.55,
+  "back": 0.62,
+  "left": 0.63,
+  "right": 0.58,
+  "run_nat": 7.4,
+  "run": 4.2,
+  "sprint": 5.4
+ },
+ "anims": {
+  "walk": "isshin_sh_walk",
+  "back": "isshin_sh_back",
+  "strafe_l": "isshin_sh_strafe_l",
+  "strafe_r": "isshin_sh_strafe_r",
+  "run": "isshin_sh_run",
+  "turn_l90": "isshin_sh_turn_l90",
+  "turn_r90": "isshin_sh_turn_r90"
+ },
+ "turn": {
+  "l90": "sturn_l90",
+  "r90": "sturn_r90"
+ },
+ "_doc": "c1400 居合型 a100 移動組（居合構：右手扶柄、左手握鞘口）。速度＝站立腳接觸速度（walk 1.55／back 0.62／strafe 0.63/0.58）；a100_405010 原本是 7.4 m/s 的突進跑，run 放慢到 4.2 m/s、sprint 5.4 m/s（播放速度×0.57／0.73）"
+}

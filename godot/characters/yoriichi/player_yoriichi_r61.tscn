@@ -1,0 +1,121 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://characters/yoriichi/yoriichi_character_r61.gd" id="1_e8xfb"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r61/r61_quickdraw.res" id="2_bkbb2"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6_idle_sheathed.res" id="3_dxsrk"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r61/r61_jump_up.res" id="4_ve3gp"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r61/r61_fall.res" id="5_njpmx"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r61/r61_land.res" id="6_f6ieh"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r61/r61_grip_pose.res" id="7_3ouh1"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6_idle_drawn.res" id="8_b42hk"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_gs_walk_back.res" id="9_i0a3c"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_gs_strafe_l.res" id="10_c7vfl"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_gs_strafe_r.res" id="11_na54s"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_gs_strafe_l_run.res" id="12_5b23h"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_gs_strafe_r_run.res" id="13_mr4rr"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_gs_run_back.res" id="14_7vjiy"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r61/r61_heavy_cut.res" id="15_wnms6"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r61/r61c_gs_spin_run.res" id="16_ft7f3"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_gs_jump_atk.res" id="17_tnhhu"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_gs_slide.res" id="18_bqg2u"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_gs_power.res" id="19_t5570"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_gs_crouch_slash.res" id="20_j0151"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_th_combo.res" id="21_u8ece"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_iai_stance.res" id="22_8iu6r"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r61/r61c_guard.res" id="23_8oxqv"]
+[ext_resource type="Animation" path="res://characters/yoriichi/v24/anims_r6/r6c_gs_block_hit.res" id="24_y7o7f"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/v24_r61/yoriichi_v24_r61.glb" id="25_q0lgr"]
+[ext_resource type="Script" path="res://characters/yoriichi/v24/yoriichi_v24_rig.gd" id="26_kgmqa"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/yoriichi_sword.glb" id="27_rvo3a"]
+[ext_resource type="Script" path="res://characters/yoriichi/sheath_v2/sword_hilt_only.gd" id="28_tpabd"]
+[ext_resource type="PackedScene" path="res://characters/yoriichi/sheath_v2/yoriichi_sheath_v2.glb" id="29_xky76"]
+[ext_resource type="Script" path="res://characters/yoriichi/sheath_sway.gd" id="30_3jni0"]
+[ext_resource type="Script" path="res://characters/yoriichi/player_camera_adapter.gd" id="31_vw24k"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_body"]
+radius = 0.3
+height = 1.7
+
+[node name="Player" type="CharacterBody3D" unique_id=983313881 node_paths=PackedStringArray("input_yaw_node")]
+floor_max_angle = 0.907571
+script = ExtResource("1_e8xfb")
+r5_quickdraw_resource = ExtResource("2_bkbb2")
+idle_grounded_resource = ExtResource("3_dxsrk")
+idle_break_enabled = false
+jump_anim_resource = ExtResource("4_ve3gp")
+fall_resource = ExtResource("5_njpmx")
+land_resource = ExtResource("6_f6ieh")
+grip_pose_resource = ExtResource("7_3ouh1")
+drawn_idle_resource = ExtResource("8_b42hk")
+drawn_back_resource = ExtResource("9_i0a3c")
+drawn_strafe_l_resource = ExtResource("10_c7vfl")
+drawn_strafe_r_resource = ExtResource("11_na54s")
+drawn_strafe_l_run_resource = ExtResource("12_5b23h")
+drawn_strafe_r_run_resource = ExtResource("13_mr4rr")
+drawn_run_back_resource = ExtResource("14_7vjiy")
+heavy_cut_resource = ExtResource("15_wnms6")
+attack_spin_resource = ExtResource("16_ft7f3")
+attack_spin_jump_resource = ExtResource("17_tnhhu")
+attack_thrust_resource = ExtResource("18_bqg2u")
+attack_form05_resource = ExtResource("19_t5570")
+attack_form06_resource = ExtResource("20_j0151")
+attack_form12_resource = ExtResource("21_u8ece")
+iai_stance_resource = ExtResource("22_8iu6r")
+iai_slash_resource = ExtResource("20_j0151")
+guard_anim_resource = ExtResource("23_8oxqv")
+block_anim_resource = ExtResource("24_y7o7f")
+deflect_anim_resource = ExtResource("24_y7o7f")
+heavy_cut_speed = 1.15
+heavy_charge_freeze_progress = 0.52
+input_yaw_node = NodePath("Pivot")
+
+[node name="BodyVisual" parent="." unique_id=500352667 instance=ExtResource("25_q0lgr")]
+script = ExtResource("26_kgmqa")
+start_motion = ""
+
+[node name="HandSocket" type="BoneAttachment3D" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D" parent_id_path=PackedInt32Array(500352667, 1395084764) index="10" unique_id=2094229427]
+bone_name = "mixamorig_RightHand"
+bone_idx = 152
+
+[node name="Sword_Hand" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D/HandSocket" unique_id=471443238 instance=ExtResource("27_rvo3a")]
+transform = Transform3D(0.4384881, 0.47451672, 0.21204233, -0.5028491, 0.45747522, 0.016099079, -0.13141882, -0.16718334, 0.6458938, 0.03522734, 0.098931685, 0.0100603625)
+visible = false
+
+[node name="SheathSocket" type="BoneAttachment3D" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D" parent_id_path=PackedInt32Array(500352667, 1395084764) index="11" unique_id=110335924]
+bone_name = "mixamorig_Hips"
+bone_idx = 0
+
+[node name="Sword_Sheathed" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D/SheathSocket" unique_id=1144595285 instance=ExtResource("27_rvo3a")]
+transform = Transform3D(0.4002622, -0.51214236, -0.19975081, -0.5454751, -0.4006653, -0.06575904, -0.068169445, 0.19894111, -0.64666486, 0.060698036, 0.02672951, -0.25239396)
+script = ExtResource("28_tpabd")
+
+[node name="Sheath" parent="BodyVisual/緣一_fbx/Armature/Skeleton3D/SheathSocket" unique_id=1499322463 instance=ExtResource("29_xky76")]
+transform = Transform3D(0.4002622, 0.19975081, -0.51214236, -0.5454751, 0.06575904, -0.4006653, -0.068169445, 0.64666486, 0.19894111, -0.28809348, -0.23383154, -0.21540536)
+script = ExtResource("30_3jni0")
+followers = Array[NodePath]([NodePath("../Sword_Sheathed")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=357429528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_body")
+
+[node name="Pivot" type="Node3D" parent="." unique_id=1926967171]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Pivot" unique_id=1057773750]
+spring_length = 7.5
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="Pivot/SpringArm3D" unique_id=339939692]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.090482235, -1.0391102)
+
+[node name="InteractionRay" type="RayCast3D" parent="Pivot" unique_id=2086420576]
+target_position = Vector3(0, 0, -4)
+collide_with_areas = true
+
+[node name="CameraAdapter" type="Node" parent="." unique_id=1515007360 node_paths=PackedStringArray("pivot", "arm", "interaction_ray")]
+script = ExtResource("31_vw24k")
+pivot = NodePath("../Pivot")
+arm = NodePath("../Pivot/SpringArm3D")
+interaction_ray = NodePath("../Pivot/InteractionRay")
+
+[editable path="BodyVisual"]

@@ -1,0 +1,95 @@
+{
+ "_doc": "R13 日之呼吸・炎舞（ART_APPROVED 2026-10-23，使用者試玩通過；凍結）：獨立技能 sun_enbu_double（R11 的圓舞 sun_enbu 是另一招，不動）。動作 anims/isshin_sun_enbu_double_r13.res（notes/r13/build_enbu_r13.py；梟 c5060 a000_003000 #80 → a000_003001 #81，原速）。兩支是梟自己的連段：003001 第 0 格＝003000 在 0.90 s 的姿勢（手 0.00 m、刀 0°、腳 0.00 m、髖高差 8 mm），直接在原生接點切換、不加過渡。時間：0–0.55 蓄勢（刀沿左側舉過頭，刀尖 5–8 m/s）→ 0.55–0.72 第一刀袈裟（右上→左下，峰值 70 m/s @0.617）→ 0.72–0.90 低位停頓 → 0.90–1.22 再起刀＋左腳上步 → 1.22–1.40 第二刀水平橫斬（左後→正前→右側，刀尖高 1.10 m、刀刃水平，峰值 60 m/s @1.300；2026-10-23 依使用者試玩改：原 #81 逆袈裟上挑，只改上半身持刀，步伐不變）→ 1.40–2.05 回到中段構 → 2.05–2.70 收勢回待機（左腳不動、右腳上步）。位移：第一刀前衝約 1.4 m、第二刀約 0.9 m，整招約 2.4 m（離木樁近時 lunges 等比縮）。",
+ "name": "日之呼吸・炎舞",
+ "damage": 2,
+ "_damage": "每一刀命中扣 2（兩刀＝4）；兩個判定窗各自最多命中一次（combat_locomotion.gd hits_done[i]）。",
+ "cooldown": 1.2,
+ "charge_cancel": 0.5,
+ "_charge_cancel": "蓄勢段（第一刀出手前，shot_t < 0.50 s）按閃避＝取消技能直接閃避（r13_enbu_demo.gd）；之後到第二刀收刀（1.62 s）前不能取消。",
+ "shot": {
+  "anim": "isshin_sun_enbu_double_r13",
+  "angle": 0.0,
+  "fade_in": 0.12,
+  "fade_out": 0.3,
+  "travel_scale": 1.0,
+  "two_hand": true,
+  "grip_off": 2.1,
+  "_grip": "雙手握刀 IK（R10 起的共用 two_hand_grip）：出招到收勢中段雙手；2.1 s 起放開左手，跟著身體淡回單手持刀的待機姿勢。",
+  "attack": true,
+  "strikes": [
+   [
+    0.575,
+    0.69
+   ],
+   [
+    1.255,
+    1.37
+   ]
+  ],
+  "_strikes": "依實際動畫：刀在身前（刀尖在根前方 >0.35 m）第一刀 0.600–0.650 s、第二刀 1.283–1.333 s，各往前後放寬約 0.03 s；比原動作 TAE 攻擊窗（0.547–0.730、1.213–1.397）窄，避免起刀時從背後判到。",
+  "swings": [
+   0.56,
+   1.24
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.0,
+    0.7
+   ],
+   [
+    0.9,
+    1.45
+   ]
+  ],
+  "lunge_min_dist": [
+   1.1,
+   0.95
+  ],
+  "min_dist": 0.95,
+  "dodge_cancel": 1.62,
+  "move_cancel": 1.95,
+  "attack_cancel": 1.95,
+  "end_t": 2.7,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 5,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.6
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.12,
+   "db": -10.0,
+   "pitch": 0.75
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 0.56,
+   "db": 0.0,
+   "pitch": 0.95
+  },
+  "swing2": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 1.24,
+   "db": 0.0,
+   "pitch": 1.0
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.15,
+   "loop_to": 1.7,
+   "db": -16.0
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ }
+}

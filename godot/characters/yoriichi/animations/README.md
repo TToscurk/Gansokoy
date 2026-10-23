@@ -1,3 +1,7 @@
+> **2026-10-17 已封存**：正式玩家已換成 v2.4（`../v24/yoriichi_v24.glb`，Mixamo 骨架）。
+> 本文件描述的舊 Meshy 24 骨動畫（`*.res`、`anim_src/`、`v2/`）已全部刪除，僅留作設計紀錄；
+> 操作、參數、動畫來源等段落不再反映現況。目前 v2.4 只有 idle／walk／walk_user。
+
 # Yoriichi Gameplay Animations
 
 `yoriichi_character_meshy_full.tscn` 會由 `yoriichi_character.gd` 載入本資料夾的衍生動畫。
@@ -214,6 +218,26 @@ output
   持刀待機 (0.24, −0.94, −0.24)、持刀走 (0.11, −0.93, −0.36) —— 前下方、
   刃向下分量 0.90；拔刀收尾 (−0.48, −0.75, −0.46)、連段中段
   (−0.82, −0.07, −0.56) 屬揮動過程的合理過渡。
+
+## 居合架勢跑步（Iai_Run，2026-09-21，Blender MCP 手調）
+
+| 遊戲內名稱 | 長度 | 倍率 | 層 | 內容 |
+|---|---|---|---|---|
+| Iai_Run | 0.625 s（16 格 @24fps，loop） | — | full | 拔刀斬預備（居合 kamae）姿態的**原地跑步循環**：上半身沿用 Iai_Stance 的 kamae（雙手疊握身前刀、沉腰 12 cm、右擰），下半身 2 步循環 |
+
+- 產出鏈：`anim_src/iai_clips.glb`（Iai_Stance／Iai_Slash／**Iai_Run** 三支）→ `tools/build_react_clips.gd`
+  （`"hips_ref": 101.28969` = Iai_Stance f0 的 GLB Hips y，即 Idle 髖高；這支沒有 Idle 端點幀可錨，
+  錨任何一鍵都會把蹲姿抬到 Idle 高度）→ `animations/yoriichi_iai_run.res`（loop=true、位置軌 1、旋轉軌 22）。
+- Blender 端工作檔 `anim_src/form_mcp_work.blend`（action `Iai_Run`，pose 快照 `iairun3_00..16`）；
+  腳本 `work/yoriichi_iai_run/s05_author_v3.py`（可重跑）。
+- 量測（Blender）：接縫 f0 == f16（dq 0.0、dhips 0.0）、eval mesh min z 全程 ≥ 地面 −0.1 cm（**穿地 0**）、
+  Hips z 彈幅 **6.6 cm**、浮空相 f9–f13（最高 15.6 cm，蹲姿跑的騰空）、雙手距離 0.137–0.140 m（全程貼在柄上）、
+  刀尖 z 0.73–0.92 m（水平持刀，不亂甩）。
+- 步幅換算：支撐腳後退 ≈0.44 m/步、0.333 s/步 → 倍率 1.0 時等效 **1.33 m/s**；
+  要對上疾跑 7 m/s 需 5.3× 播放（視覺會太急）或加大步幅（大腿 22°→40° 級）。
+- **尚未接線**：RMB 蓄力目前仍是「凍姿蓄」。要讓「邊跑邊預備」成立，需要在
+  `yoriichi_character.gd` 的蓄力分支加一個「允許移動 → 播 Iai_Run」的狀態（**full 層**，
+  蹲姿在 upper filter 下讀不出來）。
 
 ## 動畫 layer 適性（依 Stage 1 實測腿/臂活動量分類）
 

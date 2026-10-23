@@ -8,6 +8,12 @@ const SND_SWING_3 = preload("res://assets/audio/sfx/sword_swing_3.wav")
 const SND_SWING_FIRE_1 = preload("res://assets/audio/sfx/sword_fire_swing_1.wav")
 const SND_SWING_FIRE_2 = preload("res://assets/audio/sfx/sword_fire_swing_2.wav")
 const SND_SWING_FIRE_3 = preload("res://assets/audio/sfx/sword_fire_swing_3.wav")
+## 使用者 2026-09-17 提供的 ElevenLabs「三次刀揮砍」錄音，原檔是一段 1.68s 的
+## 三連揮。切成三個獨立單聲道 44.1k 檔，正好對上三段連段的 stage 1/2/3。
+## ⚠ 不要整段播：一次攻擊播整段 = 一刀三聲。
+const SND_SWING_EL_1 = preload("res://assets/audio/sfx/sword_swing_el_1.wav")
+const SND_SWING_EL_2 = preload("res://assets/audio/sfx/sword_swing_el_2.wav")
+const SND_SWING_EL_3 = preload("res://assets/audio/sfx/sword_swing_el_3.wav")
 const SND_HEAVY = preload("res://assets/audio/sfx/sword_heavy.wav")
 const SND_DRAW = preload("res://assets/audio/sfx/sword_draw.wav")
 const SND_SHEATHE = preload("res://assets/audio/sfx/sword_sheathe.wav")
@@ -66,19 +72,22 @@ func _play(stream: AudioStream, volume_db: float = 0.0, pitch_variance: float = 
 	events_played += 1
 
 
+## 輕連段揮砍。2026-09-17 起預設用使用者提供的 ElevenLabs 三連揮切段，
+## stage 1/2/3 各對應原錄音的第 1/2/3 刀，音色本來就連貫。
+## 合成的 SND_SWING_FIRE_* 保留成 fallback，不再是預設。
 func play_swing(stage: int) -> void:
 	if not designed_swings.is_empty():
 		_play(designed_swings[posmod(stage - 1, designed_swings.size())], -3.0, 0.015)
 		return
 	match stage:
 		1:
-			_play(SND_SWING_FIRE_1, 0.0, 0.02)
+			_play(SND_SWING_EL_1, -1.0, 0.02)
 		2:
-			_play(SND_SWING_FIRE_2, 0.0, 0.02)
+			_play(SND_SWING_EL_2, -1.0, 0.02)
 		3:
-			_play(SND_SWING_FIRE_3, 0.0, 0.02)
+			_play(SND_SWING_EL_3, -1.0, 0.02)
 		_:
-			_play(SND_SWING_FIRE_1, 0.0, 0.02)
+			_play(SND_SWING_EL_1, -1.0, 0.02)
 
 
 func play_heavy_swing() -> void:

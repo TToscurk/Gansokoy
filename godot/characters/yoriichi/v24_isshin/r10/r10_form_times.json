@@ -1,0 +1,43 @@
+{
+ "sun_hekiraten": {
+  "strikes": [
+   [
+    0.46,
+    0.64
+   ]
+  ],
+  "hit": 0.55,
+  "main": [
+   0.48,
+   0.64
+  ],
+  "travel_scale": 0.679,
+  "cancel": 0.92,
+  "dodge_cancel": 0.75,
+  "end_t": 1.9,
+  "fade_out": 0.4
+ },
+ "sun_retsujitsu": {
+  "strikes": [
+   [
+    0.5,
+    0.69
+   ],
+   [
+    0.86,
+    0.99
+   ]
+  ],
+  "hit": 0.617,
+  "main": [
+   0.5,
+   1.0
+  ],
+  "travel_scale": 0.852,
+  "cancel": 1.15,
+  "dodge_cancel": 1.02,
+  "end_t": 1.9,
+  "fade_out": 0.35
+ },
+ "_doc": "實測刀路（--dumpblade 240 Hz，r10_combat_demo）：碧羅天 刀尖 >20 m/s 0.48–0.62 s（峰值 57 m/s @0.56）、命中 0.55；烈日紅鏡 第一刀 0.48–0.70（峰值 0.60）、第二刀 0.86–1.00（峰值 59 m/s @0.96），命中 0.617／0.95"
+}

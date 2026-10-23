@@ -1,0 +1,196 @@
+{
+ "colliders": [
+  {
+   "name": "Hips",
+   "bone": "mixamorig:Hips",
+   "radius_m": 0.09008404696011886,
+   "height_m": 0.18034954821532004,
+   "center_y": 0.03885237187971821,
+   "offset_xz": [
+    0.010233635745602342,
+    -0.0023244568952332516
+   ],
+   "torso": true
+  },
+  {
+   "name": "Spine",
+   "bone": "mixamorig:Spine",
+   "radius_m": 0.07641470877610557,
+   "height_m": 0.15301087184729345,
+   "center_y": 0.06035253494522519,
+   "offset_xz": [
+    0.011708735183804796,
+    0.0009946607676325533
+   ],
+   "torso": true
+  },
+  {
+   "name": "Spine1",
+   "bone": "mixamorig:Spine1",
+   "radius_m": 0.09139844086397846,
+   "height_m": 0.18297833602303926,
+   "center_y": 0.05681505589297247,
+   "offset_xz": [
+    0.007855603403477834,
+    0.0034524559734362458
+   ],
+   "torso": true
+  },
+  {
+   "name": "Spine2",
+   "bone": "mixamorig:Spine2",
+   "radius_m": 0.09368832744709937,
+   "height_m": 0.1875581091892811,
+   "center_y": 0.06461162541190407,
+   "offset_xz": [
+    -0.003988566819620818,
+    -0.0019199295956201737
+   ],
+   "torso": true
+  },
+  {
+   "name": "Neck",
+   "bone": "mixamorig:Neck",
+   "radius_m": 0.08345758400648441,
+   "height_m": 0.16709662230805114,
+   "center_y": 0.040408319453277615,
+   "offset_xz": [
+    0.0246557432953966,
+    -0.0038365816735862054
+   ],
+   "torso": false
+  },
+  {
+   "name": "Head",
+   "bone": "mixamorig:Head",
+   "radius_m": 0.0676225715283984,
+   "height_m": 0.19267278929870252,
+   "center_y": 0.09633639464935126,
+   "offset_xz": [
+    0.015039549162451614,
+    0.00031491371585431566
+   ],
+   "torso": false
+  },
+  {
+   "name": "LeftArm",
+   "bone": "mixamorig:LeftArm",
+   "radius_m": 0.052380129236935156,
+   "height_m": 0.21905154530234175,
+   "center_y": 0.11394532208321001,
+   "offset_xz": [
+    0.0,
+    0.0
+   ],
+   "torso": false
+  },
+  {
+   "name": "RightArm",
+   "bone": "mixamorig:RightArm",
+   "radius_m": 0.055314926596633514,
+   "height_m": 0.2133122324039199,
+   "center_y": 0.11256571763834791,
+   "offset_xz": [
+    0.0,
+    0.0
+   ],
+   "torso": false
+  },
+  {
+   "name": "LeftForeArm",
+   "bone": "mixamorig:LeftForeArm",
+   "radius_m": 0.03998525555336299,
+   "height_m": 0.17052503820410783,
+   "center_y": 0.0909392806320087,
+   "offset_xz": [
+    0.0,
+    0.0
+   ],
+   "torso": false
+  },
+  {
+   "name": "RightForeArm",
+   "bone": "mixamorig:RightForeArm",
+   "radius_m": 0.044297620192561143,
+   "height_m": 0.18473993429793006,
+   "center_y": 0.09148768980776151,
+   "offset_xz": [
+    0.0,
+    0.0
+   ],
+   "torso": false
+  },
+  {
+   "name": "LeftHand",
+   "bone": "mixamorig:LeftHand",
+   "radius_m": 0.02586957998616443,
+   "height_m": 0.058066357689904,
+   "center_y": 0.030826746930953147,
+   "offset_xz": [
+    0.0,
+    0.0
+   ],
+   "torso": false
+  },
+  {
+   "name": "RightHand",
+   "bone": "mixamorig:RightHand",
+   "radius_m": 0.027851472944862062,
+   "height_m": 0.061570233140701404,
+   "center_y": 0.030838895163153992,
+   "offset_xz": [
+    0.0,
+    0.0
+   ],
+   "torso": false
+  },
+  {
+   "name": "LeftUpLeg",
+   "bone": "mixamorig:LeftUpLeg",
+   "radius_m": 0.07968222021640724,
+   "height_m": 0.4369476535698622,
+   "center_y": 0.18766853884786638,
+   "offset_xz": [
+    0.0,
+    0.0
+   ],
+   "torso": false
+  },
+  {
+   "name": "RightUpLeg",
+   "bone": "mixamorig:RightUpLeg",
+   "radius_m": 0.08457378009270516,
+   "height_m": 0.4354027798376797,
+   "center_y": 0.161418218731501,
+   "offset_xz": [
+    0.0,
+    0.0
+   ],
+   "torso": false
+  },
+  {
+   "name": "LeftLeg",
+   "bone": "mixamorig:LeftLeg",
+   "radius_m": 0.05799679505018941,
+   "height_m": 0.4534703939773336,
+   "center_y": 0.2501870588277669,
+   "offset_xz": [
+    0.0,
+    0.0
+   ],
+   "torso": false
+  },
+  {
+   "name": "RightLeg",
+   "bone": "mixamorig:RightLeg",
+   "radius_m": 0.06087445712788918,
+   "height_m": 0.4791657569232762,
+   "center_y": 0.2359278378324117,
+   "offset_xz": [
+    0.0,
+    0.0
+   ],
+   "torso": false
+  }
+ ]
+}

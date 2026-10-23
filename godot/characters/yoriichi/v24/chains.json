@@ -1,0 +1,541 @@
+{
+ "chains": [
+  {
+   "name": "Haori_Hem_00",
+   "kind": "hem",
+   "parent": "mixamorig:Hips",
+   "root": "Haori_Hem_00_root",
+   "bones": [
+    "Haori_Hem_00_01",
+    "Haori_Hem_00_02",
+    "Haori_Hem_00_03"
+   ],
+   "end_length_m": 0.14144195757113975,
+   "root_game": "Haori_Hem_00_root",
+   "bones_game": [
+    "Haori_Hem_00_01",
+    "Haori_Hem_00_02",
+    "Haori_Hem_00_03"
+   ]
+  },
+  {
+   "name": "Haori_Hem_01",
+   "kind": "hem",
+   "parent": "mixamorig:Hips",
+   "root": "Haori_Hem_01_root",
+   "bones": [
+    "Haori_Hem_01_01",
+    "Haori_Hem_01_02",
+    "Haori_Hem_01_03"
+   ],
+   "end_length_m": 0.1201929866295495,
+   "root_game": "Haori_Hem_01_root",
+   "bones_game": [
+    "Haori_Hem_01_01",
+    "Haori_Hem_01_02",
+    "Haori_Hem_01_03"
+   ]
+  },
+  {
+   "name": "Haori_Hem_02",
+   "kind": "hem",
+   "parent": "mixamorig:Hips",
+   "root": "Haori_Hem_02_root",
+   "bones": [
+    "Haori_Hem_02_01",
+    "Haori_Hem_02_02",
+    "Haori_Hem_02_03"
+   ],
+   "end_length_m": 0.11327340278549144,
+   "root_game": "Haori_Hem_02_root",
+   "bones_game": [
+    "Haori_Hem_02_01",
+    "Haori_Hem_02_02",
+    "Haori_Hem_02_03"
+   ]
+  },
+  {
+   "name": "Haori_Hem_03",
+   "kind": "hem",
+   "parent": "mixamorig:Hips",
+   "root": "Haori_Hem_03_root",
+   "bones": [
+    "Haori_Hem_03_01",
+    "Haori_Hem_03_02",
+    "Haori_Hem_03_03"
+   ],
+   "end_length_m": 0.12131888157065526,
+   "root_game": "Haori_Hem_03_root",
+   "bones_game": [
+    "Haori_Hem_03_01",
+    "Haori_Hem_03_02",
+    "Haori_Hem_03_03"
+   ]
+  },
+  {
+   "name": "Haori_Hem_04",
+   "kind": "hem",
+   "parent": "mixamorig:Hips",
+   "root": "Haori_Hem_04_root",
+   "bones": [
+    "Haori_Hem_04_01",
+    "Haori_Hem_04_02",
+    "Haori_Hem_04_03"
+   ],
+   "end_length_m": 0.13975233059296407,
+   "root_game": "Haori_Hem_04_root",
+   "bones_game": [
+    "Haori_Hem_04_01",
+    "Haori_Hem_04_02",
+    "Haori_Hem_04_03"
+   ]
+  },
+  {
+   "name": "Haori_Hem_05",
+   "kind": "hem",
+   "parent": "mixamorig:Hips",
+   "root": "Haori_Hem_05_root",
+   "bones": [
+    "Haori_Hem_05_01",
+    "Haori_Hem_05_02",
+    "Haori_Hem_05_03"
+   ],
+   "end_length_m": 0.12250058623478541,
+   "root_game": "Haori_Hem_05_root",
+   "bones_game": [
+    "Haori_Hem_05_01",
+    "Haori_Hem_05_02",
+    "Haori_Hem_05_03"
+   ]
+  },
+  {
+   "name": "Haori_Hem_06",
+   "kind": "hem",
+   "parent": "mixamorig:Hips",
+   "root": "Haori_Hem_06_root",
+   "bones": [
+    "Haori_Hem_06_01",
+    "Haori_Hem_06_02",
+    "Haori_Hem_06_03"
+   ],
+   "end_length_m": 0.01767956773440038,
+   "root_game": "Haori_Hem_06_root",
+   "bones_game": [
+    "Haori_Hem_06_01",
+    "Haori_Hem_06_02",
+    "Haori_Hem_06_03"
+   ]
+  },
+  {
+   "name": "Haori_Hem_07",
+   "kind": "hem",
+   "parent": "mixamorig:Hips",
+   "root": "Haori_Hem_07_root",
+   "bones": [
+    "Haori_Hem_07_01",
+    "Haori_Hem_07_02",
+    "Haori_Hem_07_03"
+   ],
+   "end_length_m": 0.12270369019349694,
+   "root_game": "Haori_Hem_07_root",
+   "bones_game": [
+    "Haori_Hem_07_01",
+    "Haori_Hem_07_02",
+    "Haori_Hem_07_03"
+   ]
+  },
+  {
+   "name": "Hair_BackL",
+   "kind": "hair",
+   "parent": "mixamorig:Head",
+   "root": "Hair_BackL_root",
+   "bones": [
+    "Hair_BackL_01",
+    "Hair_BackL_02",
+    "Hair_BackL_03"
+   ],
+   "end_length_m": 0.1310099696060379,
+   "root_game": "Hair_BackL_root",
+   "bones_game": [
+    "Hair_BackL_01",
+    "Hair_BackL_02",
+    "Hair_BackL_03"
+   ]
+  },
+  {
+   "name": "Hair_BackC",
+   "kind": "hair",
+   "parent": "mixamorig:Head",
+   "root": "Hair_BackC_root",
+   "bones": [
+    "Hair_BackC_01",
+    "Hair_BackC_02",
+    "Hair_BackC_03"
+   ],
+   "end_length_m": 0.12435535527407807,
+   "root_game": "Hair_BackC_root",
+   "bones_game": [
+    "Hair_BackC_01",
+    "Hair_BackC_02",
+    "Hair_BackC_03"
+   ]
+  },
+  {
+   "name": "Hair_BackR",
+   "kind": "hair",
+   "parent": "mixamorig:Head",
+   "root": "Hair_BackR_root",
+   "bones": [
+    "Hair_BackR_01",
+    "Hair_BackR_02",
+    "Hair_BackR_03"
+   ],
+   "end_length_m": 0.13617152563947568,
+   "root_game": "Hair_BackR_root",
+   "bones_game": [
+    "Hair_BackR_01",
+    "Hair_BackR_02",
+    "Hair_BackR_03"
+   ]
+  },
+  {
+   "name": "Hair_FrontL",
+   "kind": "hair",
+   "parent": "mixamorig:Head",
+   "root": "Hair_FrontL_root",
+   "bones": [
+    "Hair_FrontL_01",
+    "Hair_FrontL_02",
+    "Hair_FrontL_03"
+   ],
+   "end_length_m": 0.06494167410126342,
+   "root_game": "Hair_FrontL_root",
+   "bones_game": [
+    "Hair_FrontL_01",
+    "Hair_FrontL_02",
+    "Hair_FrontL_03"
+   ]
+  },
+  {
+   "name": "Hair_FrontR",
+   "kind": "hair",
+   "parent": "mixamorig:Head",
+   "root": "Hair_FrontR_root",
+   "bones": [
+    "Hair_FrontR_01",
+    "Hair_FrontR_02",
+    "Hair_FrontR_03"
+   ],
+   "end_length_m": 0.06454535125624551,
+   "root_game": "Hair_FrontR_root",
+   "bones_game": [
+    "Hair_FrontR_01",
+    "Hair_FrontR_02",
+    "Hair_FrontR_03"
+   ]
+  },
+  {
+   "name": "Cuff_L_Up",
+   "kind": "sleeve",
+   "parent": "mixamorig:LeftForeArm",
+   "bones": [
+    "Cuff_L_Up_01",
+    "Cuff_L_Up_02",
+    "Cuff_L_Up_03"
+   ],
+   "end_length_m": 0.08323213450917992,
+   "bones_game": [
+    "Cuff_L_Up_01",
+    "Cuff_L_Up_02",
+    "Cuff_L_Up_03"
+   ]
+  },
+  {
+   "name": "Cuff_L_Fwd",
+   "kind": "sleeve",
+   "parent": "mixamorig:LeftForeArm",
+   "bones": [
+    "Cuff_L_Fwd_01",
+    "Cuff_L_Fwd_02",
+    "Cuff_L_Fwd_03"
+   ],
+   "end_length_m": 0.08198038744334936,
+   "bones_game": [
+    "Cuff_L_Fwd_01",
+    "Cuff_L_Fwd_02",
+    "Cuff_L_Fwd_03"
+   ]
+  },
+  {
+   "name": "Cuff_L_Dn",
+   "kind": "sleeve",
+   "parent": "mixamorig:LeftForeArm",
+   "bones": [
+    "Cuff_L_Dn_01",
+    "Cuff_L_Dn_02",
+    "Cuff_L_Dn_03"
+   ],
+   "end_length_m": 0.08525726793599976,
+   "bones_game": [
+    "Cuff_L_Dn_01",
+    "Cuff_L_Dn_02",
+    "Cuff_L_Dn_03"
+   ]
+  },
+  {
+   "name": "Cuff_L_Back",
+   "kind": "sleeve",
+   "parent": "mixamorig:LeftForeArm",
+   "bones": [
+    "Cuff_L_Back_01",
+    "Cuff_L_Back_02",
+    "Cuff_L_Back_03"
+   ],
+   "end_length_m": 0.08325489979041352,
+   "bones_game": [
+    "Cuff_L_Back_01",
+    "Cuff_L_Back_02",
+    "Cuff_L_Back_03"
+   ]
+  },
+  {
+   "name": "Cuff_R_Up",
+   "kind": "sleeve",
+   "parent": "mixamorig:RightForeArm",
+   "bones": [
+    "Cuff_R_Up_01",
+    "Cuff_R_Up_02",
+    "Cuff_R_Up_03"
+   ],
+   "end_length_m": 0.08476677032989625,
+   "bones_game": [
+    "Cuff_R_Up_01",
+    "Cuff_R_Up_02",
+    "Cuff_R_Up_03"
+   ]
+  },
+  {
+   "name": "Cuff_R_Fwd",
+   "kind": "sleeve",
+   "parent": "mixamorig:RightForeArm",
+   "bones": [
+    "Cuff_R_Fwd_01",
+    "Cuff_R_Fwd_02",
+    "Cuff_R_Fwd_03"
+   ],
+   "end_length_m": 0.0851721808713109,
+   "bones_game": [
+    "Cuff_R_Fwd_01",
+    "Cuff_R_Fwd_02",
+    "Cuff_R_Fwd_03"
+   ]
+  },
+  {
+   "name": "Cuff_R_Dn",
+   "kind": "sleeve",
+   "parent": "mixamorig:RightForeArm",
+   "bones": [
+    "Cuff_R_Dn_01",
+    "Cuff_R_Dn_02",
+    "Cuff_R_Dn_03"
+   ],
+   "end_length_m": 0.08531443920247192,
+   "bones_game": [
+    "Cuff_R_Dn_01",
+    "Cuff_R_Dn_02",
+    "Cuff_R_Dn_03"
+   ]
+  },
+  {
+   "name": "Cuff_R_Back",
+   "kind": "sleeve",
+   "parent": "mixamorig:RightForeArm",
+   "bones": [
+    "Cuff_R_Back_01",
+    "Cuff_R_Back_02",
+    "Cuff_R_Back_03"
+   ],
+   "end_length_m": 0.0847604663226943,
+   "bones_game": [
+    "Cuff_R_Back_01",
+    "Cuff_R_Back_02",
+    "Cuff_R_Back_03"
+   ]
+  }
+ ],
+ "bone_map": {
+  "mixamorig:Hips": "mixamorig_Hips",
+  "mixamorig:LeftUpLeg": "mixamorig_LeftUpLeg",
+  "mixamorig:LeftLeg": "mixamorig_LeftLeg",
+  "mixamorig:LeftFoot": "mixamorig_LeftFoot",
+  "mixamorig:LeftToeBase": "mixamorig_LeftToeBase",
+  "mixamorig:LeftToe_End": "mixamorig_LeftToe_End",
+  "mixamorig:RightUpLeg": "mixamorig_RightUpLeg",
+  "mixamorig:RightLeg": "mixamorig_RightLeg",
+  "mixamorig:RightFoot": "mixamorig_RightFoot",
+  "mixamorig:RightToeBase": "mixamorig_RightToeBase",
+  "mixamorig:RightToe_End": "mixamorig_RightToe_End",
+  "mixamorig:Spine": "mixamorig_Spine",
+  "mixamorig:Spine1": "mixamorig_Spine1",
+  "mixamorig:Spine2": "mixamorig_Spine2",
+  "mixamorig:LeftShoulder": "mixamorig_LeftShoulder",
+  "mixamorig:LeftArm": "mixamorig_LeftArm",
+  "mixamorig:LeftForeArm": "mixamorig_LeftForeArm",
+  "mixamorig:LeftHand": "mixamorig_LeftHand",
+  "mixamorig:LeftHandIndex1": "mixamorig_LeftHandIndex1",
+  "mixamorig:LeftHandIndex2": "mixamorig_LeftHandIndex2",
+  "mixamorig:LeftHandIndex3": "mixamorig_LeftHandIndex3",
+  "mixamorig:LeftHandIndex4": "mixamorig_LeftHandIndex4",
+  "mixamorig:LeftHandMiddle1": "mixamorig_LeftHandMiddle1",
+  "mixamorig:LeftHandMiddle2": "mixamorig_LeftHandMiddle2",
+  "mixamorig:LeftHandMiddle3": "mixamorig_LeftHandMiddle3",
+  "mixamorig:LeftHandMiddle4": "mixamorig_LeftHandMiddle4",
+  "mixamorig:LeftHandPinky1": "mixamorig_LeftHandPinky1",
+  "mixamorig:LeftHandPinky2": "mixamorig_LeftHandPinky2",
+  "mixamorig:LeftHandPinky3": "mixamorig_LeftHandPinky3",
+  "mixamorig:LeftHandPinky4": "mixamorig_LeftHandPinky4",
+  "mixamorig:LeftHandRing1": "mixamorig_LeftHandRing1",
+  "mixamorig:LeftHandRing2": "mixamorig_LeftHandRing2",
+  "mixamorig:LeftHandRing3": "mixamorig_LeftHandRing3",
+  "mixamorig:LeftHandRing4": "mixamorig_LeftHandRing4",
+  "mixamorig:LeftHandThumb1": "mixamorig_LeftHandThumb1",
+  "mixamorig:LeftHandThumb2": "mixamorig_LeftHandThumb2",
+  "mixamorig:LeftHandThumb3": "mixamorig_LeftHandThumb3",
+  "mixamorig:LeftHandThumb4": "mixamorig_LeftHandThumb4",
+  "Cuff_L_Up_01": "Cuff_L_Up_01",
+  "Cuff_L_Up_02": "Cuff_L_Up_02",
+  "Cuff_L_Up_03": "Cuff_L_Up_03",
+  "Cuff_L_Fwd_01": "Cuff_L_Fwd_01",
+  "Cuff_L_Fwd_02": "Cuff_L_Fwd_02",
+  "Cuff_L_Fwd_03": "Cuff_L_Fwd_03",
+  "Cuff_L_Dn_01": "Cuff_L_Dn_01",
+  "Cuff_L_Dn_02": "Cuff_L_Dn_02",
+  "Cuff_L_Dn_03": "Cuff_L_Dn_03",
+  "Cuff_L_Back_01": "Cuff_L_Back_01",
+  "Cuff_L_Back_02": "Cuff_L_Back_02",
+  "Cuff_L_Back_03": "Cuff_L_Back_03",
+  "Haori_Sleeve_L_Front_root": "Haori_Sleeve_L_Front_root",
+  "Haori_Sleeve_L_Front_01": "Haori_Sleeve_L_Front_01",
+  "Haori_Sleeve_L_Front_02": "Haori_Sleeve_L_Front_02",
+  "Haori_Sleeve_L_Front_03": "Haori_Sleeve_L_Front_03",
+  "Haori_Sleeve_L_Top_root": "Haori_Sleeve_L_Top_root",
+  "Haori_Sleeve_L_Top_01": "Haori_Sleeve_L_Top_01",
+  "Haori_Sleeve_L_Top_02": "Haori_Sleeve_L_Top_02",
+  "Haori_Sleeve_L_Top_03": "Haori_Sleeve_L_Top_03",
+  "Haori_Sleeve_L_Back_root": "Haori_Sleeve_L_Back_root",
+  "Haori_Sleeve_L_Back_01": "Haori_Sleeve_L_Back_01",
+  "Haori_Sleeve_L_Back_02": "Haori_Sleeve_L_Back_02",
+  "Haori_Sleeve_L_Back_03": "Haori_Sleeve_L_Back_03",
+  "Haori_Sleeve_L_Bottom_root": "Haori_Sleeve_L_Bottom_root",
+  "Haori_Sleeve_L_Bottom_01": "Haori_Sleeve_L_Bottom_01",
+  "Haori_Sleeve_L_Bottom_02": "Haori_Sleeve_L_Bottom_02",
+  "Haori_Sleeve_L_Bottom_03": "Haori_Sleeve_L_Bottom_03",
+  "mixamorig:Neck": "mixamorig_Neck",
+  "mixamorig:Head": "mixamorig_Head",
+  "mixamorig:HeadTop_End": "mixamorig_HeadTop_End",
+  "Hair_BackL_root": "Hair_BackL_root",
+  "Hair_BackL_01": "Hair_BackL_01",
+  "Hair_BackL_02": "Hair_BackL_02",
+  "Hair_BackL_03": "Hair_BackL_03",
+  "Hair_BackC_root": "Hair_BackC_root",
+  "Hair_BackC_01": "Hair_BackC_01",
+  "Hair_BackC_02": "Hair_BackC_02",
+  "Hair_BackC_03": "Hair_BackC_03",
+  "Hair_BackR_root": "Hair_BackR_root",
+  "Hair_BackR_01": "Hair_BackR_01",
+  "Hair_BackR_02": "Hair_BackR_02",
+  "Hair_BackR_03": "Hair_BackR_03",
+  "Hair_FrontL_root": "Hair_FrontL_root",
+  "Hair_FrontL_01": "Hair_FrontL_01",
+  "Hair_FrontL_02": "Hair_FrontL_02",
+  "Hair_FrontL_03": "Hair_FrontL_03",
+  "Hair_FrontR_root": "Hair_FrontR_root",
+  "Hair_FrontR_01": "Hair_FrontR_01",
+  "Hair_FrontR_02": "Hair_FrontR_02",
+  "Hair_FrontR_03": "Hair_FrontR_03",
+  "mixamorig:RightShoulder": "mixamorig_RightShoulder",
+  "mixamorig:RightArm": "mixamorig_RightArm",
+  "mixamorig:RightForeArm": "mixamorig_RightForeArm",
+  "mixamorig:RightHand": "mixamorig_RightHand",
+  "mixamorig:RightHandIndex1": "mixamorig_RightHandIndex1",
+  "mixamorig:RightHandIndex2": "mixamorig_RightHandIndex2",
+  "mixamorig:RightHandIndex3": "mixamorig_RightHandIndex3",
+  "mixamorig:RightHandIndex4": "mixamorig_RightHandIndex4",
+  "mixamorig:RightHandMiddle1": "mixamorig_RightHandMiddle1",
+  "mixamorig:RightHandMiddle2": "mixamorig_RightHandMiddle2",
+  "mixamorig:RightHandMiddle3": "mixamorig_RightHandMiddle3",
+  "mixamorig:RightHandMiddle4": "mixamorig_RightHandMiddle4",
+  "mixamorig:RightHandPinky1": "mixamorig_RightHandPinky1",
+  "mixamorig:RightHandPinky2": "mixamorig_RightHandPinky2",
+  "mixamorig:RightHandPinky3": "mixamorig_RightHandPinky3",
+  "mixamorig:RightHandPinky4": "mixamorig_RightHandPinky4",
+  "mixamorig:RightHandRing1": "mixamorig_RightHandRing1",
+  "mixamorig:RightHandRing2": "mixamorig_RightHandRing2",
+  "mixamorig:RightHandRing3": "mixamorig_RightHandRing3",
+  "mixamorig:RightHandRing4": "mixamorig_RightHandRing4",
+  "mixamorig:RightHandThumb1": "mixamorig_RightHandThumb1",
+  "mixamorig:RightHandThumb2": "mixamorig_RightHandThumb2",
+  "mixamorig:RightHandThumb3": "mixamorig_RightHandThumb3",
+  "mixamorig:RightHandThumb4": "mixamorig_RightHandThumb4",
+  "Cuff_R_Up_01": "Cuff_R_Up_01",
+  "Cuff_R_Up_02": "Cuff_R_Up_02",
+  "Cuff_R_Up_03": "Cuff_R_Up_03",
+  "Cuff_R_Fwd_01": "Cuff_R_Fwd_01",
+  "Cuff_R_Fwd_02": "Cuff_R_Fwd_02",
+  "Cuff_R_Fwd_03": "Cuff_R_Fwd_03",
+  "Cuff_R_Dn_01": "Cuff_R_Dn_01",
+  "Cuff_R_Dn_02": "Cuff_R_Dn_02",
+  "Cuff_R_Dn_03": "Cuff_R_Dn_03",
+  "Cuff_R_Back_01": "Cuff_R_Back_01",
+  "Cuff_R_Back_02": "Cuff_R_Back_02",
+  "Cuff_R_Back_03": "Cuff_R_Back_03",
+  "Haori_Sleeve_R_Front_root": "Haori_Sleeve_R_Front_root",
+  "Haori_Sleeve_R_Front_01": "Haori_Sleeve_R_Front_01",
+  "Haori_Sleeve_R_Front_02": "Haori_Sleeve_R_Front_02",
+  "Haori_Sleeve_R_Front_03": "Haori_Sleeve_R_Front_03",
+  "Haori_Sleeve_R_Top_root": "Haori_Sleeve_R_Top_root",
+  "Haori_Sleeve_R_Top_01": "Haori_Sleeve_R_Top_01",
+  "Haori_Sleeve_R_Top_02": "Haori_Sleeve_R_Top_02",
+  "Haori_Sleeve_R_Top_03": "Haori_Sleeve_R_Top_03",
+  "Haori_Sleeve_R_Back_root": "Haori_Sleeve_R_Back_root",
+  "Haori_Sleeve_R_Back_01": "Haori_Sleeve_R_Back_01",
+  "Haori_Sleeve_R_Back_02": "Haori_Sleeve_R_Back_02",
+  "Haori_Sleeve_R_Back_03": "Haori_Sleeve_R_Back_03",
+  "Haori_Sleeve_R_Bottom_root": "Haori_Sleeve_R_Bottom_root",
+  "Haori_Sleeve_R_Bottom_01": "Haori_Sleeve_R_Bottom_01",
+  "Haori_Sleeve_R_Bottom_02": "Haori_Sleeve_R_Bottom_02",
+  "Haori_Sleeve_R_Bottom_03": "Haori_Sleeve_R_Bottom_03",
+  "Haori_Hem_00_root": "Haori_Hem_00_root",
+  "Haori_Hem_00_01": "Haori_Hem_00_01",
+  "Haori_Hem_00_02": "Haori_Hem_00_02",
+  "Haori_Hem_00_03": "Haori_Hem_00_03",
+  "Haori_Hem_01_root": "Haori_Hem_01_root",
+  "Haori_Hem_01_01": "Haori_Hem_01_01",
+  "Haori_Hem_01_02": "Haori_Hem_01_02",
+  "Haori_Hem_01_03": "Haori_Hem_01_03",
+  "Haori_Hem_02_root": "Haori_Hem_02_root",
+  "Haori_Hem_02_01": "Haori_Hem_02_01",
+  "Haori_Hem_02_02": "Haori_Hem_02_02",
+  "Haori_Hem_02_03": "Haori_Hem_02_03",
+  "Haori_Hem_03_root": "Haori_Hem_03_root",
+  "Haori_Hem_03_01": "Haori_Hem_03_01",
+  "Haori_Hem_03_02": "Haori_Hem_03_02",
+  "Haori_Hem_03_03": "Haori_Hem_03_03",
+  "Haori_Hem_04_root": "Haori_Hem_04_root",
+  "Haori_Hem_04_01": "Haori_Hem_04_01",
+  "Haori_Hem_04_02": "Haori_Hem_04_02",
+  "Haori_Hem_04_03": "Haori_Hem_04_03",
+  "Haori_Hem_05_root": "Haori_Hem_05_root",
+  "Haori_Hem_05_01": "Haori_Hem_05_01",
+  "Haori_Hem_05_02": "Haori_Hem_05_02",
+  "Haori_Hem_05_03": "Haori_Hem_05_03",
+  "Haori_Hem_06_root": "Haori_Hem_06_root",
+  "Haori_Hem_06_01": "Haori_Hem_06_01",
+  "Haori_Hem_06_02": "Haori_Hem_06_02",
+  "Haori_Hem_06_03": "Haori_Hem_06_03",
+  "Haori_Hem_07_root": "Haori_Hem_07_root",
+  "Haori_Hem_07_01": "Haori_Hem_07_01",
+  "Haori_Hem_07_02": "Haori_Hem_07_02",
+  "Haori_Hem_07_03": "Haori_Hem_07_03"
+ }
+}

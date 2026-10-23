@@ -1,0 +1,238 @@
+{
+ "_doc": "R15 日之呼吸・圓舞一閃（ART_REVIEW 候選，notes/r15/build_issen_r15.py）。來源 #161 劍聖 葦名一心 c5400 a000_003091。文字檔原意「瞬步衝刺＋a050_300020（#4）」：#4 只前進 1.5 m、庫內衝刺接 #4 的最佳接點仍差 手 0.79 m／刀軸 49°／腳 0.69 m／髖 78°／肩 97°（notes/join_search.py），接不起來 → 改用一心這支「下蹲 → 瞬步（腿保持弓步滑行、沒有跑步）→ 收住 → 短衝 → 橫斬」整支同一來源：下蹲 0.22 s → 瞬步 6.3 m（根位移縮成原本 0.6 倍、仍 ≥5 m）→ 中間停頓拿掉 → 一閃（橫斬 L→R）→ 收勢；第二刀縱劈不用。操作：圓舞（新）時 Shift+L，或 Z／X 直接選。",
+ "name": "日之呼吸・圓舞一閃",
+ "status": "ART_REVIEW",
+ "batch": 1,
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r15_issen.json",
+ "source": "#161 劍聖 葦名一心 c5400 a000_003091（TS 0.78；#4 接不起來，見說明）",
+ "timeline": "下蹲 0–0.22 s（Space 可取消）→ 瞬步 0.22–0.44（6.3 m，光帶＋殘影）→ 收住接短衝 → 一閃 0.65–0.78 → 收勢",
+ "damage": 3,
+ "cooldown": 1.2,
+ "charge_cancel": 0.2,
+ "targets": [
+  {
+   "name": "木樁 9.2 m（設計距離）",
+   "pos": [
+    0.0,
+    0.0,
+    9.19
+   ]
+  },
+  {
+   "name": "木樁 4.5 m（瞬步自動縮短）",
+   "pos": [
+    0.0,
+    0.0,
+    4.5
+   ]
+  }
+ ],
+ "afterimage": {
+  "times": [
+   0.264,
+   0.319,
+   0.374,
+   0.429
+  ],
+  "life": 0.16,
+  "alpha": 0.38,
+  "color": [
+   1.0,
+   0.7,
+   0.3
+  ]
+ },
+ "shot": {
+  "anim": "isshin_sun_issen_r15",
+  "angle": 0.0,
+  "fade_in": 0.05,
+  "fade_out": 0.25,
+  "travel_scale": 1.0,
+  "two_hand": false,
+  "attack": true,
+  "strikes": [
+   [
+    0.653,
+    0.776
+   ]
+  ],
+  "swings": [
+   0.653
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.2,
+    0.653
+   ]
+  ],
+  "lunge_min_dist": [
+   1.3
+  ],
+  "min_dist": 0.9,
+  "dodge_cancel": 0.896,
+  "move_cancel": 1.026,
+  "attack_cancel": 1.026,
+  "end_t": 1.45,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 6,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -12.0,
+   "pitch": 0.55
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.04,
+   "db": -9.0,
+   "pitch": 0.85
+  },
+  "dash": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.21,
+   "db": 0.0,
+   "pitch": 1.5
+  },
+  "wind": {
+   "stream": "res://assets/audio/sfx/dragon_wind_loop.wav",
+   "at": 0.22,
+   "db": -10.0,
+   "pitch": 1.8
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 0.633,
+   "db": 0.0,
+   "pitch": 1.15
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・圓舞一閃",
+  "_doc": "R15 圓舞一閃：蓄勢時刀身點燃；瞬步段＝胸口高的白金光帶（沿實際衝刺路線，issen_r15_stroke_path.json 第一段）＋4 個淡金殘影（試玩場景姿勢快照）；一閃＝細而極亮的白金斬線（第二段）；命中爆燃一次（停格 6 格）。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     0.633,
+     0.796
+    ]
+   ],
+   "lifetime": 0.1,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.8,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（下蹲時點燃）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.12,
+     0.8
+    ],
+    [
+     0.2,
+     1.0
+    ],
+    [
+     0.876,
+     1.0
+    ],
+    [
+     1.226,
+     0.0
+    ]
+   ],
+   "edge_height": 0.12,
+   "end_t": 1.326
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/issen_r15_stroke_path.json",
+   "break_gap": 0.1,
+   "inner": 0.12,
+   "outer": 0.2,
+   "grow": 0.03,
+   "head_len": 0.04,
+   "tear_t": 0.34,
+   "gone_t": 0.62,
+   "tear_lag": 1.0,
+   "vanish_age": 0.42,
+   "vanish_soft": 0.12,
+   "end_t": 1.45,
+   "yellow_cut": 0.6,
+   "orange_cut": 0.28,
+   "outline_w": 0.05,
+   "opacity": 0.9,
+   "near_fade": 0.55,
+   "col_yellow": [
+    1.0,
+    0.8,
+    0.4
+   ],
+   "yellow_gain": 1.7,
+   "col_orange": [
+    1.0,
+    0.45,
+    0.1
+   ],
+   "orange_gain": 1.0,
+   "col_red": [
+    0.6,
+    0.08,
+    0.02
+   ],
+   "red_gain": 0.8,
+   "col_white": [
+    1.0,
+    0.97,
+    0.9
+   ],
+   "white_gain": 3.6,
+   "head_gain": 1.2
+  },
+  "sparks": {
+   "window": [
+    0.653,
+    0.776
+   ],
+   "min_speed": 15.0,
+   "spacing": 0.15,
+   "cap": 14
+  },
+  "hit": {
+   "tongues": 6,
+   "sparks": 16,
+   "flash_len": 0.7,
+   "flash_w": 0.08,
+   "flash_life": 0.2,
+   "flash_ahead": 0.2,
+   "flash_out": 0.1,
+   "flare_time": 0.15
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "id": "sun_enbu_issen"
+}

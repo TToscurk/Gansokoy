@@ -1,0 +1,31 @@
+{
+ "character_id": "f2e0c040-48e3-43f5-a17c-a3bacd230211",
+ "arm_space": 0.78,
+ "fps": 30,
+ "skin": false,
+ "inplace": false,
+ "files": {
+  "gs_combo_slash": {
+   "product_id": "c9cc7e5c-b96c-11e4-a802-0aaa78deedf9",
+   "name": "Great Sword Slash",
+   "description": "Great Sword Combo Slash",
+   "model_id": 122350901,
+   "params": "0",
+   "frames": 105,
+   "job": "c23e7ded-418c-46dc-a2a5-1fb2e083430a",
+   "bytes": 586240,
+   "sha256": "79f11116bcafa5486d704b90167cc0e5e4955330241720b2b542a0b8fddb163b"
+  },
+  "gs_down_slash": {
+   "product_id": "c9cc7d9c-b96c-11e4-a802-0aaa78deedf9",
+   "name": "Great Sword Slash",
+   "description": "Great Sword Downward Slash",
+   "model_id": 122340901,
+   "params": "0",
+   "frames": 38,
+   "job": "9a1df770-a591-40c0-98d5-351af277c096",
+   "bytes": 375888,
+   "sha256": "d9fc257f959c64206b8730ed708c8e0921569ed51d82241ada6a36fec87a369a"
+  }
+ }
+}
