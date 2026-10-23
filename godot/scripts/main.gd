@@ -159,10 +159,10 @@ var _shot_i := 0
 var _shot_cam_node: Camera3D = null
 var _shot_wait := 0
 var _shot_hidden: Array[Node3D] = []
+var _shot_hidden_ui: Array[CanvasLayer] = []
 
 func _load_json_array(path: String) -> Array:
 	var txt := FileAccess.get_file_as_string(path)
-var _shot_hidden_ui: Array[CanvasLayer] = []
 	if txt.is_empty():
 		push_error("讀不到 shots 清單 %s" % path)
 		return []
@@ -185,9 +185,6 @@ func _aim_shot(i: int) -> void:
 	for p in _shot_hidden:
 		p.visible = true
 	_shot_hidden.clear()
-	if map_root != null:
-		for hp in e.get("hide", []):
-			var hn := map_root.get_node_or_null(String(hp))
 	# "hud": false —— 美術審查用乾淨畫面：所有 HUD（CanvasLayer：任務卡、指路、
 	# 時鐘、地名）先藏起來，該張拍完自動還原。
 	for cl in _shot_hidden_ui:
@@ -199,6 +196,9 @@ func _aim_shot(i: int) -> void:
 			if (cl as CanvasLayer).visible:
 				(cl as CanvasLayer).visible = false
 				_shot_hidden_ui.append(cl)
+	if map_root != null:
+		for hp in e.get("hide", []):
+			var hn := map_root.get_node_or_null(String(hp))
 			if hn is Node3D:
 				hn.visible = false
 				_shot_hidden.append(hn)
