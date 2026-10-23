@@ -1,0 +1,1038 @@
+[
+{
+"path": "docs/reference/SKYBOX/人里skybox.png",
+"size": 2090476,
+"md5": "424dc79df8d9a8d076906b9af92dd26f",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/SKYBOX/妖怪之山.png",
+"size": 1484988,
+"md5": "9eb5cf66790e2cf500eb305a5e047733",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/SKYBOX/妖怪之山2.png",
+"size": 1008871,
+"md5": "28dc09bf06ff45406914b03586cb9547",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/SKYBOX/妖怪之山3.png",
+"size": 2461740,
+"md5": "759dd1ea245c4cd3b2c661465c6e0f46",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/SKYBOX/遠景山.PNG",
+"size": 2790775,
+"md5": "a44642764b9603253035c171378dfffe",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/ui設計/ui設計提示詞.txt",
+"size": 9747,
+"md5": "0fd4ae075c5517fcbdccd02d2916c9e5",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/ui設計/緣一ui..png",
+"size": 2512391,
+"md5": "bd016693ef15bee174207485cb015159",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/丘腳社寺 側面.png",
+"size": 2446509,
+"md5": "0dd2d9b9bac17e43be1491e1106e822e",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/丘腳社寺 正面.png",
+"size": 2849782,
+"md5": "7a08e9f50140b43b367934b7392f78b3",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/人間之里村落概念設計圖V2最終參考版.PNG",
+"size": 3449366,
+"md5": "ba3b95a2a2714c07cdbe64a3d2d70483",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/住商地區.PNG",
+"size": 3224294,
+"md5": "24b1ede248ee9ff8d52924f3657deb45",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/住宅概念圖.png",
+"size": 3189734,
+"md5": "cac86ba924504dcf010efefd2cb65065",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/新版水護岸概念圖.png",
+"size": 3167479,
+"md5": "be395224ea0b76daa69ededf47db220e",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/村落農村概念高空俯視.png",
+"size": 3482100,
+"md5": "68a479533bd92178c6e450747b21c36b",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/河童重工+人間之里.png",
+"size": 2650610,
+"md5": "7dd3c405e57f03f7cf67bf5cf3869f4d",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/人間之里 路 水 景 物 農 商 生活概念圖/背面.png",
+"size": 2612577,
+"md5": "981fecc51ffc2b4fa96a88bb23495d38",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/傳送點美術/幻想鄉神社傳送點設計提案.png",
+"size": 3004539,
+"md5": "1c0014b7210ab5646a0e358e9ef3900e",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/動作設計/打擊感_逐字稿_JogsLeech.txt",
+"size": 17578,
+"md5": "e6d1e0df3c13d0cbab119dbaa2db7e17",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/動作設計/打擊感研究.md",
+"size": 7114,
+"md5": "a35a1d39746f879fb86662f0c93d7a2c",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF01_圓舞.png",
+"size": 2091733,
+"md5": "ed005bf2f3d60d014b9d7e36da62cb26",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF02_碧羅之天.png",
+"size": 2224451,
+"md5": "c76ef08d915ab0bbd91f00a526bb58bc",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF03_烈日虹鏡.png",
+"size": 2236870,
+"md5": "2c80eddeee2450eb5615949ae6429fe0",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF04_幻日虹.png",
+"size": 2049761,
+"md5": "8060db001f52164371a8cd602faf6cc5",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF05_火車.png",
+"size": 2070870,
+"md5": "c464e0ef4f50c69730b2039e1e423edb",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF06_灼骨炎陽.png",
+"size": 2119325,
+"md5": "a30a9f5ec847a9b7b8f1bb4574592e87",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF07_陽華突.png",
+"size": 1966589,
+"md5": "c1b5c5d39baa116e6c6030697e5fb758",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF08_飛輪陽炎.png",
+"size": 2043491,
+"md5": "c6ef2637888737c3d078fc679a55db56",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF09_斜陽轉身.png",
+"size": 2112805,
+"md5": "56f1fd15ad62d3dbd882c2283830b5b1",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF10_輝輝恩光.png",
+"size": 2108766,
+"md5": "68a3e713da70dba19fa9a451660dd5b8",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF11_日暈之龍頭舞.png",
+"size": 2534787,
+"md5": "01496737297e814eb41b07b3d58dc876",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF12_炎舞.png",
+"size": 2309117,
+"md5": "f23a095c8af663f2f3e384144eb42a5c",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/REF13_十二圓環.png",
+"size": 2796269,
+"md5": "7a31224347a1241ad362aed82ddd7bbe",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/動作設計/緣一_日之呼吸_參考圖包/緣一架式.png",
+"size": 75816,
+"md5": "564f6b6ccc45d6186654d1df06fe8193",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/市集資產/01_市集布旗與招牌.png",
+"size": 2428186,
+"md5": "eec16ba6f5d749baa3ab17951c6658be",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/市集資產/02_陶瓷碗盤與杯具.png",
+"size": 1912404,
+"md5": "e76dbe45a0ce3999234133bc0ba15136",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/市集資產/03_陶罐酒瓶與儲藏器皿.png",
+"size": 2201022,
+"md5": "6f4b732328c8b5df23bcd20a6739f26b",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/市集資產/04_木製攤位與家具道具.png",
+"size": 2206437,
+"md5": "6411edca2d65d4ae48b7cc5337f17779",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/市集資產/05_布料燈籠與雜貨配件.png",
+"size": 2541860,
+"md5": "52d4db0fb6d34c32e0fff3d311f9f354",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/市集資產/06_蔬果與竹籃木箱.png",
+"size": 2637573,
+"md5": "c966583940a657701c2ac766110fd493",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/市集資產/市集商品.png",
+"size": 2048773,
+"md5": "3c4516409f0f15a4bf8178d44ce74860",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/市集資產/市集攤.png",
+"size": 2349698,
+"md5": "1b59231ff1009af53da5f8620ba12437",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/市集資產/旗桿.png",
+"size": 1913482,
+"md5": "20ecf7031ef8bec696ff258e7543b841",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/市集資產/木箱木桶稻草.png",
+"size": 2063626,
+"md5": "c2fe9be77f2ea78b38a87e69a747366e",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/市集資產/水井.png",
+"size": 2102348,
+"md5": "0aa6924c805e6ecfe6c0b784ce60de24",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/怪物/格爾芬.png",
+"size": 1637659,
+"md5": "380c0e039f9eb2a2ed913dcf418cfa0a",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_01.png",
+"size": 1513134,
+"md5": "9db0ed77ac7d67aab2293f938d1ccad9",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_02.png",
+"size": 2121863,
+"md5": "eb85bcb7232f752350986d820a8d2740",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_03.png",
+"size": 2376382,
+"md5": "b67989b4c30de8ddd858235b85f6cff8",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_04.png",
+"size": 1820377,
+"md5": "36e216be16a2d533877c791f78fbaa46",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_05.png",
+"size": 2106979,
+"md5": "3a6547dbce497f10c63ce8789cc82523",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_06.png",
+"size": 2197091,
+"md5": "c45de93cc8df740156ee1af5518f3fb0",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_07.png",
+"size": 1410256,
+"md5": "fb9340e18fa799344380411d11bd808d",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_08.png",
+"size": 1721293,
+"md5": "a9fbbf5d7bddfc5de79e3379dc8639e0",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_09.png",
+"size": 2143205,
+"md5": "b0fec668f0db7b502e5b056613e40241",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_10.png",
+"size": 2169528,
+"md5": "73bd675fb085f9c602c3367153bf9fb0",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_11.png",
+"size": 1421702,
+"md5": "090092efdeb7ac8846ad9bb7df3fd865",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/meshy_tree_refs_12/tree_12.png",
+"size": 1846743,
+"md5": "43eea07d96e8d1e335af8ccb7d3e4a04",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/樹/平原樹與石頭.png",
+"size": 2492877,
+"md5": "ae8cc5a87c0ca912c26b39c5836bbcb5",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/樹/針葉林.png",
+"size": 2727614,
+"md5": "3cdc7f8ce7502051c6156f8ecfea4252",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/樹/高原山樹.PNG",
+"size": 2691019,
+"md5": "0e75c3ee300a150921d5aa4bba355110",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/樹/高原山樹2.PNG",
+"size": 2021228,
+"md5": "75ed00612944f4c20fb43aa6d28bfed9",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/橋/地基拱橋1.png",
+"size": 1867714,
+"md5": "7e3b21d4a823544c14803e2de8851537",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/橋/地基拱橋2.png",
+"size": 1527747,
+"md5": "10e8e6d0d40539ac8911c4cf004db045",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/橋/地基拱橋3.png",
+"size": 1874730,
+"md5": "679740d970a83cc6b34b6d9551c0d60d",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/橋/長橋.png",
+"size": 1242704,
+"md5": "39e3d71496e84df99904b22f807f52f3",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/一般市集商店.PNG",
+"size": 1943288,
+"md5": "cc06c499e5ef78e859206ad53b7a615f",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/中等町2.PNG",
+"size": 2448688,
+"md5": "a818cb324edd0ffeaa40a54a28ea80fb",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/倉庫.PNG",
+"size": 2112576,
+"md5": "4c33639a2c3065e8bb92230143eeb7c6",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/商家.PNG",
+"size": 2040770,
+"md5": "088da228c4a4bc76c6d16bdd437e846a",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/圍牆.png",
+"size": 2820289,
+"md5": "6e5ce12d8e2595596d1076e9dcd19bdd",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/旅館.png",
+"size": 2333338,
+"md5": "5093053d11928c23becd070b2182ecd9",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/普町1.PNG",
+"size": 2124486,
+"md5": "f54ac5c6c8ed00b22b9c01d2153b8835",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/普町2.PNG",
+"size": 2448688,
+"md5": "a818cb324edd0ffeaa40a54a28ea80fb",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/普町3.PNG",
+"size": 1943288,
+"md5": "cc06c499e5ef78e859206ad53b7a615f",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/普町4.PNG",
+"size": 2203972,
+"md5": "d1ef43ffd860e311d36b72d04ca38d1a",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/農家.PNG",
+"size": 2447730,
+"md5": "f371607312643415ba6aa0a596a2a376",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/長屋.PNG",
+"size": 2216713,
+"md5": "6bb7a3388000a8e77394fb70b56dfd82",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/民宅/高等町4.PNG",
+"size": 2203972,
+"md5": "d1ef43ffd860e311d36b72d04ca38d1a",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/分水閘門.png",
+"size": 291094,
+"md5": "2209adc2adf8901586bffe6702127b54",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/收頭件1.png",
+"size": 650481,
+"md5": "e62eb312915585405ca05d44f06e3539",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/木樁.png",
+"size": 1537143,
+"md5": "5db28a43a66416a28df7e1714f581e81",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/木樋（引水槽）＋支撐棚架.png",
+"size": 1852759,
+"md5": "fe93bf63db9964f506f43f947cc0269b",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/木溝水門.png",
+"size": 251268,
+"md5": "e2789d732d8f5846972007a1ff18d704",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/水田一格.png",
+"size": 1999199,
+"md5": "220cfeeee1fd7858a7e143e2b9dcd27c",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/水車小屋.png",
+"size": 2202292,
+"md5": "61b174c7cfd17828670272e96908ce20",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/水車小屋整組.png",
+"size": 2525151,
+"md5": "51d2ad12c2da08fe2673d6a4d262ed95",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/水車齒輪(寬).png",
+"size": 2075523,
+"md5": "8d80aa4c70b40ada74fa435ceaf2f1c6",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/水車齒輪(窄).png",
+"size": 2051725,
+"md5": "dc8803a5a167a306b1cd42c83631614c",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/洗物石段.png",
+"size": 2438528,
+"md5": "14f58d46bacbd8e19cd9fa68231418ce",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/濱水平台一塊.png",
+"size": 264871,
+"md5": "7d11a8addc413e660579a5fa63ca9475",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/畦道／田埂.png",
+"size": 1686479,
+"md5": "7d838f2a763a707da83fb2c94e7ba3da",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/石造堰檻.png",
+"size": 1909931,
+"md5": "6d0e361e8cea9b1a46027c026b2d7e4f",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/稻作株（生長中）.png",
+"size": 2030361,
+"md5": "f23d8b8bede81e27a5e51b4f3678a383",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/花崗岩）疊砌牆一段.png",
+"size": 2241115,
+"md5": "f41418dd3bd606041ec409a24a9f0605",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/親水階梯.png",
+"size": 223681,
+"md5": "2db8507eaeee662ea6de0f834085acaa",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/護岸收頭件2.png",
+"size": 2059591,
+"md5": "3724cfa9e9c3863c0fc1330627df4c6e",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/護岸轉角石／收頭件90度角.png",
+"size": 2001207,
+"md5": "ee189410316141a590c4d4c556110102",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/資產部件2.png",
+"size": 2018729,
+"md5": "5cb7973874df860d93da3817183f08dc",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/降台石段（2–3 階短梯）.png",
+"size": 2239913,
+"md5": "cf3f4a0f6220fd429bcccacc01b11f6b",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/河岸/降台石段（5 階短梯）.png",
+"size": 2326998,
+"md5": "2245773f824edb1d38cfd26b8b7e4b38",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/獸道概念圖/叢林感.PNG",
+"size": 137077,
+"md5": "01e19b5ed4af949aaea9e19f813a160a",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/獸道概念圖/林道.png",
+"size": 3815255,
+"md5": "ccdb4d77627683b2cc137e536c1d2fc5",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/獸道概念圖/植被.PNG",
+"size": 634987,
+"md5": "118ee17c3bc6c22807e6af397f2e0508",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/獸道概念圖/獸道概念圖1.png",
+"size": 3837137,
+"md5": "86f1d095b3c507ff45ad380148c01c8b",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/獸道概念圖/獸道概念圖2.png",
+"size": 3849196,
+"md5": "09a5f5b4059390f8aaa91ad858fb6866",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/獸道概念圖/獸道概念圖3.png",
+"size": 3873355,
+"md5": "a802fed2d5cf7e4c2d06d6d14c0b8752",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/博麗神社山間全域概念地圖.png",
+"size": 3084402,
+"md5": "66d4e5ff6e1828d44cfb45a6e14b29fa",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/博麗神社概念圖.png",
+"size": 2975007,
+"md5": "ecaa67747c0fdef862ed4c87ca352d0a",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/博麗神社鳥居.png",
+"size": 2421317,
+"md5": "55494447e1bb2d19d4ba0362ad1d5497",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/參道台階.png",
+"size": 2471281,
+"md5": "33992b3f9ff0047fb74175e78c47f20d",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/拜殿.png",
+"size": 2836463,
+"md5": "95a1d71551c3c1d7bf39aa74eed7d63c",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/水手舍.png",
+"size": 2499691,
+"md5": "cb82b5057ef37c932378d8e04bd0367b",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/淨水台.png",
+"size": 2932418,
+"md5": "34b24315db30bfc63b5d0b8c7d3991aa",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/社務所靈夢駐所.png",
+"size": 2514348,
+"md5": "fe31644e8474a5ca12902972e98a79bd",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/神社元素圖.png",
+"size": 2490000,
+"md5": "0f873d2e91e97d751d82f626c30f069e",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/神社地面.png",
+"size": 4099440,
+"md5": "0245598f1a3163b63d1af5f1033a9735",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/神社地面概念圖.png",
+"size": 2679556,
+"md5": "85a047d26418c74841ce08329da5dafc",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/神社山腳台階.png",
+"size": 2885746,
+"md5": "70a6ebf28531cdfa4764648c37477aac",
+"file_ref": false,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/賽錢箱.png",
+"size": 3047198,
+"md5": "78c1c13091c4547c240a6b2757e8530d",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/神社/陰陽玉.png",
+"size": 1809345,
+"md5": "f38df134ed2c588a2822d34354221c84",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/立繪角色/角色概念圖/博麗靈夢v2.png",
+"size": 2673991,
+"md5": "ebf4ef2ef17b2887b14174d9b4a1ed5b",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/立繪角色/角色概念圖/奧野田美宵(鯢吞亭).png",
+"size": 2564323,
+"md5": "732cdc304f0de4267c9668e360289b9c",
+"file_ref": true,
+"dir_ref": false
+},
+{
+"path": "docs/reference/立繪角色/角色概念圖/慧音-立繪圖.png",
+"size": 3020252,
+"md5": "8056cb2b39ddfaf16115dabc560f5b44",
+"file_ref": true,
+"dir_ref": false
+},
+{
+"path": "docs/reference/立繪角色/角色概念圖/慧音.png",
+"size": 2449977,
+"md5": "29c5a5d3b08909acc60ba294aa59ac85",
+"file_ref": true,
+"dir_ref": false
+},
+{
+"path": "docs/reference/立繪角色/角色概念圖/本居小玲(鈴耐庵).png",
+"size": 2956789,
+"md5": "fe8e2e21bf94d54bda33a09579bc29e9",
+"file_ref": true,
+"dir_ref": false
+},
+{
+"path": "docs/reference/立繪角色/角色概念圖/稗田阿求.png",
+"size": 2853723,
+"md5": "f221871e7be452a4504823d0faa1cc24",
+"file_ref": true,
+"dir_ref": false
+},
+{
+"path": "docs/reference/立繪角色/角色概念圖/緣一.png",
+"size": 2455757,
+"md5": "6b2e34a32819efeaf00c699d7e8c8dec",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/立繪角色/角色概念圖/靈夢.png",
+"size": 2911438,
+"md5": "9af51a41f4e4ec68c3c1289895dcdf6e",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/立繪角色/角色概念圖/魔里莎.png",
+"size": 3085203,
+"md5": "31e4382278804bb307fb0cc40241547b",
+"file_ref": false,
+"dir_ref": false
+},
+{
+"path": "docs/reference/紋理/黃土質感色.png",
+"size": 3316659,
+"md5": "fdc7ad5dd929a9b96fbf2866e4801e60",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/上白澤旗桿.PNG",
+"size": 1070085,
+"md5": "e34d0d80e6eede28101723424f9bdf26",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/寺子屋2.PNG",
+"size": 2713044,
+"md5": "c4b967bc9f2ecf50edb56a155a1d4e14",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/寺子屋告示牌.PNG",
+"size": 1446065,
+"md5": "c3d4d8134e9f6c0d54f98a1654ea2c94",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/火見橹.png",
+"size": 1794602,
+"md5": "6d55552738f30ee55a48c0362bb8a785",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/裨田後.PNG",
+"size": 3010296,
+"md5": "a42a5edf629dc41a81ba46145e5664d7",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/裨田邸正面.PNG",
+"size": 2763616,
+"md5": "26b924d06fc041415aadb26f72118896",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/裨田邸正面2.PNG",
+"size": 2870561,
+"md5": "7adfff9612c78a0454ce077184bb0294",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/鈴耐庵.png",
+"size": 2377957,
+"md5": "e40d7a1542aa9024504d963b4a0bf6a9",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/電杆.png",
+"size": 1860756,
+"md5": "b0ab6176155a922171ebe53404f4b445",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/霧雨店.png",
+"size": 3057003,
+"md5": "9afdb15a8a60099ab88e98b431f1f369",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/霧雨燈籠.png",
+"size": 1778823,
+"md5": "096f81c05090b8b2f866e12c57adf081",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/霧雨特價.png",
+"size": 1902262,
+"md5": "a9027f2c478d9560b78f492f63522b1f",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/鯢吞燈籠正面.png",
+"size": 668548,
+"md5": "4d56b5e32360e05179843a3f2f544451",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/鲵吞亭_側面.png",
+"size": 2258923,
+"md5": "401e240c33ff620cfa7fe54f7ca82a51",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/鲵吞亭_正面.png",
+"size": 2752016,
+"md5": "690722fc27123b3bcb95ce04030a4502",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/鳥居.png",
+"size": 1643235,
+"md5": "ad4687fc3d0bfc130a5de719b432052f",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/龍神像.png",
+"size": 2632722,
+"md5": "8ba11b51c574f889380b41f9b4257509",
+"file_ref": true,
+"dir_ref": true
+},
+{
+"path": "docs/reference/重點地標/龍神像2.png",
+"size": 2166871,
+"md5": "0aa0d1145423bac9e3034f2cbfc27db7",
+"file_ref": true,
+"dir_ref": true
+}
+]

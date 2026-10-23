@@ -334,9 +334,8 @@ they are not "fixed" in the engine again:
   look decision. Street lamps were already switched off and bought nothing (0.7 % of the
   total, 44→43 fps, inside noise) — recorded so it is not retried as a fix.
 - **Play boundary.** `tools/probe_play_bounds.gd`: 15 of 16 compass headings run 420 m+
-  with no terrain stopping the player. A plan exists at
-  `docs/plans/2026-09-04-圍牆佈局規劃.md` (invisible `StaticBody3D` bounds for movement,
-  wall segments only as gate dressing) but has not been approved or built.
+  with no terrain stopping the player. No boundary plan is active (the 2026-09-04 wall
+  layout plan was withdrawn by the user on 2026-09-23).
 
 ## Do Not Reopen Without Evidence
 

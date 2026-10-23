@@ -1,0 +1,11 @@
+{
+ "anim": "idle_shift",
+ "clip": "idle",
+ "frame_script_ms_p50_p95": [
+  16.79,
+  197.67
+ ],
+ "nan": 0,
+ "skirt_bone_rot_from_rest_max_deg": 36.0,
+ "skirt_joint_far_from_hips_max_m": 0.69
+}

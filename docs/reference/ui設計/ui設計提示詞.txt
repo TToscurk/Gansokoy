@@ -1,0 +1,494 @@
+可以，而且我建議你不要叫 AI「照這張做」，而是把這張圖拆成一套 **UI Design System 參數**。這樣不管你用 Claude、GPT、Qwen 幫你改 Godot，都比較不會每次做出不同風格。
+
+你可以把「幻想鄉 × 緣一」的 UI 定義成這樣：
+
+```yaml
+UI_ART_DIRECTION:
+  theme:
+    world: "幻想鄉 / 和風妖怪世界"
+    protagonist: "繼國緣一氣質"
+    mood: "幽玄、安靜、神秘、略帶孤寂"
+    quality: "高級日式幻想 RPG"
+
+  style_ratio:
+    japanese_fantasy: 45
+    ink_wash: 20
+    shrine_miko: 15
+    yoriichi_sun_breathing: 15
+    modern_game_ui: 5
+
+  palette:
+    primary: "#A72E2E"      # 暗朱紅
+    secondary: "#E8DFCC"    # 和紙米白
+    dark: "#171310"         # 墨黑
+    gold: "#B58A4A"         # 舊金
+    accent: "#D85A38"       # 日之呼吸橙紅
+    ghost: "#A7C9D4"        # 妖怪/靈氣淡藍
+
+  materials:
+    background: "和紙、墨跡、舊木、漆器"
+    border: "毛筆不規則邊緣"
+    decoration:
+      - "紅白御幣"
+      - "御札"
+      - "彼岸花"
+      - "楓葉"
+      - "細繩結"
+      - "日輪"
+      - "刀鍔"
+
+  shape_language:
+    corner_radius: 2
+    symmetry: 0.35
+    organic_edges: 0.8
+    border_irregularity: 0.6
+    geometric_ui: 0.2
+
+  transparency:
+    hud_background: 0.55
+    dialogue_background: 0.92
+    quest_background: 0.86
+
+  hierarchy:
+    gameplay_hud: "低存在感"
+    dialogue: "高存在感"
+    quest: "中存在感"
+    interaction_prompt: "極低存在感"
+
+  animation:
+    duration: 0.18
+    easing: "ease_out"
+    popup_style: "墨水暈開"
+    hover_style: "淡紅光 + 紙張浮起"
+    quest_complete: "御札燃燒成灰"
+    dialogue_appear: "由墨跡逐漸顯現"
+
+  forbidden:
+    - "純矩形半透明黑框"
+    - "Bootstrap風格"
+    - "手機APP風格"
+    - "大面積純紅色"
+    - "大量發光邊框"
+    - "科幻HUD"
+    - "過度對稱"
+    - "所有框使用同一套NinePatch"
+```
+
+### 最重要的是「元件參數化」
+
+例如對話框，不要告訴 AI：
+
+> 幫我把對話框做漂亮。
+
+改成：
+
+```yaml
+DialogueBox:
+  anchor: bottom_center
+  width: 0.62 viewport
+  min_height: 180px
+
+  background:
+    material: washi
+    opacity: 0.94
+    tint: warm_ivory
+
+  border:
+    type: hand_brushed
+    thickness: 3px
+    irregularity: 0.55
+    primary_color: ink_black
+    accent_color: dark_vermilion
+
+  ornament:
+    left:
+      - red_maple
+      - braided_cord
+    right:
+      - shrine_paper
+    amount: sparse
+
+  nameplate:
+    offset_x: 48px
+    overlap_border: true
+    material: dark_lacquer
+    accent: sun_breathing_red
+
+  typography:
+    speaker_size: 28
+    dialogue_size: 25
+    line_spacing: 1.35
+    color: "#2A211B"
+
+  animation:
+    enter: ink_reveal
+    duration: 0.22
+```
+
+這樣 Claude / GPT 就知道，你要的不是單純換 Texture，而是**整套藝術語言**。
+
+---
+
+你那張圖真正好看的地方，其實不是「很多裝飾」。
+
+而是 **不對稱 + 材質感 + 留白**。
+
+例如一般模板 UI 是：
+
+```text
+[████████ 任務 ████████]
+[ 主線 XXXXX          ]
+[ 支線 XXXXX          ]
+```
+
+我生成那種感覺則比較像：
+
+```text
+        任 務
+  ────────╮
+ ◇ 前往博麗神社
+      ┆
+ ◆ 將書送至鯢吞亭
+           ╰──御札
+```
+
+也就是故意讓：
+
+```yaml
+layout:
+  perfect_alignment: false
+  controlled_asymmetry: true
+  decoration_density: 0.25
+  negative_space: 0.40
+```
+
+**不要填滿。**
+
+這個超重要。
+
+幻想鄉 UI 如果每個角落都有花、繩子、鳥居、御札，就會直接變成中國手遊活動頁面（笑）。
+
+---
+
+### 緣一的元素也不要直接塞角色圖片
+
+我反而會把他轉成「UI 語言」。
+
+例如：
+
+```yaml
+Yoriichi_UI_DNA:
+  sun:
+    usage: rare
+    locations:
+      - health_emblem
+      - skill_ready
+      - save_point
+
+  katana:
+    usage:
+      - hotbar_base
+      - menu_divider
+
+  flame:
+    type: "日之呼吸曲線"
+    saturation: low
+    animation_speed: slow
+
+  red:
+    usage_ratio: 0.10
+
+  personality:
+    quiet: 0.9
+    elegant: 0.9
+    aggressive: 0.2
+    flashy: 0.1
+```
+
+這就很符合你之前神社的方向：**紅色不是主色，而是辨識色。** 
+
+否則很容易做成「鬼滅 UI」，反而不像你的幻想鄉世界。
+
+---
+
+## 你可以直接把下面這段丟給負責 Godot 的 AI
+
+重新設計目前 Godot 專案的 UI，但不要改變遊戲現有功能、Signal、資料來源與遊戲邏輯。
+
+目標不是單純美化，而是建立統一的「幻想鄉 × 緣一」UI Design System，並逐步將目前模板化 UI 替換。
+
+ART DIRECTION
+
+整體視覺：
+- 日本傳統幻想
+- 幻想鄉妖怪世界
+- 和紙、墨、水墨、舊木、漆器
+- 少量神社紅白元素
+- 少量日之呼吸／日輪元素
+- 安靜、幽玄、神秘、有歷史感
+- 不要現代 APP UI 感
+
+STYLE WEIGHT
+Japanese Fantasy: 45%
+Ink / Washi: 20%
+Shrine / Miko: 15%
+Yoriichi / Sun Breathing: 15%
+Modern UI: 5%
+
+COLOR SYSTEM
+Ink Black: #171310
+Washi Ivory: #E8DFCC
+Dark Vermilion: #A72E2E
+Old Gold: #B58A4A
+Sun Accent: #D85A38
+Spirit Blue: #A7C9D4
+
+紅色只能作為 Accent，畫面佔比盡量低於 10–15%。
+
+DESIGN LANGUAGE
+
+避免所有 UI 都是規則矩形。
+
+使用：
+- 不規則毛筆邊緣
+- 和紙背景
+- 墨跡
+- 細繩
+- 御札
+- 楓葉
+- 少量彼岸花
+- 日輪
+- 刀鍔
+- 細小紅白神社元素
+
+Decoration Density 約 20–30%。
+
+大量保留 Negative Space。
+
+不要讓所有元素完美對稱。
+
+HUD 應融入畫面，而不是像 Debug Overlay 貼在螢幕上。
+
+DIALOGUE
+
+底部中央。
+寬度約 viewport 60–65%。
+
+和紙米白背景，約 90–95% opacity。
+
+外框使用不規則墨線。
+
+Speaker Name Plate 與對話框略微重疊，不使用普通 Rectangle Header。
+
+左右裝飾必須不對稱。
+
+文字保持高可讀性。
+
+對話出現動畫：
+Ink Reveal / Brush Reveal
+Duration 約 0.18–0.25 秒。
+
+QUEST UI
+
+不要使用普通 RPG Quest Box。
+
+設計成小型掛紙／卷軸／御札資訊區。
+
+主線：
+暖金或淡朱紅標記。
+
+支線：
+墨灰色。
+
+背景不能太厚重。
+
+非任務更新狀態時，視覺存在感降低。
+
+HEALTH / STAMINA
+
+禁止普通粗 Rectangle ProgressBar。
+
+生命可以融合：
+日輪 / 円相 / 墨圈。
+
+血量仍然可以保留水平閱讀方式，但外形必須帶有有機筆觸。
+
+Stamina 比 Health 更低調。
+
+HOTBAR
+
+使用御札、木牌、刀鍔構成 Slot。
+
+底部可以加入非常淡的刀鞘／日輪刀輪廓作為基座。
+
+Selected Slot：
+不是 Neon Glow。
+
+改為：
+淡朱紅內光
++
+細微紙張浮起
++
+小型日輪呼吸效果。
+
+INTERACTION PROMPT
+
+例如：
+[E] 調查
+
+保持極簡。
+
+只有：
+Key Icon
++
+Action Text
+
+不要大型 Panel。
+
+MINIMAP
+
+如果保留 Minimap：
+
+使用水墨地圖風格。
+
+降低 Saturation。
+
+外框可以使用：
+円相
++
+舊金屬
++
+少量繩結。
+
+ANIMATION
+
+所有 UI 動畫應克制。
+
+基本 Duration：
+0.15–0.30 sec。
+
+推薦：
+Fade
+Brush Reveal
+Ink Spread
+Paper Slide
+Small Scale
+Soft Glow
+
+避免：
+Bounce
+Neon Flash
+大量粒子
+手機遊戲式爆炸動畫。
+
+SPECIAL EFFECTS
+
+Quest Complete：
+御札淡淡燃燒 → 灰燼 → 消失。
+
+New Quest：
+紙張由畫面側邊滑入並展開。
+
+Important Dialogue：
+背景降低亮度約 10–15%。
+
+Character Emotion：
+可以非常輕微改變 Nameplate Ornament，而不是改整個框。
+
+YORIICHI DESIGN DNA
+
+緣一元素不應直接大量使用角色圖。
+
+將角色特徵抽象成：
+
+Sun Circle
+Katana
+Flame Curve
+Dark Red
+Black
+Calm Motion
+
+Yoriichi UI Personality：
+
+Quiet: 90%
+Elegant: 90%
+Ancient: 80%
+Aggressive: 20%
+Flashy: 10%
+
+禁止做成典型鬼滅之刃 UI。
+
+它仍然首先是一個幻想鄉世界。
+
+IMPLEMENTATION
+
+請先建立：
+
+UITheme_Gensokyo.tres
+
+再建立可重複使用 Component：
+
+GensokyoPanel
+GensokyoDialogueBox
+GensokyoNameplate
+GensokyoQuestTracker
+GensokyoButton
+GensokyoItemSlot
+GensokyoInteractionPrompt
+GensokyoTooltip
+
+不要每一個場景獨立設計 UI。
+
+盡量使用：
+Theme
+StyleBoxTexture
+StyleBoxFlat
+NinePatchRect
+ShaderMaterial
+Tween
+
+建立統一參數。
+
+例如：
+
+ui_scale
+panel_opacity
+paper_texture_strength
+ink_edge_strength
+accent_red_strength
+ornament_density
+animation_speed
+font_scale
+
+所有 UI 都從統一 Theme / Component 繼承。
+
+先不要一次重做全部 UI。
+
+第一階段只修改：
+
+1. Dialogue
+2. Quest Tracker
+3. Health / Stamina
+4. Interaction Prompt
+5. Hotbar
+
+完成後檢查：
+- 1920x1080
+- 2560x1440
+- 不同 UI Scale
+- 中文文字不截斷
+- 日文文字不截斷
+- 長對話自動換行
+- 不遮擋角色與重要遊戲畫面
+
+最終目標：
+
+即使把所有文字與角色拿掉，玩家只看到 UI 的形狀、材質與動畫，也應該能感覺這是一款「幻想鄉中的緣一」遊戲，而不是 Godot 預設模板。
+
+這段比直接拿圖片叫 AI「模仿」穩定很多。
+
+而且你甚至可以再進一步搞一個 `UI_ART_DIRECTION.json`，讓你的 AI Agent 每次改 UI **先讀這個檔案**。這樣你之後叫它：
+
+> 「幫我增加物品欄」
+
+它也會自動知道物品欄不能突然變成一坨灰色 Rect + 白字，整個專案的 UI 會慢慢長成同一個世界觀。

@@ -1,0 +1,11 @@
+{
+ "anim": "walk",
+ "clip": "walk",
+ "frame_script_ms_p50_p95": [
+  16.84,
+  201.04
+ ],
+ "nan": 0,
+ "skirt_bone_rot_from_rest_max_deg": 51.2,
+ "skirt_joint_far_from_hips_max_m": 0.7
+}

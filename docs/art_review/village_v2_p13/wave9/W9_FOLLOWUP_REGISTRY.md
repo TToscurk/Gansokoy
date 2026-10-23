@@ -133,3 +133,8 @@ P13 要擴張到尚未改善的街區，**不回頭反覆打磨已批准的三�
 
 - 使用者提供 Tripo 模型（D:/資產glb/丘腳社寺）→ P5 Hero 管線 `hillfoot_temple`，取代 P0 灰盒（收尾報告 §4 G1）。Asset Gate 11／11 PASS、registry 登記（ART_REVIEW）、碰撞 8 個（台基、本體、石段斜面、袖石＋燈籠、高札）、真輸入實走 A–E 無卡住。
 - 待裁定：石段正前方的 EnvironmentP9 四目垣斷片（E082_fence_frag）是否移開；美術 ART_REVIEW。報告：`hillfoot_temple/HILLFOOT_TEMPLE_REPORT.md`。
+
+## 丘腳社寺取消 → 自然林（使用者 2026-10-18 TASK E FINAL）
+
+- 社寺 Hero 自 village_v2.tscn 移除（anchor 留空＋cancelled meta；`mount_hillfoot_temple.py --cancel`），registry 改列 v2_rejected（資產檔保留）。E2 地面／踏石／草株抑制作廢，E082 四目垣維持可逆抑制；DistrictHF 重排為自然林 74 件。驗證 HFW 8/8、district_verify 14/0、MMBAKE／ENV／EDTOOL／GB／PARCEL／SL 0 失敗、WALK 19/19、換圖往返 OK。
+- 待裁定：原址 pad 平台地形（需改 layout＋重生地形）、GroundcoverP9 碎石斑（封存層）；美術 ART_REVIEW。報告：`hillfoot_woodland/HILLFOOT_WOODLAND_REPORT.md`。

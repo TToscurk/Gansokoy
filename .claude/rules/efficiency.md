@@ -20,6 +20,10 @@ Full text: repo root `.hermes.md` → 效率規則. Summary:
    `gen_village_v2.gd` refuses to write unless `VILLAGE_V2_ALLOW_REGEN=1` (a regen drops every
    overlay and hand edit). Edit nodes or the owning overlay scene directly — via MCP, the
    editor or text insertion — instead of stacking another fix-up overlay.
+6. Beast path (獸道) single-zone iteration: `bash godot/tools/beast_path/bp_iterate.sh --zone=S0x
+   [--bake] [--no-gen] [--no-shots]` = generate → verify → one zone contact sheet → other zones
+   unchanged vs git HEAD. Isolation is git; no backups/manifests/replay A/B. Old freeze gates are INFO
+   (`--legacy-freeze` restores FAIL). Image review per round: ≤ 1 sheet + 4 single shots.
 
 Still in force: only the user grants `ART_APPROVED`; MultiMesh bakes never run `--headless`;
 check the editor is closed (or edit through it) before writing a scene file.

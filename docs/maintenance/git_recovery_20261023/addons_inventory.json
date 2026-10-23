@@ -1,0 +1,26 @@
+{
+ "simplegrasstextured": {
+  "files": 122,
+  "mb": 0.5,
+  "demos": 0,
+  "demos_mb": 0.0
+ },
+ "proton_scatter": {
+  "files": 418,
+  "mb": 11.9,
+  "demos": 83,
+  "demos_mb": 11.2
+ },
+ "godot_jev": {
+  "files": 30,
+  "mb": 0.1,
+  "demos": 0,
+  "demos_mb": 0.0
+ },
+ "godot_ai": {
+  "files": 311,
+  "mb": 2.1,
+  "demos": 0,
+  "demos_mb": 0.0
+ }
+}

@@ -1,0 +1,548 @@
+[
+ {
+  "path": "godot/assets/fonts/NotoSerifTC-VF.ttf",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 16851596,
+  "mtime": "2026-09-23 13:20",
+  "required_by": "godot/maps/village_v2/village_v2.tscn"
+ },
+ {
+  "path": "godot/assets/fonts/NotoSerifTC-VF.ttf.import",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 780,
+  "mtime": "2026-09-23 13:24",
+  "required_by": ""
+ },
+ {
+  "path": "godot/assets/shaders/wind_field_gen.gdshader.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 20,
+  "mtime": "2026-10-19 16:49",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/akyuu/akyuu.glb",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 26269256,
+  "mtime": "2026-10-19 19:01",
+  "required_by": "godot/characters/akyuu/akyuu.tscn"
+ },
+ {
+  "path": "godot/characters/akyuu/akyuu.glb.import",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 1803,
+  "mtime": "2026-10-19 19:01",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/akyuu/akyuu.tscn",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 1572,
+  "mtime": "2026-10-19 21:18",
+  "required_by": "godot/maps/village_v2/akyuu_npc.tscn"
+ },
+ {
+  "path": "godot/characters/akyuu/akyuu_kimono_seiza_cloth.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 1059311,
+  "mtime": "2026-10-19 23:54",
+  "required_by": "godot/characters/akyuu/akyuu_seiza.gd"
+ },
+ {
+  "path": "godot/characters/akyuu/akyuu_seiza.gd",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 4930,
+  "mtime": "2026-10-19 23:54",
+  "required_by": "godot/characters/akyuu/akyuu.tscn"
+ },
+ {
+  "path": "godot/characters/akyuu/akyuu_seiza.gd.uid",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 19,
+  "mtime": "2026-10-19 23:33",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/akyuu/anim/fall_to_knees_pray_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 136919,
+  "mtime": "2026-10-19 23:34",
+  "required_by": "godot/data/npc_life/heroes.json"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/idle_female_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 46964,
+  "mtime": "2026-10-19 23:34",
+  "required_by": "godot/characters/akyuu/akyuu.tscn"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/idle_thinking_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 116526,
+  "mtime": "2026-10-19 23:34",
+  "required_by": "godot/characters/akyuu/akyuu.tscn"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/idle_weightshift_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 298569,
+  "mtime": "2026-10-19 23:34",
+  "required_by": "godot/characters/akyuu/akyuu.tscn"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/kneel_idle_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 83275,
+  "mtime": "2026-10-19 23:34",
+  "required_by": "godot/data/npc_life/heroes.json"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/kneel_pray_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 32103,
+  "mtime": "2026-10-19 23:34",
+  "required_by": "godot/data/npc_life/heroes.json"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/pray_to_stand_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 139462,
+  "mtime": "2026-10-19 23:34",
+  "required_by": "godot/data/npc_life/heroes.json"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/seiza_idle_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 138887,
+  "mtime": "2026-10-19 20:24",
+  "required_by": "godot/characters/akyuu/akyuu_seiza.gd"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/seiza_sit_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 203168,
+  "mtime": "2026-10-19 23:54",
+  "required_by": "godot/characters/akyuu/akyuu_seiza.gd"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/seiza_stand_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 203245,
+  "mtime": "2026-10-19 23:54",
+  "required_by": "godot/characters/akyuu/akyuu_seiza.gd"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/sit_kneeldown_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 81554,
+  "mtime": "2026-10-19 23:34",
+  "required_by": "godot/data/npc_life/heroes.json"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/stand_from_kneel_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 76393,
+  "mtime": "2026-10-19 23:34",
+  "required_by": "godot/data/npc_life/heroes.json"
+ },
+ {
+  "path": "godot/characters/akyuu/anim/walk_female124_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 32607,
+  "mtime": "2026-10-19 23:34",
+  "required_by": "godot/characters/akyuu/akyuu.tscn"
+ },
+ {
+  "path": "godot/characters/keine/anim/idle_female_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 46672,
+  "mtime": "2026-10-18 20:30",
+  "required_by": "godot/characters/keine/keine.tscn"
+ },
+ {
+  "path": "godot/characters/keine/anim/idle_thinking_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 116454,
+  "mtime": "2026-10-18 20:31",
+  "required_by": "godot/characters/keine/keine.tscn"
+ },
+ {
+  "path": "godot/characters/keine/anim/idle_weightshift_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 298917,
+  "mtime": "2026-10-18 20:30",
+  "required_by": "godot/characters/keine/keine.tscn"
+ },
+ {
+  "path": "godot/characters/keine/anim/walk_femwalk2_a030_final.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 32970,
+  "mtime": "2026-10-18 20:31",
+  "required_by": "godot/characters/keine/keine.tscn"
+ },
+ {
+  "path": "godot/characters/keine/keine.glb",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 8716644,
+  "mtime": "2026-10-18 20:03",
+  "required_by": "godot/characters/keine/keine.tscn"
+ },
+ {
+  "path": "godot/characters/keine/keine.glb.import",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 1804,
+  "mtime": "2026-10-18 20:03",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/keine/keine.tscn",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 906,
+  "mtime": "2026-10-18 20:40",
+  "required_by": "godot/maps/village_v2/keine_npc.tscn"
+ },
+ {
+  "path": "godot/characters/keine/keine_face_fill.gd",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 2853,
+  "mtime": "2026-10-20 08:27",
+  "required_by": "godot/characters/keine/keine.tscn"
+ },
+ {
+  "path": "godot/characters/keine/keine_face_fill.gd.uid",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 19,
+  "mtime": "2026-10-18 19:56",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/keine/keine_visual.gd",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 3442,
+  "mtime": "2026-10-18 20:36",
+  "required_by": "godot/characters/keine/keine.tscn"
+ },
+ {
+  "path": "godot/characters/keine/keine_visual.gd.uid",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 19,
+  "mtime": "2026-10-18 20:22",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/kosuzu/kosuzu.glb",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 21393608,
+  "mtime": "2026-10-21 17:32",
+  "required_by": "godot/characters/kosuzu/kosuzu.tscn"
+ },
+ {
+  "path": "godot/characters/kosuzu/kosuzu.glb.import",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 1150,
+  "mtime": "2026-10-21 17:32",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/kosuzu/kosuzu.tscn",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 1062,
+  "mtime": "2026-10-21 17:34",
+  "required_by": "godot/maps/village_v2/kosuzu_npc.tscn"
+ },
+ {
+  "path": "godot/characters/kosuzu/kosuzu_sleeve_bones.gd",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 10155,
+  "mtime": "2026-10-21 17:27",
+  "required_by": "godot/characters/kosuzu/kosuzu.tscn"
+ },
+ {
+  "path": "godot/characters/kosuzu/kosuzu_sleeve_bones.gd.uid",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 19,
+  "mtime": "2026-10-21 14:44",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/kosuzu/kosuzu_sleeves.gd",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 11013,
+  "mtime": "2026-10-19 20:46",
+  "required_by": "godot/characters/akyuu/akyuu.tscn"
+ },
+ {
+  "path": "godot/characters/kosuzu/kosuzu_sleeves.gd.uid",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 20,
+  "mtime": "2026-10-19 11:38",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/kosuzu/kosuzu_visual.gd",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 2570,
+  "mtime": "2026-10-21 14:44",
+  "required_by": "godot/characters/kosuzu/kosuzu.tscn"
+ },
+ {
+  "path": "godot/characters/kosuzu/kosuzu_visual.gd.uid",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 20,
+  "mtime": "2026-10-19 11:38",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/marisa/anim/browse_looking_down_a030_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 121307,
+  "mtime": "2026-10-20 13:40",
+  "required_by": "godot/characters/marisa/marisa.tscn"
+ },
+ {
+  "path": "godot/characters/marisa/anim/idle_female_a030_mx_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 46970,
+  "mtime": "2026-10-20 13:03",
+  "required_by": "godot/characters/marisa/marisa.tscn"
+ },
+ {
+  "path": "godot/characters/marisa/anim/idle_thinking_a030_mx_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 116532,
+  "mtime": "2026-10-20 13:03",
+  "required_by": "godot/characters/marisa/marisa.tscn"
+ },
+ {
+  "path": "godot/characters/marisa/anim/idle_weightshift_a030_mx_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 298575,
+  "mtime": "2026-10-20 13:03",
+  "required_by": "godot/characters/marisa/marisa.tscn"
+ },
+ {
+  "path": "godot/characters/marisa/anim/talk_funny_a030_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 136238,
+  "mtime": "2026-10-20 13:41",
+  "required_by": "godot/characters/marisa/marisa.tscn"
+ },
+ {
+  "path": "godot/characters/marisa/anim/talk_general_a030_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 294624,
+  "mtime": "2026-10-20 13:40",
+  "required_by": "godot/characters/marisa/marisa.tscn"
+ },
+ {
+  "path": "godot/characters/marisa/anim/talk_twohands_a030_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 113201,
+  "mtime": "2026-10-20 13:40",
+  "required_by": "godot/characters/marisa/marisa.tscn"
+ },
+ {
+  "path": "godot/characters/marisa/anim/walk_female124_a030_mx_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 32613,
+  "mtime": "2026-10-20 13:03",
+  "required_by": "godot/characters/marisa/marisa.tscn"
+ },
+ {
+  "path": "godot/characters/marisa/marisa.glb",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 16615824,
+  "mtime": "2026-10-20 13:00",
+  "required_by": "godot/characters/marisa/marisa.tscn"
+ },
+ {
+  "path": "godot/characters/marisa/marisa.glb.import",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 1808,
+  "mtime": "2026-10-20 13:01",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/marisa/marisa.tscn",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 1895,
+  "mtime": "2026-10-20 13:42",
+  "required_by": "godot/maps/village_v2/marisa_npc.tscn"
+ },
+ {
+  "path": "godot/characters/marisa/marisa_visual.gd",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 758,
+  "mtime": "2026-10-20 13:41",
+  "required_by": "godot/characters/marisa/marisa.tscn"
+ },
+ {
+  "path": "godot/characters/marisa/marisa_visual.gd.uid",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 19,
+  "mtime": "2026-10-20 16:15",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/npc/_shared/arm_space_correction.gd",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 4879,
+  "mtime": "2026-10-21 15:42",
+  "required_by": "godot/characters/kosuzu/kosuzu_sleeve_bones.gd"
+ },
+ {
+  "path": "godot/characters/npc/_shared/arm_space_correction.gd.uid",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 20,
+  "mtime": "2026-10-21 15:51",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/reimu/anim/fwalk_sm1_a045_mx_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 34055,
+  "mtime": "2026-10-21 14:22",
+  "required_by": "godot/characters/reimu/reimu.tscn"
+ },
+ {
+  "path": "godot/characters/reimu/anim/idle_female_a030_mx_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 46961,
+  "mtime": "2026-10-20 06:24",
+  "required_by": "godot/characters/reimu/reimu.tscn"
+ },
+ {
+  "path": "godot/characters/reimu/anim/idle_thinking_a030_mx_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 116523,
+  "mtime": "2026-10-20 06:24",
+  "required_by": "godot/characters/reimu/reimu.tscn"
+ },
+ {
+  "path": "godot/characters/reimu/anim/idle_weightshift_a030_mx_grounded.res",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 298566,
+  "mtime": "2026-10-20 06:24",
+  "required_by": "godot/characters/reimu/reimu.tscn"
+ },
+ {
+  "path": "godot/characters/reimu/reimu.glb",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 45627076,
+  "mtime": "2026-10-21 14:24",
+  "required_by": "godot/characters/reimu/reimu.tscn"
+ },
+ {
+  "path": "godot/characters/reimu/reimu.glb.import",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 1804,
+  "mtime": "2026-10-21 14:25",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/reimu/reimu.tscn",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 1745,
+  "mtime": "2026-10-21 14:34",
+  "required_by": "godot/maps/village_v2/reimu_npc.tscn"
+ },
+ {
+  "path": "godot/characters/reimu/reimu_skirt.gd",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 5797,
+  "mtime": "2026-10-20 07:24",
+  "required_by": "godot/characters/marisa/marisa.tscn"
+ },
+ {
+  "path": "godot/characters/reimu/reimu_skirt.gd.uid",
+  "batch": "R3b（HEAD 場景引用的角色／字型）",
+  "size": 20,
+  "mtime": "2026-10-20 06:26",
+  "required_by": ""
+ },
+ {
+  "path": "godot/characters/yoriichi/vfx/heavy_charge_fx.gd.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 20,
+  "mtime": "2026-09-18 10:59",
+  "required_by": ""
+ },
+ {
+  "path": "godot/maps/village/village.tscn",
+  "batch": "EXCLUDE（HEAD 流程不會載入 village）",
+  "size": 210,
+  "mtime": "2026-09-22 20:06",
+  "required_by": ""
+ },
+ {
+  "path": "godot/maps/village_v2/kit_cal_p10/kit_cal.gdshader.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 19,
+  "mtime": "2026-10-14 19:47",
+  "required_by": ""
+ },
+ {
+  "path": "godot/maps/village_v2/lod_cal_p13/kit_cal_lod.gdshader.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 19,
+  "mtime": "2026-10-14 23:34",
+  "required_by": ""
+ },
+ {
+  "path": "godot/maps/village_v2/scripts_p13/dev_layer_gate.gd.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 19,
+  "mtime": "2026-10-17 11:35",
+  "required_by": ""
+ },
+ {
+  "path": "godot/scripts/npc_activity_core.gd.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 20,
+  "mtime": "2026-10-08 18:03",
+  "required_by": ""
+ },
+ {
+  "path": "godot/scripts/npc_activity_outer.gd.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 19,
+  "mtime": "2026-10-08 18:03",
+  "required_by": ""
+ },
+ {
+  "path": "godot/tools/village_v2_human_use_exp_lib.gd.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 19,
+  "mtime": "2026-10-08 18:03",
+  "required_by": ""
+ },
+ {
+  "path": "godot/tools/village_v2_human_use_lib.gd.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 20,
+  "mtime": "2026-10-08 18:03",
+  "required_by": ""
+ },
+ {
+  "path": "godot/tools/village_v2_p13_mainstreet_lib.gd.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 20,
+  "mtime": "2026-10-14 19:47",
+  "required_by": ""
+ },
+ {
+  "path": "godot/tools/village_v2_population_core_lib.gd.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 20,
+  "mtime": "2026-10-08 18:03",
+  "required_by": ""
+ },
+ {
+  "path": "godot/tools/village_v2_population_outer_lib.gd.uid",
+  "batch": "R3a（已追蹤腳本的 .uid）",
+  "size": 19,
+  "mtime": "2026-10-08 18:03",
+  "required_by": ""
+ }
+]
