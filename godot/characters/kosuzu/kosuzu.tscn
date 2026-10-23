@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://characters/kosuzu/kosuzu_visual.gd" id="1_vis"]
+[ext_resource type="PackedScene" path="res://characters/kosuzu/kosuzu.glb" id="2_glb"]
+[ext_resource type="Script" path="res://characters/kosuzu/kosuzu_sleeve_bones.gd" id="3_slv"]
+
+[node name="NPC_Kosuzu" type="Node3D"]
+script = ExtResource("1_vis")
+metadata/art_revision = "Kosuzu r1 ART_REVIEW（2026-10-19）：Tripo 綁骨＋4K 原貼圖＋權重修正＋Mixamo 13 支（小鈴自身骨架）＋雙袖 SoftBody；r2（2026-10-21）：袖改多骨鏈（每袖 3 鏈×3 節，SpringBoneSimulator3D＋衣身碰撞球，kosuzu_sleeve_bones.gd），不用 Jolt 布料；T24（2026-10-21）：上臂姿勢修正層 12°（arm_space_correction.gd，手垂著貼身體時才外張）"
+
+[node name="Model" parent="." instance=ExtResource("2_glb")]
+transform = Transform3D(0, 0, 1.5642, 0, 1.5642, 0, -1.5642, 0, 0, 0, 0, 0)
+
+[node name="Sleeves" type="Node3D" parent="."]
+script = ExtResource("3_slv")
+arm_correction_deg = 12.0
+drape_out = 0.3

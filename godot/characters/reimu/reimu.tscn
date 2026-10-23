@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://characters/keine/keine_visual.gd" id="1_vis"]
+[ext_resource type="PackedScene" path="res://characters/reimu/reimu.glb" id="2_glb"]
+[ext_resource type="Script" path="res://characters/reimu/reimu_skirt.gd" id="3_skirt"]
+[ext_resource type="Script" path="res://characters/keine/keine_face_fill.gd" id="4_fill"]
+
+[node name="NPC_Reimu" type="Node3D"]
+script = ExtResource("1_vis")
+idle_clip = "res://characters/reimu/anim/idle_female_a030_mx_grounded.res"
+walk_clip = "res://characters/reimu/anim/fwalk_sm1_a045_mx_grounded.res"
+idle_shift_clip = "res://characters/reimu/anim/idle_weightshift_a030_mx_grounded.res"
+idle_think_clip = "res://characters/reimu/anim/idle_thinking_a030_mx_grounded.res"
+metadata/art_revision = "Reimu r1 ART_REVIEW（2026-10-20）：Tripo 65 骨 mixamorig＋解剖遮罩權重；袴＝SpringBoneSimulator3D 骨鏈 16×3（2026-10-20 改，Jolt 布料作廢）；動作沿用阿求女性 Mixamo clip 並依靈夢骨架接地；r2（2026-10-21）：裙擺骨 v3 貼外層裙面（靈夢_rig_權重v3_裙擺骨外緣.blend）、走路改 Female Walk Stride -1＋arm-space 0.45（fwalk_sm1_a045，接地足速 0.99 m/s）；r3（2026-10-21）：下巴／下顎權重改歸 Head（face_neck_weights.py）、走路接地改 --leg_ik（Hips 平滑＋腳 IK，頭部垂直加速度尖峰 49.8→15.5 m/s²）"
+
+[node name="Model" parent="." instance=ExtResource("2_glb")]
+
+[node name="Skirt" type="Node3D" parent="."]
+script = ExtResource("3_skirt")
+
+[node name="FaceFill" type="OmniLight3D" parent="."]
+light_color = Color(1, 0.86, 0.76, 1)
+light_energy = 0.08
+omni_range = 1.4
+omni_attenuation = 1.2
+script = ExtResource("4_fill")
+day_energy = 0.08
+sun_aware = true

@@ -1,0 +1,36 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://characters/marisa/marisa_visual.gd" id="1_vis"]
+[ext_resource type="PackedScene" path="res://characters/marisa/marisa.glb" id="2_glb"]
+[ext_resource type="Script" path="res://characters/reimu/reimu_skirt.gd" id="3_skirt"]
+[ext_resource type="Script" path="res://characters/keine/keine_face_fill.gd" id="4_fill"]
+
+[node name="NPC_Marisa" type="Node3D"]
+script = ExtResource("1_vis")
+idle_clip = "res://characters/marisa/anim/idle_female_a030_mx_grounded.res"
+walk_clip = "res://characters/marisa/anim/walk_female124_a030_mx_grounded.res"
+idle_shift_clip = "res://characters/marisa/anim/idle_weightshift_a030_mx_grounded.res"
+idle_think_clip = "res://characters/marisa/anim/idle_thinking_a030_mx_grounded.res"
+extra_clips = {
+"browse": "res://characters/marisa/anim/browse_looking_down_a030_grounded.res",
+"talk_funny": "res://characters/marisa/anim/talk_funny_a030_grounded.res",
+"talk_general": "res://characters/marisa/anim/talk_general_a030_grounded.res",
+"talk_twohands": "res://characters/marisa/anim/talk_twohands_a030_grounded.res"
+}
+metadata/art_revision = "Marisa r1 ART_REVIEW（2026-10-20）：Tripo 65 骨 mixamorig＋解剖遮罩權重（頭髮依高度剛體、袖口前臂連續、關節硬切平滑）；裙＝衣服網格下半 SpringBoneSimulator3D 骨鏈 16×3（沿用靈夢 reimu_skirt.gd，資料前綴 marisa）；動作沿用阿求女性 Mixamo clip 並依魔理莎骨架接地"
+
+[node name="Model" parent="." instance=ExtResource("2_glb")]
+
+[node name="Skirt" type="Node3D" parent="."]
+script = ExtResource("3_skirt")
+data_prefix = "res://characters/marisa/marisa"
+skirt_mesh_name = "衣服"
+
+[node name="FaceFill" type="OmniLight3D" parent="."]
+light_color = Color(1, 0.86, 0.76, 1)
+light_energy = 0.08
+omni_range = 1.4
+omni_attenuation = 1.2
+script = ExtResource("4_fill")
+day_energy = 0.08
+sun_aware = true

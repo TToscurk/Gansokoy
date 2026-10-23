@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://characters/keine/keine_visual.gd" id="1_vis"]
+[ext_resource type="PackedScene" path="res://characters/keine/keine.glb" id="2_glb"]
+[ext_resource type="Script" path="res://characters/keine/keine_face_fill.gd" id="3_fill"]
+
+[node name="NPC_Keine" type="Node3D"]
+script = ExtResource("1_vis")
+idle_clip = "res://characters/keine/anim/idle_female_a030_final.res"
+walk_clip = "res://characters/keine/anim/walk_femwalk2_a030_final.res"
+idle_shift_clip = "res://characters/keine/anim/idle_weightshift_a030_final.res"
+idle_think_clip = "res://characters/keine/anim/idle_thinking_a030_final.res"
+
+[node name="Model" parent="." instance=ExtResource("2_glb")]
+
+[node name="FaceFill" type="OmniLight3D" parent="."]
+light_color = Color(1, 0.72, 0.55, 1)
+light_energy = 0.4
+omni_range = 1.4
+omni_attenuation = 1.2
+script = ExtResource("3_fill")
+
