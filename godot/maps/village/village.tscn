@@ -1,0 +1,5 @@
+[gd_scene format=4 uid="uid://c6j3y5s67x1qa"]
+
+[ext_resource type="PackedScene" uid="uid://bomtd3ktjtats" path="res://maps/slice/slice.tscn" id="1_slice"]
+
+[node name="village" instance=ExtResource("1_slice")]

@@ -1,0 +1,186 @@
+{
+ "generator": "assets/beast_path/s01_kit/src/build_wild_kit.py",
+ "blender": "5.2.1 LTS",
+ "assets": {
+  "wild_torii_ruin": {
+   "category": "arch",
+   "tris": 2408,
+   "verts": 3278,
+   "size_m": [
+    9.291,
+    3.597,
+    5.163
+   ],
+   "z_min": -0.128,
+   "z_max": 5.035
+  },
+  "wild_rootgiant_a": {
+   "category": "wood",
+   "tris": 2464,
+   "verts": 1556,
+   "size_m": [
+    5.945,
+    8.442,
+    3.74
+   ],
+   "z_min": -0.374,
+   "z_max": 3.366
+  },
+  "wild_rootgiant_b": {
+   "category": "wood",
+   "tris": 2200,
+   "verts": 1384,
+   "size_m": [
+    5.922,
+    6.16,
+    3.018
+   ],
+   "z_min": -0.334,
+   "z_max": 2.684
+  },
+  "wild_log_rootplate_a": {
+   "category": "wood",
+   "tris": 4380,
+   "verts": 2682,
+   "size_m": [
+    11.161,
+    4.506,
+    4.971
+   ],
+   "z_min": -1.629,
+   "z_max": 3.342
+  },
+  "wild_ruin_pillar_a": {
+   "category": "ruin",
+   "tris": 392,
+   "verts": 336,
+   "size_m": [
+    1.231,
+    1.0,
+    2.011
+   ],
+   "z_min": -0.311,
+   "z_max": 1.7
+  },
+  "wild_ruin_pillar_b": {
+   "category": "ruin",
+   "tris": 496,
+   "verts": 453,
+   "size_m": [
+    3.179,
+    1.26,
+    0.5
+   ],
+   "z_min": -0.148,
+   "z_max": 0.351
+  },
+  "wild_ruin_wall_a": {
+   "category": "ruin",
+   "tris": 1584,
+   "verts": 1783,
+   "size_m": [
+    5.244,
+    2.251,
+    1.553
+   ],
+   "z_min": -0.269,
+   "z_max": 1.284
+  },
+  "wild_ruin_steps_a": {
+   "category": "ruin",
+   "tris": 756,
+   "verts": 672,
+   "size_m": [
+    2.46,
+    2.572,
+    1.445
+   ],
+   "z_min": -0.664,
+   "z_max": 0.781
+  },
+  "wild_jizo_a": {
+   "category": "ruin",
+   "tris": 586,
+   "verts": 425,
+   "size_m": [
+    0.903,
+    0.602,
+    1.07
+   ],
+   "z_min": -0.18,
+   "z_max": 0.89
+  },
+  "wild_mud_a": {
+   "category": "moss",
+   "tris": 246,
+   "verts": 266,
+   "size_m": [
+    1.6,
+    1.1,
+    0.036
+   ],
+   "z_min": -0.02,
+   "z_max": 0.016
+  },
+  "wild_rootgiant_edge_a": {
+   "category": "wood",
+   "tris": 632,
+   "verts": 393,
+   "size_m": [
+    7.194,
+    3.364,
+    0.884
+   ],
+   "z_min": -0.373,
+   "z_max": 0.512
+  },
+  "wild_rootgiant_edge_b": {
+   "category": "wood",
+   "tris": 632,
+   "verts": 393,
+   "size_m": [
+    5.393,
+    3.102,
+    0.833
+   ],
+   "z_min": -0.372,
+   "z_max": 0.46
+  },
+  "wild_ruin_gatepost_a": {
+   "category": "ruin",
+   "tris": 516,
+   "verts": 405,
+   "size_m": [
+    0.968,
+    0.86,
+    3.68
+   ],
+   "z_min": -0.3,
+   "z_max": 3.38
+  },
+  "wild_ruin_gatepost_b": {
+   "category": "ruin",
+   "tris": 514,
+   "verts": 438,
+   "size_m": [
+    3.164,
+    1.746,
+    1.897
+   ],
+   "z_min": -0.3,
+   "z_max": 1.597
+  },
+  "wild_ruin_rubble_a": {
+   "category": "ruin",
+   "tris": 432,
+   "verts": 489,
+   "size_m": [
+    3.334,
+    1.723,
+    0.569
+   ],
+   "z_min": -0.322,
+   "z_max": 0.247
+  }
+ }
+}

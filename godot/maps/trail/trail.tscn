@@ -66,6 +66,7 @@
 [ext_resource type="Shader" uid="uid://b00tlvumfdra5" path="res://shaders/sky_daynight.gdshader" id="68_xm6n4"]
 [ext_resource type="PackedScene" path="res://maps/trail/trail_interactions.tscn" id="68_y02o2"]
 [ext_resource type="Texture2D" uid="uid://bi0jv4o31gigr" path="res://assets/sky/人里_clouds.png" id="69_66a54"]
+[ext_resource type="Script" path="res://maps/trail/trail_yatai_controller.gd" id="70_yatai"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m3m6g"]
 render_priority = 0
@@ -592,10 +593,10 @@ _surfaces = [{
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gyik7"]
 shader = ExtResource("68_xm6n4")
-shader_parameter/sun_dir = Vector3(0.42642087, 0.50010705, 0.7536964)
-shader_parameter/moon_dir = Vector3(-0.42642087, -0.50010705, -0.7536964)
-shader_parameter/day_amount = 1.0
-shader_parameter/golden = 0.0
+shader_parameter/sun_dir = Vector3(-0.9420048, 0.11524779, -0.3151904)
+shader_parameter/moon_dir = Vector3(0.9420048, -0.11524779, 0.3151904)
+shader_parameter/day_amount = 0.921319018386921
+shader_parameter/golden = 0.6312194574848325
 shader_parameter/cloud_cover = 0.1
 shader_parameter/overcast = 0.0
 shader_parameter/star_density = 0.35
@@ -622,30 +623,32 @@ process_mode = 3
 background_mode = 2
 sky = SubResource("Sky_xnt57")
 ambient_light_source = 3
-ambient_light_energy = 0.8034094
+ambient_light_energy = 0.4711567
 reflected_light_source = 2
 tonemap_mode = 3
-tonemap_exposure = 0.98
+tonemap_exposure = 0.9957362
 ssao_enabled = true
 ssao_intensity = 1.6
-sdfgi_enabled = true
+ssil_enabled = true
+ssil_radius = 16.0
+ssil_intensity = 1.6
 glow_enabled = true
-glow_intensity = 0.55
+glow_intensity = 0.53032976
 glow_bloom = 0.05
-glow_hdr_threshold = 1.1
+glow_hdr_threshold = 1.1550767
 fog_enabled = true
 fog_mode = 1
-fog_light_color = Color(0.7, 0.78, 0.86, 1)
-fog_sun_scatter = 0.28
-fog_density = 0.000546
+fog_light_color = Color(0.75057936, 0.69529843, 0.675677, 1)
+fog_sun_scatter = 0.25796932
+fog_density = 0.00051506894
 fog_sky_affect = 0.25
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.0023400001
-volumetric_fog_albedo = Color(0.7, 0.78, 0.86, 1)
+volumetric_fog_density = 0.0021835035
+volumetric_fog_albedo = Color(0.75057936, 0.69529843, 0.675677, 1)
 volumetric_fog_gi_inject = 0.4
 volumetric_fog_length = 320.0
 adjustment_enabled = true
-adjustment_saturation = 1.05
+adjustment_saturation = 1.0384339
 
 [sub_resource type="Environment" id="Environment_6i5ae"]
 background_mode = 2
@@ -654,7 +657,6 @@ ambient_light_energy = 0.42
 tonemap_mode = 3
 tonemap_exposure = 0.9
 ssr_enabled = true
-ssao_enabled = true
 fog_enabled = true
 fog_light_color = Color(0.68, 0.72, 0.66, 1)
 fog_density = 0.006
@@ -50674,6 +50676,7 @@ process_material = SubResource("ParticleProcessMaterial_a6uyy")
 draw_pass_1 = SubResource("QuadMesh_3wany")
 
 [node name="夜雀屋台區" type="Node3D" parent="." unique_id=1799099489]
+script = ExtResource("70_yatai")
 
 [node name="夜雀屋台_Hero佔位" type="Marker3D" parent="夜雀屋台區" unique_id=625120882]
 transform = Transform3D(0.185432, 0, -0.9826571, 0, 1, 0, 0.9826571, 0, 0.185432, 8.002422, 7.2044606, -72.39728)
@@ -51131,17 +51134,17 @@ transform = Transform3D(0.29315475, 0, 0.45656145, 0, 0.5425754, 0, -0.45656145,
 
 [node name="天象系統" type="Node3D" parent="." unique_id=385656281]
 script = ExtResource("67_hxmuc")
-"時刻" = 15.7
-"一日長度分鐘" = 20.0
+"時刻" = 6.5
+"一日長度分鐘" = 60.0
 "方位角" = -26.0
 "星星密度" = 0.35
 "銀河強度" = 0.5
 "陰影距離" = 120.0
 
 [node name="太陽" type="DirectionalLight3D" parent="天象系統" unique_id=234008691]
-transform = Transform3D(0.8703557, -0.24626446, 0.4264208, 0, 0.8659635, 0.50010705, -0.4924235, -0.435271, 0.7536964, 42.642086, 50.010704, 75.36964)
-light_color = Color(1, 0.97, 0.92, 1)
-light_energy = 1.2927356
+transform = Transform3D(-0.31730467, 0.109292194, -0.9420048, 0, 0.99333674, 0.115247786, 0.94832367, 0.036568657, -0.3151904, -94.20048, 11.524779, -31.519041)
+light_color = Color(1, 0.7490732, 0.55389273, 1)
+light_energy = 0.8176617
 light_angular_distance = 0.6
 shadow_enabled = true
 shadow_bias = 0.04
@@ -51153,10 +51156,9 @@ directional_shadow_blend_splits = true
 directional_shadow_max_distance = 260.0
 
 [node name="月亮" type="DirectionalLight3D" parent="天象系統" unique_id=1312114559]
-transform = Transform3D(-0.8703558, -0.24626443, -0.42642078, 0, 0.8659635, -0.50010705, 0.49242344, -0.43527102, -0.7536964, -42.642086, -50.010704, -75.36964)
-visible = false
+transform = Transform3D(0.3173047, 0.109292194, 0.9420048, 0, 0.99333674, -0.115247786, -0.94832367, 0.03656866, 0.31519043, 94.20048, -11.524779, 31.519041)
 light_color = Color(0.62, 0.72, 0.95, 1)
-light_energy = 0.0
+light_energy = 0.012588957
 light_angular_distance = 1.2
 
 [node name="天空環境" type="WorldEnvironment" parent="天象系統" unique_id=1332308924]

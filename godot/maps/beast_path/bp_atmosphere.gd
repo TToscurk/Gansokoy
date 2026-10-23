@@ -26,10 +26,22 @@ extends WorldEnvironment
 ##   k＝DayNight 的日照係數（0 半夜～1 正午），k 在 day_k0 → day_k1 之間淡入（10:00 的 k＝0.89、07:00／17:00＝0.37）。
 @export var day_k0 := 0.40
 @export var day_k1 := 0.85
+## 2026-10-18 荒野化：林中幽暗（gloom）——只在 S02／S03。相機 z 在 gloom_z[0]→[1] 淡入、[2]→[3] 淡出（淡出完才到 S03／S04 接縫 −340，
+##   S04 與 BOSS 的大氣完全不受影響）。只動 daynight.gd 不寫的三個值：fog_density（main 0.0012）、adjustment_brightness、adjustment_saturation。
+##   gloom_enabled＝false＝原樣。
+@export var gloom_enabled := false
+@export var gloom_z := PackedFloat32Array([-60.0, -112.0, -312.0, -336.0])
+@export var gloom_fog_density := 0.008
+@export var gloom_brightness := 0.88
+@export var gloom_saturation_k := 0.88
 
 var _base_sky := 1.0
 var _base_aerial := 0.0
 var _w := -1.0
+var _base_fog := 0.0012
+var _base_bright := 1.0
+var _base_sat := 1.0
+var _g := -1.0
 
 
 func _enter_tree() -> void:
@@ -42,8 +54,12 @@ func _enter_tree() -> void:
 	var e := src.duplicate() as Environment
 	_base_sky = e.fog_sky_affect
 	_base_aerial = e.fog_aerial_perspective
+	_base_fog = e.fog_density
+	_base_bright = e.adjustment_brightness
+	_base_sat = e.adjustment_saturation
 	environment = e
 	_apply(_weight())
+	_apply_gloom(_gloom_weight())
 
 
 func _process(_delta: float) -> void:
@@ -52,6 +68,9 @@ func _process(_delta: float) -> void:
 	var w := _weight()
 	if absf(w - _w) > 0.002:
 		_apply(w)
+	var g := _gloom_weight()
+	if absf(g - _g) > 0.002:
+		_apply_gloom(g)
 
 
 ## S04 的權重：0＝S03 以北或低太陽（main 的原值）、1＝S04 內且日高（本檔的值）
@@ -93,3 +112,24 @@ func _main_env() -> Environment:
 		return we.environment
 	# 前一張圖自帶環境時，main 的那份已被拿掉、暫存在 _default_env
 	return main.get("_default_env") as Environment
+
+
+## 林中幽暗的權重（0＝原樣、1＝全幽暗）：只看相機 z
+func _gloom_weight() -> float:
+	if not gloom_enabled or gloom_z.size() < 4:
+		return 0.0
+	var vp := get_viewport()
+	var cam := vp.get_camera_3d() if vp != null else null
+	if cam == null:
+		return 0.0
+	var z := cam.global_position.z
+	var a := smoothstep(gloom_z[0], gloom_z[1], z) if gloom_z[0] < gloom_z[1] else smoothstep(-gloom_z[0], -gloom_z[1], -z)
+	var b := 1.0 - (smoothstep(-gloom_z[2], -gloom_z[3], -z))
+	return clampf(minf(a, b), 0.0, 1.0)
+
+
+func _apply_gloom(g: float) -> void:
+	_g = g
+	environment.fog_density = lerpf(_base_fog, gloom_fog_density, g)
+	environment.adjustment_brightness = lerpf(_base_bright, _base_bright * gloom_brightness, g)
+	environment.adjustment_saturation = lerpf(_base_sat, _base_sat * gloom_saturation_k, g)

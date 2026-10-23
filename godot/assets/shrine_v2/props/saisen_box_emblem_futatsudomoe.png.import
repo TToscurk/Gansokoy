@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://duf5pgx4fmrqb"
-path="res://.godot/imported/saisen_box_emblem_futatsudomoe.png-c6de279ce6a340bf3fee09e086f231aa.ctex"
+path.s3tc="res://.godot/imported/saisen_box_emblem_futatsudomoe.png-c6de279ce6a340bf3fee09e086f231aa.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "d0da3d31de77258cf3ec08ebd6b4bd78"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/shrine_v2/props/saisen_box_emblem_futatsudomoe.png"
-dest_files=["res://.godot/imported/saisen_box_emblem_futatsudomoe.png-c6de279ce6a340bf3fee09e086f231aa.ctex"]
+dest_files=["res://.godot/imported/saisen_box_emblem_futatsudomoe.png-c6de279ce6a340bf3fee09e086f231aa.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

@@ -1,0 +1,1113 @@
+{
+ "_note": "noren_text_kit atlas（UV 左上原点；Blender 端 v は 1−v）。tools/build_village_v2_noren_text_atlas.py が産生。暖簾の字（1 幅 1 字）。kind＝kit 512×256／age 512×256／stall 1024×224。region 名＝noren_<cell id>（字の向き監査の対象）。",
+ "size": 2048,
+ "atlas_px": [
+  2048,
+  4256
+ ],
+ "cells": {
+  "abura": {
+   "kind": "kit",
+   "px": [
+    0,
+    0,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_aomono_kinari": {
+   "kind": "age",
+   "px": [
+    512,
+    0,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_aramono_ai": {
+   "kind": "age",
+   "px": [
+    1024,
+    0,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_chaya_beni": {
+   "kind": "age",
+   "px": [
+    1536,
+    0,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_chitose_kinari": {
+   "kind": "age",
+   "px": [
+    0,
+    256,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_choju_kinari": {
+   "kind": "age",
+   "px": [
+    512,
+    256,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_fukuju_ai": {
+   "kind": "age",
+   "px": [
+    1024,
+    256,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_gofuku_ai": {
+   "kind": "age",
+   "px": [
+    1536,
+    256,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_jufuku_ai": {
+   "kind": "age",
+   "px": [
+    0,
+    512,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_kanbutsu_beni": {
+   "kind": "age",
+   "px": [
+    512,
+    512,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_kiraku_ai": {
+   "kind": "age",
+   "px": [
+    1024,
+    512,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_kissho_beni": {
+   "kind": "age",
+   "px": [
+    1536,
+    512,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_kissho_kinari": {
+   "kind": "age",
+   "px": [
+    0,
+    768,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_kofuku_beni": {
+   "kind": "age",
+   "px": [
+    512,
+    768,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_sake_ai": {
+   "kind": "age",
+   "px": [
+    1024,
+    768,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "age_seto_kinari": {
+   "kind": "age",
+   "px": [
+    1536,
+    768,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "aomono_ton": {
+   "kind": "kit",
+   "px": [
+    0,
+    1024,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 4
+  },
+  "aramono": {
+   "kind": "kit",
+   "px": [
+    512,
+    1024,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "chacha": {
+   "kind": "kit",
+   "px": [
+    1024,
+    1024,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "chaya": {
+   "kind": "kit",
+   "px": [
+    1536,
+    1024,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "chochin": {
+   "kind": "kit",
+   "px": [
+    0,
+    1280,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "choju": {
+   "kind": "kit",
+   "px": [
+    512,
+    1280,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "dango": {
+   "kind": "kit",
+   "px": [
+    1024,
+    1280,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "fudesumi": {
+   "kind": "kit",
+   "px": [
+    1536,
+    1280,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "fukuju": {
+   "kind": "kit",
+   "px": [
+    0,
+    1536,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "furudogu": {
+   "kind": "kit",
+   "px": [
+    512,
+    1536,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 3
+  },
+  "furugi": {
+   "kind": "kit",
+   "px": [
+    1024,
+    1536,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "gofuku": {
+   "kind": "kit",
+   "px": [
+    1536,
+    1536,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "hakimono": {
+   "kind": "kit",
+   "px": [
+    0,
+    1792,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "hatago": {
+   "kind": "kit",
+   "px": [
+    512,
+    1792,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "himono": {
+   "kind": "kit",
+   "px": [
+    1024,
+    1792,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "ichizen": {
+   "kind": "kit",
+   "px": [
+    1536,
+    1792,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 4
+  },
+  "kami": {
+   "kind": "kit",
+   "px": [
+    0,
+    2048,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "kamiyui": {
+   "kind": "kit",
+   "px": [
+    512,
+    2048,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "kasa": {
+   "kind": "kit",
+   "px": [
+    1024,
+    2048,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "kome": {
+   "kind": "kit",
+   "px": [
+    1536,
+    2048,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "kusuri": {
+   "kind": "kit",
+   "px": [
+    0,
+    2304,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "kusuri_ton": {
+   "kind": "kit",
+   "px": [
+    512,
+    2304,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 4
+  },
+  "meshi": {
+   "kind": "kit",
+   "px": [
+    1024,
+    2304,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "miso": {
+   "kind": "kit",
+   "px": [
+    1536,
+    2304,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "okashi": {
+   "kind": "kit",
+   "px": [
+    0,
+    2560,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 3
+  },
+  "oyado": {
+   "kind": "kit",
+   "px": [
+    512,
+    2560,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "sakana": {
+   "kind": "kit",
+   "px": [
+    1024,
+    2560,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "sake": {
+   "kind": "kit",
+   "px": [
+    1536,
+    2560,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "senbei": {
+   "kind": "kit",
+   "px": [
+    0,
+    2816,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "seto": {
+   "kind": "kit",
+   "px": [
+    512,
+    2816,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "shichi": {
+   "kind": "kit",
+   "px": [
+    1024,
+    2816,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "shoyu": {
+   "kind": "kit",
+   "px": [
+    1536,
+    2816,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "soba": {
+   "kind": "kit",
+   "px": [
+    0,
+    3072,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "sumiya": {
+   "kind": "kit",
+   "px": [
+    512,
+    3072,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "tabako": {
+   "kind": "kit",
+   "px": [
+    1024,
+    3072,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "takezaiku": {
+   "kind": "kit",
+   "px": [
+    1536,
+    3072,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 3
+  },
+  "tofu": {
+   "kind": "kit",
+   "px": [
+    0,
+    3328,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "tsukemono": {
+   "kind": "kit",
+   "px": [
+    512,
+    3328,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "yaoya": {
+   "kind": "kit",
+   "px": [
+    1024,
+    3328,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 3
+  },
+  "yorozu": {
+   "kind": "kit",
+   "px": [
+    1536,
+    3328,
+    512,
+    256
+   ],
+   "inset": 12,
+   "slots": 2
+  },
+  "stall_ame": {
+   "kind": "stall",
+   "px": [
+    0,
+    3584,
+    1024,
+    224
+   ],
+   "inset": 6,
+   "slots": 2
+  },
+  "stall_cha": {
+   "kind": "stall",
+   "px": [
+    1024,
+    3584,
+    1024,
+    224
+   ],
+   "inset": 6,
+   "slots": 2
+  },
+  "stall_ichi": {
+   "kind": "stall",
+   "px": [
+    0,
+    3808,
+    1024,
+    224
+   ],
+   "inset": 6,
+   "slots": 1
+  },
+  "stall_sakana": {
+   "kind": "stall",
+   "px": [
+    1024,
+    3808,
+    1024,
+    224
+   ],
+   "inset": 6,
+   "slots": 3
+  },
+  "stall_yasai": {
+   "kind": "stall",
+   "px": [
+    0,
+    4032,
+    1024,
+    224
+   ],
+   "inset": 6,
+   "slots": 3
+  }
+ },
+ "regions": {
+  "noren_abura": [
+   0.0,
+   0.0,
+   0.25,
+   0.060150376
+  ],
+  "noren_age_aomono_kinari": [
+   0.25,
+   0.0,
+   0.5,
+   0.060150376
+  ],
+  "noren_age_aramono_ai": [
+   0.5,
+   0.0,
+   0.75,
+   0.060150376
+  ],
+  "noren_age_chaya_beni": [
+   0.75,
+   0.0,
+   1.0,
+   0.060150376
+  ],
+  "noren_age_chitose_kinari": [
+   0.0,
+   0.060150376,
+   0.25,
+   0.120300752
+  ],
+  "noren_age_choju_kinari": [
+   0.25,
+   0.060150376,
+   0.5,
+   0.120300752
+  ],
+  "noren_age_fukuju_ai": [
+   0.5,
+   0.060150376,
+   0.75,
+   0.120300752
+  ],
+  "noren_age_gofuku_ai": [
+   0.75,
+   0.060150376,
+   1.0,
+   0.120300752
+  ],
+  "noren_age_jufuku_ai": [
+   0.0,
+   0.120300752,
+   0.25,
+   0.180451128
+  ],
+  "noren_age_kanbutsu_beni": [
+   0.25,
+   0.120300752,
+   0.5,
+   0.180451128
+  ],
+  "noren_age_kiraku_ai": [
+   0.5,
+   0.120300752,
+   0.75,
+   0.180451128
+  ],
+  "noren_age_kissho_beni": [
+   0.75,
+   0.120300752,
+   1.0,
+   0.180451128
+  ],
+  "noren_age_kissho_kinari": [
+   0.0,
+   0.180451128,
+   0.25,
+   0.240601504
+  ],
+  "noren_age_kofuku_beni": [
+   0.25,
+   0.180451128,
+   0.5,
+   0.240601504
+  ],
+  "noren_age_sake_ai": [
+   0.5,
+   0.180451128,
+   0.75,
+   0.240601504
+  ],
+  "noren_age_seto_kinari": [
+   0.75,
+   0.180451128,
+   1.0,
+   0.240601504
+  ],
+  "noren_aomono_ton": [
+   0.0,
+   0.240601504,
+   0.25,
+   0.30075188
+  ],
+  "noren_aramono": [
+   0.25,
+   0.240601504,
+   0.5,
+   0.30075188
+  ],
+  "noren_chacha": [
+   0.5,
+   0.240601504,
+   0.75,
+   0.30075188
+  ],
+  "noren_chaya": [
+   0.75,
+   0.240601504,
+   1.0,
+   0.30075188
+  ],
+  "noren_chochin": [
+   0.0,
+   0.30075188,
+   0.25,
+   0.360902256
+  ],
+  "noren_choju": [
+   0.25,
+   0.30075188,
+   0.5,
+   0.360902256
+  ],
+  "noren_dango": [
+   0.5,
+   0.30075188,
+   0.75,
+   0.360902256
+  ],
+  "noren_fudesumi": [
+   0.75,
+   0.30075188,
+   1.0,
+   0.360902256
+  ],
+  "noren_fukuju": [
+   0.0,
+   0.360902256,
+   0.25,
+   0.421052632
+  ],
+  "noren_furudogu": [
+   0.25,
+   0.360902256,
+   0.5,
+   0.421052632
+  ],
+  "noren_furugi": [
+   0.5,
+   0.360902256,
+   0.75,
+   0.421052632
+  ],
+  "noren_gofuku": [
+   0.75,
+   0.360902256,
+   1.0,
+   0.421052632
+  ],
+  "noren_hakimono": [
+   0.0,
+   0.421052632,
+   0.25,
+   0.481203008
+  ],
+  "noren_hatago": [
+   0.25,
+   0.421052632,
+   0.5,
+   0.481203008
+  ],
+  "noren_himono": [
+   0.5,
+   0.421052632,
+   0.75,
+   0.481203008
+  ],
+  "noren_ichizen": [
+   0.75,
+   0.421052632,
+   1.0,
+   0.481203008
+  ],
+  "noren_kami": [
+   0.0,
+   0.481203008,
+   0.25,
+   0.541353383
+  ],
+  "noren_kamiyui": [
+   0.25,
+   0.481203008,
+   0.5,
+   0.541353383
+  ],
+  "noren_kasa": [
+   0.5,
+   0.481203008,
+   0.75,
+   0.541353383
+  ],
+  "noren_kome": [
+   0.75,
+   0.481203008,
+   1.0,
+   0.541353383
+  ],
+  "noren_kusuri": [
+   0.0,
+   0.541353383,
+   0.25,
+   0.601503759
+  ],
+  "noren_kusuri_ton": [
+   0.25,
+   0.541353383,
+   0.5,
+   0.601503759
+  ],
+  "noren_meshi": [
+   0.5,
+   0.541353383,
+   0.75,
+   0.601503759
+  ],
+  "noren_miso": [
+   0.75,
+   0.541353383,
+   1.0,
+   0.601503759
+  ],
+  "noren_okashi": [
+   0.0,
+   0.601503759,
+   0.25,
+   0.661654135
+  ],
+  "noren_oyado": [
+   0.25,
+   0.601503759,
+   0.5,
+   0.661654135
+  ],
+  "noren_sakana": [
+   0.5,
+   0.601503759,
+   0.75,
+   0.661654135
+  ],
+  "noren_sake": [
+   0.75,
+   0.601503759,
+   1.0,
+   0.661654135
+  ],
+  "noren_senbei": [
+   0.0,
+   0.661654135,
+   0.25,
+   0.721804511
+  ],
+  "noren_seto": [
+   0.25,
+   0.661654135,
+   0.5,
+   0.721804511
+  ],
+  "noren_shichi": [
+   0.5,
+   0.661654135,
+   0.75,
+   0.721804511
+  ],
+  "noren_shoyu": [
+   0.75,
+   0.661654135,
+   1.0,
+   0.721804511
+  ],
+  "noren_soba": [
+   0.0,
+   0.721804511,
+   0.25,
+   0.781954887
+  ],
+  "noren_sumiya": [
+   0.25,
+   0.721804511,
+   0.5,
+   0.781954887
+  ],
+  "noren_tabako": [
+   0.5,
+   0.721804511,
+   0.75,
+   0.781954887
+  ],
+  "noren_takezaiku": [
+   0.75,
+   0.721804511,
+   1.0,
+   0.781954887
+  ],
+  "noren_tofu": [
+   0.0,
+   0.781954887,
+   0.25,
+   0.842105263
+  ],
+  "noren_tsukemono": [
+   0.25,
+   0.781954887,
+   0.5,
+   0.842105263
+  ],
+  "noren_yaoya": [
+   0.5,
+   0.781954887,
+   0.75,
+   0.842105263
+  ],
+  "noren_yorozu": [
+   0.75,
+   0.781954887,
+   1.0,
+   0.842105263
+  ],
+  "noren_stall_ame": [
+   0.0,
+   0.842105263,
+   0.5,
+   0.894736842
+  ],
+  "noren_stall_cha": [
+   0.5,
+   0.842105263,
+   1.0,
+   0.894736842
+  ],
+  "noren_stall_ichi": [
+   0.0,
+   0.894736842,
+   0.5,
+   0.947368421
+  ],
+  "noren_stall_sakana": [
+   0.5,
+   0.894736842,
+   1.0,
+   0.947368421
+  ],
+  "noren_stall_yasai": [
+   0.0,
+   0.947368421,
+   0.5,
+   1.0
+  ]
+ },
+ "texts": {
+  "abura": "油屋",
+  "age_aomono_kinari": "青物",
+  "age_aramono_ai": "荒物",
+  "age_chaya_beni": "茶屋",
+  "age_chitose_kinari": "千歳",
+  "age_choju_kinari": "長寿",
+  "age_fukuju_ai": "福寿",
+  "age_gofuku_ai": "呉服",
+  "age_jufuku_ai": "寿福",
+  "age_kanbutsu_beni": "乾物",
+  "age_kiraku_ai": "喜楽",
+  "age_kissho_beni": "吉祥",
+  "age_kissho_kinari": "吉祥",
+  "age_kofuku_beni": "幸福",
+  "age_sake_ai": "酒屋",
+  "age_seto_kinari": "瀬戸",
+  "aomono_ton": "青物問屋",
+  "aramono": "荒物",
+  "chacha": "茶茶",
+  "chaya": "茶屋",
+  "chochin": "提灯",
+  "choju": "長寿",
+  "dango": "団子",
+  "fudesumi": "筆墨",
+  "fukuju": "福寿",
+  "furudogu": "古道具",
+  "furugi": "古着",
+  "gofuku": "呉服",
+  "hakimono": "履物",
+  "hatago": "旅籠",
+  "himono": "干物",
+  "ichizen": "一膳飯屋",
+  "kami": "紙屋",
+  "kamiyui": "髪結",
+  "kasa": "傘屋",
+  "kome": "米屋",
+  "kusuri": "薬屋",
+  "kusuri_ton": "薬種問屋",
+  "meshi": "飯屋",
+  "miso": "味噌",
+  "okashi": "御菓子",
+  "oyado": "御宿",
+  "sakana": "魚屋",
+  "sake": "酒屋",
+  "senbei": "煎餅",
+  "seto": "瀬戸",
+  "shichi": "質屋",
+  "shoyu": "醤油",
+  "soba": "蕎麦",
+  "stall_ame": "あめ",
+  "stall_cha": "御茶",
+  "stall_ichi": "市",
+  "stall_sakana": "さかな",
+  "stall_yasai": "やさい",
+  "sumiya": "炭屋",
+  "tabako": "煙草",
+  "takezaiku": "竹細工",
+  "tofu": "豆腐",
+  "tsukemono": "漬物",
+  "yaoya": "八百屋",
+  "yorozu": "萬屋"
+ },
+ "font": "kaiu.ttf（標楷體）"
+}

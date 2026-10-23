@@ -93,7 +93,6 @@
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/u_winb_182_29.res" id="88_tf3nu"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/bk_plain_182_e54.res" id="89_6cfrt"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/bk_win_182_e54.res" id="90_tlewl"]
-[ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/nr_noren_a_182.res" id="91_srqi6"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/fp_h29.res" id="92_fyx3h"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/fb_182_h29.res" id="93_m74tg"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/sf_h29.res" id="94_1fqnx"]
@@ -127,7 +126,6 @@
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/bk_plain_91_e39_c3.res" id="122_wdxk2"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/bk_win_182_e39_c3.res" id="123_27k6r"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/bk_plain_182_e39_c3.res" id="124_64qk1"]
-[ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/nr_noren_e_182.res" id="125_5lsp0"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/fp_h27_c3.res" id="126_e3sgs"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/fb_182_h27_c3.res" id="127_w15fd"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/sf_h27_c3.res" id="128_ix6ij"]
@@ -159,7 +157,6 @@
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/bk_plain_91_e54_c1.res" id="154_4l131"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/bk_win_182_e54_c1.res" id="155_iucfw"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/bk_plain_182_e54_c1.res" id="156_so4jp"]
-[ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/nr_noren_c_182.res" id="157_jo3oh"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/fp_h29_c1.res" id="158_scc0j"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/fb_182_h29_c1.res" id="159_fr0he"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/sf_h29_c1.res" id="160_1nwyi"]
@@ -183,7 +180,6 @@
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/u_wins_182_29_c2.res" id="178_yrtvs"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/bk_plain_182_e54_c2.res" id="179_5la4e"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/bk_win_182_e54_c2.res" id="180_aabi7"]
-[ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/nr_noren_b_182.res" id="181_uyhxm"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/fp_h29_c2.res" id="182_0pq3j"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/fb_182_h29_c2.res" id="183_b1dfj"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/sf_h29_c2.res" id="184_34shk"]
@@ -258,7 +254,6 @@
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/hisx_1.res" id="253_upsdr"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/f1_koshib_182_h27_c3.res" id="254_m6cte"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/u_mushis_182_27_c3.res" id="255_yrcdj"]
-[ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/nr_noren_d_182.res" id="256_pl77d"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/rtu_c3.res" id="257_0qfx1"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/sdo_d1092_e39_c3.res" id="258_eqbp3"]
 [ext_resource type="ArrayMesh" path="res://assets/village_v2/machiya_kit/mesh/sd_d1092_e39_c3.res" id="259_1mim0"]
@@ -1145,10 +1140,49 @@
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/enrich_w9p4.scn" id="p13w9p4_enrich"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/enrich_w9p8.scn" id="p13w9p8_enrich"]
 [ext_resource type="Script" path="res://maps/village_v2/scripts_p13/dev_layer_gate.gd" id="p13w9_devgate"]
-[ext_resource type="PackedScene" path="res://assets/village_v2/hillfoot_temple/hillfoot_temple.scn" id="w9_hillfoot_temple"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/district_hf.scn" id="e2_district_hf"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/gen/hillfoot_precinct_e2.scn" id="e2_precinct"]
 [ext_resource type="PackedScene" path="res://maps/village_v2/water/wind_river_demo.tscn" id="wv2_wind_river_demo"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_abura.res" id="ntn_abura"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_aomono_ton.res" id="ntn_aomono_ton"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_aramono.res" id="ntn_aramono"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_chacha.res" id="ntn_chacha"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_chaya.res" id="ntn_chaya"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_chochin.res" id="ntn_chochin"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_dango.res" id="ntn_dango"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_fudesumi.res" id="ntn_fudesumi"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_furudogu.res" id="ntn_furudogu"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_furugi.res" id="ntn_furugi"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_gofuku.res" id="ntn_gofuku"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_hakimono.res" id="ntn_hakimono"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_hatago.res" id="ntn_hatago"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_himono.res" id="ntn_himono"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_ichizen.res" id="ntn_ichizen"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_kami.res" id="ntn_kami"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_kamiyui.res" id="ntn_kamiyui"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_kasa.res" id="ntn_kasa"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_kome.res" id="ntn_kome"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_kusuri.res" id="ntn_kusuri"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_kusuri_ton.res" id="ntn_kusuri_ton"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_meshi.res" id="ntn_meshi"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_miso.res" id="ntn_miso"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_okashi.res" id="ntn_okashi"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_oyado.res" id="ntn_oyado"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_sakana.res" id="ntn_sakana"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_sake.res" id="ntn_sake"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_senbei.res" id="ntn_senbei"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_seto.res" id="ntn_seto"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_shichi.res" id="ntn_shichi"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_shoyu.res" id="ntn_shoyu"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_soba.res" id="ntn_soba"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_sumiya.res" id="ntn_sumiya"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_tabako.res" id="ntn_tabako"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_takezaiku.res" id="ntn_takezaiku"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_tofu.res" id="ntn_tofu"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_tsukemono.res" id="ntn_tsukemono"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_yaoya.res" id="ntn_yaoya"]
+[ext_resource type="ArrayMesh" path="res://assets/village_v2/noren_text_kit/mesh/nr_noren_yorozu.res" id="ntn_yorozu"]
+[ext_resource type="Material" path="res://assets/village_v2/noren_text_kit/NT_Noren_K.tres" id="ntn_k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_owkv7"]
 shader = ExtResource("3_kpyqr")
@@ -6595,7 +6629,7 @@ mesh = ExtResource("89_6cfrt")
 transform = Transform3D(0.95238096, 0, 0, 0, 1, 0, 0, 0, 1, -0.8666667, 0, 3.95)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("91_srqi6")
+mesh = ExtResource("ntn_hakimono")
 
 [node name="fp_h29_11" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_002/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8666667, 0, 4.55)
@@ -7221,7 +7255,7 @@ mesh = ExtResource("122_wdxk2")
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, -1.3166667, 0, 4.405)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("125_5lsp0")
+mesh = ExtResource("ntn_ichizen")
 
 [node name="fp_h27_c3_20" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_003/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3166667, 0, 5.005)
@@ -7956,7 +7990,7 @@ mesh = ExtResource("155_iucfw")
 transform = Transform3D(0.9576138, 0, 0, 0, 1, 0, 0, 0, 1, 1.3071429, 0, 5.01)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("157_jo3oh")
+mesh = ExtResource("ntn_seto")
 
 [node name="fp_h29_c1_14" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_004/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43571427, 0, 5.46)
@@ -8748,7 +8782,7 @@ mesh = ExtResource("55_284lm")
 transform = Transform3D(0.96703297, 0, 0, 0, 1, 0, 0, 0, 1, -2.64, 0, 4.86)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("181_uyhxm")
+mesh = ExtResource("ntn_yorozu")
 
 [node name="nr_sudare_182_18" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_005/Kit/LOD0"]
 transform = Transform3D(0.96703297, 0, 0, 0, 1, 0, 0, 0, 1, 0.88, 0, 5.46)
@@ -11397,7 +11431,7 @@ mesh = ExtResource("52_082lr")
 transform = Transform3D(1.0549451, 0, 0, 0, 1, 0, 0, 0, 1, -1.44, 0, 4.1)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("91_srqi6")
+mesh = ExtResource("ntn_chacha")
 
 [node name="fp_h29_c4_14" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_009/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.44, 0, 4.55)
@@ -12879,7 +12913,7 @@ mesh = ExtResource("278_kw2pt")
 transform = Transform3D(0.96153843, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.005)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("125_5lsp0")
+mesh = ExtResource("ntn_aramono")
 
 [node name="post_e54_c3_17" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_011/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 5.005)
@@ -14479,7 +14513,7 @@ mesh = ExtResource("55_284lm")
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, -1.3166667, 0, 4.56)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("91_srqi6")
+mesh = ExtResource("ntn_kusuri")
 
 [node name="nr_sudare_182_18" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_013/Kit/LOD0"]
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, 2.1944444, 0, 5.46)
@@ -16014,7 +16048,7 @@ mesh = ExtResource("212_o2ssi")
 transform = Transform3D(0.96813184, 0, 0, 0, 1, 0, 0, 0, 1, -2.643, 0, 5.01)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("125_5lsp0")
+mesh = ExtResource("ntn_aomono_ton")
 
 [node name="fp_h29_c2_20" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_015/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.643, 0, 5.46)
@@ -16908,7 +16942,7 @@ mesh = ExtResource("123_27k6r")
 transform = Transform3D(0.9505494, 0, 0, 0, 1, 0, 0, 0, 1, -0.865, 0, 4.405)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("157_jo3oh")
+mesh = ExtResource("ntn_abura")
 
 [node name="fp_h27_c3_14" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_016/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.865, 0, 5.005)
@@ -17533,7 +17567,7 @@ mesh = ExtResource("278_kw2pt")
 transform = Transform3D(0.95238096, 0, 0, 0, 1, 0, 0, 0, 1, -0.8666667, 0, 4.105)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("181_uyhxm")
+mesh = ExtResource("ntn_sake")
 
 [node name="fp_h29_c3_11" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_017/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8666667, 0, 5.005)
@@ -18991,7 +19025,7 @@ mesh = ExtResource("90_tlewl")
 transform = Transform3D(0.96153843, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("91_srqi6")
+mesh = ExtResource("ntn_aramono")
 
 [node name="post_e54_14" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_019/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 5.46)
@@ -19634,7 +19668,7 @@ mesh = ExtResource("300_nuh77")
 transform = Transform3D(1.0571429, 0, 0, 0, 1, 0, 0, 0, 1, -1.443, 0, 4.55)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("256_pl77d")
+mesh = ExtResource("ntn_tofu")
 
 [node name="post_e39_c4_11" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_020/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.405, 0, 4.55)
@@ -20244,7 +20278,7 @@ mesh = ExtResource("89_6cfrt")
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, 0.43888888, 0, 4.56)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("91_srqi6")
+mesh = ExtResource("ntn_kusuri_ton")
 
 [node name="nr_sudare_182_17" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_021/Kit/LOD0"]
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, 2.1944444, 0, 5.46)
@@ -21037,7 +21071,7 @@ mesh = ExtResource("180_aabi7")
 transform = Transform3D(0.9629121, 0, 0, 0, 1, 0, 0, 0, 1, -1.7525, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("256_pl77d")
+mesh = ExtResource("ntn_chaya")
 
 [node name="post_e54_c2_14" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_022/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.505, 0, 5.46)
@@ -21792,7 +21826,7 @@ mesh = ExtResource("402_ea1il")
 transform = Transform3D(0.95238096, 0, 0, 0, 1, 0, 0, 0, 1, -0.8666667, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("181_uyhxm")
+mesh = ExtResource("ntn_kome")
 
 [node name="post_e39_14" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_023/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 0, 5.46)
@@ -22483,7 +22517,7 @@ mesh = ExtResource("156_so4jp")
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, 0.43888888, 0, 5.01)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("157_jo3oh")
+mesh = ExtResource("ntn_abura")
 
 [node name="fp_h29_c1_17" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_024/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3166667, 0, 5.46)
@@ -23242,7 +23276,7 @@ mesh = ExtResource("383_ekbyf")
 transform = Transform3D(0.9576138, 0, 0, 0, 1, 0, 0, 0, 1, -3.05, 0, 5.01)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("256_pl77d")
+mesh = ExtResource("ntn_sakana")
 
 [node name="fp_h29_14" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_025/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.05, 0, 5.46)
@@ -23975,7 +24009,7 @@ mesh = ExtResource("55_284lm")
 transform = Transform3D(0.96703297, 0, 0, 0, 1, 0, 0, 0, 1, 0.88, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("181_uyhxm")
+mesh = ExtResource("ntn_hakimono")
 
 [node name="post_e39_c1_19" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_026/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4, 0, 5.46)
@@ -24674,7 +24708,7 @@ mesh = ExtResource("89_6cfrt")
 transform = Transform3D(0.9542124, 0, 0, 0, 1, 0, 0, 0, 1, -0.86833334, 0, 5.005)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("157_jo3oh")
+mesh = ExtResource("ntn_meshi")
 
 [node name="post_e54_11" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_027/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.605, 0, 5.005)
@@ -25886,7 +25920,7 @@ mesh = ExtResource("180_aabi7")
 transform = Transform3D(0.96016484, 0, 0, 0, 1, 0, 0, 0, 1, 1.7475, 0, 4.56)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("181_uyhxm")
+mesh = ExtResource("ntn_gofuku")
 
 [node name="fp_h29_c2_14" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_029/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.46)
@@ -26570,7 +26604,7 @@ mesh = ExtResource("300_nuh77")
 transform = Transform3D(1.0549451, 0, 0, 0, 1, 0, 0, 0, 1, -1.44, 0, 4.56)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("157_jo3oh")
+mesh = ExtResource("ntn_seto")
 
 [node name="fp_h27_c4_11" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_030/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.44, 0, 5.46)
@@ -27199,7 +27233,7 @@ mesh = ExtResource("53_uscla")
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, 0.43888888, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("256_pl77d")
+mesh = ExtResource("ntn_okashi")
 
 [node name="post_e54_c4_17" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_031/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.95, 0, 5.46)
@@ -28012,7 +28046,8 @@ mesh = ExtResource("123_27k6r")
 transform = Transform3D(0.96153843, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.56)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("256_pl77d")
+mesh = ExtResource("ntn_soba")
+surface_material_override/0 = ExtResource("ntn_k")
 
 [node name="fp_h27_c3_14" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_032/Kit/LOD0" unique_id=462622043]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.46)
@@ -29201,7 +29236,8 @@ mesh = ExtResource("300_nuh77")
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, -1.3166667, 0, 4.56)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("181_uyhxm")
+mesh = ExtResource("ntn_kamiyui")
+surface_material_override/0 = ExtResource("ntn_k")
 
 [node name="fp_h27_c4_17" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_034/Kit/LOD0" unique_id=864794320]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0722222, 0, 5.46)
@@ -29996,7 +30032,8 @@ mesh = ExtResource("55_284lm")
 transform = Transform3D(0.9629121, 0, 0, 0, 1, 0, 0, 0, 1, -2.220446e-16, 0, 4.56)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("181_uyhxm")
+mesh = ExtResource("ntn_shichi")
+surface_material_override/0 = ExtResource("ntn_k")
 
 [node name="fp_h29_18" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_035/Kit/LOD0" unique_id=677233438]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.220446e-16, 0, 5.46)
@@ -31318,7 +31355,8 @@ mesh = ExtResource("402_ea1il")
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, 0.43888888, 0, 4.56)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("125_5lsp0")
+mesh = ExtResource("ntn_kasa")
+surface_material_override/0 = ExtResource("ntn_k")
 
 [node name="fp_h27_20" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_037/Kit/LOD0" unique_id=211710720]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43888888, 0, 5.46)
@@ -34153,7 +34191,8 @@ mesh = ExtResource("154_4l131")
 transform = Transform3D(0.9576138, 0, 0, 0, 1, 0, 0, 0, 1, -3.05, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("157_jo3oh")
+mesh = ExtResource("ntn_chochin")
+surface_material_override/0 = ExtResource("ntn_k")
 
 [node name="post_e54_c1_14" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_041/Kit/LOD0" unique_id=1547649531]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.05, 0, 5.46)
@@ -35453,7 +35492,8 @@ mesh = ExtResource("300_nuh77")
 transform = Transform3D(1.0549451, 0, 0, 0, 1, 0, 0, 0, 1, -1.44, 0, 4.55)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("256_pl77d")
+mesh = ExtResource("ntn_senbei")
+surface_material_override/0 = ExtResource("ntn_k")
 
 [node name="post_e39_c4_11" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_043/Kit/LOD0" unique_id=1878802570]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 0, 4.55)
@@ -36055,7 +36095,7 @@ mesh = ExtResource("430_3csx1")
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, -1.3166667, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("256_pl77d")
+mesh = ExtResource("ntn_kami")
 
 [node name="post_e39_c1_17" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_044/Kit/LOD0" unique_id=514110628]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.95, 0, 5.46)
@@ -37542,7 +37582,7 @@ mesh = ExtResource("55_284lm")
 transform = Transform3D(0.96703297, 0, 0, 0, 1, 0, 0, 0, 1, -2.64, 0, 5.01)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("125_5lsp0")
+mesh = ExtResource("ntn_himono")
 
 [node name="fp_h27_c2_21" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_046/Kit/LOD0" unique_id=1767164293]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.64, 0, 5.46)
@@ -38263,7 +38303,7 @@ mesh = ExtResource("278_kw2pt")
 transform = Transform3D(0.9542124, 0, 0, 0, 1, 0, 0, 0, 1, -0.86833334, 0, 4.405)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("91_srqi6")
+mesh = ExtResource("ntn_miso")
 
 [node name="fp_h29_c3_11" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_047/Kit/LOD0" unique_id=484310295]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.86833334, 0, 5.005)
@@ -40123,7 +40163,7 @@ mesh = ExtResource("123_27k6r")
 transform = Transform3D(0.96593404, 0, 0, 0, 1, 0, 0, 0, 1, 0.879, 0, 4.1)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("125_5lsp0")
+mesh = ExtResource("ntn_fudesumi")
 
 [node name="fp_h27_c3_20" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_050/Kit/LOD0" unique_id=1994469935]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.879, 0, 4.55)
@@ -41498,7 +41538,7 @@ mesh = ExtResource("402_ea1il")
 transform = Transform3D(0.9576138, 0, 0, 0, 1, 0, 0, 0, 1, -0.43571427, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("157_jo3oh")
+mesh = ExtResource("ntn_tsukemono")
 
 [node name="post_e39_14" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_052/Kit/LOD0" unique_id=1619053757]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.05, 0, 5.46)
@@ -42115,7 +42155,8 @@ mesh = ExtResource("52_082lr")
 transform = Transform3D(0.96153843, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 0, 4.56)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("256_pl77d")
+mesh = ExtResource("ntn_furugi")
+surface_material_override/0 = ExtResource("ntn_k")
 
 [node name="fp_h29_c4_17" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_053/Kit/LOD0" unique_id=1035350836]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 0, 5.46)
@@ -43488,7 +43529,8 @@ mesh = ExtResource("123_27k6r")
 transform = Transform3D(0.96336997, 0, 0, 0, 1, 0, 0, 0, 1, 0.43833333, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("91_srqi6")
+mesh = ExtResource("ntn_sumiya")
+surface_material_override/0 = ExtResource("ntn_k")
 
 [node name="post_e39_c3_20" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_055/Kit/LOD0" unique_id=1728732994]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.945, 0, 5.46)
@@ -44207,7 +44249,7 @@ mesh = ExtResource("401_e2psr")
 transform = Transform3D(0.96703297, 0, 0, 0, 1, 0, 0, 0, 1, -2.64, 0, 5.01)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("157_jo3oh")
+mesh = ExtResource("ntn_soba")
 
 [node name="fp_h27_17" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_056/Kit/LOD0" unique_id=1289792293]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 0, 5.46)
@@ -45497,7 +45539,8 @@ mesh = ExtResource("122_wdxk2")
 transform = Transform3D(0.96153843, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 0, 4.56)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("181_uyhxm")
+mesh = ExtResource("ntn_shichi")
+surface_material_override/0 = ExtResource("ntn_k")
 
 [node name="nr_sudare_182_17" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_058/Kit/LOD0" unique_id=1930979774]
 transform = Transform3D(0.96153843, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.46)
@@ -46264,7 +46307,8 @@ mesh = ExtResource("156_so4jp")
 transform = Transform3D(1.0549451, 0, 0, 0, 1, 0, 0, 0, 1, -1.44, 0, 4.1)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("125_5lsp0")
+mesh = ExtResource("ntn_kasa")
+surface_material_override/0 = ExtResource("ntn_k")
 
 [node name="fp_h29_c1_11" type="MeshInstance3D" parent="Districts/Market/Buildings/B_P_MKT_059/Kit/LOD0" unique_id=1882976971]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.44, 0, 4.55)
@@ -48257,7 +48301,7 @@ mesh = ExtResource("179_5la4e")
 transform = Transform3D(0.9576138, 0, 0, 0, 1, 0, 0, 0, 1, -0.43571427, 0, 4.56)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("181_uyhxm")
+mesh = ExtResource("ntn_hatago")
 
 [node name="fp_h29_c2_17" type="MeshInstance3D" parent="Districts/MixedCommercial/Buildings/B_P_MXC_001/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43571427, 0, 5.46)
@@ -49102,7 +49146,7 @@ mesh = ExtResource("123_27k6r")
 transform = Transform3D(0.96153843, 0, 0, 0, 1, 0, 0, 0, 1, -1.75, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("256_pl77d")
+mesh = ExtResource("ntn_dango")
 
 [node name="nr_sudare_182_14" type="MeshInstance3D" parent="Districts/MixedCommercial/Buildings/B_P_MXC_002/Kit/LOD0"]
 transform = Transform3D(0.96153843, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.46)
@@ -49785,7 +49829,7 @@ mesh = ExtResource("212_o2ssi")
 transform = Transform3D(1.0549451, 0, 0, 0, 1, 0, 0, 0, 1, -1.44, 0, 4.55)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("91_srqi6")
+mesh = ExtResource("ntn_tofu")
 
 [node name="post_e54_c2_14" type="MeshInstance3D" parent="Districts/MixedCommercial/Buildings/B_P_MXC_003/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 0, 4.55)
@@ -52619,7 +52663,7 @@ mesh = ExtResource("298_ya5en")
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, -2.1944444, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("125_5lsp0")
+mesh = ExtResource("ntn_yaoya")
 
 [node name="post_e39_c4_17" type="MeshInstance3D" parent="Districts/MixedCommercial/Buildings/B_P_MXC_007/Kit/LOD0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.95, 0, 5.46)
@@ -54536,7 +54580,8 @@ mesh = ExtResource("55_284lm")
 transform = Transform3D(0.96703297, 0, 0, 0, 1, 0, 0, 0, 1, -2.64, 0, 5.01)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("256_pl77d")
+mesh = ExtResource("ntn_shoyu")
+surface_material_override/0 = ExtResource("ntn_k")
 
 [node name="nr_sudare_182_21" type="MeshInstance3D" parent="Districts/MixedCommercial/Buildings/B_P_MXC_010/Kit/LOD0" unique_id=539767146]
 transform = Transform3D(0.96703297, 0, 0, 0, 1, 0, 0, 0, 1, 0.88, 0, 5.46)
@@ -55938,7 +55983,7 @@ mesh = ExtResource("55_284lm")
 transform = Transform3D(0.9576138, 0, 0, 0, 1, 0, 0, 0, 1, 1.3071429, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("181_uyhxm")
+mesh = ExtResource("ntn_takezaiku")
 
 [node name="post_e39_c3_15" type="MeshInstance3D" parent="Districts/MixedCommercial/Buildings/B_P_MXC_012/Kit/LOD0" unique_id=1785408780]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.05, 0, 5.46)
@@ -59032,7 +59077,7 @@ mesh = ExtResource("123_27k6r")
 transform = Transform3D(0.9542124, 0, 0, 0, 1, 0, 0, 0, 1, -0.86833334, 0, 3.65)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("91_srqi6")
+mesh = ExtResource("ntn_gofuku")
 
 [node name="fp_h27_c3_14" type="MeshInstance3D" parent="Districts/MixedCommercial/Buildings/B_P_MXC_017/Kit/LOD0" unique_id=785373566]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.86833334, 0, 4.55)
@@ -60942,7 +60987,7 @@ mesh = ExtResource("400_g3ega")
 transform = Transform3D(0.96459097, 0, 0, 0, 1, 0, 0, 0, 1, -2.1944444, 0, 5.46)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("181_uyhxm")
+mesh = ExtResource("ntn_furudogu")
 
 [node name="post_e39_20" type="MeshInstance3D" parent="Districts/MixedCommercial/Buildings/B_P_MXC_020/Kit/LOD0" unique_id=1886127663]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.95, 0, 5.46)
@@ -62198,7 +62243,7 @@ mesh = ExtResource("401_e2psr")
 transform = Transform3D(0.95238096, 0, 0, 0, 1, 0, 0, 0, 1, -0.8666667, 0, 3.65)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("125_5lsp0")
+mesh = ExtResource("ntn_tabako")
 
 [node name="fp_h27_11" type="MeshInstance3D" parent="Districts/MixedCommercial/Buildings/B_P_MXC_022/Kit/LOD0" unique_id=19284966]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6, 0, 4.55)
@@ -139712,7 +139757,7 @@ mesh = ExtResource("300_nuh77")
 transform = Transform3D(0.9419152, 0, 0, 0, 1, 0, 0, 0, 1, -0.42857143, 0, 4.1)
 visibility_range_end = 40.0
 visibility_range_end_margin = 4.0
-mesh = ExtResource("125_5lsp0")
+mesh = ExtResource("ntn_oyado")
 
 [node name="fp_h27_c4_17" type="MeshInstance3D" parent="Districts/SouthGate/Buildings/B_P_SGT_001/Kit/LOD0" unique_id=1849512126]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42857143, 0, 4.55)
@@ -141762,10 +141807,7 @@ metadata/label = "丘腳社寺"
 metadata/src = "D3-E3"
 metadata/conf = "medium"
 metadata/placeholder = true
-metadata/hero_asset = "hillfoot_temple"
-
-[node name="Hero" parent="Landmarks/LANDMARK_HILLFOOT_TEMPLE" instance=ExtResource("w9_hillfoot_temple")]
-metadata/phase = "P5"
+metadata/cancelled = "使用者 2026-10-18 TASK E FINAL：丘腳社寺取消，原地改為自然林（DistrictHF）"
 
 [node name="LANDMARK_DRAGON" type="Node3D" parent="Landmarks" unique_id=649486162]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 388, -0.16943625, -188)

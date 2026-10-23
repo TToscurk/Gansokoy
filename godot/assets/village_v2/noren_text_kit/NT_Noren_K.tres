@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3]
+
+[ext_resource type="Shader" path="res://maps/village_v2/kit_cal_p10/kit_cal.gdshader" id="1"]
+[ext_resource type="Texture2D" path="res://assets/village_v2/noren_text_kit/noren_text_atlas.png" id="2"]
+
+[resource]
+resource_name = "NT_Noren_K"
+render_priority = 0
+shader = ExtResource("1")
+shader_parameter/albedo_tex = ExtResource("2")
+shader_parameter/k_dark = 0.75
+shader_parameter/k_mid = 0.42
+shader_parameter/k_light = 0.7
+shader_parameter/band_dark = Vector2(0.26, 0.34)
+shader_parameter/band_light = Vector2(0.55, 0.7)
+shader_parameter/roughness_v = 0.9
+shader_parameter/emission_energy = 0.4

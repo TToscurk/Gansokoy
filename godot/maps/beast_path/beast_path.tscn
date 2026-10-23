@@ -6,22 +6,22 @@
 [ext_resource type="PackedScene" path="res://maps/beast_path/s04_boss_clearing.tscn" id="4_t1cd2"]
 [ext_resource type="Script" path="res://maps/beast_path/bp_atmosphere.gd" id="5_mrs5f"]
 
-[node name="BeastPath" type="Node3D" unique_id=662498653]
+[node name="BeastPath" type="Node3D" unique_id=572249513]
 metadata/own_colliders = true
 metadata/bp_version = "0.1-whitebox"
 metadata/bp_status = "WHITEBOX / ART_REVIEW（未 ART_APPROVED）"
 
-[node name="S01_Entrance" type="Node3D" parent="." unique_id=1906810318 instance=ExtResource("1_caxbn")]
+[node name="S01_Entrance" type="Node3D" parent="." unique_id=1898742303 instance=ExtResource("1_caxbn")]
 metadata/bp_scene = "S01"
 metadata/bp_version = "0.1-whitebox"
 metadata/bp_status = "WHITEBOX / ART_REVIEW"
 
-[node name="S02_DeepForest" type="Node3D" parent="." unique_id=923595352 instance=ExtResource("2_u2mh3")]
+[node name="S02_DeepForest" type="Node3D" parent="." unique_id=1373497860 instance=ExtResource("2_u2mh3")]
 metadata/bp_scene = "S02"
 metadata/bp_version = "0.1-whitebox"
 metadata/bp_status = "WHITEBOX / ART_REVIEW"
 
-[node name="S03_Crossroads" type="Node3D" parent="." unique_id=461131731 instance=ExtResource("3_0rtgc")]
+[node name="S03_Crossroads" type="Node3D" parent="." unique_id=612388073 instance=ExtResource("3_0rtgc")]
 metadata/bp_scene = "S03"
 metadata/bp_version = "0.1-whitebox"
 metadata/bp_status = "WHITEBOX / ART_REVIEW"
@@ -31,5 +31,10 @@ metadata/bp_scene = "S04"
 metadata/bp_version = "0.1-whitebox"
 metadata/bp_status = "WHITEBOX / ART_REVIEW"
 
-[node name="BP_Atmosphere" type="WorldEnvironment" parent="." unique_id=196449050]
+[node name="BP_Atmosphere" type="WorldEnvironment" parent="." unique_id=808825253]
 script = ExtResource("5_mrs5f")
+gloom_enabled = true
+gloom_z = PackedFloat32Array(-60, -112, -312, -336)
+gloom_fog_density = 0.0028
+gloom_brightness = 0.95
+gloom_saturation_k = 0.92

@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/village_v2/fastlane/noka_b/noka_b.glb" id="1_mjeww"]
+[ext_resource type="Shape3D" path="res://assets/village_v2/fastlane/noka_b/noka_b_collision.res" id="2_drpbv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2nd2i"]
+size = Vector3(10.309999, 0.3, 7.18)
+
+[node name="noka_b" type="Node3D" unique_id=1743493819]
+metadata/fastlane = {
+"collision": "trimesh",
+"date": "2026-10-22T14:14:34",
+"glb": "res://assets/village_v2/fastlane/noka_b/noka_b.glb",
+"label": "",
+"scale": 1.0,
+"sink": 0.08,
+"tris": 4896
+}
+
+[node name="Model" type="Node3D" parent="." unique_id=1742476750 instance=ExtResource("1_mjeww")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5499997, 0.049999997, -0.3499999)
+
+[node name="Collision" type="StaticBody3D" parent="." unique_id=1176384428]
+
+[node name="Shape" type="CollisionShape3D" parent="Collision" unique_id=968012153]
+shape = ExtResource("2_drpbv")
+
+[node name="Foot" type="CollisionShape3D" parent="Collision" unique_id=1798555744]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.33000016, 0.07, 0.33000016)
+shape = SubResource("BoxShape3D_2nd2i")
+metadata/foot = true

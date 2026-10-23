@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://systems/npc_life/npc_life_actor.gd" id="1_act"]
+[ext_resource type="PackedScene" path="res://characters/reimu/reimu.tscn" id="2_rei"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rei"]
+radius = 0.22
+height = 1.55
+
+[node name="ReimuShrineNPC" type="Node3D"]
+metadata/life_revision = "博麗神社 v3 的靈夢（2026-10-23 新版地圖接管第一階段）：沿用 characters/reimu（Reimu r1–r3 模型、骨架、Mixamo 待機 clip），結構同 maps/village_v2/reimu_npc.tscn（AnimatableBody3D＋npc_life_actor.gd＋hero_id=reimu），日後可直接交給 NpcLife director 排程；目前神社沒有 director → 只播待機（npc_visual 預設 idle），不移動。"
+
+[node name="R1_reimu" type="AnimatableBody3D" parent="."]
+sync_to_physics = false
+script = ExtResource("1_act")
+hero_id = "reimu"
+mode = "idle"
+seed_i = 200102
+metadata/model = "reimu"
+metadata/zone = "shrine_haiden"
+
+[node name="Body" type="CollisionShape3D" parent="R1_reimu"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.775, 0)
+shape = SubResource("CapsuleShape3D_rei")
+
+[node name="NPC" parent="R1_reimu" instance=ExtResource("2_rei")]

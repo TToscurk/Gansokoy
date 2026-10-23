@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://1lbposx0vybx" path="res://assets/market/水井.glb" id="15_5ha42"]
 [ext_resource type="PackedScene" uid="uid://c3jgya6aye321" path="res://assets/market/雜物堆木桶.glb" id="16_aytt4"]
 [ext_resource type="PackedScene" uid="uid://ckcqrnns3qmd1" path="res://assets/market/雜物堆瓢盆.glb" id="17_ranue"]
-[ext_resource type="PackedScene" uid="uid://cx40yxd48kyxu" path="res://assets/_lod/倉庫.glb" id="18_2j7dc"]
+[ext_resource type="PackedScene" uid="uid://dodypch20ek72" path="res://assets/_lod/倉庫.glb" id="18_2j7dc"]
 [ext_resource type="PackedScene" uid="uid://hyy03bx7la4a" path="res://assets/market/雜物草捆.glb" id="18_u1f15"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_5wvcx"]

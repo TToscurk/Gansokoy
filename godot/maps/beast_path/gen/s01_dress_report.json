@@ -1,52 +1,57 @@
 {
   "cover_counts": {
-    "s01_fern_a": 457,
-    "s01_fern_b": 371,
-    "s01_fern_c": 402,
-    "s01_fern_d": 703,
-    "s01_forb_a": 301,
-    "s01_forb_b": 43,
-    "s01_fuki_a": 271,
-    "s01_fuki_b": 189,
-    "s01_grass_short_a": 1180,
-    "s01_grass_short_b": 848,
-    "s01_grass_tall_a": 439,
-    "s01_grass_tall_b": 632,
-    "s01_grass_tall_c": 433,
-    "s01_grass_tall_d": 1735,
-    "s01_herb_broad_a": 104,
-    "s01_litter_a": 219,
-    "s01_litter_b": 666,
-    "s01_moss_a": 302,
-    "s01_sapling_a": 46,
-    "s01_sapling_b": 39,
-    "s01_sasa_a": 38,
-    "s01_sasa_b": 386,
-    "s01_sedge_a": 172,
-    "s01_shadegrass_a": 3354,
-    "s01_shrub_a": 192,
-    "s01_shrub_b": 114,
-    "s01_twigs_a": 58
+    "s01_fern_a": 1926,
+    "s01_fern_b": 1343,
+    "s01_fern_c": 1619,
+    "s01_fern_d": 1659,
+    "s01_forb_b": 1,
+    "s01_fuki_a": 958,
+    "s01_fuki_b": 597,
+    "s01_grass_short_a": 90,
+    "s01_grass_short_b": 148,
+    "s01_grass_tall_a": 2,
+    "s01_grass_tall_b": 12,
+    "s01_grass_tall_c": 1,
+    "s01_grass_tall_d": 22,
+    "s01_herb_broad_a": 261,
+    "s01_litter_a": 982,
+    "s01_litter_b": 1822,
+    "s01_moss_a": 1383,
+    "s01_sapling_a": 79,
+    "s01_sapling_b": 84,
+    "s01_sasa_a": 139,
+    "s01_sasa_b": 1422,
+    "s01_sedge_a": 154,
+    "s01_shadegrass_a": 7904,
+    "s01_shrub_a": 667,
+    "s01_shrub_b": 448,
+    "s01_twigs_a": 133,
+    "wild_mud_a": 35
   },
-  "cover_on_road": 0,
+  "cover_on_road": 226,
   "cover_path_edge_min_m": {
-    "fern_big": 0.96,
-    "fern_small": 0.72,
-    "forb": 1.66,
-    "grass_short": 0.16,
-    "grass_tall": 1.29,
-    "herb": 0.89,
-    "litter": 0.21,
-    "moss": 0.56,
-    "sapling": 1.98,
-    "sasa": 1.31,
-    "sedge": 1.12,
-    "shadegrass": 0.14,
-    "shrub": 2.44,
-    "twigs": 1.75
+    "fern_big": 0.36,
+    "fern_small": 0.41,
+    "forb": 7.26,
+    "grass_short": 24.02,
+    "grass_tall": 1.88,
+    "herb": 0.14,
+    "litter": -0.18,
+    "moss": 0.07,
+    "sapling": 2.52,
+    "sasa": 0.3,
+    "sedge": 4.43,
+    "shadegrass": -0.1,
+    "shrub": 1.38,
+    "twigs": 0.5,
+    "verge_fern": -0.77,
+    "verge_grass": -0.63,
+    "verge_litter": -0.79,
+    "verge_moss": -0.45,
+    "verge_mud": -0.84
   },
-  "cover_tris_lod1_total": 1680584,
-  "cover_tris_total": 5406890,
+  "cover_tris_lod1_total": 4184206,
+  "cover_tris_total": 13137576,
   "hard": [
     {
       "aabb_min": [
@@ -58,6 +63,7 @@
       "below_pct": 46.7,
       "collide": true,
       "drop_m": 0.89,
+      "edge_min_m": 49.63,
       "id": "F1",
       "path_edge_min_m": 49.63,
       "pos": [
@@ -87,6 +93,7 @@
       "below_pct": 49.1,
       "collide": true,
       "drop_m": 0.56,
+      "edge_min_m": 57.48,
       "id": "F2",
       "path_edge_min_m": 57.48,
       "pos": [
@@ -116,6 +123,7 @@
       "below_pct": 81.2,
       "collide": true,
       "drop_m": 3.34,
+      "edge_min_m": 48.05,
       "id": "F3",
       "path_edge_min_m": 48.05,
       "pos": [
@@ -145,6 +153,7 @@
       "below_pct": 50.1,
       "collide": true,
       "drop_m": 0.81,
+      "edge_min_m": 50.88,
       "id": "F4",
       "path_edge_min_m": 50.88,
       "pos": [
@@ -174,6 +183,7 @@
       "below_pct": 78.1,
       "collide": false,
       "drop_m": 0.25,
+      "edge_min_m": 60.36,
       "id": "F5",
       "path_edge_min_m": 60.35,
       "pos": [
@@ -203,6 +213,7 @@
       "below_pct": 43.9,
       "collide": true,
       "drop_m": 0.13,
+      "edge_min_m": 47.1,
       "id": "M1",
       "path_edge_min_m": 47.09,
       "pos": [
@@ -217,7 +228,7 @@
         0.86,
         1.23
       ],
-      "trunk_clear_m": 5.69,
+      "trunk_clear_m": 3.71,
       "underside_gap_max_m": 0.0,
       "underside_verts_gap_gt30cm": 0,
       "verts": 677
@@ -232,6 +243,7 @@
       "below_pct": 77.4,
       "collide": false,
       "drop_m": 0.34,
+      "edge_min_m": 49.15,
       "id": "M2",
       "path_edge_min_m": 49.15,
       "pos": [
@@ -261,6 +273,7 @@
       "below_pct": 48.7,
       "collide": false,
       "drop_m": 0.14,
+      "edge_min_m": 45.83,
       "id": "M3",
       "path_edge_min_m": 45.82,
       "pos": [
@@ -290,6 +303,7 @@
       "below_pct": 57.9,
       "collide": false,
       "drop_m": 0.1,
+      "edge_min_m": 48.73,
       "id": "M4",
       "path_edge_min_m": 48.73,
       "pos": [
@@ -319,6 +333,7 @@
       "below_pct": 55.4,
       "collide": false,
       "drop_m": 0.16,
+      "edge_min_m": 44.32,
       "id": "M5",
       "path_edge_min_m": 44.32,
       "pos": [
@@ -348,6 +363,7 @@
       "below_pct": 70.7,
       "collide": false,
       "drop_m": 0.02,
+      "edge_min_m": 48.52,
       "id": "D1",
       "path_edge_min_m": 48.06,
       "pos": [
@@ -362,7 +378,7 @@
         1.02,
         1.82
       ],
-      "trunk_clear_m": 6.76,
+      "trunk_clear_m": 3.9,
       "underside_gap_max_m": 0.85,
       "underside_verts_gap_gt30cm": 4,
       "verts": 1514
@@ -377,6 +393,7 @@
       "below_pct": 57.5,
       "collide": false,
       "drop_m": 0.08,
+      "edge_min_m": 49.93,
       "id": "D2",
       "path_edge_min_m": 49.93,
       "pos": [
@@ -391,7 +408,7 @@
         0.84,
         1.17
       ],
-      "trunk_clear_m": 6.72,
+      "trunk_clear_m": 5.82,
       "underside_gap_max_m": 0.45,
       "underside_verts_gap_gt30cm": 27,
       "verts": 1514
@@ -406,6 +423,7 @@
       "below_pct": 72.3,
       "collide": false,
       "drop_m": 0.02,
+      "edge_min_m": 47.13,
       "id": "D3",
       "path_edge_min_m": 47.08,
       "pos": [
@@ -427,6 +445,306 @@
     },
     {
       "aabb_min": [
+        -16.96,
+        0.77,
+        -37.23
+      ],
+      "asset": "wild_ruin_pillar_a",
+      "below_pct": 50.0,
+      "collide": true,
+      "drop_m": 0.11,
+      "edge_min_m": 3.52,
+      "id": "WR_pillar1",
+      "path_edge_min_m": 3.43,
+      "pos": [
+        -15.55,
+        1.27,
+        -36.3
+      ],
+      "protrude_m": 2.63,
+      "reachable": true,
+      "size": [
+        2.34,
+        3.22,
+        1.86
+      ],
+      "trunk_clear_m": 1.68,
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 336
+    },
+    {
+      "aabb_min": [
+        -1.71,
+        2.39,
+        -74.8
+      ],
+      "asset": "wild_ruin_pillar_b",
+      "below_pct": 59.4,
+      "collide": false,
+      "drop_m": 0.14,
+      "edge_min_m": 3.52,
+      "id": "WR_pillarb1",
+      "path_edge_min_m": 3.43,
+      "pos": [
+        -0.14,
+        2.6,
+        -72.92
+      ],
+      "protrude_m": 0.38,
+      "reachable": true,
+      "size": [
+        3.61,
+        0.7,
+        3.55
+      ],
+      "trunk_clear_m": 0.45,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 453
+    },
+    {
+      "aabb_min": [
+        -14.17,
+        1.73,
+        -84.33
+      ],
+      "asset": "wild_ruin_steps_a",
+      "below_pct": 72.2,
+      "collide": true,
+      "drop_m": 0.1,
+      "edge_min_m": 3.65,
+      "id": "WR_steps1",
+      "path_edge_min_m": 3.65,
+      "pos": [
+        -11.71,
+        2.65,
+        -80.85
+      ],
+      "protrude_m": 0.88,
+      "reachable": true,
+      "size": [
+        4.15,
+        2.03,
+        4.34
+      ],
+      "trunk_clear_m": 4.18,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 672
+    },
+    {
+      "aabb_min": [
+        8.12,
+        1.85,
+        -89.83
+      ],
+      "asset": "s01_rock_cliff_b",
+      "below_pct": 34.6,
+      "collide": true,
+      "drop_m": 0.27,
+      "edge_min_m": 3.75,
+      "id": "WR_cliff1",
+      "path_edge_min_m": 3.74,
+      "pos": [
+        9.71,
+        3.1,
+        -88.2
+      ],
+      "protrude_m": 3.07,
+      "reachable": true,
+      "size": [
+        4.19,
+        4.59,
+        3.06
+      ],
+      "trunk_clear_m": -0.19,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 3281
+    },
+    {
+      "aabb_min": [
+        -1.95,
+        0.57,
+        -33.6
+      ],
+      "asset": "wild_jizo_a",
+      "below_pct": 53.6,
+      "collide": false,
+      "drop_m": 0.16,
+      "edge_min_m": 1.16,
+      "id": "S_jizo1",
+      "path_edge_min_m": 1.11,
+      "pos": [
+        -1.52,
+        0.78,
+        -33.16
+      ],
+      "protrude_m": 0.82,
+      "reachable": true,
+      "size": [
+        0.86,
+        1.19,
+        1.14
+      ],
+      "trunk_clear_m": 2.29,
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 425
+    },
+    {
+      "aabb_min": [
+        -12.66,
+        0.85,
+        -35.33
+      ],
+      "asset": "wild_ruin_pillar_b",
+      "below_pct": 68.0,
+      "collide": false,
+      "drop_m": 0.16,
+      "edge_min_m": 1.72,
+      "id": "S_pillarb1",
+      "path_edge_min_m": 1.72,
+      "pos": [
+        -11.73,
+        1.03,
+        -33.3
+      ],
+      "protrude_m": 0.27,
+      "reachable": true,
+      "size": [
+        1.53,
+        0.61,
+        3.84
+      ],
+      "trunk_clear_m": 0.79,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 453
+    },
+    {
+      "aabb_min": [
+        -3.39,
+        1.34,
+        -54.08
+      ],
+      "asset": "wild_ruin_rubble_a",
+      "below_pct": 86.1,
+      "collide": false,
+      "drop_m": 0.16,
+      "edge_min_m": 8.45,
+      "id": "S_rubble1",
+      "path_edge_min_m": 8.23,
+      "pos": [
+        -1.28,
+        1.82,
+        -51.83
+      ],
+      "protrude_m": 0.21,
+      "reachable": true,
+      "size": [
+        3.47,
+        0.85,
+        4.3
+      ],
+      "trunk_clear_m": -1.1,
+      "underside_gap_max_m": 0.1,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 489
+    },
+    {
+      "aabb_min": [
+        -6.72,
+        0.64,
+        -34.25
+      ],
+      "asset": "res://assets/nature/RockPath_Square_Wide.gltf",
+      "below_pct": 68.6,
+      "collide": false,
+      "drop_m": 0.17,
+      "edge_min_m": 1000000000.0,
+      "id": "S_pave1",
+      "path_edge_min_m": -2.27,
+      "pos": [
+        -5.37,
+        0.68,
+        -32.9
+      ],
+      "protrude_m": 0.05,
+      "reachable": true,
+      "size": [
+        2.7,
+        0.22,
+        2.68
+      ],
+      "trunk_clear_m": 5.62,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 4712
+    },
+    {
+      "aabb_min": [
+        -4.73,
+        0.54,
+        -28.58
+      ],
+      "asset": "res://assets/nature/RockPath_Square_Small_1.gltf",
+      "below_pct": 62.5,
+      "collide": false,
+      "drop_m": 0.16,
+      "edge_min_m": 1000000000.0,
+      "id": "S_pave2",
+      "path_edge_min_m": -2.25,
+      "pos": [
+        -4.11,
+        0.56,
+        -28.0
+      ],
+      "protrude_m": 0.05,
+      "reachable": true,
+      "size": [
+        1.22,
+        0.17,
+        1.18
+      ],
+      "trunk_clear_m": 5.22,
+      "underside_gap_max_m": 0.0,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 1633
+    },
+    {
+      "aabb_min": [
+        -14.52,
+        1.48,
+        -54.96
+      ],
+      "asset": "res://assets/nature/RockPath_Round_Wide.gltf",
+      "below_pct": 46.4,
+      "collide": false,
+      "drop_m": 0.18,
+      "edge_min_m": 1000000000.0,
+      "id": "S_pave3",
+      "path_edge_min_m": -1.98,
+      "pos": [
+        -13.44,
+        1.51,
+        -53.86
+      ],
+      "protrude_m": 0.05,
+      "reachable": true,
+      "size": [
+        2.14,
+        0.17,
+        2.16
+      ],
+      "trunk_clear_m": 7.33,
+      "underside_gap_max_m": 0.05,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 7084
+    },
+    {
+      "aabb_min": [
         58.85,
         11.01,
         -0.92
@@ -435,6 +753,7 @@
       "below_pct": 59.3,
       "collide": true,
       "drop_m": 1.42,
+      "edge_min_m": 56.66,
       "id": "W1a",
       "path_edge_min_m": 56.65,
       "pos": [
@@ -464,6 +783,7 @@
       "below_pct": 62.9,
       "collide": false,
       "drop_m": 0.55,
+      "edge_min_m": 58.11,
       "id": "W1b",
       "path_edge_min_m": 58.11,
       "pos": [
@@ -493,6 +813,7 @@
       "below_pct": 59.2,
       "collide": false,
       "drop_m": 0.02,
+      "edge_min_m": 50.32,
       "id": "W1t",
       "path_edge_min_m": 50.32,
       "pos": [
@@ -507,7 +828,7 @@
         0.43,
         1.76
       ],
-      "trunk_clear_m": 3.44,
+      "trunk_clear_m": 1.38,
       "underside_gap_max_m": 0.2,
       "underside_verts_gap_gt30cm": 0,
       "verts": 1514
@@ -522,6 +843,7 @@
       "below_pct": 62.2,
       "collide": false,
       "drop_m": 3.17,
+      "edge_min_m": 59.77,
       "id": "W2",
       "path_edge_min_m": 59.77,
       "pos": [
@@ -536,39 +858,10 @@
         5.18,
         5.69
       ],
-      "trunk_clear_m": 2.62,
+      "trunk_clear_m": 0.01,
       "underside_gap_max_m": 3.05,
       "underside_verts_gap_gt30cm": 152,
       "verts": 4013
-    },
-    {
-      "aabb_min": [
-        58.69,
-        16.75,
-        -43.43
-      ],
-      "asset": "s01_rock_outcrop_c",
-      "below_pct": 58.2,
-      "collide": false,
-      "drop_m": 0.79,
-      "id": "W2a",
-      "path_edge_min_m": 61.18,
-      "pos": [
-        60.35,
-        17.53,
-        -42.05
-      ],
-      "protrude_m": 1.73,
-      "reachable": false,
-      "size": [
-        3.29,
-        1.98,
-        2.91
-      ],
-      "trunk_clear_m": 6.04,
-      "underside_gap_max_m": 3.05,
-      "underside_verts_gap_gt30cm": 92,
-      "verts": 2677
     },
     {
       "aabb_min": [
@@ -580,6 +873,7 @@
       "below_pct": 56.3,
       "collide": false,
       "drop_m": 0.03,
+      "edge_min_m": 52.9,
       "id": "W2t",
       "path_edge_min_m": 52.9,
       "pos": [
@@ -594,7 +888,7 @@
         0.4,
         1.77
       ],
-      "trunk_clear_m": 6.33,
+      "trunk_clear_m": 4.54,
       "underside_gap_max_m": 0.3,
       "underside_verts_gap_gt30cm": 0,
       "verts": 1514
@@ -609,6 +903,7 @@
       "below_pct": 56.7,
       "collide": false,
       "drop_m": 0.1,
+      "edge_min_m": 57.1,
       "id": "W3",
       "path_edge_min_m": 57.09,
       "pos": [
@@ -638,6 +933,7 @@
       "below_pct": 61.5,
       "collide": false,
       "drop_m": 1.42,
+      "edge_min_m": 61.02,
       "id": "W3a",
       "path_edge_min_m": 61.02,
       "pos": [
@@ -667,6 +963,7 @@
       "below_pct": 65.9,
       "collide": false,
       "drop_m": 0.28,
+      "edge_min_m": 56.64,
       "id": "W3b",
       "path_edge_min_m": 56.64,
       "pos": [
@@ -696,6 +993,7 @@
       "below_pct": 62.2,
       "collide": true,
       "drop_m": 2.93,
+      "edge_min_m": 52.34,
       "id": "W4",
       "path_edge_min_m": 52.33,
       "pos": [
@@ -710,7 +1008,7 @@
         4.6,
         4.55
       ],
-      "trunk_clear_m": 10.43,
+      "trunk_clear_m": 5.2,
       "underside_gap_max_m": 3.05,
       "underside_verts_gap_gt30cm": 124,
       "verts": 4013
@@ -725,6 +1023,7 @@
       "below_pct": 57.6,
       "collide": true,
       "drop_m": 0.38,
+      "edge_min_m": 54.72,
       "id": "W4a",
       "path_edge_min_m": 54.71,
       "pos": [
@@ -739,7 +1038,7 @@
         2.24,
         3.3
       ],
-      "trunk_clear_m": 8.41,
+      "trunk_clear_m": 5.5,
       "underside_gap_max_m": 3.05,
       "underside_verts_gap_gt30cm": 179,
       "verts": 2677
@@ -754,6 +1053,7 @@
       "below_pct": 59.4,
       "collide": false,
       "drop_m": 0.02,
+      "edge_min_m": 51.76,
       "id": "W4t",
       "path_edge_min_m": 51.73,
       "pos": [
@@ -768,7 +1068,7 @@
         0.36,
         1.85
       ],
-      "trunk_clear_m": 10.15,
+      "trunk_clear_m": 7.5,
       "underside_gap_max_m": 0.25,
       "underside_verts_gap_gt30cm": 0,
       "verts": 1514
@@ -783,6 +1083,7 @@
       "below_pct": 54.4,
       "collide": false,
       "drop_m": 0.15,
+      "edge_min_m": 51.39,
       "id": "T1",
       "path_edge_min_m": 51.39,
       "pos": [
@@ -812,6 +1113,7 @@
       "below_pct": 51.7,
       "collide": true,
       "drop_m": 0.16,
+      "edge_min_m": 50.54,
       "id": "T2",
       "path_edge_min_m": 50.54,
       "pos": [
@@ -826,7 +1128,7 @@
         1.16,
         1.45
       ],
-      "trunk_clear_m": 10.32,
+      "trunk_clear_m": 4.66,
       "underside_gap_max_m": 0.95,
       "underside_verts_gap_gt30cm": 5,
       "verts": 677
@@ -841,6 +1143,7 @@
       "below_pct": 52.7,
       "collide": false,
       "drop_m": 0.22,
+      "edge_min_m": 53.62,
       "id": "T3",
       "path_edge_min_m": 53.62,
       "pos": [
@@ -870,6 +1173,7 @@
       "below_pct": 52.4,
       "collide": true,
       "drop_m": 0.18,
+      "edge_min_m": 49.59,
       "id": "T4",
       "path_edge_min_m": 49.59,
       "pos": [
@@ -899,6 +1203,7 @@
       "below_pct": 56.9,
       "collide": true,
       "drop_m": 0.05,
+      "edge_min_m": 54.54,
       "id": "T5",
       "path_edge_min_m": 54.54,
       "pos": [
@@ -928,6 +1233,7 @@
       "below_pct": 71.6,
       "collide": false,
       "drop_m": 0.03,
+      "edge_min_m": 47.87,
       "id": "T6",
       "path_edge_min_m": 47.85,
       "pos": [
@@ -942,7 +1248,7 @@
         0.73,
         1.96
       ],
-      "trunk_clear_m": 4.73,
+      "trunk_clear_m": 1.54,
       "underside_gap_max_m": 0.25,
       "underside_verts_gap_gt30cm": 0,
       "verts": 1514
@@ -957,6 +1263,7 @@
       "below_pct": 13.7,
       "collide": true,
       "drop_m": 0.11,
+      "edge_min_m": 42.8,
       "id": "L1",
       "path_edge_min_m": 42.8,
       "pos": [
@@ -984,6 +1291,7 @@
       "below_pct": 35.6,
       "collide": true,
       "drop_m": 0.14,
+      "edge_min_m": 46.0,
       "id": "L2",
       "path_edge_min_m": 45.67,
       "pos": [
@@ -1011,6 +1319,7 @@
       "below_pct": 68.2,
       "collide": false,
       "drop_m": 0.36,
+      "edge_min_m": 52.87,
       "id": "R1",
       "path_edge_min_m": 52.87,
       "pos": [
@@ -1039,6 +1348,7 @@
       "below_pct": 34.2,
       "collide": false,
       "drop_m": 0.0,
+      "edge_min_m": 51.44,
       "id": "R2",
       "path_edge_min_m": 51.44,
       "pos": [
@@ -1067,6 +1377,7 @@
       "below_pct": 28.8,
       "collide": false,
       "drop_m": 0.05,
+      "edge_min_m": 52.37,
       "id": "R3",
       "path_edge_min_m": 52.37,
       "pos": [
@@ -1087,29 +1398,30 @@
     },
     {
       "aabb_min": [
-        10.08,
-        1.34,
-        -16.37
+        10.07,
+        0.84,
+        -16.41
       ],
       "asset": "s01_branch_a",
       "below_pct": 5.6,
       "collide": false,
       "drop_m": 0.04,
+      "edge_min_m": 8.59,
       "id": "B1",
-      "path_edge_min_m": 8.6,
+      "path_edge_min_m": 8.59,
       "pos": [
         11.2,
-        1.39,
+        0.88,
         -15.6
       ],
       "protrude_m": 0.33,
       "size": [
         2.2,
-        0.47,
-        1.34
+        0.43,
+        1.38
       ],
       "underside_gap_max_m": 0.55,
-      "underside_verts_gap_gt30cm": 7,
+      "underside_verts_gap_gt30cm": 9,
       "verts": 126
     },
     {
@@ -1122,6 +1434,7 @@
       "below_pct": 8.7,
       "collide": false,
       "drop_m": 0.0,
+      "edge_min_m": 40.11,
       "id": "B2",
       "path_edge_min_m": 39.94,
       "pos": [
@@ -1149,6 +1462,7 @@
       "below_pct": 11.1,
       "collide": false,
       "drop_m": 0.0,
+      "edge_min_m": 48.96,
       "id": "B3",
       "path_edge_min_m": 48.96,
       "pos": [
@@ -1168,29 +1482,30 @@
     },
     {
       "aabb_min": [
-        -14.52,
-        2.69,
-        -89.33
+        -13.86,
+        2.68,
+        -89.39
       ],
       "asset": "s01_roots_a",
-      "below_pct": 25.1,
+      "below_pct": 24.7,
       "collide": false,
       "drop_m": 0.0,
+      "edge_min_m": 8.19,
       "id": "E1",
-      "path_edge_min_m": 8.31,
+      "path_edge_min_m": 8.03,
       "pos": [
-        -13.3,
+        -12.9,
         3.1,
-        -88.2
+        -88.21
       ],
-      "protrude_m": 0.38,
+      "protrude_m": 0.39,
       "size": [
-        2.63,
+        2.42,
         0.79,
-        3.39
+        3.51
       ],
-      "tree": "sugi_b",
-      "underside_gap_max_m": 0.35,
+      "tree": "young_broad_b",
+      "underside_gap_max_m": 0.4,
       "underside_verts_gap_gt30cm": 1,
       "verts": 570
     },
@@ -1204,6 +1519,7 @@
       "below_pct": 23.9,
       "collide": false,
       "drop_m": 0.05,
+      "edge_min_m": 4.77,
       "id": "E2",
       "path_edge_min_m": 4.16,
       "pos": [
@@ -1223,26 +1539,83 @@
     },
     {
       "aabb_min": [
-        11.95,
-        2.78,
-        -61.26
+        7.94,
+        1.74,
+        -89.69
+      ],
+      "asset": "wild_rootgiant_a",
+      "below_pct": 79.7,
+      "collide": true,
+      "drop_m": 0.79,
+      "edge_min_m": 4.36,
+      "id": "WW_rootg2",
+      "path_edge_min_m": 4.36,
+      "pos": [
+        13.68,
+        2.81,
+        -86.18
+      ],
+      "protrude_m": 3.93,
+      "size": [
+        11.41,
+        5.85,
+        9.0
+      ],
+      "underside_gap_max_m": 3.05,
+      "underside_verts_gap_gt30cm": 5,
+      "verts": 1556
+    },
+    {
+      "aabb_min": [
+        -11.95,
+        1.93,
+        -81.1
+      ],
+      "asset": "wild_rootgiant_edge_b",
+      "below_pct": 80.2,
+      "collide": false,
+      "drop_m": 0.12,
+      "edge_min_m": 1.15,
+      "id": "S_root2",
+      "path_edge_min_m": 1.15,
+      "pos": [
+        -8.46,
+        2.55,
+        -80.91
+      ],
+      "protrude_m": 0.34,
+      "size": [
+        3.71,
+        1.06,
+        4.72
+      ],
+      "underside_gap_max_m": 0.1,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 393
+    },
+    {
+      "aabb_min": [
+        -12.12,
+        2.79,
+        -91.06
       ],
       "asset": "s01_roots_b",
-      "below_pct": 31.5,
+      "below_pct": 27.7,
       "collide": false,
       "drop_m": 0.0,
+      "edge_min_m": 7.72,
       "id": "AR1",
-      "path_edge_min_m": 22.63,
+      "path_edge_min_m": 7.56,
       "pos": [
-        12.96,
-        3.15,
-        -60.51
+        -11.16,
+        3.16,
+        -90.16
       ],
-      "protrude_m": 0.32,
+      "protrude_m": 0.33,
       "size": [
-        2.71,
+        2.28,
         0.67,
-        2.52
+        3.03
       ],
       "tree": "enoki_a",
       "underside_gap_max_m": 0.3,
@@ -1251,166 +1624,1564 @@
     },
     {
       "aabb_min": [
-        10.99,
-        3.19,
-        -93.88
+        -24.19,
+        1.22,
+        -40.74
       ],
       "asset": "s01_roots_a",
-      "below_pct": 25.1,
+      "below_pct": 29.1,
       "collide": false,
       "drop_m": 0.0,
+      "edge_min_m": 8.44,
       "id": "AR2",
-      "path_edge_min_m": 3.16,
+      "path_edge_min_m": 8.44,
       "pos": [
-        13.05,
-        3.56,
-        -93.18
+        -22.96,
+        1.57,
+        -38.75
       ],
-      "protrude_m": 0.34,
+      "protrude_m": 0.36,
       "size": [
-        3.12,
-        0.7,
-        2.0
+        2.69,
+        0.71,
+        2.97
       ],
-      "tree": "keyaki_a",
-      "underside_gap_max_m": 0.35,
-      "underside_verts_gap_gt30cm": 1,
+      "tree": "enoki_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
       "verts": 570
     },
     {
       "aabb_min": [
-        7.86,
-        0.46,
-        -11.04
+        -37.07,
+        2.57,
+        -66.35
       ],
       "asset": "s01_roots_a",
-      "below_pct": 26.7,
+      "below_pct": 28.1,
       "collide": false,
       "drop_m": 0.0,
+      "edge_min_m": 20.07,
       "id": "AR3",
-      "path_edge_min_m": 5.99,
+      "path_edge_min_m": 20.04,
       "pos": [
-        9.76,
-        0.81,
-        -10.66
+        -36.59,
+        2.93,
+        -65.31
       ],
-      "protrude_m": 0.33,
+      "protrude_m": 0.35,
       "size": [
-        2.9,
-        0.67,
-        1.59
+        1.79,
+        0.71,
+        3.0
       ],
-      "tree": "keyaki_a",
+      "tree": "enoki_a",
       "underside_gap_max_m": 0.25,
       "underside_verts_gap_gt30cm": 0,
       "verts": 570
     },
     {
       "aabb_min": [
-        -22.08,
-        2.65,
-        -84.74
+        -9.79,
+        1.78,
+        -63.17
       ],
       "asset": "s01_roots_b",
-      "below_pct": 27.7,
+      "below_pct": 26.9,
       "collide": false,
       "drop_m": 0.0,
+      "edge_min_m": 1.73,
       "id": "AR4",
-      "path_edge_min_m": 11.9,
+      "path_edge_min_m": 1.73,
       "pos": [
-        -21.13,
-        3.02,
-        -83.28
+        -8.17,
+        2.16,
+        -62.12
       ],
-      "protrude_m": 0.34,
+      "protrude_m": 0.35,
       "size": [
-        3.2,
+        2.5,
         0.7,
-        2.48
+        2.96
       ],
-      "tree": "konara_b",
-      "underside_gap_max_m": 0.35,
-      "underside_verts_gap_gt30cm": 2,
+      "tree": "enoki_a",
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 3,
       "verts": 676
     },
     {
       "aabb_min": [
-        -25.39,
-        2.0,
-        -64.73
+        33.64,
+        1.57,
+        -11.34
       ],
       "asset": "s01_roots_a",
-      "below_pct": 25.1,
+      "below_pct": 22.6,
       "collide": false,
       "drop_m": 0.0,
+      "edge_min_m": 31.91,
       "id": "AR5",
-      "path_edge_min_m": 8.15,
+      "path_edge_min_m": 31.61,
       "pos": [
-        -24.84,
-        2.41,
-        -63.8
+        34.94,
+        1.93,
+        -9.26
+      ],
+      "protrude_m": 0.34,
+      "size": [
+        1.96,
+        0.7,
+        3.15
+      ],
+      "tree": "enoki_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        34.44,
+        2.33,
+        -36.48
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 24.4,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 35.61,
+      "id": "AR6",
+      "path_edge_min_m": 35.61,
+      "pos": [
+        35.42,
+        2.72,
+        -35.5
       ],
       "protrude_m": 0.33,
       "size": [
-        1.88,
-        0.72,
+        2.2,
+        0.7,
+        2.93
+      ],
+      "tree": "enoki_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        5.0,
+        0.59,
+        -23.06
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 27.5,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 4.79,
+      "id": "AR7",
+      "path_edge_min_m": 4.64,
+      "pos": [
+        6.87,
+        0.94,
+        -22.04
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        2.67,
+        0.66,
         2.71
       ],
-      "tree": "sugi_a",
-      "underside_gap_max_m": 0.35,
+      "tree": "enoki_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        16.91,
+        0.71,
+        7.52
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 27.5,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 14.76,
+      "id": "AR8",
+      "path_edge_min_m": 14.52,
+      "pos": [
+        17.99,
+        1.09,
+        8.47
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        2.25,
+        0.7,
+        2.85
+      ],
+      "tree": "hinoki_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        17.02,
+        1.54,
+        -41.18
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 28.8,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 21.9,
+      "id": "AR9",
+      "path_edge_min_m": 21.74,
+      "pos": [
+        19.26,
+        1.92,
+        -40.65
+      ],
+      "protrude_m": 0.37,
+      "size": [
+        3.4,
+        0.74,
+        1.94
+      ],
+      "tree": "hinoki_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -23.16,
+        2.49,
+        -77.05
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 25.9,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 9.61,
+      "id": "AR10",
+      "path_edge_min_m": 9.51,
+      "pos": [
+        -22.18,
+        2.93,
+        -76.27
+      ],
+      "protrude_m": 0.31,
+      "size": [
+        2.52,
+        0.71,
+        2.59
+      ],
+      "tree": "hinoki_b",
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 7,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        24.63,
+        1.03,
+        -20.6
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 23.3,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 23.42,
+      "id": "AR11",
+      "path_edge_min_m": 23.42,
+      "pos": [
+        26.03,
+        1.45,
+        -19.8
+      ],
+      "protrude_m": 0.32,
+      "size": [
+        2.42,
+        0.73,
+        2.45
+      ],
+      "tree": "hinoki_b",
+      "underside_gap_max_m": 0.4,
       "underside_verts_gap_gt30cm": 3,
       "verts": 570
     },
     {
       "aabb_min": [
-        -26.17,
-        2.24,
-        -68.75
+        -19.54,
+        0.54,
+        9.71
       ],
       "asset": "s01_roots_a",
       "below_pct": 25.6,
       "collide": false,
       "drop_m": 0.0,
-      "id": "AR6",
-      "path_edge_min_m": 9.41,
+      "edge_min_m": 14.34,
+      "id": "AR12",
+      "path_edge_min_m": 14.34,
       "pos": [
-        -25.46,
-        2.63,
-        -67.82
+        -18.47,
+        0.93,
+        10.99
+      ],
+      "protrude_m": 0.35,
+      "size": [
+        3.12,
+        0.72,
+        1.71
+      ],
+      "tree": "keyaki_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -21.49,
+        0.72,
+        -4.88
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 28.0,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 16.68,
+      "id": "AR13",
+      "path_edge_min_m": 16.57,
+      "pos": [
+        -20.53,
+        1.11,
+        -4.08
+      ],
+      "protrude_m": 0.3,
+      "size": [
+        2.48,
+        0.67,
+        2.65
+      ],
+      "tree": "keyaki_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        -8.45,
+        2.66,
+        -87.59
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.8,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 3.5,
+      "id": "AR14",
+      "path_edge_min_m": 3.36,
+      "pos": [
+        -8.09,
+        2.97,
+        -86.73
+      ],
+      "protrude_m": 0.29,
+      "size": [
+        1.39,
+        0.59,
+        2.49
+      ],
+      "tree": "keyaki_a",
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        18.25,
+        3.39,
+        -67.44
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 22.6,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 24.45,
+      "id": "AR15",
+      "path_edge_min_m": 24.45,
+      "pos": [
+        19.98,
+        3.81,
+        -66.76
       ],
       "protrude_m": 0.34,
       "size": [
-        2.22,
-        0.72,
-        2.69
+        2.63,
+        0.74,
+        2.14
       ],
-      "tree": "sugi_a",
+      "tree": "keyaki_a",
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 7,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        0.94,
+        0.24,
+        11.91
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 26.9,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 1.84,
+      "id": "AR16",
+      "path_edge_min_m": 1.84,
+      "pos": [
+        2.87,
+        0.59,
+        13.23
+      ],
+      "protrude_m": 0.35,
+      "size": [
+        2.9,
+        0.69,
+        2.25
+      ],
+      "tree": "keyaki_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 5,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        27.29,
+        3.53,
+        -96.42
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 30.2,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 16.45,
+      "id": "AR17",
+      "path_edge_min_m": 16.45,
+      "pos": [
+        28.79,
+        3.98,
+        -94.36
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        2.12,
+        0.81,
+        3.14
+      ],
+      "tree": "keyaki_a",
+      "underside_gap_max_m": 0.5,
+      "underside_verts_gap_gt30cm": 7,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        7.52,
+        2.53,
+        -57.56
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.1,
+      "collide": false,
+      "drop_m": 0.03,
+      "edge_min_m": 19.4,
+      "id": "AR18",
+      "path_edge_min_m": 19.4,
+      "pos": [
+        9.67,
+        2.99,
+        -57.09
+      ],
+      "protrude_m": 0.34,
+      "size": [
+        3.28,
+        0.8,
+        1.82
+      ],
+      "tree": "keyaki_a",
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 6,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -15.23,
+        0.28,
+        1.14
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 28.7,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 10.34,
+      "id": "AR19",
+      "path_edge_min_m": 10.34,
+      "pos": [
+        -14.36,
+        0.63,
+        2.97
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        2.15,
+        0.68,
+        2.77
+      ],
+      "tree": "konara_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        -17.07,
+        0.32,
+        -1.83
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 26.5,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 12.67,
+      "id": "AR20",
+      "path_edge_min_m": 12.43,
+      "pos": [
+        -16.62,
+        0.79,
+        -0.69
+      ],
+      "protrude_m": 0.37,
+      "size": [
+        1.81,
+        0.82,
+        3.29
+      ],
+      "tree": "konara_a",
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 7,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -4.06,
+        3.14,
+        -99.65
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 6.25,
+      "id": "AR21",
+      "path_edge_min_m": 6.09,
+      "pos": [
+        -2.98,
+        3.52,
+        -98.69
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        2.27,
+        0.69,
+        2.86
+      ],
+      "tree": "konara_a",
       "underside_gap_max_m": 0.35,
       "underside_verts_gap_gt30cm": 1,
       "verts": 570
     },
     {
       "aabb_min": [
-        8.7,
-        3.03,
-        -88.51
+        -24.45,
+        2.4,
+        -91.48
       ],
       "asset": "s01_roots_b",
-      "below_pct": 27.4,
+      "below_pct": 27.8,
       "collide": false,
       "drop_m": 0.0,
-      "id": "AR7",
-      "path_edge_min_m": 4.65,
+      "edge_min_m": 18.12,
+      "id": "AR22",
+      "path_edge_min_m": 18.12,
       "pos": [
-        10.55,
-        3.42,
-        -87.14
+        -23.6,
+        2.84,
+        -89.89
       ],
       "protrude_m": 0.33,
       "size": [
+        2.77,
+        0.74,
+        2.58
+      ],
+      "tree": "konara_a",
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 12,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        -42.99,
+        2.47,
+        -65.13
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 19.8,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 24.44,
+      "id": "AR23",
+      "path_edge_min_m": 24.34,
+      "pos": [
+        -40.85,
+        2.87,
+        -64.44
+      ],
+      "protrude_m": 0.35,
+      "size": [
+        3.25,
+        0.74,
+        2.03
+      ],
+      "tree": "konara_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -10.26,
+        3.12,
+        -97.69
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 24.6,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 10.06,
+      "id": "AR24",
+      "path_edge_min_m": 9.78,
+      "pos": [
+        -8.91,
+        3.42,
+        -96.95
+      ],
+      "protrude_m": 0.3,
+      "size": [
+        2.29,
+        0.59,
+        2.27
+      ],
+      "tree": "konara_a",
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -1.79,
+        1.6,
+        -52.19
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 27.5,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 10.16,
+      "id": "AR25",
+      "path_edge_min_m": 10.15,
+      "pos": [
+        0.45,
+        2.07,
+        -51.28
+      ],
+      "protrude_m": 0.35,
+      "size": [
+        3.21,
+        0.78,
+        1.98
+      ],
+      "tree": "konara_a",
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 5,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        -0.01,
+        1.0,
+        -37.95
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 5.29,
+      "id": "AR26",
+      "path_edge_min_m": 5.1,
+      "pos": [
+        1.89,
+        1.35,
+        -37.53
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        2.9,
+        0.67,
+        1.62
+      ],
+      "tree": "konara_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        15.48,
+        3.41,
+        -94.03
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.4,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 7.09,
+      "id": "AR27",
+      "path_edge_min_m": 6.76,
+      "pos": [
+        17.5,
+        3.74,
+        -93.55
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        3.06,
+        0.66,
+        1.74
+      ],
+      "tree": "konara_a",
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        29.96,
+        1.63,
+        -25.78
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 25.0,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 29.88,
+      "id": "AR28",
+      "path_edge_min_m": 29.88,
+      "pos": [
+        31.48,
+        2.07,
+        -24.07
+      ],
+      "protrude_m": 0.31,
+      "size": [
+        2.47,
+        0.7,
+        2.45
+      ],
+      "tree": "konara_a",
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 11,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        30.89,
+        3.83,
+        -93.68
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 30.2,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 20.88,
+      "id": "AR29",
+      "path_edge_min_m": 20.88,
+      "pos": [
+        32.14,
+        4.28,
+        -91.7
+      ],
+      "protrude_m": 0.35,
+      "size": [
+        1.66,
+        0.77,
+        3.03
+      ],
+      "tree": "konara_a",
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 9,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -12.58,
+        0.37,
+        -3.76
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 26.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 6.83,
+      "id": "AR30",
+      "path_edge_min_m": 6.48,
+      "pos": [
+        -11.43,
+        0.72,
+        -2.39
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        3.33,
+        0.72,
+        1.83
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -16.64,
+        0.95,
+        -27.98
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 27.7,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 7.77,
+      "id": "AR31",
+      "path_edge_min_m": 7.66,
+      "pos": [
+        -15.7,
+        1.34,
+        -26.96
+      ],
+      "protrude_m": 0.34,
+      "size": [
+        3.11,
+        0.7,
+        1.89
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 3,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        -21.21,
+        1.08,
+        -21.66
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 23.3,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 14.51,
+      "id": "AR32",
+      "path_edge_min_m": 14.51,
+      "pos": [
+        -20.37,
+        1.45,
+        -20.59
+      ],
+      "protrude_m": 0.34,
+      "size": [
+        2.56,
+        0.69,
+        2.52
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -25.97,
+        2.24,
+        -71.81
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 9.68,
+      "id": "AR33",
+      "path_edge_min_m": 9.49,
+      "pos": [
+        -25.04,
+        2.78,
+        -70.63
+      ],
+      "protrude_m": 0.38,
+      "size": [
         2.81,
+        0.89,
+        2.89
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.5,
+      "underside_verts_gap_gt30cm": 4,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -6.11,
+        2.96,
+        -95.46
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 27.7,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 5.62,
+      "id": "AR34",
+      "path_edge_min_m": 5.55,
+      "pos": [
+        -4.86,
+        3.31,
+        -94.59
+      ],
+      "protrude_m": 0.3,
+      "size": [
+        2.02,
+        0.63,
+        2.51
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        9.21,
+        0.89,
+        -30.97
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 29.5,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 10.39,
+      "id": "AR35",
+      "path_edge_min_m": 10.39,
+      "pos": [
+        10.32,
+        1.2,
+        -29.6
+      ],
+      "protrude_m": 0.35,
+      "size": [
+        3.3,
+        0.67,
+        2.13
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        13.01,
+        2.88,
+        -64.86
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.4,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 21.93,
+      "id": "AR36",
+      "path_edge_min_m": 21.93,
+      "pos": [
+        14.17,
+        3.36,
+        -63.83
+      ],
+      "protrude_m": 0.35,
+      "size": [
+        2.44,
+        0.81,
+        3.07
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 7,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        15.63,
+        3.31,
+        -89.96
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 28.3,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 9.91,
+      "id": "AR37",
+      "path_edge_min_m": 9.91,
+      "pos": [
+        17.86,
+        3.67,
+        -88.92
+      ],
+      "protrude_m": 0.35,
+      "size": [
+        3.17,
+        0.7,
+        2.56
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        17.66,
+        3.42,
+        -76.03
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 19.27,
+      "id": "AR38",
+      "path_edge_min_m": 18.97,
+      "pos": [
+        19.46,
+        3.82,
+        -75.58
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        2.77,
+        0.72,
+        1.67
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        23.67,
+        1.88,
+        -39.71
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 22.5,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 26.6,
+      "id": "AR39",
+      "path_edge_min_m": 26.6,
+      "pos": [
+        25.22,
+        2.32,
+        -37.8
+      ],
+      "protrude_m": 0.37,
+      "size": [
+        2.26,
+        0.77,
+        2.87
+      ],
+      "tree": "konara_b",
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 5,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -28.03,
+        2.37,
+        -69.69
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 27.7,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 11.35,
+      "id": "AR40",
+      "path_edge_min_m": 11.29,
+      "pos": [
+        -27.11,
+        2.79,
+        -68.89
+      ],
+      "protrude_m": 0.31,
+      "size": [
+        2.61,
+        0.69,
+        2.15
+      ],
+      "tree": "momiji_b",
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 5,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        -6.61,
+        2.1,
+        -70.66
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 24.7,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 1.84,
+      "id": "AR41",
+      "path_edge_min_m": 1.84,
+      "pos": [
+        -4.28,
+        2.5,
+        -69.48
+      ],
+      "protrude_m": 0.39,
+      "size": [
+        3.5,
+        0.78,
+        2.63
+      ],
+      "tree": "momiji_c",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        10.54,
+        0.55,
+        -12.99
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.3,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 9.0,
+      "id": "AR42",
+      "path_edge_min_m": 8.64,
+      "pos": [
+        12.4,
+        0.96,
+        -12.23
+      ],
+      "protrude_m": 0.37,
+      "size": [
+        2.87,
+        0.78,
+        2.41
+      ],
+      "tree": "momiji_c",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -16.72,
+        2.14,
+        -75.18
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 27.7,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 2.65,
+      "id": "AR43",
+      "path_edge_min_m": 2.56,
+      "pos": [
+        -15.65,
+        2.52,
+        -74.34
+      ],
+      "protrude_m": 0.35,
+      "size": [
+        2.96,
         0.71,
-        2.24
+        2.61
+      ],
+      "tree": "shii_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        -26.27,
+        2.24,
+        -68.98
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 26.3,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 9.4,
+      "id": "AR44",
+      "path_edge_min_m": 9.2,
+      "pos": [
+        -25.38,
+        2.63,
+        -67.87
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        2.68,
+        0.71,
+        2.44
+      ],
+      "tree": "shii_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -34.79,
+        2.53,
+        -68.26
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 27.0,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 17.51,
+      "id": "AR45",
+      "path_edge_min_m": 17.18,
+      "pos": [
+        -33.66,
+        2.93,
+        -67.12
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        2.54,
+        0.76,
+        3.39
+      ],
+      "tree": "shii_a",
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        0.04,
+        0.56,
+        -28.85
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 28.8,
+      "collide": false,
+      "drop_m": 0.04,
+      "edge_min_m": 1.24,
+      "id": "AR46",
+      "path_edge_min_m": 1.24,
+      "pos": [
+        1.89,
+        0.92,
+        -28.0
+      ],
+      "protrude_m": 0.25,
+      "size": [
+        2.65,
+        0.62,
+        2.04
+      ],
+      "tree": "shii_a",
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        9.91,
+        2.76,
+        -58.44
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 22.0,
+      "id": "AR47",
+      "path_edge_min_m": 22.0,
+      "pos": [
+        12.16,
+        3.16,
+        -57.88
+      ],
+      "protrude_m": 0.37,
+      "size": [
+        3.43,
+        0.76,
+        1.98
+      ],
+      "tree": "shii_a",
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        42.29,
+        1.86,
+        -13.44
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 28.9,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 40.71,
+      "id": "AR48",
+      "path_edge_min_m": 40.67,
+      "pos": [
+        43.78,
+        2.35,
+        -11.55
+      ],
+      "protrude_m": 0.36,
+      "size": [
+        2.15,
+        0.83,
+        2.86
+      ],
+      "tree": "shii_a",
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 7,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -11.84,
+        0.39,
+        11.2
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 27.2,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 7.68,
+      "id": "AR49",
+      "path_edge_min_m": 7.51,
+      "pos": [
+        -10.83,
+        0.74,
+        12.66
+      ],
+      "protrude_m": 0.36,
+      "size": [
+        3.4,
+        0.71,
+        2.53
+      ],
+      "tree": "snag_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 4,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        -34.22,
+        1.66,
+        -39.97
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 23.7,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 17.56,
+      "id": "AR50",
+      "path_edge_min_m": 17.56,
+      "pos": [
+        -33.06,
+        2.12,
+        -38.59
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        3.32,
+        0.82,
+        1.85
+      ],
+      "tree": "snag_a",
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 3,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -9.59,
+        0.45,
+        -15.72
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 26.0,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 3.65,
+      "id": "AR51",
+      "path_edge_min_m": 3.45,
+      "pos": [
+        -8.51,
+        0.82,
+        -14.38
+      ],
+      "protrude_m": 0.36,
+      "size": [
+        3.22,
+        0.72,
+        2.43
+      ],
+      "tree": "snag_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        16.96,
+        1.08,
+        -6.29
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 26.6,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 15.34,
+      "id": "AR52",
+      "path_edge_min_m": 15.21,
+      "pos": [
+        18.98,
+        1.43,
+        -5.26
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        2.9,
+        0.67,
+        2.63
+      ],
+      "tree": "snag_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        -11.4,
+        0.14,
+        14.99
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 37.2,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 9.84,
+      "id": "AR53",
+      "path_edge_min_m": 9.66,
+      "pos": [
+        -10.42,
+        1.02,
+        16.35
+      ],
+      "protrude_m": 0.42,
+      "size": [
+        2.49,
+        1.25,
+        2.16
+      ],
+      "tree": "sugi_a",
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 18,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -14.87,
+        0.39,
+        11.01
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 27.9,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 10.6,
+      "id": "AR54",
+      "path_edge_min_m": 10.6,
+      "pos": [
+        -13.85,
+        0.72,
+        12.24
+      ],
+      "protrude_m": 0.32,
+      "size": [
+        2.98,
+        0.65,
+        1.67
+      ],
+      "tree": "sugi_a",
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -15.26,
+        0.74,
+        -17.83
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 26.6,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 9.35,
+      "id": "AR55",
+      "path_edge_min_m": 9.21,
+      "pos": [
+        -14.34,
+        1.11,
+        -17.0
+      ],
+      "protrude_m": 0.32,
+      "size": [
+        2.68,
+        0.67,
+        2.14
       ],
       "tree": "sugi_a",
       "underside_gap_max_m": 0.35,
@@ -1419,243 +3190,462 @@
     },
     {
       "aabb_min": [
-        14.84,
-        3.39,
-        -92.25
+        -17.37,
+        2.83,
+        -97.7
       ],
       "asset": "s01_roots_a",
-      "below_pct": 25.3,
+      "below_pct": 29.5,
       "collide": false,
       "drop_m": 0.0,
-      "id": "AR8",
-      "path_edge_min_m": 7.23,
+      "edge_min_m": 15.23,
+      "id": "AR56",
+      "path_edge_min_m": 15.23,
       "pos": [
-        16.55,
-        3.69,
-        -91.91
+        -15.38,
+        3.2,
+        -96.46
       ],
-      "protrude_m": 0.29,
+      "protrude_m": 0.35,
       "size": [
-        2.61,
-        0.59,
-        1.42
+        2.99,
+        0.71,
+        2.48
       ],
-      "tree": "sugi_c",
+      "tree": "sugi_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -3.26,
+        1.25,
+        -45.56
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.6,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 6.01,
+      "id": "AR57",
+      "path_edge_min_m": 5.7,
+      "pos": [
+        -2.07,
+        1.63,
+        -44.68
+      ],
+      "protrude_m": 0.32,
+      "size": [
+        2.3,
+        0.68,
+        2.66
+      ],
+      "tree": "sugi_a",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -25.58,
+        2.03,
+        -64.63
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 27.5,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 8.69,
+      "id": "AR58",
+      "path_edge_min_m": 8.63,
+      "pos": [
+        -24.84,
+        2.41,
+        -63.8
+      ],
+      "protrude_m": 0.3,
+      "size": [
+        1.6,
+        0.66,
+        2.76
+      ],
+      "tree": "sugi_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        -25.88,
+        1.56,
+        -8.92
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 23.7,
+      "collide": false,
+      "drop_m": 0.02,
+      "edge_min_m": 21.53,
+      "id": "AR59",
+      "path_edge_min_m": 21.35,
+      "pos": [
+        -25.5,
+        1.94,
+        -7.91
+      ],
+      "protrude_m": 0.31,
+      "size": [
+        1.59,
+        0.7,
+        2.93
+      ],
+      "tree": "sugi_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -9.65,
+        0.34,
+        1.92
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 25.4,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 4.8,
+      "id": "AR60",
+      "path_edge_min_m": 4.62,
+      "pos": [
+        -8.74,
+        0.64,
+        3.06
+      ],
+      "protrude_m": 0.32,
+      "size": [
+        2.75,
+        0.62,
+        2.25
+      ],
+      "tree": "sugi_a",
       "underside_gap_max_m": 0.25,
       "underside_verts_gap_gt30cm": 0,
       "verts": 570
     },
     {
       "aabb_min": [
-        -4.37,
-        1.35,
-        -43.96
+        18.31,
+        1.6,
+        -36.58
       ],
-      "asset": "s01_log_c",
-      "below_pct": 25.9,
-      "collide": true,
-      "drop_m": 0.1,
-      "id": "AD1",
-      "path_edge_min_m": 4.36,
-      "pos": [
-        -2.54,
-        1.43,
-        -43.11
-      ],
-      "protrude_m": 0.38,
-      "size": [
-        3.61,
-        0.6,
-        1.7
-      ],
-      "underside_gap_max_m": 0.45,
-      "underside_verts_gap_gt30cm": 2,
-      "verts": 437
-    },
-    {
-      "aabb_min": [
-        15.8,
-        3.14,
-        -63.26
-      ],
-      "asset": "s01_branch_pile_a",
-      "below_pct": 39.5,
+      "asset": "s01_roots_b",
+      "below_pct": 26.0,
       "collide": false,
-      "drop_m": 0.07,
-      "id": "AD2",
-      "path_edge_min_m": 24.04,
+      "drop_m": 0.0,
+      "edge_min_m": 20.99,
+      "id": "AR61",
+      "path_edge_min_m": 20.89,
       "pos": [
-        16.72,
-        3.21,
-        -62.15
+        19.2,
+        1.93,
+        -35.77
       ],
-      "protrude_m": 0.11,
+      "protrude_m": 0.3,
       "size": [
-        1.9,
-        0.3,
-        2.28
+        2.21,
+        0.6,
+        2.7
       ],
-      "underside_gap_max_m": 0.15,
-      "underside_verts_gap_gt30cm": 0,
-      "verts": 243
+      "tree": "sugi_a",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 676
     },
     {
       "aabb_min": [
-        15.12,
-        3.4,
-        -91.68
+        -3.56,
+        2.02,
+        -64.55
       ],
-      "asset": "s01_stump_a",
-      "below_pct": 45.7,
-      "collide": true,
-      "drop_m": 0.05,
-      "id": "AD3",
-      "path_edge_min_m": 8.21,
+      "asset": "s01_roots_a",
+      "below_pct": 28.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 7.22,
+      "id": "AR62",
+      "path_edge_min_m": 6.94,
       "pos": [
-        15.88,
-        3.61,
-        -90.33
+        -1.93,
+        2.37,
+        -64.05
       ],
-      "protrude_m": 0.98,
+      "protrude_m": 0.3,
       "size": [
-        1.59,
-        1.23,
-        2.42
+        2.48,
+        0.64,
+        1.71
       ],
-      "underside_gap_max_m": 0.15,
-      "underside_verts_gap_gt30cm": 0,
-      "verts": 381
-    },
-    {
-      "aabb_min": [
-        22.96,
-        3.72,
-        -92.34
-      ],
-      "asset": "s01_log_a",
-      "below_pct": 14.6,
-      "collide": true,
-      "drop_m": 0.07,
-      "id": "AD4",
-      "path_edge_min_m": 14.05,
-      "pos": [
-        25.42,
-        3.72,
-        -91.86
-      ],
-      "protrude_m": 0.47,
-      "size": [
-        4.6,
-        0.57,
-        0.95
-      ],
+      "tree": "sugi_b",
       "underside_gap_max_m": 0.3,
       "underside_verts_gap_gt30cm": 0,
-      "verts": 437
+      "verts": 570
     },
     {
       "aabb_min": [
-        -24.94,
-        2.92,
-        -86.9
+        -18.99,
+        1.12,
+        -32.21
       ],
-      "asset": "s01_branch_a",
-      "below_pct": 23.8,
+      "asset": "s01_roots_a",
+      "below_pct": 25.4,
       "collide": false,
-      "drop_m": 0.08,
-      "id": "AD5",
-      "path_edge_min_m": 16.77,
+      "drop_m": 0.0,
+      "edge_min_m": 8.19,
+      "id": "AR63",
+      "path_edge_min_m": 8.1,
       "pos": [
-        -24.21,
-        3.03,
-        -85.83
+        -18.18,
+        1.4,
+        -31.2
       ],
       "protrude_m": 0.29,
       "size": [
-        1.39,
-        0.52,
-        2.16
+        2.45,
+        0.57,
+        2.13
       ],
-      "underside_gap_max_m": 0.55,
-      "underside_verts_gap_gt30cm": 4,
-      "verts": 126
+      "tree": "sugi_b",
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
     },
     {
       "aabb_min": [
-        -35.39,
-        3.41,
-        -73.52
+        -27.74,
+        1.24,
+        -37.04
       ],
-      "asset": "s01_log_b",
-      "below_pct": 31.3,
-      "collide": true,
-      "drop_m": 0.13,
-      "id": "AD6",
-      "path_edge_min_m": 18.17,
+      "asset": "s01_roots_b",
+      "below_pct": 28.6,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 13.53,
+      "id": "AR64",
+      "path_edge_min_m": 13.53,
       "pos": [
-        -33.5,
-        3.44,
-        -72.96
+        -26.76,
+        1.62,
+        -36.3
       ],
-      "protrude_m": 0.58,
+      "protrude_m": 0.31,
       "size": [
-        3.62,
-        0.77,
-        1.1
+        2.61,
+        0.67,
+        2.47
       ],
-      "underside_gap_max_m": 0.85,
-      "underside_verts_gap_gt30cm": 2,
-      "verts": 469
+      "tree": "sugi_b",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 676
     },
     {
       "aabb_min": [
-        -10.42,
-        0.52,
-        0.54
+        -34.68,
+        1.72,
+        -56.17
       ],
-      "asset": "s01_log_c",
-      "below_pct": 25.9,
-      "collide": true,
-      "drop_m": 0.11,
-      "id": "AD7",
-      "path_edge_min_m": 4.01,
+      "asset": "s01_roots_a",
+      "below_pct": 30.0,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 16.27,
+      "id": "AR65",
+      "path_edge_min_m": 16.27,
       "pos": [
-        -8.61,
-        0.54,
-        0.93
+        -33.18,
+        2.11,
+        -55.33
       ],
-      "protrude_m": 0.37,
+      "protrude_m": 0.34,
       "size": [
-        3.63,
-        0.49,
-        0.7
+        2.55,
+        0.72,
+        2.54
       ],
+      "tree": "sugi_b",
+      "underside_gap_max_m": 0.3,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        -36.15,
+        3.03,
+        -84.36
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 22.1,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 24.71,
+      "id": "AR66",
+      "path_edge_min_m": 24.71,
+      "pos": [
+        -34.94,
+        3.65,
+        -82.49
+      ],
+      "protrude_m": 0.34,
+      "size": [
+        2.1,
+        0.91,
+        2.87
+      ],
+      "tree": "sugi_b",
       "underside_gap_max_m": 0.45,
-      "underside_verts_gap_gt30cm": 2,
-      "verts": 437
+      "underside_verts_gap_gt30cm": 12,
+      "verts": 570
     },
     {
       "aabb_min": [
-        -25.35,
-        2.81,
-        -74.89
+        2.41,
+        2.08,
+        -58.51
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 26.8,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 14.75,
+      "id": "AR67",
+      "path_edge_min_m": 14.54,
+      "pos": [
+        4.46,
+        2.49,
+        -57.63
+      ],
+      "protrude_m": 0.31,
+      "size": [
+        2.93,
+        0.7,
+        2.0
+      ],
+      "tree": "sugi_b",
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        4.95,
+        0.1,
+        14.45
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 54.9,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 6.83,
+      "id": "AR68",
+      "path_edge_min_m": 6.67,
+      "pos": [
+        5.98,
+        0.77,
+        16.01
+      ],
+      "protrude_m": 0.31,
+      "size": [
+        2.79,
+        0.99,
+        2.4
+      ],
+      "tree": "sugi_b",
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        5.91,
+        0.32,
+        9.77
+      ],
+      "asset": "s01_roots_a",
+      "below_pct": 26.3,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 4.24,
+      "id": "AR69",
+      "path_edge_min_m": 3.96,
+      "pos": [
+        7.91,
+        0.67,
+        10.35
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        3.02,
+        0.67,
+        1.83
+      ],
+      "tree": "sugi_b",
+      "underside_gap_max_m": 0.25,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 570
+    },
+    {
+      "aabb_min": [
+        7.42,
+        2.61,
+        -60.7
+      ],
+      "asset": "s01_roots_b",
+      "below_pct": 26.3,
+      "collide": false,
+      "drop_m": 0.0,
+      "edge_min_m": 19.05,
+      "id": "AR70",
+      "path_edge_min_m": 19.05,
+      "pos": [
+        9.45,
+        3.18,
+        -59.64
+      ],
+      "protrude_m": 0.36,
+      "size": [
+        2.94,
+        0.87,
+        2.68
+      ],
+      "tree": "sugi_b",
+      "underside_gap_max_m": 0.5,
+      "underside_verts_gap_gt30cm": 27,
+      "verts": 676
+    },
+    {
+      "aabb_min": [
+        10.16,
+        3.16,
+        -63.72
       ],
       "asset": "s01_branch_pile_a",
-      "below_pct": 33.3,
+      "below_pct": 24.3,
       "collide": false,
-      "drop_m": 0.06,
-      "id": "AD8",
-      "path_edge_min_m": 11.37,
+      "drop_m": 0.05,
+      "edge_min_m": 20.14,
+      "id": "AD2",
+      "path_edge_min_m": 19.66,
       "pos": [
-        -24.95,
-        2.95,
-        -73.51
+        11.54,
+        3.18,
+        -63.21
       ],
-      "protrude_m": 0.13,
+      "protrude_m": 0.15,
       "size": [
-        1.23,
-        0.36,
-        2.79
+        2.73,
+        0.21,
+        1.39
       ],
       "underside_gap_max_m": 0.2,
       "underside_verts_gap_gt30cm": 0,
@@ -1663,26 +3653,27 @@
     },
     {
       "aabb_min": [
-        5.91,
-        2.88,
-        -79.35
+        28.63,
+        1.34,
+        -11.15
       ],
       "asset": "s01_stump_a",
-      "below_pct": 48.0,
+      "below_pct": 49.3,
       "collide": true,
       "drop_m": 0.06,
-      "id": "AD9",
-      "path_edge_min_m": 7.51,
+      "edge_min_m": 27.25,
+      "id": "AD3",
+      "path_edge_min_m": 27.1,
       "pos": [
-        6.69,
-        3.13,
-        -78.47
+        29.78,
+        1.62,
+        -10.44
       ],
       "protrude_m": 0.98,
       "size": [
-        1.69,
-        1.29,
-        2.2
+        2.28,
+        1.32,
+        1.95
       ],
       "underside_gap_max_m": 0.15,
       "underside_verts_gap_gt30cm": 0,
@@ -1690,26 +3681,27 @@
     },
     {
       "aabb_min": [
-        7.72,
-        0.67,
-        -7.81
+        28.59,
+        4.03,
+        -97.96
       ],
       "asset": "s01_log_a",
-      "below_pct": 16.9,
+      "below_pct": 10.3,
       "collide": true,
-      "drop_m": 0.11,
-      "id": "AD10",
-      "path_edge_min_m": 5.66,
+      "drop_m": 0.06,
+      "edge_min_m": 16.01,
+      "id": "AD4",
+      "path_edge_min_m": 16.01,
       "pos": [
-        8.56,
-        0.64,
-        -5.47
+        30.86,
+        4.07,
+        -96.76
       ],
-      "protrude_m": 0.44,
+      "protrude_m": 0.46,
       "size": [
-        1.74,
-        0.51,
-        4.46
+        4.26,
+        0.64,
+        2.38
       ],
       "underside_gap_max_m": 0.35,
       "underside_verts_gap_gt30cm": 1,
@@ -1717,79 +3709,278 @@
     },
     {
       "aabb_min": [
-        -15.17,
-        2.59,
-        -78.18
+        -8.8,
+        3.27,
+        -95.07
       ],
       "asset": "s01_branch_a",
       "below_pct": 11.9,
       "collide": false,
       "drop_m": 0.04,
-      "id": "AD11",
-      "path_edge_min_m": 3.33,
+      "edge_min_m": 7.63,
+      "id": "AD5",
+      "path_edge_min_m": 7.57,
       "pos": [
-        -13.98,
-        2.59,
-        -77.49
+        -7.59,
+        3.26,
+        -94.63
       ],
       "protrude_m": 0.32,
       "size": [
-        2.34,
+        2.41,
         0.35,
-        1.07
+        0.85
       ],
       "underside_gap_max_m": 0.55,
-      "underside_verts_gap_gt30cm": 5,
+      "underside_verts_gap_gt30cm": 4,
       "verts": 126
     },
     {
       "aabb_min": [
-        -2.3,
-        2.22,
-        -62.85
+        -19.53,
+        2.82,
+        -84.54
+      ],
+      "asset": "s01_log_b",
+      "below_pct": 16.4,
+      "collide": true,
+      "drop_m": 0.09,
+      "edge_min_m": 10.5,
+      "id": "AD6",
+      "path_edge_min_m": 10.5,
+      "pos": [
+        -18.76,
+        2.81,
+        -82.72
+      ],
+      "protrude_m": 0.69,
+      "size": [
+        1.53,
+        0.75,
+        3.49
+      ],
+      "underside_gap_max_m": 1.2,
+      "underside_verts_gap_gt30cm": 3,
+      "verts": 469
+    },
+    {
+      "aabb_min": [
+        15.93,
+        1.02,
+        -12.26
       ],
       "asset": "s01_log_c",
-      "below_pct": 26.1,
+      "below_pct": 29.5,
       "collide": true,
-      "drop_m": 0.1,
-      "id": "AD13",
-      "path_edge_min_m": 8.56,
+      "drop_m": 0.14,
+      "edge_min_m": 13.98,
+      "id": "AD7",
+      "path_edge_min_m": 13.98,
       "pos": [
-        -0.8,
-        2.23,
-        -61.38
+        16.35,
+        1.06,
+        -10.44
       ],
-      "protrude_m": 0.38,
+      "protrude_m": 0.35,
       "size": [
-        3.01,
-        0.5,
-        2.92
+        0.79,
+        0.55,
+        3.64
       ],
-      "underside_gap_max_m": 0.45,
-      "underside_verts_gap_gt30cm": 2,
+      "underside_gap_max_m": 0.5,
+      "underside_verts_gap_gt30cm": 4,
       "verts": 437
     },
     {
       "aabb_min": [
-        -20.59,
-        2.04,
-        -62.78
+        -21.71,
+        1.42,
+        -30.96
+      ],
+      "asset": "s01_branch_pile_a",
+      "below_pct": 26.3,
+      "collide": false,
+      "drop_m": 0.05,
+      "edge_min_m": 11.85,
+      "id": "AD8",
+      "path_edge_min_m": 11.3,
+      "pos": [
+        -20.98,
+        1.42,
+        -29.56
+      ],
+      "protrude_m": 0.14,
+      "size": [
+        1.1,
+        0.19,
+        2.8
+      ],
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 243
+    },
+    {
+      "aabb_min": [
+        25.09,
+        1.14,
+        -22.44
+      ],
+      "asset": "s01_stump_a",
+      "below_pct": 50.9,
+      "collide": true,
+      "drop_m": 0.08,
+      "edge_min_m": 24.35,
+      "id": "AD9",
+      "path_edge_min_m": 24.24,
+      "pos": [
+        25.82,
+        1.41,
+        -21.41
+      ],
+      "protrude_m": 0.95,
+      "size": [
+        1.55,
+        1.32,
+        2.39
+      ],
+      "underside_gap_max_m": 0.15,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 381
+    },
+    {
+      "aabb_min": [
+        24.14,
+        3.83,
+        -87.88
+      ],
+      "asset": "s01_log_a",
+      "below_pct": 20.8,
+      "collide": true,
+      "drop_m": 0.13,
+      "edge_min_m": 17.53,
+      "id": "AD10",
+      "path_edge_min_m": 17.53,
+      "pos": [
+        24.59,
+        3.8,
+        -85.4
+      ],
+      "protrude_m": 0.42,
+      "size": [
+        0.77,
+        0.52,
+        4.6
+      ],
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        15.7,
+        3.54,
+        -84.3
+      ],
+      "asset": "s01_branch_a",
+      "below_pct": 16.7,
+      "collide": false,
+      "drop_m": 0.05,
+      "edge_min_m": 12.2,
+      "id": "AD11",
+      "path_edge_min_m": 12.2,
+      "pos": [
+        16.85,
+        3.57,
+        -83.87
+      ],
+      "protrude_m": 0.31,
+      "size": [
+        2.32,
+        0.38,
+        1.05
+      ],
+      "underside_gap_max_m": 0.5,
+      "underside_verts_gap_gt30cm": 4,
+      "verts": 126
+    },
+    {
+      "aabb_min": [
+        -28.65,
+        1.89,
+        -17.87
+      ],
+      "asset": "s01_log_b",
+      "below_pct": 19.6,
+      "collide": true,
+      "drop_m": 0.09,
+      "edge_min_m": 23.91,
+      "id": "AD12",
+      "path_edge_min_m": 23.91,
+      "pos": [
+        -28.26,
+        1.88,
+        -15.97
+      ],
+      "protrude_m": 0.74,
+      "size": [
+        0.95,
+        0.74,
+        3.68
+      ],
+      "underside_gap_max_m": 1.5,
+      "underside_verts_gap_gt30cm": 3,
+      "verts": 469
+    },
+    {
+      "aabb_min": [
+        4.12,
+        2.26,
+        -56.88
+      ],
+      "asset": "s01_log_c",
+      "below_pct": 30.0,
+      "collide": true,
+      "drop_m": 0.11,
+      "edge_min_m": 15.65,
+      "id": "AD13",
+      "path_edge_min_m": 15.65,
+      "pos": [
+        4.93,
+        2.28,
+        -55.07
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        1.62,
+        0.52,
+        3.61
+      ],
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 1,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        -31.16,
+        3.43,
+        -75.76
       ],
       "asset": "s01_branch_pile_a",
       "below_pct": 23.9,
       "collide": false,
       "drop_m": 0.05,
+      "edge_min_m": 17.08,
       "id": "AD14",
-      "path_edge_min_m": 3.54,
+      "path_edge_min_m": 17.08,
       "pos": [
-        -20.17,
-        2.08,
-        -61.41
+        -30.79,
+        3.59,
+        -74.38
       ],
-      "protrude_m": 0.14,
+      "protrude_m": 0.15,
       "size": [
-        1.27,
-        0.23,
+        1.11,
+        0.38,
         2.78
       ],
       "underside_gap_max_m": 0.2,
@@ -1798,26 +3989,27 @@
     },
     {
       "aabb_min": [
-        12.88,
-        3.4,
-        -74.51
+        -21.87,
+        1.82,
+        -61.97
       ],
       "asset": "s01_stump_a",
-      "below_pct": 48.3,
+      "below_pct": 43.3,
       "collide": true,
-      "drop_m": 0.07,
+      "drop_m": 0.05,
+      "edge_min_m": 4.48,
       "id": "AD15",
-      "path_edge_min_m": 16.15,
+      "path_edge_min_m": 4.37,
       "pos": [
-        13.61,
-        3.61,
-        -73.41
+        -20.99,
+        2.07,
+        -60.62
       ],
-      "protrude_m": 0.97,
+      "protrude_m": 0.98,
       "size": [
-        1.98,
-        1.23,
-        2.27
+        1.6,
+        1.28,
+        2.28
       ],
       "underside_gap_max_m": 0.15,
       "underside_verts_gap_gt30cm": 0,
@@ -1825,26 +4017,27 @@
     },
     {
       "aabb_min": [
-        -17.07,
-        3.15,
-        -95.02
+        30.55,
+        1.86,
+        -31.53
       ],
       "asset": "s01_log_a",
       "below_pct": 15.3,
       "collide": true,
       "drop_m": 0.1,
+      "edge_min_m": 31.18,
       "id": "AD16",
-      "path_edge_min_m": 12.16,
+      "path_edge_min_m": 31.18,
       "pos": [
-        -14.61,
-        3.13,
-        -94.47
+        31.41,
+        1.83,
+        -29.2
       ],
-      "protrude_m": 0.43,
+      "protrude_m": 0.45,
       "size": [
-        4.55,
-        0.53,
-        1.17
+        1.78,
+        0.52,
+        4.45
       ],
       "underside_gap_max_m": 0.35,
       "underside_verts_gap_gt30cm": 1,
@@ -1852,26 +4045,335 @@
     },
     {
       "aabb_min": [
-        8.42,
-        3.03,
-        -64.77
+        -27.39,
+        1.69,
+        -44.41
       ],
       "asset": "s01_branch_a",
-      "below_pct": 15.9,
+      "below_pct": 11.9,
       "collide": false,
-      "drop_m": 0.05,
+      "drop_m": 0.04,
+      "edge_min_m": 10.7,
       "id": "AD17",
-      "path_edge_min_m": 17.26,
+      "path_edge_min_m": 10.57,
       "pos": [
-        8.75,
-        3.03,
-        -63.58
+        -26.22,
+        1.72,
+        -44.07
       ],
       "protrude_m": 0.32,
       "size": [
-        0.86,
+        2.36,
         0.37,
-        2.37
+        0.9
+      ],
+      "underside_gap_max_m": 0.55,
+      "underside_verts_gap_gt30cm": 5,
+      "verts": 126
+    },
+    {
+      "aabb_min": [
+        41.48,
+        2.18,
+        -11.45
+      ],
+      "asset": "s01_log_b",
+      "below_pct": 18.1,
+      "collide": true,
+      "drop_m": 0.1,
+      "edge_min_m": 39.53,
+      "id": "AD18",
+      "path_edge_min_m": 39.53,
+      "pos": [
+        42.39,
+        2.2,
+        -9.84
+      ],
+      "protrude_m": 0.69,
+      "size": [
+        1.92,
+        0.76,
+        3.25
+      ],
+      "underside_gap_max_m": 1.25,
+      "underside_verts_gap_gt30cm": 3,
+      "verts": 469
+    },
+    {
+      "aabb_min": [
+        33.47,
+        1.99,
+        -25.64
+      ],
+      "asset": "s01_log_c",
+      "below_pct": 26.1,
+      "collide": true,
+      "drop_m": 0.1,
+      "edge_min_m": 32.67,
+      "id": "AD19",
+      "path_edge_min_m": 32.67,
+      "pos": [
+        34.92,
+        2.07,
+        -24.12
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        2.87,
+        0.6,
+        3.05
+      ],
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        25.15,
+        1.27,
+        11.35
+      ],
+      "asset": "s01_branch_pile_a",
+      "below_pct": 42.4,
+      "collide": false,
+      "drop_m": 0.06,
+      "edge_min_m": 23.15,
+      "id": "AD20",
+      "path_edge_min_m": 23.15,
+      "pos": [
+        25.94,
+        1.29,
+        12.63
+      ],
+      "protrude_m": 0.12,
+      "size": [
+        1.49,
+        0.21,
+        2.57
+      ],
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 243
+    },
+    {
+      "aabb_min": [
+        -18.3,
+        1.09,
+        -26.17
+      ],
+      "asset": "s01_stump_a",
+      "below_pct": 48.8,
+      "collide": true,
+      "drop_m": 0.06,
+      "edge_min_m": 10.86,
+      "id": "AD21",
+      "path_edge_min_m": 10.71,
+      "pos": [
+        -17.14,
+        1.32,
+        -24.95
+      ],
+      "protrude_m": 0.97,
+      "size": [
+        2.33,
+        1.26,
+        1.91
+      ],
+      "underside_gap_max_m": 0.15,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 381
+    },
+    {
+      "aabb_min": [
+        -38.16,
+        2.05,
+        -51.79
+      ],
+      "asset": "s01_log_a",
+      "below_pct": 7.3,
+      "collide": true,
+      "drop_m": 0.03,
+      "edge_min_m": 18.51,
+      "id": "AD22",
+      "path_edge_min_m": 18.51,
+      "pos": [
+        -36.12,
+        2.09,
+        -50.34
+      ],
+      "protrude_m": 0.52,
+      "size": [
+        3.95,
+        0.58,
+        2.96
+      ],
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 7,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        5.65,
+        1.31,
+        -35.85
+      ],
+      "asset": "s01_branch_a",
+      "below_pct": 16.7,
+      "collide": false,
+      "drop_m": 0.06,
+      "edge_min_m": 8.5,
+      "id": "AD23",
+      "path_edge_min_m": 8.5,
+      "pos": [
+        6.79,
+        1.36,
+        -35.07
+      ],
+      "protrude_m": 0.31,
+      "size": [
+        2.23,
+        0.44,
+        1.32
+      ],
+      "underside_gap_max_m": 0.55,
+      "underside_verts_gap_gt30cm": 4,
+      "verts": 126
+    },
+    {
+      "aabb_min": [
+        11.9,
+        3.48,
+        -82.26
+      ],
+      "asset": "s01_log_b",
+      "below_pct": 18.1,
+      "collide": true,
+      "drop_m": 0.1,
+      "edge_min_m": 10.53,
+      "id": "AD24",
+      "path_edge_min_m": 10.51,
+      "pos": [
+        12.59,
+        3.47,
+        -80.55
+      ],
+      "protrude_m": 0.68,
+      "size": [
+        1.45,
+        0.74,
+        3.48
+      ],
+      "underside_gap_max_m": 1.2,
+      "underside_verts_gap_gt30cm": 3,
+      "verts": 469
+    },
+    {
+      "aabb_min": [
+        -27.38,
+        3.15,
+        -83.4
+      ],
+      "asset": "s01_log_c",
+      "below_pct": 28.8,
+      "collide": true,
+      "drop_m": 0.13,
+      "edge_min_m": 16.58,
+      "id": "AD25",
+      "path_edge_min_m": 16.58,
+      "pos": [
+        -26.3,
+        3.25,
+        -81.67
+      ],
+      "protrude_m": 0.35,
+      "size": [
+        2.18,
+        0.64,
+        3.46
+      ],
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        9.52,
+        1.59,
+        -38.67
+      ],
+      "asset": "s01_branch_pile_a",
+      "below_pct": 25.1,
+      "collide": false,
+      "drop_m": 0.06,
+      "edge_min_m": 13.91,
+      "id": "AD26",
+      "path_edge_min_m": 13.91,
+      "pos": [
+        10.9,
+        1.64,
+        -37.98
+      ],
+      "protrude_m": 0.14,
+      "size": [
+        2.75,
+        0.28,
+        1.16
+      ],
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 243
+    },
+    {
+      "aabb_min": [
+        12.01,
+        0.71,
+        -7.53
+      ],
+      "asset": "s01_stump_a",
+      "below_pct": 48.3,
+      "collide": true,
+      "drop_m": 0.06,
+      "edge_min_m": 10.28,
+      "id": "AD27",
+      "path_edge_min_m": 10.2,
+      "pos": [
+        12.72,
+        0.95,
+        -6.59
+      ],
+      "protrude_m": 0.98,
+      "size": [
+        1.59,
+        1.3,
+        2.28
+      ],
+      "underside_gap_max_m": 0.15,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 381
+    },
+    {
+      "aabb_min": [
+        -39.46,
+        2.92,
+        -69.29
+      ],
+      "asset": "s01_branch_a",
+      "below_pct": 12.7,
+      "collide": false,
+      "drop_m": 0.03,
+      "edge_min_m": 23.43,
+      "id": "AD29",
+      "path_edge_min_m": 23.4,
+      "pos": [
+        -38.83,
+        2.94,
+        -68.11
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        0.92,
+        0.38,
+        2.38
       ],
       "underside_gap_max_m": 0.6,
       "underside_verts_gap_gt30cm": 6,
@@ -1879,37 +4381,442 @@
     },
     {
       "aabb_min": [
-        -34.02,
-        2.54,
-        -63.84
+        38.54,
+        3.78,
+        -47.95
       ],
       "asset": "s01_log_b",
-      "below_pct": 16.6,
+      "below_pct": 26.7,
       "collide": true,
-      "drop_m": 0.08,
-      "id": "AD18",
-      "path_edge_min_m": 15.12,
+      "drop_m": 0.12,
+      "edge_min_m": 43.9,
+      "id": "AD30",
+      "path_edge_min_m": 43.9,
       "pos": [
-        -32.44,
-        2.61,
-        -62.68
+        39.83,
+        3.88,
+        -46.61
       ],
-      "protrude_m": 0.66,
+      "protrude_m": 0.65,
       "size": [
-        3.03,
-        0.79,
-        2.32
+        2.7,
+        0.81,
+        2.68
       ],
-      "underside_gap_max_m": 1.35,
-      "underside_verts_gap_gt30cm": 4,
+      "underside_gap_max_m": 1.5,
+      "underside_verts_gap_gt30cm": 5,
       "verts": 469
+    },
+    {
+      "aabb_min": [
+        22.31,
+        1.14,
+        -13.8
+      ],
+      "asset": "s01_log_c",
+      "below_pct": 30.7,
+      "collide": true,
+      "drop_m": 0.17,
+      "edge_min_m": 20.56,
+      "id": "AD31",
+      "path_edge_min_m": 20.56,
+      "pos": [
+        23.29,
+        1.14,
+        -12.03
+      ],
+      "protrude_m": 0.33,
+      "size": [
+        1.95,
+        0.48,
+        3.55
+      ],
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        27.83,
+        2.43,
+        -42.98
+      ],
+      "asset": "s01_branch_pile_a",
+      "below_pct": 28.4,
+      "collide": false,
+      "drop_m": 0.06,
+      "edge_min_m": 31.59,
+      "id": "AD32",
+      "path_edge_min_m": 31.4,
+      "pos": [
+        28.62,
+        2.54,
+        -41.7
+      ],
+      "protrude_m": 0.13,
+      "size": [
+        1.48,
+        0.28,
+        2.57
+      ],
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 243
+    },
+    {
+      "aabb_min": [
+        -27.98,
+        2.81,
+        -88.28
+      ],
+      "asset": "s01_stump_a",
+      "below_pct": 48.6,
+      "collide": true,
+      "drop_m": 0.06,
+      "edge_min_m": 19.95,
+      "id": "AD33",
+      "path_edge_min_m": 19.79,
+      "pos": [
+        -26.95,
+        3.09,
+        -87.5
+      ],
+      "protrude_m": 0.98,
+      "size": [
+        2.39,
+        1.31,
+        1.55
+      ],
+      "underside_gap_max_m": 0.15,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 381
+    },
+    {
+      "aabb_min": [
+        26.83,
+        3.85,
+        -94.77
+      ],
+      "asset": "s01_log_a",
+      "below_pct": 11.2,
+      "collide": true,
+      "drop_m": 0.09,
+      "edge_min_m": 15.95,
+      "id": "AD34",
+      "path_edge_min_m": 15.95,
+      "pos": [
+        27.88,
+        3.86,
+        -92.5
+      ],
+      "protrude_m": 0.46,
+      "size": [
+        2.14,
+        0.59,
+        4.33
+      ],
+      "underside_gap_max_m": 0.35,
+      "underside_verts_gap_gt30cm": 3,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        35.46,
+        1.92,
+        9.28
+      ],
+      "asset": "s01_branch_a",
+      "below_pct": 44.4,
+      "collide": false,
+      "drop_m": 0.11,
+      "edge_min_m": 33.0,
+      "id": "AD35",
+      "path_edge_min_m": 33.0,
+      "pos": [
+        36.06,
+        1.95,
+        10.47
+      ],
+      "protrude_m": 0.26,
+      "size": [
+        0.89,
+        0.42,
+        2.41
+      ],
+      "underside_gap_max_m": 0.5,
+      "underside_verts_gap_gt30cm": 3,
+      "verts": 126
+    },
+    {
+      "aabb_min": [
+        -36.43,
+        1.99,
+        -34.71
+      ],
+      "asset": "s01_log_b",
+      "below_pct": 17.7,
+      "collide": true,
+      "drop_m": 0.07,
+      "edge_min_m": 21.23,
+      "id": "AD36",
+      "path_edge_min_m": 21.23,
+      "pos": [
+        -34.62,
+        2.05,
+        -33.98
+      ],
+      "protrude_m": 0.65,
+      "size": [
+        3.49,
+        0.79,
+        1.49
+      ],
+      "underside_gap_max_m": 1.3,
+      "underside_verts_gap_gt30cm": 6,
+      "verts": 469
+    },
+    {
+      "aabb_min": [
+        36.25,
+        1.97,
+        -6.95
+      ],
+      "asset": "s01_log_c",
+      "below_pct": 28.8,
+      "collide": true,
+      "drop_m": 0.11,
+      "edge_min_m": 34.12,
+      "id": "AD37",
+      "path_edge_min_m": 34.12,
+      "pos": [
+        36.66,
+        1.99,
+        -5.12
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        0.83,
+        0.49,
+        3.63
+      ],
+      "underside_gap_max_m": 0.4,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        20.55,
+        1.1,
+        3.7
+      ],
+      "asset": "s01_branch_pile_a",
+      "below_pct": 27.6,
+      "collide": false,
+      "drop_m": 0.05,
+      "edge_min_m": 18.55,
+      "id": "AD38",
+      "path_edge_min_m": 18.25,
+      "pos": [
+        21.51,
+        1.17,
+        4.77
+      ],
+      "protrude_m": 0.14,
+      "size": [
+        1.95,
+        0.28,
+        2.21
+      ],
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 243
+    },
+    {
+      "aabb_min": [
+        48.39,
+        2.35,
+        -0.56
+      ],
+      "asset": "s01_stump_a",
+      "below_pct": 48.6,
+      "collide": true,
+      "drop_m": 0.05,
+      "edge_min_m": 46.8,
+      "id": "AD39",
+      "path_edge_min_m": 46.65,
+      "pos": [
+        49.54,
+        2.63,
+        0.18
+      ],
+      "protrude_m": 0.99,
+      "size": [
+        2.22,
+        1.32,
+        2.01
+      ],
+      "underside_gap_max_m": 0.15,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 381
+    },
+    {
+      "aabb_min": [
+        18.97,
+        1.69,
+        -34.46
+      ],
+      "asset": "s01_branch_a",
+      "below_pct": 15.9,
+      "collide": false,
+      "drop_m": 0.05,
+      "edge_min_m": 20.72,
+      "id": "AD41",
+      "path_edge_min_m": 20.72,
+      "pos": [
+        20.18,
+        1.74,
+        -33.87
+      ],
+      "protrude_m": 0.31,
+      "size": [
+        2.39,
+        0.44,
+        0.91
+      ],
+      "underside_gap_max_m": 0.55,
+      "underside_verts_gap_gt30cm": 4,
+      "verts": 126
+    },
+    {
+      "aabb_min": [
+        4.39,
+        2.6,
+        -64.68
+      ],
+      "asset": "s01_log_b",
+      "below_pct": 18.1,
+      "collide": true,
+      "drop_m": 0.11,
+      "edge_min_m": 14.31,
+      "id": "AD42",
+      "path_edge_min_m": 14.31,
+      "pos": [
+        4.82,
+        2.67,
+        -62.92
+      ],
+      "protrude_m": 0.69,
+      "size": [
+        0.8,
+        0.86,
+        3.69
+      ],
+      "underside_gap_max_m": 1.2,
+      "underside_verts_gap_gt30cm": 3,
+      "verts": 469
+    },
+    {
+      "aabb_min": [
+        15.48,
+        1.18,
+        -2.78
+      ],
+      "asset": "s01_log_c",
+      "below_pct": 25.6,
+      "collide": true,
+      "drop_m": 0.1,
+      "edge_min_m": 13.31,
+      "id": "AD43",
+      "path_edge_min_m": 13.31,
+      "pos": [
+        17.24,
+        1.2,
+        -1.79
+      ],
+      "protrude_m": 0.38,
+      "size": [
+        3.54,
+        0.5,
+        1.99
+      ],
+      "underside_gap_max_m": 0.45,
+      "underside_verts_gap_gt30cm": 2,
+      "verts": 437
+    },
+    {
+      "aabb_min": [
+        -29.07,
+        1.73,
+        -22.72
+      ],
+      "asset": "s01_branch_pile_a",
+      "below_pct": 34.2,
+      "collide": false,
+      "drop_m": 0.06,
+      "edge_min_m": 21.36,
+      "id": "AD44",
+      "path_edge_min_m": 20.99,
+      "pos": [
+        -27.74,
+        1.86,
+        -22.07
+      ],
+      "protrude_m": 0.13,
+      "size": [
+        2.61,
+        0.34,
+        1.58
+      ],
+      "underside_gap_max_m": 0.2,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 243
+    },
+    {
+      "aabb_min": [
+        -31.14,
+        2.06,
+        -60.02
+      ],
+      "asset": "s01_stump_a",
+      "below_pct": 48.6,
+      "collide": true,
+      "drop_m": 0.06,
+      "edge_min_m": 13.01,
+      "id": "AD45",
+      "path_edge_min_m": 13.01,
+      "pos": [
+        -29.84,
+        2.31,
+        -58.97
+      ],
+      "protrude_m": 0.98,
+      "size": [
+        2.44,
+        1.27,
+        1.66
+      ],
+      "underside_gap_max_m": 0.15,
+      "underside_verts_gap_gt30cm": 0,
+      "verts": 381
     }
   ],
-  "mm_lod1_nodes": 373,
-  "mm_nodes": 913,
+  "mm_lod1_nodes": 389,
+  "mm_nodes": 1025,
   "skipped": [
     {
+      "id": "WR_wall1",
+      "why": "壓到道具腳印 rock_torii_R"
+    },
+    {
+      "id": "WR_wall2",
+      "why": "R2/R3 外推後仍不合淨空：壓到道具腳印 rocks_meadow_2 路緣推 0.00 m"
+    },
+    {
       "id": "W1",
+      "why": "樹幹在岩裡"
+    },
+    {
+      "id": "W2a",
       "why": "樹幹在岩裡"
     },
     {
@@ -1917,8 +4824,36 @@
       "why": "與既有谷壁岩重疊"
     },
     {
-      "id": "AD12",
-      "why": "離主路路緣 3.01 m（要 ≥ 3.5）"
+      "id": "WW_rootg1",
+      "why": "R2/R3 外推後仍不合淨空：穿進樹幹 take_mature  路緣推 0.00 m"
+    },
+    {
+      "id": "WW_plate1",
+      "why": "R2/R3 外推後仍不合淨空：穿進樹幹 konara_a  路緣推 1.84 m"
+    },
+    {
+      "id": "S_root1",
+      "why": "R2/R3 外推後仍不合淨空：樹幹在岩裡 路緣推 0.00 m"
+    },
+    {
+      "id": "S_log1",
+      "why": "R3 倒木底下懸空 > 0.35 m（8 個方向都不貼地）"
+    },
+    {
+      "id": "S_rootg1",
+      "why": "R2/R3 外推後仍不合淨空： 路緣推 1.30 m"
+    },
+    {
+      "id": "AD1",
+      "why": "離主路路緣 1.09 m（要 ≥ 3.5）"
+    },
+    {
+      "id": "AD28",
+      "why": "越過 S01 邊界"
+    },
+    {
+      "id": "AD40",
+      "why": "離主路路緣 1.66 m（要 ≥ 3.5）"
     }
   ],
   "tris": {
@@ -1926,7 +4861,6 @@
     "s01_fern_b": 728,
     "s01_fern_c": 1100,
     "s01_fern_d": 408,
-    "s01_forb_a": 452,
     "s01_forb_b": 132,
     "s01_fuki_a": 336,
     "s01_fuki_b": 528,
@@ -1948,6 +4882,7 @@
     "s01_shadegrass_a": 132,
     "s01_shrub_a": 1220,
     "s01_shrub_b": 1164,
-    "s01_twigs_a": 252
+    "s01_twigs_a": 252,
+    "wild_mud_a": 246
   }
 }

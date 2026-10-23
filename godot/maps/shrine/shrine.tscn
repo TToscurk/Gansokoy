@@ -67,8 +67,8 @@
 [ext_resource type="MultiMesh" path="res://maps/shrine/gen/vista_trees_r2/針葉林樹3.res" id="69_ykv1b"]
 [ext_resource type="MultiMesh" path="res://maps/shrine/gen/vista_trees_r2/針葉林樹4.res" id="70_7bdo5"]
 [ext_resource type="MultiMesh" path="res://maps/shrine/gen/vista_trees_r2/普通樹.res" id="71_ifoyv"]
-[ext_resource type="PackedScene" path="res://maps/shrine/shrine_interactions.tscn" id="story_wi"]
 [ext_resource type="PackedScene" uid="uid://bwxlquti83b5a" path="res://assets/landscape/鎮守之杜.glb" id="9101_purge"]
+[ext_resource type="PackedScene" path="res://maps/shrine/shrine_interactions.tscn" id="story_wi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bnyri"]
 render_priority = 0
@@ -709,8 +709,8 @@ radius = 0.45
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yxmn7"]
 shader = ExtResource("63_x3m31")
-shader_parameter/sun_dir = Vector3(0.42642087, 0.50010705, 0.7536964)
-shader_parameter/moon_dir = Vector3(-0.42642087, -0.50010705, -0.7536964)
+shader_parameter/sun_dir = Vector3(-0.8843774, 0.45936635, 0.082819685)
+shader_parameter/moon_dir = Vector3(0.8843774, -0.45936635, -0.082819685)
 shader_parameter/day_amount = 1.0
 shader_parameter/golden = 0.0
 shader_parameter/cloud_cover = 0.1
@@ -739,7 +739,7 @@ process_mode = 3
 background_mode = 2
 sky = SubResource("Sky_1ecu7")
 ambient_light_source = 3
-ambient_light_energy = 0.8034094
+ambient_light_energy = 0.7657541
 reflected_light_source = 2
 tonemap_mode = 3
 tonemap_exposure = 0.98
@@ -782,6 +782,7 @@ adjustment_saturation = 1.02
 metadata/own_colliders = true
 
 [node name="Terrain" type="MeshInstance3D" parent="." unique_id=1232190452]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000333786, 0, 0.018665314)
 material_override = SubResource("ShaderMaterial_bnyri")
 mesh = ExtResource("9_ijgsu")
 
@@ -793,7 +794,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, -19.786928)
 shape = SubResource("BoxShape3D_ocp4b")
 
 [node name="@CollisionShape3D@3" type="CollisionShape3D" parent="Boundary" unique_id=1354615673]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, 62.014404)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, 61.58744)
 shape = SubResource("BoxShape3D_ffups")
 disabled = true
 
@@ -1241,7 +1242,7 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 11, 3.92, -23.071434)
 metadata/scale_source = "單位化 0.997 x 0.826 x 0.908 × scale 3.20 = 3.19 寬 / 2.90 深 / 2.64 高 m"
 
 [node name="陰陽玉" parent="建築" unique_id=1453905354 instance=ExtResource("21_g2mjm")]
-transform = Transform3D(0.21460037, 0, 0.14681602, 0, 0.26001588, 0, -0.14681602, 0, 0.21460037, -9.6, 3.92, -18.6)
+transform = Transform3D(0.21460037, 0, 0.14681602, 0, 0.26001588, 0, -0.14681602, 0, 0.21460037, -9.6, 4.0885487, -18.6)
 metadata/easter_egg = "§25-27 LEVEL 3 實體陰陽玉，全圖僅此 1 顆。直徑 0.26 m（規格 0.18-0.35）。位置：社務所東南角外側地面，不在主軸視線上。"
 
 [node name="鋪石" type="Node3D" parent="." unique_id=1597625901]
@@ -8235,9 +8236,6 @@ transform = Transform3D(11.7288, -0.201441, 0.15591, 0.183614, 12.7618, 0.11558,
 [node name="普通樹_0232" parent="植被/外圍森林/普通樹" unique_id=927252058 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(10.5108, -0.383177, -10.3205, 0.174572, 15.7378, -0.334087, 10.3253, 0.123979, 10.5116, 46.1049, 0.13665283, 2.20226)
 
-[node name="普通樹_0235" parent="植被/外圍森林/普通樹" unique_id=60954273 instance=ExtResource("41_lqrkq")]
-transform = Transform3D(11.2941, 0.322205, 3.51966, -0.281802, 11.6534, -0.195, -3.52357, 0.100766, 11.2972, -16.2563, 0.34476417, 45.5828)
-
 [node name="普通樹_0236" parent="植被/外圍森林/普通樹" unique_id=977820162 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(13.3741, -0.331203, 0.593913, 0.322378, 13.8634, -0.0504463, -0.592532, 0.0669809, 13.3779, 61.1288, -1.1000459, 35.3025)
 
@@ -8331,14 +8329,8 @@ transform = Transform3D(-11.3295, -0.153065, 13.5955, -0.0431159, 19.3263, 0.146
 [node name="普通樹_0556" parent="植被/外圍森林/普通樹" unique_id=128802811 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(6.70018, -0.037638, 9.45051, 0.0510058, 11.3818, 0.0107975, -9.45045, 0.0347452, 6.70028, -23.5099, -0.012730479, 40.6961)
 
-[node name="普通樹_0567" parent="植被/外圍森林/普通樹" unique_id=48410103 instance=ExtResource("41_lqrkq")]
-transform = Transform3D(8.90413, 0.00623576, -8.93448, 0.141161, 12.621, 0.149478, 8.93336, -0.205647, 8.90288, -19.8289, 0.001722753, 49.651)
-
 [node name="針葉樹1_0572" parent="植被/外圍森林/普通樹" unique_id=1188627595 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(-11.3542, 0.0809975, -2.68256, 0.0289907, 10.7627, 0.258985, 2.68384, 0.226409, -11.3516, 36.8548, 8.742514, -44.5739)
-
-[node name="普通樹_0578" parent="植被/外圍森林/普通樹" unique_id=933828645 instance=ExtResource("41_lqrkq")]
-transform = Transform3D(11.1718, 0.102399, 12.581, -0.418482, 17.7585, 0.241961, -12.5745, -0.500033, 11.1696, -40.3018, -0.33257586, 48.9123)
 
 [node name="普通樹_0579" parent="植被/外圍森林/普通樹" unique_id=1276617552 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(-11.4502, -0.101326, -6.70809, -0.16445, 14.5481, 0.0978846, 6.70671, 0.183731, -11.4501, -38.0307, 0.060831368, 30.5165)
@@ -8367,9 +8359,6 @@ transform = Transform3D(0.756992, 0.20409, -14.185, -0.312595, 14.9016, 0.178059
 [node name="鎮守之杜_0626" parent="植被/外圍森林/普通樹" unique_id=218188943 instance=ExtResource("9101_purge")]
 transform = Transform3D(-8.55244, 0.0773443, -7.3355, 0.126963, 11.5993, -0.0326343, 7.33479, -0.110596, -8.55271, 35.9639, 1.7221708, -4.7275)
 
-[node name="普通樹_0627" parent="植被/外圍森林/普通樹" unique_id=607911424 instance=ExtResource("41_lqrkq")]
-transform = Transform3D(-14.5442, -0.148616, 7.36576, -0.0558192, 16.5459, 0.21386, -7.36701, 0.168037, -14.5434, -28.6319, -0.29159716, 49.7495)
-
 [node name="針葉樹1_0628" parent="植被/外圍森林/普通樹" unique_id=935615160 instance=ExtResource("36_2rgfx")]
 transform = Transform3D(-8.85414, 0.0553876, 11.0012, 0.198095, 13.4236, 0.0846546, -10.9995, 0.197166, -8.85392, 39.2955, 7.857028, -42.8043)
 
@@ -8378,12 +8367,6 @@ transform = Transform3D(-13.6703, -0.135018, 0.55842, -0.126898, 14.1839, 0.0843
 
 [node name="普通樹_0636" parent="植被/外圍森林/普通樹" unique_id=1733538177 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(-11.0797, 0.065887, 13.0584, -0.381418, 18.4624, -0.403692, -13.053, -0.595413, -11.0726, 26.7231, -0.58503217, 45.9517)
-
-[node name="普通樹_0646" parent="植被/外圍森林/普通樹" unique_id=1676218083 instance=ExtResource("41_lqrkq")]
-transform = Transform3D(6.6546, 0.206224, 11.0092, -0.232016, 13.8822, -0.0830225, -11.0084, -0.167921, 6.65682, -26.1738, -0.1364007, 47.8678)
-
-[node name="普通樹_0648" parent="植被/外圍森林/普通樹" unique_id=1675175167 instance=ExtResource("41_lqrkq")]
-transform = Transform3D(-0.999996, -0.0357126, -12.1064, 0.187631, 12.598, -0.050043, 12.105, -0.198223, -0.999337, -36.7238, -0.57673347, 49.4794)
 
 [node name="普通樹_0651" parent="植被/外圍森林/普通樹" unique_id=364410316 instance=ExtResource("41_lqrkq")]
 transform = Transform3D(-1.63178, 0.199949, 17.0693, -0.393292, 17.9061, -0.229832, -17.0658, -0.431775, -1.62681, 42.0066, -1.167361, 49.0893)
@@ -8844,9 +8827,6 @@ transform = Transform3D(9.40416, -0.119602, -7.74404, 0.216517, 12.3766, 0.07778
 
 [node name="2大衫_0571" parent="植被/外圍森林/2大衫" unique_id=1961777650 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(16.5964, -0.284889, -5.76417, 0.318276, 18.3725, 0.0861326, 5.76182, -0.194273, 16.5984, -46.7328, -0.33920118, 49.6402)
-
-[node name="2大衫_0577" parent="植被/外圍森林/2大衫" unique_id=1773715810 instance=ExtResource("43_tw1d2")]
-transform = Transform3D(-12.3254, -0.08475, -8.1331, 0.0381147, 16.1632, -0.198324, 8.13338, -0.204175, -12.3241, -16.6394, 0.08790153, 49.9606)
 
 [node name="2大衫_0580" parent="植被/外圍森林/2大衫" unique_id=2028303293 instance=ExtResource("43_tw1d2")]
 transform = Transform3D(-14.7228, -0.422549, 8.74301, -0.30425, 18.152, 0.268292, -8.74681, 0.0798394, -14.7257, 54.7763, 0.8770549, -1.05352)
@@ -31517,8 +31497,8 @@ transform = Transform3D(0.33539265, 0, -0.119319715, 0, 0.38983396, 0, 0.1193197
 
 [node name="天象系統" type="Node3D" parent="." unique_id=844483903]
 script = ExtResource("62_73kbx")
-"時刻" = 15.7
-"一日長度分鐘" = 20.0
+"時刻" = 8.09
+"一日長度分鐘" = 60.0
 "方位角" = -26.0
 "星星密度" = 0.35
 "概念圖雲層" = ExtResource("63_saoy0")
@@ -31527,9 +31507,9 @@ script = ExtResource("62_73kbx")
 "陰影距離" = 120.0
 
 [node name="太陽" type="DirectionalLight3D" parent="天象系統" unique_id=248713441]
-transform = Transform3D(0.8703557, -0.24626446, 0.4264208, 0, 0.8659635, 0.50010705, -0.4924235, -0.435271, 0.7536964, 42.642086, 50.010704, 75.36964)
+transform = Transform3D(0.09323953, 0.4573652, -0.8843775, 0, 0.88824683, 0.45936638, 0.99564373, -0.0428311, 0.08281972, -88.437744, 45.936634, 8.281968)
 light_color = Color(1, 0.97, 0.92, 1)
-light_energy = 1.2927356
+light_energy = 1.2434587
 light_angular_distance = 0.6
 shadow_enabled = true
 shadow_bias = 0.04
@@ -31541,7 +31521,7 @@ directional_shadow_blend_splits = true
 directional_shadow_max_distance = 260.0
 
 [node name="月亮" type="DirectionalLight3D" parent="天象系統" unique_id=627274169]
-transform = Transform3D(-0.8703558, -0.24626443, -0.42642078, 0, 0.8659635, -0.50010705, 0.49242344, -0.43527102, -0.7536964, -42.642086, -50.010704, -75.36964)
+transform = Transform3D(-0.0932395, 0.4573652, 0.8843775, 0, 0.88824683, -0.45936638, -0.99564373, -0.04283109, -0.0828197, 88.437744, -45.936634, -8.281968)
 visible = false
 light_color = Color(0.62, 0.72, 0.95, 1)
 light_energy = 0.0

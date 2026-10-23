@@ -71,6 +71,7 @@
 [ext_resource type="Script" path="res://maps/shrine_v3/s3_scatter.gd" id="69_60rmg"]
 [ext_resource type="Script" path="res://components/interaction/world_interaction.gd" id="70_g7iac"]
 [ext_resource type="NavigationMesh" path="res://maps/shrine_v3/gen/navmesh.res" id="71_4dsvw"]
+[ext_resource type="PackedScene" path="res://maps/shrine_v3/reimu_shrine_npc.tscn" id="npc_reimu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2nbci"]
 size = Vector3(12.653888, 80, 1)
@@ -8840,3 +8841,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31.603168, -15)
 
 [node name="導航" type="NavigationRegion3D" parent="." unique_id=587714631]
 navigation_mesh = ExtResource("71_4dsvw")
+
+[node name="人物" type="Node3D" parent="."]
+
+[node name="靈夢" parent="人物" instance=ExtResource("npc_reimu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35, 30.008, -16.95)

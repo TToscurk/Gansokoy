@@ -1,5 +1,7 @@
 @tool
 extends Node3D
+## TASK E FINAL（使用者 2026-10-18）：社寺取消→自然林。現行 overlay 無 Ground、mm_polys 空＝只做 E082 四目垣斷片的可逆抑制，
+## 並與 DistrictHF（林木）連動 enabled。以下為 E2 時的原說明（機制不變）。
 ## 丘腳社寺 E2 境內環境 overlay（`HillfootPrecinctE2`・tools/p13/w9/e2/build_hf_precinct.gd が産生）。
 ## 子＝Ground（sg_ground 材質の地面メッシュ・地形＋lift）。兄弟の DistrictHF（街區管線の植栽・踏石）も enabled と連動する。
 ## enabled=true：既存環境のうち境内に重なるものを『可逆に』抑制する（原ファイルは書かない・封存の EnvironmentP9／MeadowP9／GroundcoverP9 は無傷）。

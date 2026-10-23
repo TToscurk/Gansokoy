@@ -46,6 +46,7 @@ KW = ML['V2_Kawara']
 
 P = 0.45                     # P4 pitch
 FL = 0.32                    # 台基頂＝地板
+FLOOR_DY = 0.01              # 開間內朝上的地板小件（土間・敷居・平格子下收口）抬離台基頂 1 cm，避免與台基頂共面 z-fighting 閃爍
 HU = KW['tile_u_m'] / KW['columns'] * 2     # 屋面半單元＝2 欄桟瓦（0.53 m）；長度 1／2／4 個半單元組合
 RU = HU * 4                                 # 棟／LOD 用的長度單元（2.12 m）
 ROOF_N = (1, 2, 4)
@@ -110,14 +111,15 @@ def wall(m, x0, x1, y0, y1, mat='V2_Plaster', col=PL, z=0.0):
     m.quad((x0, y0, z), (x1, y0, z), (x1, y1, z), (x0, y1, z), mat, col, grain=X if mat == 'V2_Wood' else Y)
 
 
-def reveal(m, xa, xb, ya, yb, zin, col=None):
-    """內退開口的四邊收口（抱き）：從牆面 z 0 退到 zin；朝開口內側。"""
+def reveal(m, xa, xb, ya, yb, zin, col=None, floor_dy=0.0):
+    """內退開口的四邊收口（抱き）：從牆面 z 0 退到 zin；朝開口內側。floor_dy：下緣朝上面抬高（下緣落在台基頂時用）。"""
     c = PL * 0.85 if col is None else col
     # 繞序：法線＝(v1−v0)×(v2−v0)（與 wall() 相同慣例）
     m.quad((xa, yb, zin), (xa, yb, 0.0), (xa, ya, 0.0), (xa, ya, zin), 'V2_Plaster', c)      # 左邊（朝 +x）
     m.quad((xb, yb, 0.0), (xb, yb, zin), (xb, ya, zin), (xb, ya, 0.0), 'V2_Plaster', c)      # 右邊（朝 −x）
     m.quad((xa, yb, zin), (xb, yb, zin), (xb, yb, 0.0), (xa, yb, 0.0), 'V2_Plaster', c)      # 上（朝下）
-    m.quad((xa, ya, 0.0), (xb, ya, 0.0), (xb, ya, zin), (xa, ya, zin), 'V2_Plaster', c)      # 下（朝上）
+    yf = ya + floor_dy
+    m.quad((xa, yf, 0.0), (xb, yf, 0.0), (xb, yf, zin), (xa, yf, zin), 'V2_Plaster', c)      # 下（朝上）
 
 
 def koshiita(m, x0, x1, top=1.0):
@@ -151,7 +153,7 @@ def front1(kind, wn, hk):
         # R2：平格子（米屋格子，atlas koshi_b，不外凸、內退 0.04）＋上方灰泥
         xa, xb, top = a + 0.06, b - 0.04, 2.1
         m.rect_uv((xa, FL, -0.04), (xb, FL, -0.04), (xb, top, -0.04), (xa, top, -0.04), AM, RG['koshi_b'])
-        reveal(m, xa, xb, FL, top, -0.04, col=DARK)
+        reveal(m, xa, xb, FL, top, -0.04, col=DARK, floor_dy=FLOOR_DY)
         for (u0, u1) in ((xa - 0.05, xa), (xb, xb + 0.04)):
             m.box((u0, FL, -0.04), (u1, top, 0.02), 'V2_Wood', DARK, grain=Y)
         beam_x(m, xa - 0.05, xb + 0.04, top, top + 0.08, -0.04, 0.03)
@@ -183,7 +185,7 @@ def front1(kind, wn, hk):
         m.box((xa - 0.06, FL, -0.08), (xa, top, 0.02), 'V2_Wood', DARK, grain=Y)
         m.box((xb, FL, -0.08), (xb + 0.02, top, 0.02), 'V2_Wood', DARK, grain=Y)
         beam_x(m, xa - 0.06, xb + 0.02, top, top + 0.1, -0.08, 0.03)
-        m.box((xa - 0.06, FL - 0.04, -0.12), (xb + 0.02, FL, 0.06), 'V2_Wood', DARK, grain=X, skip=('-y',))  # 敷居
+        m.box((xa - 0.06, FL - 0.04, -0.12), (xb + 0.02, FL + FLOOR_DY, 0.06), 'V2_Wood', DARK, grain=X, skip=('-y',))  # 敷居
         wall(m, a, b, top + 0.1, y1 - 0.2)
     elif kind.startswith('shop'):
         # 店先：整間開放，內退 0.7 的店內（atlas shop_in／goods）、天井、土間；暖簾（atlas，無字）或簾
@@ -191,7 +193,8 @@ def front1(kind, wn, hk):
         top, zi = 2.25, -0.7          # 店先開口淨高 2.25−0.32＝1.93 m（≥ 1.90）
         back = RG['goods'] if var == 'c' else RG['shop_in']          # R2：o＝全開（入口）、c＝店台＋商品、k＝店台＋店內
         m.rect_uv((a, FL, zi), (b, FL, zi), (b, top, zi), (a, top, zi), AM, back)
-        m.quad((a, FL, 0.0), (b, FL, 0.0), (b, FL, zi), (a, FL, zi), AM, uvs=sw('#2E2119'))         # 土間（朝上）
+        fd = FL + FLOOR_DY
+        m.quad((a, fd, 0.0), (b, fd, 0.0), (b, fd, zi), (a, fd, zi), AM, uvs=sw('#2E2119'))         # 土間（朝上）
         m.quad((a, top, zi), (b, top, zi), (b, top, 0.0), (a, top, 0.0), 'V2_Wood', BOARD * 0.8, grain=Z)   # 天井（朝下）
         m.quad((a, FL, 0.0), (a, FL, zi), (a, top, zi), (a, top, 0.0), 'V2_Wood', BOARD * 0.8, grain=Y)    # 左側壁（朝 +x）
         m.quad((b, FL, zi), (b, FL, 0.0), (b, top, 0.0), (b, top, zi), 'V2_Wood', BOARD * 0.8, grain=Y)    # 右側壁（朝 −x）
