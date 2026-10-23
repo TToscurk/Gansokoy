@@ -18,7 +18,7 @@ signal game_loaded(slot: int)
 ## 載入完成、資料已就位，但世界還沒重建 —— main 監聽這個訊號切圖、擺玩家。
 signal load_requested(map_id: String, position: Vector3, yaw: float)
 
-const SAVE_VERSION := 1
+const SAVE_VERSION := 2
 const SLOT_COUNT := 3
 const SAVE_PREFIX := "user://save_"
 
@@ -41,6 +41,9 @@ func save_game(slot: int, map_id: String, pos: Vector3, yaw: float) -> bool:
 	if slot < 0 or slot >= SLOT_COUNT:
 		push_error("[Save] 槽位超出範圍：%d" % slot)
 		return false
+	var dn: Node = get_node_or_null("/root/DayNight")
+	var cur_hour: float = float(dn.get("hour")) if dn != null else 6.5
+	var cur_day: int = int(dn.get("day")) if dn != null else 1
 	var data := {
 		"version": SAVE_VERSION,
 		"saved_at": Time.get_datetime_string_from_system(true),
@@ -48,8 +51,11 @@ func save_game(slot: int, map_id: String, pos: Vector3, yaw: float) -> bool:
 		# ⚠ Vector3 不能直接進 JSON（會變成字串，讀回來是垃圾）。拆成三個數字。
 		"pos": {"x": pos.x, "y": pos.y, "z": pos.z},
 		"yaw": yaw,
+		"day": cur_day,
+		"hour": cur_hour,
 		"flags": StoryFlags.serialize(),
 		"quests": QuestManager.serialize(),
+		"inventory": InventoryManager.serialize(),
 	}
 	var txt := JSON.stringify(data, "  ")
 	# ⚠ 先備份再覆寫：寫到一半當掉會讓主檔變成半截 JSON，
@@ -82,6 +88,13 @@ func load_game(slot: int) -> bool:
 	data = _migrate(data)
 	StoryFlags.deserialize(data.get("flags", {}))
 	QuestManager.deserialize(data.get("quests", {}))
+	InventoryManager.deserialize(data.get("inventory", {}))
+	var dn: Node = get_node_or_null("/root/DayNight")
+	if dn != null:
+		if data.has("day"):
+			dn.set("day", int(data["day"]))
+		if data.has("hour") and dn.has_method("set_hour"):
+			dn.set_hour(float(data["hour"]))
 	var p: Dictionary = data.get("pos", {})
 	var pos := Vector3(float(p.get("x", 0.0)), float(p.get("y", 0.0)), float(p.get("z", 0.0)))
 	var map_id := String(data.get("map", ""))
@@ -140,8 +153,7 @@ func _read_slot(path: String) -> Dictionary:
 	return d
 
 
-## 舊版存檔升級。目前只有 v1，留著這個函式是為了下一次改格式時有地方放 ——
-## 屆時在這裡逐版往上補欄位，而不是叫使用者刪檔。
+## 舊版存檔逐版升級。v1 沒有背包，依已發生的劇情補回玩家當下應持有的任務道具。
 func _migrate(data: Dictionary) -> Dictionary:
 	var v := int(data.get("version", 0))
 	if v == SAVE_VERSION:
@@ -151,6 +163,14 @@ func _migrate(data: Dictionary) -> Dictionary:
 		push_warning("[Save] 存檔版本 %d 比本體 %d 新，嘗試照讀" % [v, SAVE_VERSION])
 		return data
 	push_warning("[Save] 升級存檔 v%d → v%d" % [v, SAVE_VERSION])
-	# 目前沒有 v0 → v1 的實際欄位變動；補上版本號即可。
+	if v < 2:
+		var flags: Dictionary = data.get("flags", {})
+		var inventory := {}
+		# MQ09 完成後慧音已交書；見過小鈴表示書已還掉。
+		if bool(flags.get("met_keine", false)) and not bool(flags.get("met_kosuzu", false)):
+			inventory["terakoya_book"] = 1
+		if bool(flags.get("has_village_lodging", false)):
+			inventory["kujiratei_room_key"] = 1
+		data["inventory"] = inventory
 	data["version"] = SAVE_VERSION
 	return data

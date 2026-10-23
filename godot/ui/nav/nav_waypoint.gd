@@ -43,7 +43,9 @@ func _process(delta: float) -> void:
 	# 目標高度：用玩家高度近似（差距對浮標影響小；避免每幀射線）
 	var world := Vector3(pos2.x, player.global_position.y + marker_height, pos2.y)
 	var dist := Vector2(player.global_position.x, player.global_position.z).distance_to(pos2)
-	var label := "%s  %d m" % [_target["label"], int(dist)]
+	# 只寫距離，不重複目標名稱 —— 目標文字已經在右上任務追蹤那一行；
+	# 兩邊各講一次「前往某某」是 2026-09-22 使用者指出的常駐提示擁擠來源。
+	var label := "%d m" % int(dist)
 	var vp := get_viewport().get_visible_rect().size
 	var behind := cam.is_position_behind(world)
 	var sp := cam.unproject_position(world)

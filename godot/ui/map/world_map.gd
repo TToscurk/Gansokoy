@@ -17,13 +17,20 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("map_toggle"):
-		if not visible and DialogueManager.is_active():
+		if not visible and (DialogueManager.is_active() or _other_modal_open()):
 			return
 		_set_open(not visible)
 		get_viewport().set_input_as_handled()
 	elif visible and event.is_action_pressed("ui_cancel"):
 		_set_open(false)
 		get_viewport().set_input_as_handled()
+
+
+func _other_modal_open() -> bool:
+	for n in get_tree().get_nodes_in_group("modal_ui"):
+		if n != self and n is CanvasLayer and (n as CanvasLayer).visible:
+			return true
+	return false
 
 
 func _set_open(open: bool) -> void:

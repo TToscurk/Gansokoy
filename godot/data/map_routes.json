@@ -1,0 +1,27 @@
+{
+	"_doc": "地圖路由（systems/nav/map_router.gd 讀）。2026-10-23 新版地圖接管第一～四階段。mode=legacy：正式流程（trail→shrine／slice）完全照舊；新版三圖只靠自己的傳送門互連。mode=v2 僅供測試（--routes=v2），正式切換前不得改預設值。",
+	"mode": "legacy",
+	"groups": {
+		"_doc": "同一地點的新舊版本。共用室內圖（稗田邸、香霖堂）的回程 target 寫的是舊 id（slice），由「群組最後一次實際到過的成員」決定回哪一版。",
+		"shrine": ["shrine", "shrine_v3"],
+		"trail": ["trail", "beast_path"],
+		"village": ["slice", "village_v2", "village"]
+	},
+	"alias_v2": {
+		"_doc": "只在 mode=v2 生效：舊 id → 新 id（開局、讀檔、傳送目標）。被別名轉向的讀檔不沿用舊座標，改落在新圖 meta.spawn／入口傳送點。",
+		"shrine": "shrine_v3",
+		"trail": "beast_path",
+		"slice": "village_v2",
+		"village": "village_v2",
+		"人間之里": "village_v2"
+	},
+	"portal_overrides": {
+		"_doc": "{地圖: {傳送點索引: 目標}}。用於生成器產出的 meta（勿手改的檔），重生不會丟。",
+		"beast_path": {"1": "shrine_v3"},
+		"shrine_v3": {"0": "beast_path"}
+	},
+	"open_seals": {
+		"_doc": "暫行：BOSS 戰尚未實作，探索階段打開出口封印（bp_role=exit_seal 的 StaticBody3D 停用碰撞）。BOSS 戰接入後刪除此項，改由 bp_unlock 旗標解除。",
+		"beast_path": ["exit_seal"]
+	}
+}

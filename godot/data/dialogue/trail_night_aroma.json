@@ -1,0 +1,25 @@
+{
+  "_doc": "獸道夜間隨機事件：在獸道待到晚上時，隨機聞到夜雀屋台飄來的八目鰻香味。結合緣一敏銳氣息感知。",
+  "start": "l1",
+  "nodes": {
+    "l1": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「……？夜風中，似乎隱約飄來了一股烤八目鰻與甘甜醬汁的焦香。」",
+      "next": "l2"
+    },
+    "l2": {
+      "speaker": "yoriichi",
+      "portrait": "serious",
+      "text": "「香氣之外……還有一個人的氣息。不，並非人類。」",
+      "next": "l3"
+    },
+    "l3": {
+      "speaker": "yoriichi",
+      "portrait": "normal",
+      "text": "「循著香氣望去……幽深樹林深處竟然點著暖黃燈籠，有食攤與桌椅？真不可思議。」",
+      "next": null,
+      "set_flags": ["trail_aroma_noticed"]
+    }
+  }
+}

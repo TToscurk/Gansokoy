@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://ui/gensokyo/gensokyo_dialogue_box.gd" id="1_box"]
+[ext_resource type="Theme" path="res://ui/gensokyo/UITheme_Gensokyo.tres" id="2_theme"]
+[ext_resource type="Script" path="res://ui/gensokyo/gensokyo_panel.gd" id="3_panel"]
+[ext_resource type="Script" path="res://ui/gensokyo/gensokyo_nameplate.gd" id="4_name"]
+[ext_resource type="Script" path="res://ui/gensokyo/gensokyo_ornament.gd" id="5_orn"]
+
+[node name="GensokyoDialogueBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_box")
+
+[node name="Panel" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 365.0
+offset_top = 862.0
+offset_right = 1555.0
+offset_bottom = 1042.0
+mouse_filter = 2
+script = ExtResource("3_panel")
+base_opacity = 0.93
+seed = 2.7
+border_px = 3.0
+irregularity = 0.55
+border_sides = Vector4(0.9, 0.25, 1.0, 0.55)
+taper = 0.6
+accent_edge = 2
+accent_span = Vector2(0.78, 0.93)
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Text" type="RichTextLabel" parent="Panel/VBox"]
+layout_mode = 2
+theme_type_variation = &"GensokyoDialogueText"
+bbcode_enabled = false
+text = "「……你誰？」"
+fit_content = true
+scroll_active = false
+autowrap_mode = 3
+mouse_filter = 2
+
+[node name="Choices" type="VBoxContainer" parent="Panel/VBox"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="NextHint" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_type_variation = &"GensokyoHint"
+text = "▼"
+
+[node name="Nameplate" type="Control" parent="."]
+layout_mode = 0
+mouse_filter = 2
+script = ExtResource("4_name")
+speaker = "博麗靈夢"
+
+[node name="Ornament" type="Control" parent="."]
+layout_mode = 0
+mouse_filter = 2
+script = ExtResource("5_orn")

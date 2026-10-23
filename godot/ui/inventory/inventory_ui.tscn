@@ -1,0 +1,90 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/inventory/inventory_ui.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="panel_style"]
+bg_color = Color(0.075, 0.065, 0.05, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72, 0.57, 0.3, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="InventoryUI" type="CanvasLayer"]
+layer = 30
+script = ExtResource("1")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.62)
+
+[node name="Panel" type="Panel" parent="Dim"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -410.0
+offset_top = -275.0
+offset_right = 410.0
+offset_bottom = 275.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("panel_style")
+
+[node name="Margin" type="MarginContainer" parent="Dim/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 28
+
+[node name="Layout" type="VBoxContainer" parent="Dim/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Dim/Panel/Margin/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.84, 0.52, 1)
+theme_override_font_sizes/font_size = 32
+text = "道具袋"
+horizontal_alignment = 1
+
+[node name="Rule" type="HSeparator" parent="Dim/Panel/Margin/Layout"]
+layout_mode = 2
+
+[node name="Items" type="VBoxContainer" parent="Dim/Panel/Margin/Layout"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Empty" type="Label" parent="Dim/Panel/Margin/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.62, 0.61, 0.57, 1)
+theme_override_font_sizes/font_size = 21
+text = "目前沒有道具"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Dim/Panel/Margin/Layout"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.78, 0.7, 1)
+theme_override_font_sizes/font_size = 19
+text = "任務中獲得的重要物品會收在這裡。"
+autowrap_mode = 2
+
+[node name="Hint" type="Label" parent="Dim/Panel/Margin/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 0.56, 0.5, 1)
+theme_override_font_sizes/font_size = 16
+text = "↑↓ 選擇　I／Esc 關閉"
+horizontal_alignment = 2

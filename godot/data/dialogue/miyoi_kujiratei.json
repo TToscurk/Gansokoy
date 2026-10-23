@@ -57,7 +57,10 @@
       "speaker": "miyoi",
       "portrait": "normal",
       "text": "「這是今晚客房的鑰匙，先收好。住宿登記就在這裡辦，不用急著找房門。」",
-      "next": "i8"
+      "next": "i8",
+      "give_items": [
+        { "id": "kujiratei_room_key", "amount": 1 }
+      ]
     },
     "i8": {
       "speaker": "miyoi",

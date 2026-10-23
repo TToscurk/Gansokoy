@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GensokyoStyle" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/gensokyo/gensokyo_style.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+ui_scale = 1.0
+auto_resolution_scale = true
+font_scale = 1.0
+animation_speed = 1.0
+panel_opacity = 1.0
+paper_texture_strength = 1.0
+ink_edge_strength = 1.0
+accent_red_strength = 1.0
+ornament_density = 0.25

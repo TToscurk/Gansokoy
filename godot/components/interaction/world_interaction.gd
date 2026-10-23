@@ -51,9 +51,13 @@ func _ready() -> void:
 	#   Area3D 的 body_entered 只在跨越邊界那一幀發出，所以跟 _set_enabled 一樣
 	#   需要主動重判一次，否則前置一解除這區就永遠不會再發動。
 	if not require_flag.is_empty() or not require_quest.is_empty():
-		StoryFlags.flag_changed.connect(_on_gate_changed)
-		QuestManager.quest_started.connect(_on_gate_changed)
-		QuestManager.quest_completed.connect(_on_gate_changed)
+		var sf := _story_flags()
+		if sf != null:
+			sf.flag_changed.connect(_on_gate_changed)
+		var qm := _quest_mgr()
+		if qm != null:
+			qm.quest_started.connect(_on_gate_changed)
+			qm.quest_completed.connect(_on_gate_changed)
 
 
 ## 前置條件可能剛剛解除 —— 玩家站在區內就補發動（或至少把提示字亮出來）。
@@ -63,7 +67,9 @@ func _on_gate_changed(_a: Variant = null, _b: Variant = null) -> void:
 	if auto_trigger:
 		_try_auto_trigger()
 	elif quest_event_type == "REACH":
-		QuestManager.report_event("REACH", quest_target_id)
+		var qm := _quest_mgr()
+		if qm != null:
+			qm.report_event("REACH", quest_target_id)
 	else:
 		_refresh_prompt()
 
@@ -81,7 +87,9 @@ func _on_enter(body: Node3D) -> void:
 	_refresh_prompt()
 	# REACH 型：進區即回報（QuestManager 自己防重複）
 	if quest_event_type == "REACH" and enabled:
-		QuestManager.report_event("REACH", quest_target_id)
+		var qm := _quest_mgr()
+		if qm != null:
+			qm.report_event("REACH", quest_target_id)
 
 
 ## auto_trigger 的實際發動。對話中不能插隊，但**不得就此丟掉**——
@@ -91,13 +99,14 @@ func _on_enter(body: Node3D) -> void:
 func _try_auto_trigger() -> void:
 	if _suppressed():
 		return
-	if not DialogueManager.is_active():
+	var dm := _dialogue_mgr()
+	if dm == null or not dm.is_active():
 		interact()
 		return
 	if _waiting_for_dialogue:
 		return
 	_waiting_for_dialogue = true
-	DialogueManager.dialogue_ended.connect(_on_dialogue_ended_retry, CONNECT_ONE_SHOT)
+	dm.dialogue_ended.connect(_on_dialogue_ended_retry, CONNECT_ONE_SHOT)
 
 
 func _on_dialogue_ended_retry(_id: String) -> void:
@@ -127,7 +136,9 @@ func _set_enabled(v: bool) -> void:
 	if auto_trigger:
 		_try_auto_trigger()
 	elif quest_event_type == "REACH":
-		QuestManager.report_event("REACH", quest_target_id)
+		var qm := _quest_mgr()
+		if qm != null:
+			qm.report_event("REACH", quest_target_id)
 	else:
 		_refresh_prompt()
 
@@ -142,7 +153,8 @@ func _on_exit(body: Node3D) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not _player_inside or not enabled or _suppressed():
 		return
-	if DialogueManager.is_active():
+	var dm := _dialogue_mgr()
+	if dm != null and dm.is_active():
 		return
 	if event.is_action_pressed("interact") and not event.is_echo():
 		get_viewport().set_input_as_handled()
@@ -156,12 +168,17 @@ func interact() -> void:
 	if not enabled or _suppressed():
 		return
 	interacted.emit(interaction_id)
-	if not once_flag.is_empty():
-		StoryFlags.set_flag(once_flag, true)
+	var sf := _story_flags()
+	if not once_flag.is_empty() and sf != null:
+		sf.set_flag(once_flag, true)
 	if not dialogue_id.is_empty():
-		DialogueManager.start(dialogue_id)
+		var dm := _dialogue_mgr()
+		if dm != null:
+			dm.start(dialogue_id)
 	elif quest_event_type != "NONE" and quest_event_type != "REACH":
-		QuestManager.report_event(quest_event_type, quest_target_id)
+		var qm := _quest_mgr()
+		if qm != null:
+			qm.report_event(quest_event_type, quest_target_id)
 
 
 func prompt_text() -> String:
@@ -184,14 +201,17 @@ func _has_interact_payload() -> bool:
 
 ## 這一區現在該不該完全沉默（前置未達、已觸發過，或劇情已推進過去）。
 func _suppressed() -> bool:
-	if not require_flag.is_empty() and not StoryFlags.get_flag(require_flag):
+	var sf := _story_flags()
+	var qm := _quest_mgr()
+	if not require_flag.is_empty():
+		if sf == null or not sf.get_flag(require_flag):
+			return true
+	if not require_quest.is_empty():
+		if qm == null or not (qm.is_active(require_quest) or qm.is_completed(require_quest)):
+			return true
+	if not once_flag.is_empty() and sf != null and sf.get_flag(once_flag):
 		return true
-	if not require_quest.is_empty() \
-			and not (QuestManager.is_active(require_quest) or QuestManager.is_completed(require_quest)):
-		return true
-	if not once_flag.is_empty() and StoryFlags.get_flag(once_flag):
-		return true
-	if not skip_flag.is_empty() and StoryFlags.get_flag(skip_flag):
+	if not skip_flag.is_empty() and sf != null and sf.get_flag(skip_flag):
 		return true
 	return false
 
@@ -202,3 +222,15 @@ func _refresh_prompt() -> void:
 
 func _is_player(body: Node) -> bool:
 	return body.is_in_group("player")
+
+
+func _story_flags() -> Node:
+	return get_tree().root.get_node_or_null("StoryFlags") if is_inside_tree() else null
+
+
+func _quest_mgr() -> Node:
+	return get_tree().root.get_node_or_null("QuestManager") if is_inside_tree() else null
+
+
+func _dialogue_mgr() -> Node:
+	return get_tree().root.get_node_or_null("DialogueManager") if is_inside_tree() else null

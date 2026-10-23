@@ -67,7 +67,7 @@
       "myouren",
       "lake"
     ],
-    "entry": "maps/village/"
+    "entry": "maps/slice/"
   },
   "bamboo": {
     "id": "bamboo",
@@ -262,7 +262,7 @@
     ],
     "mobTheme": "iceFairy",
     "connections": [
-      "village",
+      "slice",
       "youkaiMountain",
       "sdm"
     ]
@@ -395,7 +395,7 @@
     ],
     "mobTheme": null,
     "connections": [
-      "village"
+      "slice"
     ]
   },
   "netherworld": {

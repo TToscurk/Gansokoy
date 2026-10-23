@@ -1,5 +1,5 @@
 {
-	"_note": "V2 blockout 開發用（--map=village_v2）。由 tools/gen_village_v2.gd 產生，勿手改。正式遊戲的人間之里仍是 slice（計畫 §52）。",
+	"_note": "V2 人間之里（新版接管候選；--map=village_v2）。原由 tools/gen_village_v2.gd 產生，生成器已退役（.hermes.md 效率規則 5），本檔改為手動維護。正式遊戲的人間之里在正式切換前仍是 slice。",
 	"id": "village_v2",
 	"playSize": [
 		560.0,
@@ -20,12 +20,24 @@
 			"x": 224.0,
 			"y": 0.22,
 			"z": 172.0
+		}
+	],
+	"portals": [
+		{
+			"arrival_ground_y": 0.18,
+			"arrival_y_offset": 1.2,
+			"arrival_yaw": 0.0,
+			"note": "→ 獸道 beast_path（村南入口；P13 W9 收尾 2026-10-16 使用者授權恢復；layout 規劃目標為 trail）；2026-10-23 y 改為路面實測 0.32（玩家碰撞遮罩射線）",
+			"target": "beast_path",
+			"x": 224.0,
+			"y": 0.32,
+			"z": 172.0
 		},
 		{
 			"arrival_ground_y": 0.54,
 			"arrival_y_offset": 1.2,
 			"arrival_yaw": 3.14159265358979,
-			"note": "→ 稗田邸（隨稗田邸候補（low），conf=low）",
+			"note": "→ 稗田邸（隨稗田邸候補（low），conf=low）；2026-10-23 使用者解除對外傳送停用，恢復",
 			"target": "hieda1f",
 			"x": 398.0,
 			"y": 0.54,
@@ -35,25 +47,14 @@
 			"arrival_ground_y": 2.01,
 			"arrival_y_offset": 1.2,
 			"arrival_yaw": 1.5707963267949,
-			"note": "→ 香霖堂（龍神橋東端（舊 slice 亦在龍石像橋東岸），conf=medium）",
+			"note": "→ 香霖堂（龍神橋東端（舊 slice 亦在龍石像橋東岸），conf=medium）；2026-10-23 使用者解除對外傳送停用，恢復",
 			"target": "kourindou",
 			"x": 428.0,
 			"y": 2.13,
 			"z": -205.0
 		}
 	],
-	"portals": [
-		{
-			"arrival_ground_y": 0.18,
-			"arrival_y_offset": 1.2,
-			"arrival_yaw": 0.0,
-			"note": "→ 獸道 beast_path（村南入口；P13 W9 收尾 2026-10-16 使用者授權恢復；layout 規劃目標為 trail）",
-			"target": "beast_path",
-			"x": 224.0,
-			"y": 0.22,
-			"z": 172.0
-		}
-	],
 	"note_p11r2b": "P11 R2B TASK01：V2 對外傳送停用（使用者裁定：他圖重製中）。原 portals 保存於 portals_disabled_p11r2b 供未來參考；候選 C 未整合。spawn 保留為開發出生點。",
-	"note_p13w9_closure": "P13 W9 收尾（2026-10-16 使用者授權）：恢復村南入口 →獸道 beast_path 一筆（獸道進村的落點與回程出口）；稗田邸 1F・香霖堂仍停用。"
+	"note_p13w9_closure": "P13 W9 收尾（2026-10-16 使用者授權）：恢復村南入口 →獸道 beast_path 一筆（獸道進村的落點與回程出口）；稗田邸 1F・香霖堂仍停用。",
+	"note_20261023": "2026-10-23 使用者裁定：解除 P11 R2B 對外傳送停用與 10/19 村莊暫時結案。恢復 →稗田邸 1F（398,2）、→香霖堂（428,-205）；→trail 一筆保留停用（舊獸道不接新版人里）。共用室內圖回程經 data/map_routes.json 群組回到 village_v2。"
 }

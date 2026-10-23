@@ -229,12 +229,6 @@
    "anim_start_time": 3.12,
    "speed_scale": 1.05,
    "seed_i": 1256755,
-   "activity": {
-    "type": "Drink",
-    "clip": "drinking_im1_a030",
-    "slot": "idle",
-    "options": {}
-   },
    "distance_from_core_m": 85.9
   },
   {

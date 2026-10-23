@@ -3,14 +3,121 @@ extends Node
 ## 轉動 Main/Sun、調光色與強度；HUD 時鐘由 main.gd 讀 hour 顯示。
 
 signal hour_changed(hour: float)
+signal time_advanced(day: int, hour: int, minute: int)
+signal period_changed(new_period: Period, old_period: Period)
 
-## 遊戲內時刻 0..24
-## 預設時刻。正午是最平的光 —— 沒有長影子、沒有色溫，建築的面看不出明暗。
-## 下午 15:40 的斜陽有方向感，同一個村子立刻不一樣。
-var hour := 15.7
+## 時段定義（對照 ADR 與 RPG 世界時間表）
+enum Period {
+	DAWN,       # 05:00 - 07:59 清晨
+	MORNING,    # 08:00 - 11:59 上午
+	NOON,       # 12:00 - 13:59 中午
+	AFTERNOON,  # 14:00 - 17:59 下午
+	DUSK,       # 18:00 - 19:29 黃昏
+	NIGHT,      # 19:30 - 23:59 夜晚
+	MIDNIGHT,   # 00:00 - 04:59 深夜
+}
+
+## 預設開場時刻：第 1 日，早上 06:30（日出晨曦金色薄霧）。
+var day: int = 1
+var hour := 6.5
 var flowing := true
-## 現實幾秒 = 遊戲一天（預設 20 分鐘一天）
-var day_seconds := 1200.0
+## 現實幾秒 = 遊戲一天（預設 60 分鐘一天，3600 秒）
+var day_seconds := 3600.0
+
+## 時間流速倍率。1.0 = 正常。
+## 冥想／等待等「快轉」只改這一個數字 —— **不動 day_seconds**：那是「一天多長」
+## 的世界設定，由各圖天象系統的「一日長度分鐘」在管（sky_system.gd:193）。
+## 兩者混用會出事：換一張圖就把玩家的快轉倍率一起換掉。
+var time_scale := 1.0
+
+var pause_reasons: Array[String] = []
+
+var minute: int:
+	get: return int(fmod(hour, 1.0) * 60.0)
+
+var hour_int: int:
+	get: return int(hour)
+
+## 絕對時間（遊戲分鐘，第 1 日 00:00 = 0）。
+## 跨日目標（23:00 冥想到隔天 06:00）必須用這個比較 ——
+## 直接寫 `hour >= target_hour` 在跨日時永遠不成立。
+var total_minutes: int:
+	get: return (day - 1) * 1440 + int(round(hour * 60.0))
+
+## 從現在到「下一個 target_hour」還差幾分鐘（1 ~ 1440）。已經在該時刻回 1440。
+func minutes_until_hour(target_hour: float) -> int:
+	var target := int(round(fmod(fmod(target_hour, 24.0) + 24.0, 24.0) * 60.0))
+	var now := int(round(hour * 60.0))
+	var diff := target - now
+	if diff <= 0:
+		diff += 1440
+	return diff
+
+var _last_period: Period = Period.DAWN
+
+func get_period() -> Period:
+	if hour < 5.0:
+		return Period.MIDNIGHT
+	elif hour < 8.0:
+		return Period.DAWN
+	elif hour < 12.0:
+		return Period.MORNING
+	elif hour < 14.0:
+		return Period.NOON
+	elif hour < 18.0:
+		return Period.AFTERNOON
+	elif hour < 19.5:
+		return Period.DUSK
+	else:
+		return Period.NIGHT
+
+func get_period_name(p: Variant = null) -> String:
+	var target: Period = get_period() if p == null else p as Period
+	match target:
+		Period.DAWN: return "清晨"
+		Period.MORNING: return "上午"
+		Period.NOON: return "中午"
+		Period.AFTERNOON: return "下午"
+		Period.DUSK: return "黃昏"
+		Period.NIGHT: return "夜晚"
+		Period.MIDNIGHT: return "深夜"
+	return "未知"
+
+func is_night() -> bool:
+	return hour >= 19.5 or hour < 5.0
+
+func lock_time(reason: String) -> void:
+	if not pause_reasons.has(reason):
+		pause_reasons.append(reason)
+
+func unlock_time(reason: String) -> void:
+	pause_reasons.erase(reason)
+
+func is_time_paused() -> bool:
+	return not pause_reasons.is_empty() or not flowing
+
+func set_day_length_minutes(mins: float) -> void:
+	day_seconds = maxf(mins * 60.0, 1.0)
+
+## 推進時間（單位：分鐘）。處理天、時、分進位。
+func advance_minutes(amount: int) -> void:
+	if is_time_paused():
+		return
+	var total_mins: int = int(round(hour * 60.0)) + amount
+	while total_mins < 0:
+		total_mins += 1440
+		day = maxi(1, day - 1)
+	while total_mins >= 1440:
+		total_mins -= 1440
+		day += 1
+	var new_h: float = float(total_mins) / 60.0
+	set_hour(new_h)
+	time_advanced.emit(day, int(new_h), int(total_mins % 60))
+
+## 推進時間（單位：小時）。向下相容包裝。
+func advance_time(hours: float) -> void:
+	advance_minutes(int(round(hours * 60.0)))
+
 var _bound_map: Node = null
 var _lit_hour := -1.0
 var _lamp_searched := false
@@ -23,6 +130,11 @@ const DAWN_COLOR := Color(1.0, 0.62, 0.38)
 const NIGHT_COLOR := Color(0.55, 0.65, 0.95)
 
 func _ready() -> void:
+	_last_period = get_period()
+	if has_node("/root/DialogueManager"):
+		var dm: Node = get_node("/root/DialogueManager")
+		dm.dialogue_started.connect(func(_id: String) -> void: lock_time("dialogue"))
+		dm.dialogue_ended.connect(func(_id: String) -> void: unlock_time("dialogue"))
 	# `godot ... -- --hour=21` 固定時刻並停鐘。审图必須能在**同一個時刻**
 	# 拍 before / after —— 一天 20 分鐘的話，兩張圖差 4 分鐘就跨了 5 個鐘頭，
 	# 比較的是日照不是改動。
@@ -32,8 +144,12 @@ func _ready() -> void:
 			set_hour(a.substr(7).to_float())
 
 func _process(delta: float) -> void:
-	if flowing:
-		set_hour(fmod(hour + delta * 24.0 / day_seconds, 24.0))
+	if flowing and not is_time_paused():
+		var delta_hours := delta * time_scale * 24.0 / day_seconds
+		var next_h := hour + delta_hours
+		if next_h >= 24.0:
+			day += int(next_h / 24.0)
+		set_hour(next_h)
 	# ⚠ 掛け直しの契機は「地図が入れ替わった時」だけ。`Main/Sun` は Main の
 	#   _ready より前から木にいるので、autoload の初回 set_hour は**成功して
 	#   しまう** —— その時点で `load_map()` はまだ走っておらず、街燈も地図側の
@@ -58,22 +174,27 @@ func _process(delta: float) -> void:
 
 func set_hour(h: float) -> void:
 	hour = fmod(h + 24.0, 24.0)
+	var cur_p := get_period()
+	if cur_p != _last_period:
+		var old_p := _last_period
+		_last_period = cur_p
+		period_changed.emit(cur_p, old_p)
 	hour_changed.emit(hour)
 	var sun := get_tree().root.get_node_or_null("Main/Sun") as DirectionalLight3D
 	if sun == null:
 		return
 	# 6:00 日出、12:00 最高、18:00 日落；夜間當月光用
 	var t := (hour - 6.0) / 12.0
-	var day := t >= 0.0 and t <= 1.0
+	var is_daytime := t >= 0.0 and t <= 1.0
 	var elev: float
-	if day:
+	if is_daytime:
 		elev = sin(PI * t) * 72.0 + 6.0
 	else:
 		var tn := fmod(t + 1.0, 1.0)
 		elev = sin(PI * tn) * 40.0 + 8.0
-	var azim := -40.0 + (t if day else fmod(t + 1.0, 1.0)) * 80.0
+	var azim := -40.0 + (t if is_daytime else fmod(t + 1.0, 1.0)) * 80.0
 	sun.rotation_degrees = Vector3(-elev, azim, 0.0)
-	if day:
+	if is_daytime:
 		var low := clampf(1.0 - sin(PI * t) * 1.6, 0.0, 1.0)   # 晨昏 → 1
 		sun.light_color = DAY_COLOR.lerp(DAWN_COLOR, low)
 		sun.light_energy = lerpf(0.35, 1.35, clampf(sin(PI * t) * 1.4, 0.0, 1.0))

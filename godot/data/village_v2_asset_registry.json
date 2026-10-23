@@ -448,34 +448,6 @@
    "lod0_tris": 67462
   },
   {
-   "id": "hillfoot_temple",
-   "kind": "hero",
-   "path": "res://assets/village_v2/hillfoot_temple",
-   "entry": "res://assets/village_v2/hillfoot_temple/hillfoot_temple.scn",
-   "entry_sha256": "3966c939c602be492bf67aa73f0df78dfe5e04716ba917ff252aeeb8d9d3bfad",
-   "gate_json": "res://assets/village_v2/hillfoot_temple/gate.json",
-   "gate": {
-    "size": "PASS",
-    "parcel_fit": "PASS",
-    "grounding": "PASS",
-    "materials": "PASS",
-    "geometry": "PASS",
-    "pivot_scale": "PASS",
-    "collision": "PASS",
-    "lod": "PASS",
-    "performance": "PASS",
-    "player_screenshot": "PASS",
-    "f5_f6": "PASS"
-   },
-   "gate_date": "2026-10-17T22:11:32",
-   "status": "ART_REVIEW",
-   "label": "社殿",
-   "landmark": "LANDMARK_HILLFOOT_TEMPLE",
-   "asset_json": "res://assets/village_v2/hillfoot_temple/asset.json",
-   "replaces": "Landmarks/LANDMARK_HILLFOOT_TEMPLE/Block",
-   "lod0_tris": 57975
-  },
-  {
    "id": "hilltop_shrine",
    "kind": "hero",
    "path": "res://assets/village_v2/hilltop_shrine",
@@ -756,7 +728,14 @@
    "lod0_tris": 2056
   }
  ],
- "v2_rejected": [],
+ "v2_rejected": [
+  {
+   "id": "hillfoot_temple",
+   "why": [
+    "CANCELLED（使用者 2026-10-18 TASK E FINAL：丘腳社寺取消，原地改為自然林；GLB／來源保留於資產庫）"
+   ]
+  }
+ ],
  "protected": [
   {
    "group": "龍神像",

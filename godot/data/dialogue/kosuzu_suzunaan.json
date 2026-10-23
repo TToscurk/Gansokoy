@@ -50,7 +50,10 @@
       "speaker": "kosuzu",
       "portrait": "normal",
       "text": "「收到了。頁數和封面都好，我替老師劃掉這筆。」",
-      "next": "k8"
+      "next": "k8",
+      "take_items": [
+        { "id": "terakoya_book", "amount": 1 }
+      ]
     },
     "k8": {
       "speaker": "kosuzu",

@@ -1,0 +1,24 @@
+{
+ "_doc": "冥想被打斷的獨白。由 systems/time/meditation_controller.gd 在野外風險觸發時 start()。玩家沒被瞬移、也沒被硬拉進戰鬥 —— 只是睜開眼睛知道有人來了。",
+ "start": "l1",
+ "nodes": {
+  "l1": {
+   "speaker": "yoriichi",
+   "portrait": "normal",
+   "text": "「……」",
+   "next": "l2"
+  },
+  "l2": {
+   "speaker": "yoriichi",
+   "portrait": "surprised",
+   "text": "（枯葉被踩碎的聲音。不是風。）",
+   "next": "l3"
+  },
+  "l3": {
+   "speaker": "yoriichi",
+   "portrait": "serious",
+   "text": "（睜開眼睛──手已經按在刀柄上。）",
+   "next": null
+  }
+ }
+}

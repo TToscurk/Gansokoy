@@ -361,13 +361,7 @@
     1.358,
     -59.0
    ],
-   "yaw_deg": 146.31,
-   "activity": {
-    "type": "Drink",
-    "clip": "drinking_im1_a030",
-    "slot": "idle",
-    "options": {}
-   }
+   "yaw_deg": 146.31
   },
   {
    "id": "C18",
@@ -566,7 +560,7 @@
   "tag": "CORE"
  },
  "frozen": {
-  "godot/tools/village_v2_population_core_lib.gd": "a5351eb323f5a11ac7dd40bc748b103147ff7bd7d616d5e8c6ab813be5968a2d",
+  "godot/tools/village_v2_population_core_lib.gd": "b3058067a12cb2f2894c9a2a7a9bff6550e2eb8056d7216d463f9526b698c80e",
   "godot/tools/village_v2_entrance_cue_lib.gd": "f5ad8ba7444aa156c41a87bfddaa6931254745c70ad9a2211595a532e2350636",
   "godot/scripts/npc_activity_core.gd": "c3aea5a03e8858b5f86f9f3eed2f7b1fa29eee6f011a1d1e3e57514e6ea08a06",
   "godot/tools/verify_village_v2_population_core.gd": "d6d83ac7363d6e9c50de02ebf1acfa5e95cc4d6af579fca93ae1a32aef572b57",
@@ -575,7 +569,7 @@
   "godot/tools/shot_village_v2_population_core_views.json": "9d85097d2cdbf8d319b80e2ede972c842b327aaf5b9f116b0a0092b780900e22",
   "godot/maps/village_v2/gen/population_core_p10.tscn": "e595f1fa90755d3211770ca26d665dfaf892a4d30bba2f122b094c62c8139228",
   "godot/maps/village_v2/gen/entrance_cue_p10.tscn": "7bcf6e69b78809d3131c7373c32d055dfa05a33767981a8164c8c04535728a77",
-  "godot/data/village_v2_p10r3d_snapshot.json": "a01ac93c7f9fd2260d3680b9805548261b2c52e4b84d9edc5136bf96ea1a1d70",
+  "godot/data/village_v2_p10r3d_snapshot.json": "7c6ad64d06749b534c3f1c5cf80d1e23982406c8ecf0605b7e8778806b6591a9",
   "tools/seal_p10r3d.py": "f15e366f7dbbf2e5574512ad31a19f09aa423dd7e5fbfa9593fb5468b024871e",
   "godot/tools/village_v2_population_scope.gd": "a68250d3ccffba626d5d164cdfc2192661bc4e1c9c64a07c726ee3091f60ac4f"
  },
@@ -724,7 +718,7 @@
  },
  "child_seals": {
   "godot/data/village_v2_p10r3b_seal.json": "aded7212e885b0404f17289ed299855b6019e1ddf81f9718a52c95aa2f15cd80",
-  "godot/data/village_v2_p10r3c_seal.json": "10663d339be0eb28f7788307aadba8739c48729762a407874974b3a053bf2ebb",
+  "godot/data/village_v2_p10r3c_seal.json": "6f3546f3a6db5c2033fefbe6c3ddec67331934ca733293ec76242675c6bc8c94",
   "godot/data/village_v2_p10_npclib_seal.json": "d8ce98e6c63bae580664d8964bc9315ebf1032fbc29e786689b333e319297515"
  },
  "reseal_history": [
@@ -853,6 +847,39 @@
    "seal_file_before": "4eec899e333c06bc1ff7820d65628a8e071b8a83e6577bdfbc37468dda7bf6c4",
    "approved_by": "user（P13 WAVE 3B）",
    "reason": "P13 W3B：子封存の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "CHAYA_DRINK_REMOVED",
+   "at": "2026-10-16",
+   "frozen": {
+    "godot/tools/village_v2_population_core_lib.gd": [
+     "a5351eb323f5a11ac7dd40bc748b103147ff7bd7d616d5e8c6ab813be5968a2d",
+     "b3058067a12cb2f2894c9a2a7a9bff6550e2eb8056d7216d463f9526b698c80e"
+    ],
+    "godot/data/village_v2_p10r3d_snapshot.json": [
+     "a01ac93c7f9fd2260d3680b9805548261b2c52e4b84d9edc5136bf96ea1a1d70",
+     "7c6ad64d06749b534c3f1c5cf80d1e23982406c8ecf0605b7e8778806b6591a9"
+    ]
+   },
+   "content": {
+    "added": "C17 activity removed"
+   },
+   "seal_file_before": "a1d65a601ced5992a98a4b63d374f1026d41ee2e59b2205ef0c3d0f7a7e5461c",
+   "approved_by": "user（2026-10-16 指示「請把茶屋少女 喝水這個動作刪除」）",
+   "reason": "茶屋少女（chaya_f01）の喝水（Drink：drinking_im1_a030＋茶碗）を全配置から削除し、基線 Idle に戻す。人數・位置・朝向・mode は不変。 R3d ASSIGN から C17 茶屋少女の Drink を削除（基線 Idle）。配役・位置・朝向は不変。 snapshot の C17 から activity（Drink）を削除。位置・朝向・mode は不変。"
+  },
+  {
+   "kind": "CHAYA_DRINK_REMOVED_CHILD_CASCADE",
+   "at": "2026-10-16",
+   "child_seals": {
+    "godot/data/village_v2_p10r3c_seal.json": [
+     "10663d339be0eb28f7788307aadba8739c48729762a407874974b3a053bf2ebb",
+     "6f3546f3a6db5c2033fefbe6c3ddec67331934ca733293ec76242675c6bc8c94"
+    ]
+   },
+   "seal_file_before": "87dacadb2738c8a805e5e33459dcc28746d536350d4ff3f9905d77b51392d1ab",
+   "approved_by": "user（2026-10-16 指示「請把茶屋少女 喝水這個動作刪除」）",
+   "reason": "茶屋少女 Drink 削除：子封存（R3c／R3d／R3e）の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

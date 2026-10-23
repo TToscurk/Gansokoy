@@ -1,0 +1,190 @@
+[gd_resource type="Theme" format=3 uid="uid://2iqv8qm5i0du"]
+
+[ext_resource type="FontFile" uid="uid://bl5cm7wvg4lu8" path="res://assets/fonts/NotoSerifTC-VF.ttf" id="1_ltapg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0s3p0"]
+content_margin_left = 22.0
+content_margin_top = 8.0
+content_margin_right = 22.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_825s4"]
+content_margin_left = 22.0
+content_margin_top = 8.0
+content_margin_right = 22.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fry7w"]
+content_margin_left = 22.0
+content_margin_top = 8.0
+content_margin_right = 22.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vdgp8"]
+content_margin_left = 22.0
+content_margin_top = 8.0
+content_margin_right = 22.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_45odx"]
+content_margin_left = 22.0
+content_margin_top = 8.0
+content_margin_right = 22.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pql0a"]
+content_margin_left = 22.0
+content_margin_top = 8.0
+content_margin_right = 22.0
+content_margin_bottom = 8.0
+
+[sub_resource type="FontVariation" id="FontVariation_ntta8"]
+base_font = ExtResource("1_ltapg")
+variation_opentype = {
+2003265652: 400
+}
+
+[sub_resource type="FontVariation" id="FontVariation_7gha3"]
+base_font = ExtResource("1_ltapg")
+variation_opentype = {
+2003265652: 700
+}
+
+[sub_resource type="FontVariation" id="FontVariation_lu8kw"]
+base_font = ExtResource("1_ltapg")
+variation_opentype = {
+2003265652: 500
+}
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7pqa2"]
+content_margin_left = 34.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yyfkr"]
+content_margin_left = 34.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yxp4l"]
+content_margin_left = 34.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w54v3"]
+content_margin_left = 34.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ckgod"]
+content_margin_left = 34.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_13lob"]
+content_margin_left = 34.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_apcvn"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 14.0
+content_margin_bottom = 7.0
+bg_color = Color(0.09019608, 0.07450981, 0.0627451, 0.92)
+border_width_left = 2
+border_width_bottom = 1
+border_color = Color(0.70980394, 0.5411765, 0.2901961, 0.55)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[resource]
+default_font = SubResource("FontVariation_lu8kw")
+default_font_size = 22
+Button/colors/font_color = Color(0.16470589, 0.12941177, 0.105882354, 1)
+Button/colors/font_disabled_color = Color(0.43137255, 0.39607844, 0.35686275, 1)
+Button/colors/font_focus_color = Color(0.16470589, 0.12941177, 0.105882354, 1)
+Button/colors/font_hover_color = Color(0.654902, 0.18039216, 0.18039216, 1)
+Button/colors/font_pressed_color = Color(0.5239216, 0.14431374, 0.14431374, 1)
+Button/styles/disabled = SubResource("StyleBoxEmpty_0s3p0")
+Button/styles/focus = SubResource("StyleBoxEmpty_825s4")
+Button/styles/hover = SubResource("StyleBoxEmpty_fry7w")
+Button/styles/hover_pressed = SubResource("StyleBoxEmpty_vdgp8")
+Button/styles/normal = SubResource("StyleBoxEmpty_45odx")
+Button/styles/pressed = SubResource("StyleBoxEmpty_pql0a")
+GensokyoBannerHead/base_type = &"Label"
+GensokyoBannerHead/colors/font_color = Color(0.654902, 0.18039216, 0.18039216, 1)
+GensokyoBannerHead/constants/outline_size = 0
+GensokyoBannerHead/font_sizes/font_size = 16
+GensokyoBannerHead/fonts/font = SubResource("FontVariation_ntta8")
+GensokyoBannerTitle/base_type = &"Label"
+GensokyoBannerTitle/colors/font_color = Color(0.16470589, 0.12941177, 0.105882354, 1)
+GensokyoBannerTitle/constants/outline_size = 0
+GensokyoBannerTitle/font_sizes/font_size = 30
+GensokyoBannerTitle/fonts/font = SubResource("FontVariation_7gha3")
+GensokyoChoice/base_type = &"Button"
+GensokyoChoice/colors/font_color = Color(0.3509804, 0.3156863, 0.27941176, 1)
+GensokyoChoice/colors/font_focus_color = Color(0.654902, 0.18039216, 0.18039216, 1)
+GensokyoChoice/colors/font_hover_color = Color(0.654902, 0.18039216, 0.18039216, 1)
+GensokyoChoice/colors/font_hover_pressed_color = Color(0.654902, 0.18039216, 0.18039216, 1)
+GensokyoChoice/colors/font_pressed_color = Color(0.5239216, 0.14431374, 0.14431374, 1)
+GensokyoChoice/font_sizes/font_size = 23
+GensokyoChoice/fonts/font = SubResource("FontVariation_lu8kw")
+GensokyoChoice/styles/disabled = SubResource("StyleBoxEmpty_7pqa2")
+GensokyoChoice/styles/focus = SubResource("StyleBoxEmpty_yyfkr")
+GensokyoChoice/styles/hover = SubResource("StyleBoxEmpty_yxp4l")
+GensokyoChoice/styles/hover_pressed = SubResource("StyleBoxEmpty_w54v3")
+GensokyoChoice/styles/normal = SubResource("StyleBoxEmpty_ckgod")
+GensokyoChoice/styles/pressed = SubResource("StyleBoxEmpty_13lob")
+GensokyoDialogueText/base_type = &"RichTextLabel"
+GensokyoDialogueText/colors/default_color = Color(0.16470589, 0.12941177, 0.105882354, 1)
+GensokyoDialogueText/constants/line_separation = 9
+GensokyoDialogueText/constants/outline_size = 0
+GensokyoDialogueText/font_sizes/bold_font_size = 25
+GensokyoDialogueText/font_sizes/normal_font_size = 25
+GensokyoDialogueText/fonts/bold_font = SubResource("FontVariation_7gha3")
+GensokyoDialogueText/fonts/normal_font = SubResource("FontVariation_lu8kw")
+GensokyoHint/base_type = &"Label"
+GensokyoHint/colors/font_color = Color(0.43137255, 0.39607844, 0.35686275, 1)
+GensokyoHint/constants/outline_size = 0
+GensokyoHint/font_sizes/font_size = 15
+GensokyoHint/fonts/font = SubResource("FontVariation_ntta8")
+GensokyoHudText/base_type = &"Label"
+GensokyoHudText/colors/font_color = Color(0.9098039, 0.8745098, 0.8, 1)
+GensokyoHudText/colors/font_outline_color = Color(0.09019608, 0.07450981, 0.0627451, 0.9)
+GensokyoHudText/constants/outline_size = 4
+GensokyoHudText/font_sizes/font_size = 15
+GensokyoHudText/fonts/font = SubResource("FontVariation_7gha3")
+GensokyoPrompt/base_type = &"Label"
+GensokyoPrompt/colors/font_color = Color(0.9098039, 0.8745098, 0.8, 1)
+GensokyoPrompt/colors/font_outline_color = Color(0.09019608, 0.07450981, 0.0627451, 0.85)
+GensokyoPrompt/constants/outline_size = 5
+GensokyoPrompt/font_sizes/font_size = 22
+GensokyoPrompt/fonts/font = SubResource("FontVariation_lu8kw")
+GensokyoQuestText/base_type = &"Label"
+GensokyoQuestText/colors/font_color = Color(0.16470589, 0.12941177, 0.105882354, 1)
+GensokyoQuestText/constants/line_spacing = 4
+GensokyoQuestText/constants/outline_size = 0
+GensokyoQuestText/font_sizes/font_size = 18
+GensokyoQuestText/fonts/font = SubResource("FontVariation_lu8kw")
+GensokyoSpeaker/base_type = &"Label"
+GensokyoSpeaker/colors/font_color = Color(0.9098039, 0.8745098, 0.8, 1)
+GensokyoSpeaker/colors/font_outline_color = Color(0, 0, 0, 0)
+GensokyoSpeaker/constants/outline_size = 0
+GensokyoSpeaker/font_sizes/font_size = 28
+GensokyoSpeaker/fonts/font = SubResource("FontVariation_7gha3")
+Label/colors/font_color = Color(0.9098039, 0.8745098, 0.8, 1)
+Label/colors/font_outline_color = Color(0.09019608, 0.07450981, 0.0627451, 0.85)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0)
+Label/constants/outline_size = 4
+TooltipLabel/colors/font_color = Color(0.9098039, 0.8745098, 0.8, 1)
+TooltipLabel/font_sizes/font_size = 17
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_apcvn")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://systems/inventory/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+item_id = "terakoya_book"
+display_name = "慧音借出的書"
+description = "慧音請你歸還鈴奈庵的借書。書頁間夾著寺子屋的借閱紙條。"
+category = 0
+max_stack = 1

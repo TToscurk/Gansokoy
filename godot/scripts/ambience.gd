@@ -41,6 +41,19 @@ const TRACKS := {
 		{"from": 5.0, "to": 19.0, "stream": "res://assets/audio/ambience/insects_day.ogg", "db": -18.0},
 		{"from": 19.0, "to": 5.0, "stream": "res://assets/audio/ambience/insects_night.ogg", "db": -10.0},
 	],
+	# 新版地圖（2026-10-23 接管）：鍵＝地圖根節點名轉小寫。沿用舊版同地點的音量。
+	"beastpath": [
+		{"from": 5.0, "to": 19.0, "stream": "res://assets/audio/ambience/insects_day.ogg", "db": -12.0},
+		{"from": 19.0, "to": 5.0, "stream": "res://assets/audio/ambience/insects_night.ogg", "db": -4.0},
+	],
+	"villagev2": [
+		{"from": 5.0, "to": 19.0, "stream": "res://assets/audio/ambience/insects_day.ogg", "db": -14.0},
+		{"from": 19.0, "to": 5.0, "stream": "res://assets/audio/ambience/insects_night.ogg", "db": -6.0},
+	],
+	"博麗神社": [
+		{"from": 5.0, "to": 19.0, "stream": "res://assets/audio/ambience/insects_day.ogg", "db": -16.0},
+		{"from": 19.0, "to": 5.0, "stream": "res://assets/audio/ambience/insects_night.ogg", "db": -8.0},
+	],
 }
 
 ## 一般對淡秒數（切圖、同時段換曲）。

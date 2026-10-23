@@ -45,8 +45,10 @@ config/features=PackedStringArray("4.7")
 [autoload]
 
 DayNight="*res://scripts/daynight.gd"
+WorldTimeManager="*res://scripts/world_time_manager.gd"
 Ambience="*res://scripts/ambience.gd"
 StoryFlags="*res://systems/story/story_flags.gd"
+InventoryManager="*res://systems/inventory/inventory_manager.gd"
 QuestManager="*res://systems/quest/quest_manager.gd"
 SaveManager="*res://systems/save/save_manager.gd"
 DialogueManager="*res://systems/dialogue/dialogue_manager.gd"
@@ -57,7 +59,7 @@ SimpleGrass="*res://addons/simplegrasstextured/singleton.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/asset_placer/plugin.cfg", "res://addons/cyclops_level_builder/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/meshy-godot-plugin-v0.1.6/meshy-godot-plugin/plugin.cfg", "res://addons/proton_scatter/plugin.cfg", "res://addons/simplegrasstextured/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg", "res://addons/proton_scatter/plugin.cfg", "res://addons/simplegrasstextured/plugin.cfg")
 
 [filesystem]
 
@@ -124,6 +126,16 @@ map_toggle={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":77,"key_label":0,"unicode":109,"location":0,"echo":false,"script":null)
 ]
 }
+meditate={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":84,"key_label":0,"unicode":116,"location":0,"echo":false,"script":null)
+]
+}
+inventory_toggle={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":73,"key_label":0,"unicode":105,"location":0,"echo":false,"script":null)
+]
+}
 quick_save={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194336,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
@@ -180,6 +192,10 @@ guard={
 
 3d_render/layer_17="SimpleGrassTextured interactive layer"
 
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
 [rendering]
 
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=3
@@ -196,46 +212,6 @@ environment/screen_space_reflection/roughness_quality=1
 
 [shader_globals]
 
-sgt_legacy_renderer={
-"type": "int",
-"value": 0
-}
-sgt_player_position={
-"type": "vec3",
-"value": Vector3(1000000, 1000000, 1000000)
-}
-sgt_player_mov={
-"type": "vec3",
-"value": Vector3(0, 0, 0)
-}
-sgt_normal_displacement={
-"type": "sampler2D",
-"value": "res://addons/simplegrasstextured/images/normal.png"
-}
-sgt_motion_texture={
-"type": "sampler2D",
-"value": "res://addons/simplegrasstextured/images/motion.png"
-}
-sgt_wind_direction={
-"type": "vec3",
-"value": Vector3(1, 0, 0)
-}
-sgt_wind_movement={
-"type": "vec3",
-"value": Vector2(0, 0)
-}
-sgt_wind_strength={
-"type": "float",
-"value": 0.15
-}
-sgt_wind_turbulence={
-"type": "float",
-"value": 1.0
-}
-sgt_wind_pattern={
-"type": "sampler2D",
-"value": "res://addons/simplegrasstextured/images/wind_pattern.png"
-}
 gw_dir={
 "type": "vec3",
 "value": Vector3(0.788, 0, 0.616)
@@ -319,4 +295,44 @@ gw_spp={
 gw_spm={
 "type": "vec4",
 "value": Vector4(0, 0, 0, 0)
+}
+sgt_legacy_renderer={
+"type": "int",
+"value": 0
+}
+sgt_player_position={
+"type": "vec3",
+"value": Vector3(1000000, 1000000, 1000000)
+}
+sgt_player_mov={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+sgt_normal_displacement={
+"type": "sampler2D",
+"value": "res://addons/simplegrasstextured/images/normal.png"
+}
+sgt_motion_texture={
+"type": "sampler2D",
+"value": "res://addons/simplegrasstextured/images/motion.png"
+}
+sgt_wind_direction={
+"type": "vec3",
+"value": Vector3(1, 0, 0)
+}
+sgt_wind_movement={
+"type": "vec3",
+"value": Vector2(0, 0)
+}
+sgt_wind_strength={
+"type": "float",
+"value": 0.15
+}
+sgt_wind_turbulence={
+"type": "float",
+"value": 1.0
+}
+sgt_wind_pattern={
+"type": "sampler2D",
+"value": "res://addons/simplegrasstextured/images/wind_pattern.png"
 }

@@ -821,13 +821,7 @@
    "yaw_deg": 146.31,
    "idle_t": 0.84,
    "speed_scale": 1.02,
-   "seed": 2408767,
-   "activity": {
-    "type": "Drink",
-    "clip": "drinking_im1_a030",
-    "slot": "idle",
-    "options": {}
-   }
+   "seed": 2408767
   },
   {
    "id": "C18",

@@ -1,0 +1,8 @@
+{
+	"_note": "Development-only review start（scripts/dev/review_start.gd）。只在 debug＋編輯器執行（F5／MCP project_run）時採用；release 匯出不生效。enabled=false 或命令列 --no-review → 正式流程（獸道序章）。spawn：main_street, hieda, shrine, school, waterwheel, fire_lookout, suzunaan, dragon, geidontei, kirisame。",
+	"enabled": true,
+	"spawn": "kirisame",
+	"hour": 10.0,
+	"freeze_time": true,
+	"hide_debug": true
+}

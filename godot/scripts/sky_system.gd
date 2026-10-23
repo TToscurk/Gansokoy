@@ -190,6 +190,8 @@ func _ready() -> void:
 	_grey = t.w
 	var dn: Node = get_node_or_null("/root/DayNight")
 	if dn != null and not Engine.is_editor_hint():
+		if 一日長度分鐘 > 0.0 and dn.has_method("set_day_length_minutes"):
+			dn.set_day_length_minutes(一日長度分鐘)
 		時刻 = dn.get("hour")
 	_apply()
 	_dirty = false

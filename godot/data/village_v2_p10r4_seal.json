@@ -276,8 +276,8 @@
   "godot/data/village_v2_p10r1_seal.json": "7c56ee7dfe3ea2218d1c60f8945645c8460ecc10e02bce698cbe2513ae1c0d67",
   "godot/data/village_v2_p10r1b_seal.json": "35f1d3abda1d61001aaca5f34a9eed4a51bb86c7e03431cc0212be19bd27985e",
   "godot/data/village_v2_p10r2_seal.json": "1eaa5172743a443c2a7bdaed38e9b7fec21c27582abbeb3f69c19246b876b473",
-  "godot/data/village_v2_p10r3d_seal.json": "a1d65a601ced5992a98a4b63d374f1026d41ee2e59b2205ef0c3d0f7a7e5461c",
-  "godot/data/village_v2_p10r3e_seal.json": "de6714cf7ec07d4acb93139db77a05f10eb3afa304d3fafa5daf61979feffa9b",
+  "godot/data/village_v2_p10r3d_seal.json": "bae2fb2a820e14316187a98adb1be7d542541496ccedd7c71e6994d4e207492a",
+  "godot/data/village_v2_p10r3e_seal.json": "a7349fad3c1cfbdd7719d85042384923c9e26f65942a7d1d4af967cbf157f292",
   "godot/data/village_v2_p10r4c_seal.json": "b34f93fab5b236ac7d4e081e3e8ab3c4afd33195abed9e1ea2dd4398b091da40"
  },
  "reseal_history": [
@@ -433,6 +433,23 @@
    "seal_file_before": "c0e6237a6013a915719b92c671990f49a93ff33f3157a887a3deb4c1bf7f38f3",
    "approved_by": "user（P13 WAVE 3B）",
    "reason": "P13 W3B：子封存の雜湊だけ追従、本封存の内容は不変。"
+  },
+  {
+   "kind": "CHAYA_DRINK_REMOVED_CHILD_CASCADE",
+   "at": "2026-10-16",
+   "child_seals": {
+    "godot/data/village_v2_p10r3d_seal.json": [
+     "a1d65a601ced5992a98a4b63d374f1026d41ee2e59b2205ef0c3d0f7a7e5461c",
+     "bae2fb2a820e14316187a98adb1be7d542541496ccedd7c71e6994d4e207492a"
+    ],
+    "godot/data/village_v2_p10r3e_seal.json": [
+     "de6714cf7ec07d4acb93139db77a05f10eb3afa304d3fafa5daf61979feffa9b",
+     "a7349fad3c1cfbdd7719d85042384923c9e26f65942a7d1d4af967cbf157f292"
+    ]
+   },
+   "seal_file_before": "8e4f38e367d230ef1fa527d6d65e3d216ba941b83bcbb987c8fc6eb1fbda3265",
+   "approved_by": "user（2026-10-16 指示「請把茶屋少女 喝水這個動作刪除」）",
+   "reason": "茶屋少女 Drink 削除：子封存（R3c／R3d／R3e）の雜湊だけ追従、本封存の内容は不変。"
   }
  ]
 }

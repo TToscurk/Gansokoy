@@ -75,6 +75,14 @@ func life_setup(dir: Node, def: Dictionary, shared: Dictionary, first_delay: flo
 	if String(def.get("skeleton", "")) == "general":
 		_add_clips(shared.get("general_clips", {}))
 	_add_clips(def.get("extra_clips", {}))
+	_emo_clips = EMO_CLIPS.duplicate(true)
+	for src: Dictionary in [shared.get("emo_clips", {}), def.get("emo_clips", {})]:
+		for k in src:
+			_emo_clips[k] = src[k]
+	_listen_clips = (shared.get("listen_clips", {}) as Dictionary).duplicate(true)
+	for k in def.get("listen_clips", {}):
+		_listen_clips[k] = def.listen_clips[k]
+	_listen_chance = float(def.get("listen_chance", shared.get("listen_chance", 0.0)))
 	_make_bubble()
 	_make_voice()
 	if bool(def.get("head_look", true)):
@@ -93,7 +101,7 @@ func _add_clips(m: Dictionary) -> void:
 		return
 	var lib := ap.get_animation_library(&"")
 	for k in m:
-		if lib.has_animation(k):
+		if String(k).begins_with("_") or lib.has_animation(k):
 			continue
 		var spec: Variant = m[k]
 		var path := String(spec[0]) if spec is Array else String(spec)
@@ -214,7 +222,7 @@ func _maybe_change_plan(f: String) -> bool:
 	return false
 
 
-## 情緒 → 說話時的動作（沒有該動作就退回一般說話）
+## 情緒 → 說話時的動作（沒有該動作就退回一般說話）。這是內建後備；實際用 heroes.json 的 _shared.emo_clips（各 HERO 的 emo_clips 可再覆寫）。
 const EMO_CLIPS := {
 	"happy": ["talk_funny"], "excited": ["talk_twohands", "talk_funny"], "smug": ["talk_funny"],
 	"surprised": ["talk_twohands"], "annoyed": ["talk_twohands"], "serious": ["talk_general"],
@@ -222,6 +230,21 @@ const EMO_CLIPS := {
 	"embarrassed": ["talk_general"],
 }
 const EMO_BODY := {"excited": "happy"}     # 身體反應借用的 profile
+var _emo_clips := {}
+var _listen_clips := {}
+var _listen_chance := 0.0
+var _last_talk := ""
+
+
+## 從動作池挑一支本角色有的動作；可能時避開上一句用過的那支
+func _pick_talk(pool: Array) -> String:
+	var ok: Array = []
+	for c in pool:
+		if _has_clip(String(c)) and String(c) != _last_talk:
+			ok.append(String(c))
+	if ok.is_empty():
+		return _pick_clip(pool)
+	return ok[randi() % ok.size()]
 
 
 func session_speak(text: String, dur: float, listener: Node3D, clip: String, vclip := {}, emo := "neutral") -> void:
@@ -230,21 +253,32 @@ func session_speak(text: String, dur: float, listener: Node3D, clip: String, vcl
 	if not vclip.is_empty():
 		_speak_voice(vclip)
 	if _pose == "":
-		var pool: Array = EMO_CLIPS.get(emo, _action("talk").get("loop", ["idle"]))
-		var c := clip if clip != "" else _pick_clip(pool)
+		var pool: Array = _emo_clips.get(emo, EMO_CLIPS.get(emo, _action("talk").get("loop", ["idle"])))
+		var c := clip if clip != "" else _pick_talk(pool)
 		if c == "idle":
 			c = _pick_clip(_action("talk").get("loop", ["idle"]))
+		_last_talk = c
 		_play(c, 0.0)
 	_emote_play(String(EMO_BODY.get(emo, emo)), maxf(float(vclip.get("dur", dur - 0.45)), 0.4))
 
 
-## 聆聽：看著對方；對方講得久、語氣平常時中途點個頭（不出聲，不會兩人同時說話）
+## 聆聽：看著對方；對方講得久時中途回應——依對方情緒偶爾做回應動作（點頭／附和／搖頭，listen_clips），否則程序化點頭（不出聲，不會兩人同時說話）
 func session_listen(speaker: Node3D, dur := 0.0, emo := "neutral") -> void:
 	_look_at = speaker
 	if _pose == "" and _act.is_empty():
 		_anim(&"idle")
-	if dur > 3.0 and emo in ["neutral", "happy", "excited", "smug", "serious"]:
-		var me := self
+	var me := self
+	var lpool: Array = _listen_clips.get(emo, [])
+	var lc := _pick_clip(lpool) if not lpool.is_empty() else "idle"
+	if dur > 2.2 and lc != "idle" and _pose == "" and randf() < _listen_chance:
+		get_tree().create_timer(dur * 0.35).timeout.connect(func():
+			if not is_instance_valid(me) or _session.is_empty() or is_speaking() or not _act.is_empty():
+				return
+			_play(lc, 0.0)
+			get_tree().create_timer(maxf(_clip_len(lc) - 0.2, 0.3)).timeout.connect(func():
+				if is_instance_valid(me) and not is_speaking() and _anim_name() == lc:
+					_anim(&"idle")))
+	elif dur > 3.0 and emo in ["neutral", "happy", "excited", "smug", "serious"]:
 		get_tree().create_timer(dur * 0.45).timeout.connect(func():
 			if is_instance_valid(me) and not _session.is_empty() and not is_speaking():
 				_emote_play("nod", 0.6))
@@ -1145,24 +1179,36 @@ func _make_look() -> void:
 	_look_target = Node3D.new()
 	_look_target.name = "LifeLookTarget"
 	add_child(_look_target)
-	_look = LookAtModifier3D.new()
-	_look.name = "LifeHeadLook"
-	sk.add_child(_look)
-	_look.bone_name = "Head"
-	_look.forward_axis = 4
-	_look.primary_rotation_axis = 1
-	_look.use_angle_limitation = true
-	_look.symmetry_limitation = true
-	_look.primary_limit_angle = deg_to_rad(120.0)
-	_look.secondary_limit_angle = deg_to_rad(60.0)
-	_look.use_secondary_rotation = true
-	_look.duration = 0.25
-	_look.influence = 0.0
-	_look.target_node = _look.get_path_to(_look_target)
+	# 2026-10-21：轉頭分給脖子＋頭（只轉頭時脖子邊被拉長 3 倍、下巴被扯歪）。脖子先看、分到約 4 成，頭再補剩下的；角度上限收小。
+	if sk.find_bone("Neck") >= 0:
+		_look_neck = _new_look(sk, "Neck", 55.0, 30.0)
+	_look = _new_look(sk, "Head", 75.0, 40.0)
 	# 情緒身體反應（排在 LookAt 之後，疊在看向之上）
 	_emote = (load("res://systems/npc_life/npc_emote.gd") as GDScript).new()
 	_emote.name = "LifeEmote"
 	sk.add_child(_emote)
+
+
+var _look_neck: LookAtModifier3D
+const NECK_SHARE := 0.55   # 脖子 influence 對頭 influence 的比例（脖子先轉，頭補剩下的）
+
+
+func _new_look(sk: Skeleton3D, bone: String, yaw_lim: float, pitch_lim: float) -> LookAtModifier3D:
+	var l := LookAtModifier3D.new()
+	l.name = "LifeLook" + bone
+	sk.add_child(l)
+	l.bone_name = bone
+	l.forward_axis = 4
+	l.primary_rotation_axis = 1
+	l.use_angle_limitation = true
+	l.symmetry_limitation = true
+	l.primary_limit_angle = deg_to_rad(yaw_lim)
+	l.secondary_limit_angle = deg_to_rad(pitch_lim)
+	l.use_secondary_rotation = true
+	l.duration = 0.25
+	l.influence = 0.0
+	l.target_node = l.get_path_to(_look_target)
+	return l
 
 
 func _update_look(dt: float) -> void:
@@ -1174,6 +1220,8 @@ func _update_look(dt: float) -> void:
 		var h := 1.45 if _look_at != _player else 1.5
 		_look_target.global_position = _look_at.global_position + Vector3(0.0, h, 0.0)
 	_look.influence = move_toward(_look.influence, want, 3.0 * dt)
+	if _look_neck != null:
+		_look_neck.influence = _look.influence * NECK_SHARE
 
 
 func _anim_name() -> String:

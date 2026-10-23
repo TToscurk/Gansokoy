@@ -23,6 +23,12 @@ const PORTAL_COOLDOWN := 2.0
 const TRIMESH_MIN_SPAN := 15.0
 const InteriorLightingRig = preload("res://scripts/interior_lighting.gd")
 const COMBAT_RUNTIME = preload("res://systems/combat/combat_runtime.gd")
+## 地圖路由（data/map_routes.json）：版本群組回程、生成器 meta 的傳送目標覆寫、舊→新別名（預設關）。
+const MapRouter = preload("res://systems/nav/map_router.gd")
+## 傳送點地面光印（docs/reference/傳送點美術）。
+const PortalSeal = preload("res://assets/portal/portal_seal.gd")
+## 開發用審圖起點（debug＋編輯器限定；release 不生效）。見 scripts/dev/review_start.gd。
+const ReviewStart = preload("res://scripts/dev/review_start.gd")
 ## 密閉室內圖：屋頂擋住太陽，環境光又靠天空貢獻近半，實測畫面平均亮度
 ## 只有 0.08（六成像素接近純黑）。這些圖載入後補一層室內光。
 const INTERIOR_MAPS := ["hieda1f", "hieda2f", "hieda3f"]
@@ -31,6 +37,7 @@ const INTERIOR_MAPS := ["hieda1f", "hieda2f", "hieda3f"]
 const AMBIENCE_SETTLE_FRAMES := 20
 
 var registry: Dictionary = {}
+var router = MapRouter.new()
 var current_id := ""
 var map_root: Node3D = null
 var portal_cooldown := 0.0
@@ -38,6 +45,9 @@ var portal_cooldown := 0.0
 var _live_portals: Array = []
 ## 戰鬥接線層（HUD ＋ 型選單）。_setup_story_systems() 建立。
 var combat: Node = null
+## 冥想（T）：快轉世界時間的控制層。_setup_story_systems() 建立。
+var meditation: Node = null
+var _map_label_tween: Tween = null
 
 @onready var player: CharacterBody3D = $Player
 @onready var map_label: Label = $UI/MapLabel
@@ -70,6 +80,15 @@ func _ready() -> void:
 			_playtest = true
 		elif a == "--continue":           # 開局直接讀快速槽（存讀檔測試用）
 			want_continue = true
+	# 開發用審圖起點：debug＋編輯器 F5／MCP 預設直入人間之里審圖站位（dev/review_start.json），
+	# 其他工具模式（--map／--shot*／--playtest／--continue）照舊；--no-review 強制走正式序章。
+	var tool_args := false
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--map=") or a.begins_with("--shot") or a == "--playtest" or a == "--continue":
+			tool_args = true
+	var review: Dictionary = ReviewStart.resolve(tool_args)
+	if not review.is_empty():
+		start = String(review["map"])
 	# 起動図が未構築なら、構築済みの図へ落とす。黙って落とさない——
 	# START_MAP は「本来ここから始まる」という意思表示なので、書き換えて
 	# 隠すのではなく、毎回うるさく言いながら遊べる状態にしておく。
@@ -84,9 +103,11 @@ func _ready() -> void:
 	var is_cold_start: bool = start == START_MAP and current_id == START_MAP \
 		and not StoryFlags.get_flag("woke_in_trail") \
 		and _shot_path == "" and _shots_file == "" and not _playtest and _shot_player == "" \
-		and not want_continue
+		and not want_continue and review.is_empty()
 	if is_cold_start:
 		_play_opening()
+	if not review.is_empty():
+		ReviewStart.apply(self, review)
 	# --continue：載圖與序章判定都做完之後才讀檔，讓 _on_load_requested 的
 	# load_map 成為最後一次切圖（否則開場流程會蓋掉存檔的位置）。
 	if want_continue:
@@ -358,6 +379,10 @@ func _run_ambience_check() -> void:
 func _pt_ground(space: PhysicsDirectSpaceState3D, x: float, z: float,
 		exclude: Array[RID] = [], skip_boundary: bool = false) -> float:
 	var q := PhysicsRayQueryParameters3D.create(Vector3(x, 400.0, z), Vector3(x, -100.0, z))
+	# 只量玩家站得上的面：阿求／小鈴袖子模擬的 Floor（WorldBoundary、layer 20）鋪滿整張人里 y≈1.69，
+	# 不設 mask 會被當成地面（village_v2 出生點與傳送點因此量成「埋地 1.3 m」）。
+	if player != null:
+		q.collision_mask = player.collision_mask
 	q.exclude = exclude
 	if not skip_boundary:
 		var hit := space.intersect_ray(q)
@@ -415,6 +440,12 @@ func _load_json(p: String) -> Dictionary:
 	return JSON.parse_string(txt)
 
 func load_map(id: String, from_id: String) -> void:
+	if id == "village" or id == "人間之里":
+		id = "slice"
+	if from_id == "village" or from_id == "人間之里":
+		from_id = "slice"
+	# mode=v2（測試用）才會把舊 id 換成新 id；legacy 原樣返回。
+	id = router.resolve_map(id)
 	interaction_prompt.visible = false
 	interaction_message.visible = false
 	var meta := _load_json("res://data/%s.meta.json" % id)
@@ -446,6 +477,7 @@ func load_map(id: String, from_id: String) -> void:
 	# 傳送區掛在 map_root 底下，隨舊圖一起釋放；清掉舊清單免得留下無效引用。
 	_live_portals.clear()
 	current_id = id
+	router.note_loaded(id)
 	print("[map] %s → %s" % [id, path])
 	map_root = packed.instantiate()
 	add_child(map_root)
@@ -483,6 +515,7 @@ func load_map(id: String, from_id: String) -> void:
 	if not own:
 		_build_game_colliders(meta)
 	_spawn_portals(meta)
+	router.apply_open_seals(id, map_root)
 	_apply_interior_lighting(id)
 	_apply_wildlife_audio(id)
 	_place_player(meta, from_id)
@@ -494,6 +527,19 @@ func load_map(id: String, from_id: String) -> void:
 
 	var info: Dictionary = registry.get(id, {})
 	map_label.text = "%s  %s" % [info.get("zh", id), info.get("en", "")]
+	_fade_map_label()
+
+
+## 地名只在換圖時報一次：停留數秒後淡出，不當常駐提示掛在左上角。
+## （2026-09-22 使用者裁定「常駐提示太擠」—— 地名＋時鐘＋任務＋指路四組文字
+##   同時常駐在畫面上緣。）
+func _fade_map_label() -> void:
+	if _map_label_tween != null:
+		_map_label_tween.kill()
+	map_label.modulate.a = 1.0
+	_map_label_tween = create_tween()
+	_map_label_tween.tween_interval(4.0)
+	_map_label_tween.tween_property(map_label, "modulate:a", 0.0, 1.5)
 
 
 func _on_interaction_prompt_changed(text: String) -> void:
@@ -584,7 +630,11 @@ const DIALOGUE_UI := preload("res://ui/dialogue/dialogue_ui.tscn")
 const QUEST_TRACKER_UI := preload("res://ui/quest/quest_tracker.tscn")
 const NAV_UI := preload("res://ui/nav/nav_waypoint.tscn")
 const MAP_UI := preload("res://ui/map/world_map.tscn")
+const INVENTORY_UI := preload("res://ui/inventory/inventory_ui.tscn")
+const ITEM_TOAST_UI := preload("res://ui/inventory/item_toast.tscn")
 const SAVE_UI := preload("res://ui/save/save_menu.tscn")
+const MEDITATION_UI := preload("res://ui/meditation/meditation_menu.tscn")
+const MEDITATION_CONTROLLER := preload("res://systems/time/meditation_controller.gd")
 
 func _setup_story_systems() -> void:
 	player.add_to_group("player")
@@ -602,11 +652,21 @@ func _setup_story_systems() -> void:
 		QuestManager.start_quest("MQ00")
 	add_child(NAV_UI.instantiate())
 	add_child(MAP_UI.instantiate())
-	# 存檔選單（Esc）。與地圖 UI 的 Esc 爭用**不靠掛載順序**解決 ——
+	add_child(INVENTORY_UI.instantiate())
+	add_child(ITEM_TOAST_UI.instantiate())
+	# 存檔選單（Esc）。與地圖／背包 UI 的 Esc 爭用**不靠掛載順序**解決 ——
 	# 兩者都在 group "modal_ui"，選單開之前會先問「別的面板開著嗎」。
 	# （實測過順序解法會壞：_unhandled_input 是後加入者先收到，選單會搶先
 	#   吃掉 Esc 讓地圖關不掉。）順序在這裡無所謂。
 	add_child(SAVE_UI.instantiate())
+	# 冥想（T）：只拉 DayNight.time_scale 的「快轉」，天空／日照／時段／屋台都照原系統跑。
+	# ⚠ 掛載順序有關係：_unhandled_input 是**後加入者先收到**，控制器先掛、
+	# 選單後掛，選單開著時才能先吃掉 T／Esc／Enter。
+	meditation = MEDITATION_CONTROLLER.new()
+	add_child(meditation)
+	var meditation_menu := MEDITATION_UI.instantiate()
+	add_child(meditation_menu)
+	meditation.bind_menu(meditation_menu)
 	# 戰鬥接線：HUD（血／軀幹／呼吸）與死亡演出。
 	# 純程式掛載，不寫進 main.tscn —— 編輯器可能正開著未存檔。
 	combat = COMBAT_RUNTIME.new()
@@ -617,23 +677,179 @@ func _setup_story_systems() -> void:
 
 const OPENING_FADE := preload("res://ui/opening/opening_fade.gd")
 
-## 開場淡入。淡入期間鎖玩家（黑畫面裡不該能跑），淡完起醒來獨白。
-## 獨白由這裡起，不再靠獸道的「醒來獨白」踏區 —— 那個區保留當保底
-## （once_flag 同一個，淡入起過就不會重播）。
+## 序章開場電影鏡頭與甦醒演出（8-Shot Sequence）：
+## Shot 01: 黑幕停留（林間風聲、樹葉沙沙、遠方鳥叫，2.4 秒）。時間鎖定於第 1 日 06:30。
+## Shot 02: 晨光淡入，緣一第一人稱視角（POV）由地面仰望松林樹冠與 06:30 晨曦金光。
+## Shot 03: 鏡頭流暢俯降至低角度特寫，緣一靜臥草地，日輪刀橫於身側。
+## Shot 04: 手指微動、眼睜，獨白「「……」」浮現。
+## Shot 05: 緣一微側視角環視林地，獨白「「這是……哪裡？」」。
+## Shot 06: 獨白「「這裡，不是我所知的地方。」」結束，緣一撐地挺身起立（play_get_up），鏡頭平滑拉至中景。
+## Shot 07: 緣一挺立撫刀確認，凝望前方幽深獸道。
+## Shot 08: 鏡頭平滑過渡至第三人稱視角，中央淡入「── 獸道 ──」字卡，解鎖時間並交接玩家操控。
 func _play_opening() -> void:
+	if player.has_method("start_opening_lie_down"):
+		player.start_opening_lie_down()
+	else:
+		player.set("input_locked", true)
+
+	StoryFlags.set_flag("opening_fade_active", true)
+
+	# 鎖定時間在第 1 日 06:30
+	var dn: Node = get_node_or_null("/root/DayNight")
+	if dn != null:
+		if dn.has_method("lock_time"):
+			dn.lock_time("opening_cutscene")
+		dn.set("day", 1)
+		if dn.has_method("set_hour"):
+			dn.set_hour(6.5)
+
+	var gameplay_cam: Camera3D = player.find_child("Camera3D", true, false) as Camera3D
+
+	var cine_cam := Camera3D.new()
+	cine_cam.name = "CinematicOpeningCamera"
+	cine_cam.fov = 54.0
+	add_child(cine_cam)
+
+	var p_pos: Vector3 = player.global_position
+
+	# Shot 02 初始視位：地面仰角，朝向樹冠與天空晨曦
+	var sky_look := p_pos + Vector3(0.0, 25.0, -1.5)
+	var ground_pov_pos := p_pos + Vector3(0.0, 0.35, 0.0)
+	cine_cam.global_position = ground_pov_pos
+	cine_cam.look_at(sky_look, Vector3.UP)
+	cine_cam.current = true
+
+	# Shot 01: 黑幕停留 2.4 秒
 	var fade := OPENING_FADE.new()
 	fade.name = "OpeningFade"
+	fade.hold_black = 2.4
+	fade.fade_in = 2.2
 	add_child(fade)
-	player.set("input_locked", true)
-	# 立這個旗標讓獸道的「醒來獨白」踏區在黑幕期間閉嘴（它有 skip_flag）。
-	# 淡完再清掉 —— 之後那個區只是保底，因為 once_flag 早就被本函式起的對話立了。
-	StoryFlags.set_flag("opening_fade_active", true)
+
+	var line_conn: Callable
+	line_conn = func(_speaker: String, _portrait: Texture2D, text: String, _choices: PackedStringArray) -> void:
+		if not is_instance_valid(cine_cam):
+			return
+		if text.contains("哪裡"):
+			# Shot 05: 緣一微側視角環顧林地
+			var pov_pos := p_pos + Vector3(0.1, 0.45, 0.05)
+			var forest_look := p_pos + Vector3(2.5, 3.5, -4.0)
+			var tw_pov := create_tween()
+			tw_pov.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			tw_pov.tween_method(func(w: float) -> void:
+				if is_instance_valid(cine_cam):
+					cine_cam.global_position = cine_cam.global_position.lerp(pov_pos, w)
+					cine_cam.look_at(forest_look, Vector3.UP)
+			, 0.0, 1.0, 1.2)
+
+	DialogueManager.line_shown.connect(line_conn)
+
+	var on_dialogue_done := func(dialogue_id: String) -> void:
+		if dialogue_id == "yoriichi_wake":
+			if DialogueManager.line_shown.is_connected(line_conn):
+				DialogueManager.line_shown.disconnect(line_conn)
+			_transition_opening_camera_and_stand_up(cine_cam, gameplay_cam)
+
+	DialogueManager.dialogue_ended.connect(on_dialogue_done, CONNECT_ONE_SHOT)
+
 	fade.fade_finished.connect(func() -> void:
 		StoryFlags.set_flag("opening_fade_active", false)
-		player.set("input_locked", false)
-		if not DialogueManager.is_active():
-			DialogueManager.start("yoriichi_wake"))
+		# Shot 03: 鏡頭流暢俯降至緣一仰躺特寫
+		var shot3_pos := p_pos + Vector3(0.65, 0.65, 1.15)
+		var shot3_look := p_pos + Vector3(0.0, 0.20, 0.0)
+		var tw_drop := create_tween()
+		tw_drop.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tw_drop.tween_method(func(w: float) -> void:
+			if is_instance_valid(cine_cam):
+				cine_cam.global_position = ground_pov_pos.lerp(shot3_pos, w)
+				cine_cam.look_at(sky_look.lerp(shot3_look, w), Vector3.UP)
+		, 0.0, 1.0, 1.6)
+		tw_drop.tween_callback(func() -> void:
+			# Shot 04: 開啟第一句獨白「……」
+			if not DialogueManager.is_active():
+				DialogueManager.start("yoriichi_wake")
+		)
+	)
 	fade.play()
+
+
+func _transition_opening_camera_and_stand_up(cine_cam: Camera3D, gameplay_cam: Camera3D) -> void:
+	var get_up_time := 2.5
+	if player.has_method("play_get_up"):
+		get_up_time = player.play_get_up(1.15)
+	if get_up_time <= 0.0:
+		get_up_time = 2.5
+
+	if not is_instance_valid(cine_cam) or not is_instance_valid(gameplay_cam):
+		_finish_opening_sequence(cine_cam, gameplay_cam)
+		return
+
+	# Shot 06 & Shot 07: 緣一挺立，鏡頭由特寫平滑拉遠為中景並觀察
+	# Shot 08: 平滑過渡至第三人稱視角，彈出「── 獸道 ──」字卡
+	_show_opening_title_card()
+
+	var start_pos: Vector3 = cine_cam.global_position
+	var start_rot: Quaternion = cine_cam.global_transform.basis.get_rotation_quaternion()
+	var start_fov: float = cine_cam.fov
+	var target_fov: float = gameplay_cam.fov
+
+	var tw := create_tween()
+	tw.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_method(func(weight: float) -> void:
+		if is_instance_valid(cine_cam) and is_instance_valid(gameplay_cam):
+			var cur_target_trans := gameplay_cam.global_transform
+			var cur_target_rot := cur_target_trans.basis.get_rotation_quaternion()
+			var cur_pos := start_pos.lerp(cur_target_trans.origin, weight)
+			var cur_rot := start_rot.slerp(cur_target_rot, weight)
+			cine_cam.global_transform = Transform3D(Basis(cur_rot), cur_pos)
+			cine_cam.fov = lerpf(start_fov, target_fov, weight)
+	, 0.0, 1.0, get_up_time + 0.5)
+
+	tw.tween_callback(func() -> void:
+		_finish_opening_sequence(cine_cam, gameplay_cam)
+	)
+
+
+func _finish_opening_sequence(cine_cam: Camera3D, gameplay_cam: Camera3D) -> void:
+	if is_instance_valid(gameplay_cam):
+		gameplay_cam.current = true
+	if is_instance_valid(cine_cam):
+		cine_cam.queue_free()
+	if player.has_method("finish_get_up"):
+		player.finish_get_up()
+	else:
+		player.set("input_locked", false)
+	var dn: Node = get_node_or_null("/root/DayNight")
+	if dn != null and dn.has_method("unlock_time"):
+		dn.unlock_time("opening_cutscene")
+
+
+func _show_opening_title_card() -> void:
+	if not has_node("UI"):
+		return
+	var ui: Node = get_node("UI")
+	var label := Label.new()
+	label.name = "OpeningTitleCard"
+	label.text = "── 獸道 ──"
+	label.anchor_left = 0.0
+	label.anchor_right = 1.0
+	label.anchor_top = 0.68
+	label.anchor_bottom = 0.78
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.add_theme_font_size_override("font_size", 34)
+	label.add_theme_color_override("font_color", Color(1.0, 0.94, 0.82, 0.95))
+	label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.85))
+	label.add_theme_constant_override("shadow_offset_x", 2)
+	label.add_theme_constant_override("shadow_offset_y", 2)
+	label.modulate.a = 0.0
+	ui.add_child(label)
+
+	var tw := create_tween()
+	tw.tween_property(label, "modulate:a", 1.0, 0.8)
+	tw.tween_interval(1.8)
+	tw.tween_property(label, "modulate:a", 0.0, 1.0)
+	tw.tween_callback(func() -> void: label.queue_free())
 
 
 ## 提示只能被「目前持有者」清掉：同一幀離開 A 區、進入 B 區時，A 的空字串
@@ -673,8 +889,11 @@ func _refresh_world_prompt() -> void:
 
 func _spawn_portals(meta: Dictionary) -> void:
 	_current_portal_meta = meta.get("portals", [])
-	for p in meta.get("portals", []):
-		var tgt: Variant = p.get("target")
+	var plist: Array = meta.get("portals", [])
+	for pi in plist.size():
+		var p: Dictionary = plist[pi]
+		# 生成器 meta 的空目標／舊目標可由 data/map_routes.json 的 portal_overrides 指定
+		var tgt: Variant = router.portal_target(current_id, pi, p.get("target"))
 		var reserved: bool = tgt == null or String(tgt).is_empty()
 		var ground_y := float(p.y)
 
@@ -689,41 +908,13 @@ func _spawn_portals(meta: Dictionary) -> void:
 		area.add_child(shape)
 
 		if not reserved:
-			var mat := StandardMaterial3D.new()
-			mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-			mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-			mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-			mat.albedo_color = Color(0.48, 0.84, 1.0, 0.46)
-			mat.emission_enabled = true
-			mat.emission = Color(0.32, 0.72, 1.0)
-			mat.emission_energy_multiplier = 1.15
-
-			# Keep the route marker legible without putting an opaque pillar between
-			# the arrival camera and the map cell.  The Area3D stays unchanged; only
-			# the visual is grounded at the portal's local terrain value.
-			var ring := MeshInstance3D.new()
-			var torus := TorusMesh.new()
-			torus.inner_radius = 1.10
-			torus.outer_radius = 1.38
-			torus.rings = 48
-			torus.ring_segments = 12
-			ring.mesh = torus
-			ring.position.y = -0.93
-			ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-			ring.material_override = mat
-			area.add_child(ring)
-
-			var gate := MeshInstance3D.new()
-			gate.name = "GlowGate"
-			var quad := QuadMesh.new()
-			quad.size = Vector2(3.0, 3.4)
-			gate.mesh = quad
-			gate.position.y = 0.30
-			gate.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-			var glow := ShaderMaterial.new()
-			glow.shader = preload("res://shaders/portal_gate.gdshader")
-			gate.material_override = glow
-			area.add_child(gate)
+			# 地面光印（石盤＋櫻花紋＋結界環、接近點亮、花瓣光粒、夜間增亮）。
+			# 名字沿用 GlowGate：verify_portal_up／verify_all_portal_up 依名字確認光門存在。
+			var seal = PortalSeal.new()
+			seal.name = "GlowGate"
+			seal.palette = PortalSeal.palette_for_map(current_id)
+			seal.position.y = -1.0
+			area.add_child(seal)
 
 			var prompt := Label3D.new()
 			prompt.name = "PortalPrompt"
@@ -850,11 +1041,18 @@ func _on_load_requested(map_id: String, pos: Vector3, yaw: float) -> void:
 		push_error("[Save] 存檔的地圖 '%s' 載不起來" % map_id)
 		return
 	player.velocity = Vector3.ZERO
-	player.global_position = pos
-	if player.has_method("snap_yaw"):
-		player.snap_yaw(yaw)
+	if router.last_aliased:
+		# v2 別名把舊圖換成新圖：存檔座標屬於舊圖，不得沿用（會落在地下或牆裡）→ 新圖出生點／入口
+		print("[Save] 存檔地圖 %s 已由別名轉為 %s：不沿用舊座標，改落在新圖出生點" % [map_id, current_id])
+		# 等一個物理幀：剛載入的圖碰撞要進物理空間後，出生點射線才量得到地面（否則退回 40 m 高空落下）
+		await get_tree().physics_frame
+		_place_player(_load_json("res://data/%s.meta.json" % current_id), "")
 	else:
-		player.rotation.y = yaw
+		player.global_position = pos
+		if player.has_method("snap_yaw"):
+			player.snap_yaw(yaw)
+		else:
+			player.rotation.y = yaw
 	player.set("input_locked", false)
 	portal_cooldown = PORTAL_COOLDOWN
 	# 任務／旗標已經換成存檔內容，但 UI 是靠 signal 更新的，而 deserialize 刻意
@@ -873,7 +1071,7 @@ func _portal_unlocked(entry: Dictionary) -> bool:
 
 ## 選最近的重疊傳送區；一次按鍵至多排入一次切圖。
 func _try_portal_interaction() -> bool:
-	if portal_cooldown > 0.0:
+	if portal_cooldown > 0.0 or _traveling:
 		return false
 	var target := ""
 	var nearest := INF
@@ -928,16 +1126,153 @@ func _on_portal_reserved(body: Node3D, who: String) -> void:
 	if OS.is_debug_build():
 		print("[portal] %s：觸發區已作用，但尚未指定目的地" % who)
 
-func _on_portal_entered(body: Node3D, target: String) -> void:
-	if body != player or portal_cooldown > 0.0:
+const ROUTE_TRAVEL_MINUTES := {
+	"trail:slice": 60,
+	"slice:trail": 60,
+	"slice:shrine": 90,
+	"shrine:slice": 90,
+	"slice:hieda1f": 15,
+	"hieda1f:slice": 15,
+	"slice:kourindou": 30,
+	"kourindou:slice": 30,
+}
+
+var _time_toast_label: Label = null
+
+func _get_portal_travel_minutes(from_id: String, to_id: String) -> int:
+	var key := "%s:%s" % [from_id, to_id]
+	return ROUTE_TRAVEL_MINUTES.get(key, 30)
+
+func _show_time_toast(old_text: String, new_text: String, diff_mins: int) -> void:
+	if not has_node("UI"):
 		return
+	var ui: Node = get_node("UI")
+	if _time_toast_label == null:
+		_time_toast_label = Label.new()
+		_time_toast_label.name = "TimePassageToast"
+		_time_toast_label.anchor_left = 0.65
+		_time_toast_label.anchor_right = 0.98
+		_time_toast_label.anchor_top = 0.055
+		_time_toast_label.anchor_bottom = 0.095
+		_time_toast_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		_time_toast_label.add_theme_font_size_override("font_size", 18)
+		_time_toast_label.add_theme_color_override("font_color", Color(1.0, 0.92, 0.72, 0.95))
+		_time_toast_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.75))
+		_time_toast_label.add_theme_constant_override("shadow_offset_x", 1)
+		_time_toast_label.add_theme_constant_override("shadow_offset_y", 1)
+		ui.add_child(_time_toast_label)
+
+	_time_toast_label.text = "%s → %s (+%d分)" % [old_text, new_text, diff_mins]
+	_time_toast_label.modulate.a = 0.0
+	_time_toast_label.visible = true
+
+	var tw := create_tween()
+	tw.tween_property(_time_toast_label, "modulate:a", 1.0, 0.4)
+	tw.tween_interval(2.0)
+	tw.tween_property(_time_toast_label, "modulate:a", 0.0, 0.8)
+	tw.tween_callback(func() -> void:
+		if is_instance_valid(_time_toast_label):
+			_time_toast_label.visible = false
+	)
+
+func _on_portal_entered(body: Node3D, target: String) -> void:
+	if body != player or portal_cooldown > 0.0 or _traveling:
+		return
+	if target == "village" or target == "人間之里":
+		target = "slice"
+	# 共用室內圖回程（同群組回到最後到過的版本）、v2 別名；無效／循環時維持原值
+	target = router.resolve_travel(current_id, target)
 	# 目的地還沒烤（built:false）就不動 —— 跟 web 版「看到光＝走得過去」不同，
 	# 這裡先把光留著當 TODO 標記
 	if not FileAccess.file_exists("res://data/%s.meta.json" % target):
 		return
 	portal_cooldown = PORTAL_COOLDOWN
 	var from := current_id
-	call_deferred("load_map", target, from)
+	var dn: Node = get_node_or_null("/root/DayNight")
+	if dn != null:
+		var old_clock: String = dn.call("clock_text") if dn.has_method("clock_text") else ""
+		var travel_mins := _get_portal_travel_minutes(from, target)
+		if dn.has_method("advance_minutes"):
+			dn.call("advance_minutes", travel_mins)
+		elif dn.has_method("advance_time"):
+			dn.call("advance_time", float(travel_mins) / 60.0)
+		var new_clock: String = dn.call("clock_text") if dn.has_method("clock_text") else ""
+		if not old_clock.is_empty() and not new_clock.is_empty():
+			_show_time_toast(old_clock, new_clock, travel_mins)
+	# 無頭（驗證工具）維持舊的同步切圖：工具靠「兩幀後 current_id 已變」判定。
+	# 有畫面（F5）走 _travel()：黑幕＋暫停＋背景執行緒載入。
+	if DisplayServer.get_name() == "headless":
+		call_deferred("load_map", target, from)
+	else:
+		_travel(target, from)
+
+const TRAVEL_LOADING := preload("res://ui/loading/travel_loading.gd")
+## 換圖進行中（黑幕→載入→揭幕）。為真時任何傳送／連按一律忽略。
+var _traveling := false
+
+## 有畫面時的換圖：黑幕＋整棵樹暫停＋背景執行緒讀 .tscn。
+##
+## 獸道→人間之里 F5 實測：舊的 call_deferred(load_map) 一次卡死主執行緒 ≈10 s
+##（load 5.5 s＋instantiate 2.0 s＋效能裁剪 1.8 s＋首幀 0.8 s），畫面凍在
+## 獸道、按鍵沒反應 —— 使用者看到的就是「載不進去」。
+## 這裡把最大塊的 load 搬到背景執行緒（有進度條），其餘同步段在黑幕後跑。
+## 暫停期間玩家、敵人、時鐘、傳送冷卻都不走，揭幕前才解除。
+func _travel(target: String, from: String) -> void:
+	if _traveling:
+		return
+	_traveling = true
+	var tree := get_tree()
+	var info: Dictionary = registry.get(target, {})
+	var scr := TRAVEL_LOADING.new()
+	scr.name = "TravelLoading"
+	add_child(scr)
+	scr.set_title("%s\n%s" % [info.get("zh", target), info.get("en", "")])
+	interaction_prompt.visible = false
+	tree.paused = true
+	await scr.cover()
+
+	var t0 := Time.get_ticks_msec()
+	var native := "res://maps/%s/%s.tscn" % [target, target]
+	var path := native if ResourceLoader.exists(native) else "res://blockout/%s.glb" % target
+	# 持有讀好的資源到 load_map 結束 —— 快取是弱引用，放手就會被釋放、
+	# load_map 裡的 load() 又得同步重讀一次。
+	var _hold: Resource = null
+	if ResourceLoader.exists(path) and not ResourceLoader.has_cached(path):
+		if ResourceLoader.load_threaded_request(path, "", true) == OK:
+			var prog := []
+			var st := ResourceLoader.load_threaded_get_status(path, prog)
+			while st == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+				if not prog.is_empty():
+					scr.set_progress(float(prog[0]) * 0.8)
+				await tree.process_frame
+				st = ResourceLoader.load_threaded_get_status(path, prog)
+			if st == ResourceLoader.THREAD_LOAD_LOADED:
+				_hold = ResourceLoader.load_threaded_get(path)
+			else:
+				push_error("[travel] 背景載入失敗（%d）：%s，改走同步 load" % [st, path])
+	var t1 := Time.get_ticks_msec()
+
+	scr.set_progress(0.85)
+	scr.set_status("佈置場景…")
+	# 先讓黑幕上的文字畫出來，再進同步段
+	await tree.process_frame
+	var before := current_id
+	load_map(target, from)
+	_hold = null
+	# 效能裁剪走 call_deferred、首幀要上傳 GPU：多等幾幀再揭幕
+	scr.set_progress(0.95)
+	for i in 4:
+		await tree.process_frame
+	var t2 := Time.get_ticks_msec()
+	if current_id == before and before != target:
+		push_error("[travel] %s → %s 切圖失敗，留在原圖" % [from, target])
+	print("[travel] %s → %s：背景載入 %d ms、佈置 %d ms、合計 %d ms"
+		% [from, target, t1 - t0, t2 - t1, t2 - t0])
+	scr.set_progress(1.0)
+	tree.paused = false
+	_traveling = false
+	await scr.reveal()
+
 
 ## 從 from_id 進來 → 落在通往 from_id 的傳送點旁；首次啟動（沒有來源圖）
 ## 也落在第一個傳送點旁 —— 圖中心常常是建築物的正上方
@@ -966,11 +1301,21 @@ func _place_player(meta: Dictionary, from_id: String) -> void:
 		var p0: Dictionary = portals[0]
 		arrival_portal = p0
 		spawn = _arrival_for_portal(p0)
-	for p in portals:
-		if p.get("target") == from_id:
+	for i in portals.size():
+		var p: Dictionary = portals[i]
+		if router.portal_target(current_id, i, p.get("target")) == from_id:
 			arrival_portal = p
 			spawn = _arrival_for_portal(p)
 			break
+	# 共用室內圖：回程 target 寫舊 id（slice），來源是同群組新版（village_v2）時也算同一個出口
+	if arrival_portal.is_empty() and from_id != "" and from_id != "__load__":
+		for i in portals.size():
+			var p: Dictionary = portals[i]
+			var t := router.portal_target(current_id, i, p.get("target"))
+			if t != "" and router.same_place(t, from_id):
+				arrival_portal = p
+				spawn = _arrival_for_portal(p)
+				break
 	player.velocity = Vector3.ZERO
 	player.global_position = spawn
 	if arrival_portal.has("arrival_yaw"):

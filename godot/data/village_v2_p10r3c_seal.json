@@ -86,22 +86,6 @@
       },
       "arm_space": 0.3
     },
-    "MarketWest/W3_chaya_f01": {
-      "type": "Drink",
-      "npc": "chaya_f01",
-      "clip": "drinking_im1_a030",
-      "slot": "idle",
-      "options": {},
-      "mixamo": {
-        "name": "Drinking",
-        "product": "c9c63255-b96c-11e4-a802-0aaa78deedf9",
-        "character_uuid": "32cf6b5e-a362-485b-9166-bc70c1c04748",
-        "model_id": 101330902,
-        "params": "-1,0",
-        "inplace": false
-      },
-      "arm_space": 0.3
-    },
     "MarketWest/W4_yakusou_f01": {
       "type": "Sit",
       "npc": "yakusou_f01",
@@ -240,9 +224,9 @@
     }
   ],
   "frozen": {
-    "godot/scripts/npc_activity_overlay.gd": "dc6258ab90c2d1a64d107e96d0f934a302a20399ddc99fbb3f6b753c39e86ceb",
+    "godot/scripts/npc_activity_overlay.gd": "074c64e80c5e5fe43ac579c512c5f047c2adbf006cee36ac9d24a8d13f1c0402",
     "godot/maps/village_v2/activity_p10.tscn": "3e53a1038199422785157ff083bb2a7f9dbdfd3f16bb3e04296a5ac4d13ae496",
-    "godot/tools/verify_p10_activity.gd": "83a20a678b83085069604eb9a17a08f57f8deae94dceacdaa213b10932913149",
+    "godot/tools/verify_p10_activity.gd": "c8833fdd756623e041d2b439da96bf36cacbc765f7e05b6636a7b019597e371c",
     "godot/tools/probe_p10_drink_ab2.gd": "fda5eea06f30986b2e9af0c96c2e9189a8755fa346731b4b09c175d975cb2596",
     "godot/tools/probe_p10_drink_dump.gd": "431ae512bc5ae2c539c61a11f4874ec6f455fb3661ec778f232b8a61113d8a3a",
     "godot/tools/probe_p10_r3c1_contact.gd": "011415ee4cc26f6efde7922114d94efa7e1f2a91f75681b5d18659e6be89b336",
@@ -430,6 +414,46 @@
       "seal_file_before": "8a59048c34b08d691cfe535e919d6c264f3f191ff3c54850c155df92c08044e9",
       "approved_by": "user（P13 WAVE 3B）",
       "reason": "P13 W3B：子封存の雜湊だけ追従、本封存の内容は不変。"
+    },
+    {
+      "kind": "CHAYA_DRINK_REMOVED",
+      "at": "2026-10-16",
+      "frozen": {
+        "godot/scripts/npc_activity_overlay.gd": [
+          "dc6258ab90c2d1a64d107e96d0f934a302a20399ddc99fbb3f6b753c39e86ceb",
+          "074c64e80c5e5fe43ac579c512c5f047c2adbf006cee36ac9d24a8d13f1c0402"
+        ],
+        "godot/tools/verify_p10_activity.gd": [
+          "83a20a678b83085069604eb9a17a08f57f8deae94dceacdaa213b10932913149",
+          "c8833fdd756623e041d2b439da96bf36cacbc765f7e05b6636a7b019597e371c"
+        ]
+      },
+      "content": {
+        "assignments": "removed MarketWest/W3_chaya_f01 → removed_assignments"
+      },
+      "seal_file_before": "10663d339be0eb28f7788307aadba8739c48729762a407874974b3a053bf2ebb",
+      "approved_by": "user（2026-10-16 指示「請把茶屋少女 喝水這個動作刪除」）",
+      "reason": "茶屋少女（chaya_f01）の喝水（Drink：drinking_im1_a030＋茶碗）を全配置から削除し、基線 Idle に戻す。人數・位置・朝向・mode は不変。 R3c ASSIGN から W3 茶屋少女の Drink を削除（W3 は基線 Idle に戻る）。杯の握持・tea_cup・時々飲む処理は未使用の vocabulary として残す。 limited verifier correction：指派数 8→7・類型 5→4（Drink 削除に追従）。判定ロジックは不変。"
     }
-  ]
+  ],
+  "removed_assignments": {
+    "MarketWest/W3_chaya_f01": {
+      "type": "Drink",
+      "npc": "chaya_f01",
+      "clip": "drinking_im1_a030",
+      "slot": "idle",
+      "options": {},
+      "mixamo": {
+        "name": "Drinking",
+        "product": "c9c63255-b96c-11e4-a802-0aaa78deedf9",
+        "character_uuid": "32cf6b5e-a362-485b-9166-bc70c1c04748",
+        "model_id": 101330902,
+        "params": "-1,0",
+        "inplace": false
+      },
+      "arm_space": 0.3,
+      "removed": "2026-10-16",
+      "approved_by": "user（2026-10-16 指示「請把茶屋少女 喝水這個動作刪除」）"
+    }
+  }
 }

@@ -219,6 +219,15 @@ func complete_quest(quest_id: String) -> void:
 	if q != null:
 		for f in q.complete_flags:
 			StoryFlags.set_flag(String(f), true)
+		for reward in q.rewards:
+			if reward == null or not reward.has_method("is_valid") or not reward.call("is_valid"):
+				push_warning("[QuestManager] %s 含無效道具獎勵" % id)
+				continue
+			var item_id := String(reward.get("item_id"))
+			var amount := int(reward.get("amount"))
+			var overflow := InventoryManager.add_item(item_id, amount)
+			if overflow > 0:
+				push_warning("[QuestManager] %s 的獎勵 %s 有 %d 個未能加入背包" % [id, item_id, overflow])
 	quest_completed.emit(id)
 	var chained := false
 	if q != null and not q.next_quest_id.is_empty():

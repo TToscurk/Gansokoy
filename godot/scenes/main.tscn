@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1"]
 [ext_resource type="PackedScene" path="res://characters/yoriichi/player_yoriichi.tscn" id="2"]
 
 [ext_resource type="Shader" path="res://shaders/sky_cumulus.gdshader" id="3"]
+[ext_resource type="Script" path="res://ui/gensokyo/gensokyo_interaction_prompt.gd" id="4_prompt"]
 
 [sub_resource type="ShaderMaterial" id="sky"]
 shader = ExtResource("3")
@@ -70,17 +71,14 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -110.0
-offset_top = -92.0
-offset_right = 110.0
-offset_bottom = -52.0
-theme_override_colors/font_color = Color(1, 0.94, 0.72, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 2
+offset_left = -160.0
+offset_top = -170.0
+offset_right = 160.0
+offset_bottom = -130.0
 theme_override_font_sizes/font_size = 22
 text = "E：交談"
 horizontal_alignment = 1
+script = ExtResource("4_prompt")
 
 [node name="InteractionMessage" type="Label" parent="UI"]
 visible = false

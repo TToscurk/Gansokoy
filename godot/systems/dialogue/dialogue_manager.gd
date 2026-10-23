@@ -4,7 +4,8 @@ extends Node
 ## 資料：res://data/dialogue/<dialogue_id>.json
 ##   { "start": "node_id" | [ {"if": cond, "node": id}, ... ],
 ##     "nodes": { id: { speaker, portrait, text, choices:[{text,next}], next,
-##                      set_flags:[...], quest_event:{type,target} , "if": cond } } }
+##                      set_flags:[...], give_items:[{id,amount}], take_items:[{id,amount}],
+##                      quest_event:{type,target}, "if": cond } }
 ## 立繪：res://data/portraits.json  { character_id: { name, portraits: {state: path} } }
 ##
 ## 只發 signal；UI 與玩家鎖定由監聽者處理。往下只呼叫 QuestManager / StoryFlags。
@@ -84,6 +85,23 @@ func _show(node_id: String) -> void:
 	# 副作用：先於顯示，這樣同一節點的 text 能反映結果也無妨
 	for f in n.get("set_flags", []):
 		StoryFlags.set_flag(String(f), true)
+	for raw_item in n.get("give_items", []):
+		if raw_item is not Dictionary:
+			continue
+		var give: Dictionary = raw_item
+		var give_id := String(give.get("id", ""))
+		var give_amount := maxi(int(give.get("amount", 1)), 1)
+		var overflow := InventoryManager.add_item(give_id, give_amount)
+		if overflow > 0:
+			push_warning("[Dialogue] %s 有 %d 個 %s 未能加入背包" % [_dialogue_id, overflow, give_id])
+	for raw_item in n.get("take_items", []):
+		if raw_item is not Dictionary:
+			continue
+		var take: Dictionary = raw_item
+		var take_id := String(take.get("id", ""))
+		var take_amount := maxi(int(take.get("amount", 1)), 1)
+		if not InventoryManager.remove_item(take_id, take_amount):
+			push_warning("[Dialogue] %s 無法移除 %d 個 %s" % [_dialogue_id, take_amount, take_id])
 	if n.has("quest_event"):
 		var ev: Dictionary = n["quest_event"]
 		QuestManager.report_event(ev.get("type", ""), String(ev.get("target", "")), int(ev.get("amount", 1)))

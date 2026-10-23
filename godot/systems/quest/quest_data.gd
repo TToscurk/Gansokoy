@@ -6,6 +6,8 @@ class_name QuestData
 @export var title: String = ""
 @export_multiline var description: String = ""
 @export var objectives: Array[QuestObjective] = []
+## 完成任務時加入 InventoryManager 的道具（可空）。
+@export var rewards: Array[Resource] = []
 @export var next_quest_id: String = ""
 ## 完成時設的劇情旗標（可空）
 @export var complete_flags: PackedStringArray = []

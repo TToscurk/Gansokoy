@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://systems/inventory/item_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+item_id = "kujiratei_room_key"
+display_name = "鯢吞亭客房鑰匙"
+description = "美宵交給你的客房鑰匙。這代表你在人間之里暫時有了落腳處。"
+category = 1
+max_stack = 1

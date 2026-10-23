@@ -1,0 +1,640 @@
+{
+ "_note": "人間之里 V2 暖簾の字（2026-10-21 使用者指示：字の無い・幾何紋の布簾を相応の字へ）。cells＝暖簾 1 種（text 字数＝幅数；cloth/ink 色名）；buildings＝棟 id→cell。主街の 商い は封存 StreetP10 の実際の店先物件（data/village_v2_p13_mainstreet.json の cat と同源）、arch の用途は w9r2_lib.gd の注記、商い不明の裏通りの店は屋号／商いを割当て（tools/build_village_v2_noren_text_atlas.py が atlas、godot/tools/village_v2_noren_text_apply.gd がメッシュ／arch、tools/patch_village_v2_noren_text.py がシーンへ反映）。",
+ "cloth": {
+  "navy": "#2E3F5C",
+  "brown": "#5A3E2B",
+  "char": "#55585A",
+  "cream": "#D8CFBA",
+  "rust": "#6E2F22",
+  "green": "#3F5A34",
+  "asagi": "#2F5560",
+  "plum": "#4E3550",
+  "mustard": "#7A5F2A",
+  "age_ai": "#2B4160",
+  "age_beni": "#9E3A2E",
+  "age_kinari": "#D2C9AE"
+ },
+ "ink": {
+  "light": [
+   226,
+   220,
+   204
+  ],
+  "sumi": [
+   34,
+   30,
+   26
+  ],
+  "navy": [
+   46,
+   63,
+   92
+  ]
+ },
+ "cells": {
+  "sake": {
+   "text": "酒屋",
+   "cloth": "navy",
+   "ink": "light"
+  },
+  "sakana": {
+   "text": "魚屋",
+   "cloth": "asagi",
+   "ink": "light"
+  },
+  "kome": {
+   "text": "米屋",
+   "cloth": "cream",
+   "ink": "sumi"
+  },
+  "hakimono": {
+   "text": "履物",
+   "cloth": "brown",
+   "ink": "light"
+  },
+  "abura": {
+   "text": "油屋",
+   "cloth": "mustard",
+   "ink": "light"
+  },
+  "tofu": {
+   "text": "豆腐",
+   "cloth": "cream",
+   "ink": "sumi"
+  },
+  "chaya": {
+   "text": "茶屋",
+   "cloth": "green",
+   "ink": "light"
+  },
+  "chacha": {
+   "text": "茶茶",
+   "cloth": "green",
+   "ink": "light"
+  },
+  "kusuri": {
+   "text": "薬屋",
+   "cloth": "char",
+   "ink": "light"
+  },
+  "kusuri_ton": {
+   "text": "薬種問屋",
+   "cloth": "plum",
+   "ink": "light"
+  },
+  "aomono_ton": {
+   "text": "青物問屋",
+   "cloth": "green",
+   "ink": "light"
+  },
+  "yaoya": {
+   "text": "八百屋",
+   "cloth": "green",
+   "ink": "light"
+  },
+  "aramono": {
+   "text": "荒物",
+   "cloth": "char",
+   "ink": "light"
+  },
+  "seto": {
+   "text": "瀬戸",
+   "cloth": "cream",
+   "ink": "navy"
+  },
+  "meshi": {
+   "text": "飯屋",
+   "cloth": "rust",
+   "ink": "light"
+  },
+  "ichizen": {
+   "text": "一膳飯屋",
+   "cloth": "rust",
+   "ink": "light"
+  },
+  "okashi": {
+   "text": "御菓子",
+   "cloth": "plum",
+   "ink": "light"
+  },
+  "dango": {
+   "text": "団子",
+   "cloth": "cream",
+   "ink": "navy"
+  },
+  "hatago": {
+   "text": "旅籠",
+   "cloth": "navy",
+   "ink": "light"
+  },
+  "yorozu": {
+   "text": "萬屋",
+   "cloth": "brown",
+   "ink": "light"
+  },
+  "gofuku": {
+   "text": "呉服",
+   "cloth": "plum",
+   "ink": "light"
+  },
+  "choju": {
+   "text": "長寿",
+   "cloth": "char",
+   "ink": "light"
+  },
+  "fukuju": {
+   "text": "福寿",
+   "cloth": "brown",
+   "ink": "light"
+  },
+  "soba": {
+   "text": "蕎麦",
+   "cloth": "brown",
+   "ink": "light"
+  },
+  "kamiyui": {
+   "text": "髪結",
+   "cloth": "char",
+   "ink": "light"
+  },
+  "shichi": {
+   "text": "質屋",
+   "cloth": "navy",
+   "ink": "light"
+  },
+  "kasa": {
+   "text": "傘屋",
+   "cloth": "asagi",
+   "ink": "light"
+  },
+  "chochin": {
+   "text": "提灯",
+   "cloth": "rust",
+   "ink": "light"
+  },
+  "senbei": {
+   "text": "煎餅",
+   "cloth": "mustard",
+   "ink": "light"
+  },
+  "kami": {
+   "text": "紙屋",
+   "cloth": "cream",
+   "ink": "sumi"
+  },
+  "fudesumi": {
+   "text": "筆墨",
+   "cloth": "cream",
+   "ink": "sumi"
+  },
+  "himono": {
+   "text": "干物",
+   "cloth": "asagi",
+   "ink": "light"
+  },
+  "miso": {
+   "text": "味噌",
+   "cloth": "brown",
+   "ink": "light"
+  },
+  "tsukemono": {
+   "text": "漬物",
+   "cloth": "green",
+   "ink": "light"
+  },
+  "furugi": {
+   "text": "古着",
+   "cloth": "char",
+   "ink": "light"
+  },
+  "sumiya": {
+   "text": "炭屋",
+   "cloth": "char",
+   "ink": "light"
+  },
+  "shoyu": {
+   "text": "醤油",
+   "cloth": "navy",
+   "ink": "light"
+  },
+  "takezaiku": {
+   "text": "竹細工",
+   "cloth": "green",
+   "ink": "light"
+  },
+  "furudogu": {
+   "text": "古道具",
+   "cloth": "brown",
+   "ink": "light"
+  },
+  "oyado": {
+   "text": "御宿",
+   "cloth": "navy",
+   "ink": "light"
+  },
+  "tabako": {
+   "text": "煙草",
+   "cloth": "plum",
+   "ink": "light"
+  },
+  "age_aramono_ai": {
+   "kind": "age",
+   "text": "荒物",
+   "cloth": "age_ai",
+   "ink": "light",
+   "age_color": "ai"
+  },
+  "age_gofuku_ai": {
+   "kind": "age",
+   "text": "呉服",
+   "cloth": "age_ai",
+   "ink": "light",
+   "age_color": "ai"
+  },
+  "age_sake_ai": {
+   "kind": "age",
+   "text": "酒屋",
+   "cloth": "age_ai",
+   "ink": "light",
+   "age_color": "ai"
+  },
+  "age_seto_kinari": {
+   "kind": "age",
+   "text": "瀬戸",
+   "cloth": "age_kinari",
+   "ink": "navy",
+   "age_color": "kinari"
+  },
+  "age_aomono_kinari": {
+   "kind": "age",
+   "text": "青物",
+   "cloth": "age_kinari",
+   "ink": "navy",
+   "age_color": "kinari"
+  },
+  "age_kanbutsu_beni": {
+   "kind": "age",
+   "text": "乾物",
+   "cloth": "age_beni",
+   "ink": "light",
+   "age_color": "beni"
+  },
+  "age_chaya_beni": {
+   "kind": "age",
+   "text": "茶屋",
+   "cloth": "age_beni",
+   "ink": "light",
+   "age_color": "beni"
+  },
+  "age_fukuju_ai": {
+   "kind": "age",
+   "text": "福寿",
+   "cloth": "age_ai",
+   "ink": "light",
+   "age_color": "ai"
+  },
+  "age_kiraku_ai": {
+   "kind": "age",
+   "text": "喜楽",
+   "cloth": "age_ai",
+   "ink": "light",
+   "age_color": "ai"
+  },
+  "age_jufuku_ai": {
+   "kind": "age",
+   "text": "寿福",
+   "cloth": "age_ai",
+   "ink": "light",
+   "age_color": "ai"
+  },
+  "age_kissho_beni": {
+   "kind": "age",
+   "text": "吉祥",
+   "cloth": "age_beni",
+   "ink": "light",
+   "age_color": "beni"
+  },
+  "age_kofuku_beni": {
+   "kind": "age",
+   "text": "幸福",
+   "cloth": "age_beni",
+   "ink": "light",
+   "age_color": "beni"
+  },
+  "age_chitose_kinari": {
+   "kind": "age",
+   "text": "千歳",
+   "cloth": "age_kinari",
+   "ink": "navy",
+   "age_color": "kinari"
+  },
+  "age_choju_kinari": {
+   "kind": "age",
+   "text": "長寿",
+   "cloth": "age_kinari",
+   "ink": "navy",
+   "age_color": "kinari"
+  },
+  "age_kissho_kinari": {
+   "kind": "age",
+   "text": "吉祥",
+   "cloth": "age_kinari",
+   "ink": "navy",
+   "age_color": "kinari"
+  },
+  "stall_yasai": {
+   "kind": "stall",
+   "text": "やさい",
+   "cloth": "navy",
+   "ink": "light"
+  },
+  "stall_cha": {
+   "kind": "stall",
+   "text": "御茶",
+   "cloth": "green",
+   "ink": "light"
+  },
+  "stall_sakana": {
+   "kind": "stall",
+   "text": "さかな",
+   "cloth": "asagi",
+   "ink": "light"
+  },
+  "stall_ame": {
+   "kind": "stall",
+   "text": "あめ",
+   "cloth": "rust",
+   "ink": "light"
+  },
+  "stall_ichi": {
+   "kind": "stall",
+   "text": "市",
+   "cloth": "navy",
+   "ink": "light"
+  }
+ },
+ "buildings": {
+  "B_P_MKT_001": "sakana",
+  "B_P_MKT_002": "hakimono",
+  "B_P_MKT_003": "ichizen",
+  "B_P_MKT_004": "seto",
+  "B_P_MKT_005": "yorozu",
+  "B_P_MKT_009": "chacha",
+  "B_P_MKT_011": "aramono",
+  "B_P_MKT_012": "sake",
+  "B_P_MKT_013": "kusuri",
+  "B_P_MKT_015": "aomono_ton",
+  "B_P_MKT_016": "abura",
+  "B_P_MKT_017": "sake",
+  "B_P_MKT_018": "fukuju",
+  "B_P_MKT_019": "aramono",
+  "B_P_MKT_020": "tofu",
+  "B_P_MKT_021": "kusuri_ton",
+  "B_P_MKT_022": "chaya",
+  "B_P_MKT_023": "kome",
+  "B_P_MKT_024": "abura",
+  "B_P_MKT_025": "sakana",
+  "B_P_MKT_026": "hakimono",
+  "B_P_MKT_027": "meshi",
+  "B_P_MKT_028": "choju",
+  "B_P_MKT_029": "gofuku",
+  "B_P_MKT_030": "seto",
+  "B_P_MKT_031": "okashi",
+  "B_P_MXC_001": "hatago",
+  "B_P_MXC_002": "dango",
+  "B_P_MXC_003": "tofu",
+  "B_P_MXC_007": "yaoya",
+  "B_P_MKT_032": "soba",
+  "B_P_MKT_034": "kamiyui",
+  "B_P_MKT_035": "shichi",
+  "B_P_MKT_037": "kasa",
+  "B_P_MKT_041": "chochin",
+  "B_P_MKT_043": "senbei",
+  "B_P_MKT_044": "kami",
+  "B_P_MKT_050": "fudesumi",
+  "B_P_MKT_046": "himono",
+  "B_P_MKT_047": "miso",
+  "B_P_MKT_052": "tsukemono",
+  "B_P_MKT_053": "furugi",
+  "B_P_MKT_055": "sumiya",
+  "B_P_SGT_001": "oyado",
+  "B_P_MXC_010": "shoyu",
+  "B_P_MXC_012": "takezaiku",
+  "B_P_MXC_020": "furudogu",
+  "B_P_MXC_022": "tabako",
+  "B_P_MXC_017": "gofuku",
+  "B_P_MKT_058": "shichi",
+  "B_P_MKT_056": "soba",
+  "B_P_MKT_059": "kasa"
+ },
+ "k_buildings_note": "AlbedoBatch1P13.targets（W7 batch1）の棟。ここは町家 Kit の材質が実行期に K 版（kit_cal.gdshader）へ差し替わるので、暖簾にも同じ K 版（NT_Noren_K）を節点の surface_material_override に付ける。",
+ "k_buildings": [
+  "B_P_MKT_032",
+  "B_P_MKT_034",
+  "B_P_MKT_035",
+  "B_P_MKT_037",
+  "B_P_MKT_038",
+  "B_P_MKT_039",
+  "B_P_MKT_040",
+  "B_P_MKT_041",
+  "B_P_MKT_042",
+  "B_P_MKT_043",
+  "B_P_MKT_049",
+  "B_P_MKT_053",
+  "B_P_MKT_055",
+  "B_P_MKT_058",
+  "B_P_MKT_059",
+  "B_P_MKT_060",
+  "B_P_MXC_009",
+  "B_P_MXC_010",
+  "B_P_MXC_013",
+  "B_P_MXC_014",
+  "B_P_MXC_015",
+  "B_P_MXC_018",
+  "B_P_MXC_019",
+  "B_P_MXC_023",
+  "B_P_RNE_001",
+  "B_P_RNE_002",
+  "B_P_RNE_007",
+  "B_P_RNE_010",
+  "B_P_RNE_012",
+  "B_P_RSW_007",
+  "B_P_RSW_010",
+  "B_P_RSW_017",
+  "B_P_RSW_022",
+  "B_P_RSW_023",
+  "B_P_RSW_027",
+  "B_P_RSW_029",
+  "B_P_RSW_033",
+  "B_P_RSW_034",
+  "B_P_RSW_036",
+  "B_P_RSW_045",
+  "B_P_RSW_046",
+  "B_P_RSW_048",
+  "B_P_RSW_059",
+  "B_P_RSW_071",
+  "B_P_RSW_072",
+  "B_P_RSW_073",
+  "B_P_RSW_074",
+  "B_P_RSW_075",
+  "B_P_RSW_076",
+  "B_P_RSW_077"
+ ],
+ "age_props_note": "掀げ暖簾（mise_kit ms_noren_age_*）：節点ごとに字を変えるので、overlay の .scn（LOD0／LOD1 の mesh）を節点単位で差し替える。キーは店 id（MW_＝MarketWest の店、H_／AH_／BH_＝戸口に暖簾を掛ける家）。",
+ "age_props": {
+  "MW_N1": {
+   "scene": "res://maps/village_v2/gen/market_west_p10.scn",
+   "path": "Signs/003_ms_noren_age_ai",
+   "cell": "age_aramono_ai"
+  },
+  "MW_N2": {
+   "scene": "res://maps/village_v2/gen/market_west_p10.scn",
+   "path": "Signs/010_ms_noren_age_ai",
+   "cell": "age_gofuku_ai"
+  },
+  "MW_N3": {
+   "scene": "res://maps/village_v2/gen/market_west_p10.scn",
+   "path": "Signs/017_ms_noren_age_kinari",
+   "cell": "age_seto_kinari"
+  },
+  "MW_N4": {
+   "scene": "res://maps/village_v2/gen/market_west_p10.scn",
+   "path": "Signs/024_ms_noren_age_beni",
+   "cell": "age_kanbutsu_beni"
+  },
+  "MW_N6": {
+   "scene": "res://maps/village_v2/gen/market_west_p10.scn",
+   "path": "Signs/029_ms_noren_age_beni",
+   "cell": "age_chaya_beni"
+  },
+  "MW_S2": {
+   "scene": "res://maps/village_v2/gen/market_west_p10.scn",
+   "path": "Signs/037_ms_noren_age_kinari",
+   "cell": "age_aomono_kinari"
+  },
+  "MW_S4": {
+   "scene": "res://maps/village_v2/gen/market_west_p10.scn",
+   "path": "Signs/046_ms_noren_age_ai",
+   "cell": "age_sake_ai"
+  },
+  "H_RSW_046": {
+   "scene": "res://maps/village_v2/gen/enrich_w9_p13.scn",
+   "path": "ZoneR/H_RSW_046/000_ms_noren_age_ai",
+   "cell": "age_fukuju_ai"
+  },
+  "H_RSW_049": {
+   "scene": "res://maps/village_v2/gen/enrich_w9_p13.scn",
+   "path": "ZoneR/H_RSW_049/009_ms_noren_age_beni",
+   "cell": "age_kissho_beni"
+  },
+  "H_RSW_053": {
+   "scene": "res://maps/village_v2/gen/enrich_w9_p13.scn",
+   "path": "ZoneR/H_RSW_053/017_ms_noren_age_kinari",
+   "cell": "age_chitose_kinari"
+  },
+  "H_RSW_059": {
+   "scene": "res://maps/village_v2/gen/enrich_w9_p13.scn",
+   "path": "ZoneR/H_RSW_059/020_ms_noren_age_kinari",
+   "cell": "age_choju_kinari"
+  },
+  "H_RSW_061": {
+   "scene": "res://maps/village_v2/gen/enrich_w9_p13.scn",
+   "path": "ZoneR/H_RSW_061/025_ms_noren_age_ai",
+   "cell": "age_kiraku_ai"
+  },
+  "H_RSW_066": {
+   "scene": "res://maps/village_v2/gen/enrich_w9_p13.scn",
+   "path": "ZoneR/H_RSW_066/037_ms_noren_age_beni",
+   "cell": "age_kofuku_beni"
+  },
+  "AH_RSW_013": {
+   "scene": "res://maps/village_v2/gen/enrich_w9p4.scn",
+   "path": "ZoneB4/AH_RSW_013/062_ms_noren_age_ai",
+   "cell": "age_jufuku_ai"
+  },
+  "BH_RNE_003": {
+   "scene": "res://maps/village_v2/gen/enrich_w9p8.scn",
+   "path": "ZoneB8/BH_RNE_003/050_ms_noren_age_kinari",
+   "cell": "age_kissho_kinari"
+  },
+  "BH_RNE_013": {
+   "scene": "res://maps/village_v2/gen/enrich_w9p8.scn",
+   "path": "ZoneB8/BH_RNE_013/064_ms_noren_age_ai",
+   "cell": "age_fukuju_ai"
+  }
+ },
+ "inplace_meshes_note": "屋台・木戸のメッシュは 1 節点ずつしか使われていない（MarketP10 Stalls／MarketWestP10 Entrances）ので、メッシュ資源をそのまま書き換える（region＝market_kit atlas の旧区画名）。",
+ "inplace_meshes": [
+  {
+   "mesh": "res://assets/village_v2/market_kit/mesh/mk_yatai_yasai.res",
+   "region": "noren_mon",
+   "cell": "stall_yasai"
+  },
+  {
+   "mesh": "res://assets/village_v2/market_kit/mesh/mk_yatai_yasai_l1.res",
+   "region": "noren_mon",
+   "cell": "stall_yasai"
+  },
+  {
+   "mesh": "res://assets/village_v2/market_kit/mesh/mk_yatai_cha.res",
+   "region": "noren_mon",
+   "cell": "stall_cha"
+  },
+  {
+   "mesh": "res://assets/village_v2/market_kit/mesh/mk_yatai_cha_l1.res",
+   "region": "noren_mon",
+   "cell": "stall_cha"
+  },
+  {
+   "mesh": "res://assets/village_v2/market_kit/mesh/mk_yatai_sakana.res",
+   "region": "noren_mon",
+   "cell": "stall_sakana"
+  },
+  {
+   "mesh": "res://assets/village_v2/market_kit/mesh/mk_yatai_sakana_l1.res",
+   "region": "noren_mon",
+   "cell": "stall_sakana"
+  },
+  {
+   "mesh": "res://assets/village_v2/market_kit/mesh/mk_yatai_ame.res",
+   "region": "noren_dango",
+   "cell": "stall_ame"
+  },
+  {
+   "mesh": "res://assets/village_v2/market_kit/mesh/mk_yatai_ame_l1.res",
+   "region": "noren_dango",
+   "cell": "stall_ame"
+  },
+  {
+   "mesh": "res://assets/village_v2/mise_kit/mesh/ms_kido_50.res",
+   "region": "noren_mon",
+   "cell": "stall_ichi",
+   "ucrop": [
+    0.17,
+    0.83
+   ]
+  },
+  {
+   "mesh": "res://assets/village_v2/mise_kit/mesh/ms_kido_50_l1.res",
+   "region": "noren_mon",
+   "cell": "stall_ichi",
+   "ucrop": [
+    0.17,
+    0.83
+   ]
+  }
+ ],
+ "kit_props_note": "MarketWestP10 の中の合成町家（MW_N5 菓子・MW_S1 米屋）にも町家 Kit の暖簾 nr_noren_e_182 がある（village_v2.tscn の Districts 配下ではなく overlay の .scn 内）ので節点単位で差し替える。",
+ "kit_props": {
+  "MW_N5": {
+   "scene": "res://maps/village_v2/gen/market_west_p10.scn",
+   "path": "Buildings/MW_N5/Kit/LOD0/nr_noren_e_182_7",
+   "cell": "okashi"
+  },
+  "MW_S1": {
+   "scene": "res://maps/village_v2/gen/market_west_p10.scn",
+   "path": "Buildings/MW_S1/Kit/LOD0/nr_noren_e_182_10",
+   "cell": "kome"
+  }
+ }
+}
