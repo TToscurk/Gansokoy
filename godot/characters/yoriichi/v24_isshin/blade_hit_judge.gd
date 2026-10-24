@@ -19,6 +19,9 @@ const Y_MAX := 1.95
 var prev_xf := Transform3D()
 var last_xf := Transform3D()
 var radius_fn: Callable = dummy_r
+## R16c：幀間插值段數（預設＝SUBSTEPS＝原樣）；只有刀速極快的候選（炎舞 2 倍速，刀尖 145 m/s）由場景依技能設定調高，
+## 讓每段的取樣間距和原速時相同（判定條件本身——刀身範圍、半徑、切入深度——不變）
+var substeps := SUBSTEPS
 
 static func dummy_r(y: float) -> float:
 	if y > 1.6:
@@ -39,8 +42,8 @@ func test(cur: Transform3D, target: Vector3, shot_t: float, dt: float, strikes: 
 		if shot_t >= float(w[0]) and shot_t <= float(w[1]) and t0 < float(w[0]) and dt > 0.0:
 			wmin = clampf((float(w[0]) - t0) / dt, 0.0, 1.0)
 	var prev := prev_xf if prev_xf != Transform3D() else cur
-	for k in range(1, SUBSTEPS + 1):
-		var w2 := float(k) / float(SUBSTEPS)
+	for k in range(1, substeps + 1):
+		var w2 := float(k) / float(substeps)
 		if w2 < wmin - 1e-4:
 			continue
 		var xf := prev.interpolate_with(cur, w2)

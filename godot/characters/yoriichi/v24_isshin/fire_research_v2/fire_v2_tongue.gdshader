@@ -11,6 +11,8 @@ uniform sampler2D noise_tex : hint_default_white, filter_linear_mipmap, repeat_e
 uniform sampler2D depth_tex : hint_depth_texture, filter_nearest;
 uniform float fx_time = 0.0;          // 由腳本推進；Hit Stop 時不前進
 uniform float brightness = 1.0;
+uniform float pink = 0.0;             // R16b：淡粉紅火舌尖端（0＝關＝舊行為）
+uniform vec3 col_pink = vec3(1.0, 0.45, 0.58);
 uniform float occlusion = 0.80;       // 熱區擋掉背景的比例（0＝純加法）；顏色永遠是亮的，所以高覆蓋也不會變棕
 
 varying float v_age;
@@ -71,6 +73,12 @@ void fragment() {
 	float cov = dens * birth * death * v_int;
 	float soft = soft_depth(depth_tex, SCREEN_UV, VERTEX.z, INV_PROJECTION_MATRIX, 0.12);
 	cov *= soft;
-	ALBEDO = fire_ramp(heat) * cov * brightness;
-	ALPHA = cov * occlusion * smoothstep(0.08, 0.40, heat);
+	vec3 fc = fire_ramp(heat);
+	// 淡粉紅：只在火舌上段（尖端）、溫度低處，噪聲決定有沒有，越老越多；亮度跟著原本的火色（不會比火亮）
+	// R16b 第二輪：尖端溫度低＝原本幾乎透明，粉紅看不到 → 粉紅處保留不透明度、亮度不低於 0.5
+	float pk = pink * smoothstep(0.55, 0.9, yy) * smoothstep(0.45, 0.68, n) * (1.0 - smoothstep(0.25, 0.6, heat)) * smoothstep(0.15, 0.6, a);
+	pk = clamp(pk, 0.0, 0.85);
+	fc = mix(fc, col_pink * max(fc.r, 0.5), pk);
+	ALBEDO = fc * cov * brightness;
+	ALPHA = cov * occlusion * max(smoothstep(0.08, 0.40, heat), pk * 0.75);
 }

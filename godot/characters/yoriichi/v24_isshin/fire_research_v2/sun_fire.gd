@@ -25,6 +25,8 @@ const SH_PROC := preload("res://characters/yoriichi/v24_isshin/fire_research_v2/
 const SH_FLASH := preload("res://characters/yoriichi/v24_isshin/fire_research_v2/fire_v2_flash.gdshader")
 const SH_EDGE := preload("res://characters/yoriichi/v24_isshin/fire_research_v2/fire_v2_blade.gdshader")
 const SH_STROKE := preload("res://characters/yoriichi/v24_isshin/fire_research_v2/sun_fire_stroke.gdshader")
+## R16 招式主特效（AOE 視覺）子模組：只在 profile 有 "aoe" 時運作；沒有 aoe 的 profile（R9–R15）行為不變
+const AoeR16 = preload("res://characters/yoriichi/v24_isshin/fire_research_v2/sun_fire_aoe.gd")
 const BAND := preload("res://characters/yoriichi/v24_isshin/fire_research_v2/stylized_flame_band.png")
 const NOISE := preload("res://characters/yoriichi/v24_isshin/fire_research_v2/fire_noise_v2.png")
 const TEX := {
@@ -91,11 +93,14 @@ var _aura_n := 0
 var _blade_level := 0.0
 var _hit_strikes := {}
 var _prewarm := 4
+var hit_bursts := 0                 # 檢查用：命中爆炎實際生成次數／因 hit_burst_enabled 關閉而略過的次數
+var hit_bursts_skipped := 0
 
 var hits_spawned := 0
 var hits_ignored := 0
 var frozen_frames := 0
 var n_emit := {"burst": 0, "spark": 0}
+var aoe: Node3D                          # R16 招式主特效（sun_fire_aoe.gd）
 
 func setup(actor_: Node3D, sword_: Node3D, cam_: Camera3D) -> void:
 	actor = actor_
@@ -105,6 +110,12 @@ func setup(actor_: Node3D, sword_: Node3D, cam_: Camera3D) -> void:
 	global_transform = Transform3D.IDENTITY
 	rng.seed = 7741
 	profiles = JSON.parse_string(FileAccess.get_file_as_string(PROFILES))
+	aoe = AoeR16.new()
+	aoe.name = "SunAoeR16"
+	add_child(aoe)
+	aoe.setup(actor, cam)
+	aoe.ember = func(p: Vector3, v: Vector3) -> void:
+		_emit(sparks, p, v, Vector3.UP, rng.randf_range(0.012, 0.02), 0.03, rng.randf_range(0.45, 0.9), 3, 1.0)
 	# 第一層＋第三層：原始 R9 刀光（取樣、幾何、時鐘全用原檔），只換兩個材質
 	trail = TrailR9.new()
 	trail.name = "SunTrailR9"
@@ -287,7 +298,14 @@ func begin(key: String) -> void:
 	core_mat.set_shader_parameter("gain", float(tr.get("core_gain", 0.5)))
 	trail_mat.set_shader_parameter("heat_gain", float(tr.get("flame_heat", 1.0)))
 	trail_mat.set_shader_parameter("occlusion", float(tr.get("flame_occlusion", 0.5)))
+	# R16b 淡粉紅火舌末端：profile.pink（沒設＝0＝舊行為）同時給命中爆燃／刀身小火、風格化火帶、招式主特效
+	tongue_mat.set_shader_parameter("pink", float(prof.get("pink", 0.0)))
 	_begin_stroke()
+	var asp: Dictionary = prof.get("aoe", {})
+	if not asp.is_empty() and not asp.has("pink") and prof.has("pink"):
+		asp = asp.duplicate()
+		asp["pink"] = prof["pink"]
+	aoe.begin(asp)
 	var mp: Dictionary = prof.get("mesh", {})
 	cur = sets.get(str(mp.get("glb", "")), {})
 	if not cur.is_empty():
@@ -333,6 +351,7 @@ func _begin_stroke() -> void:
 	_stroke = _stroke_paths[path]
 	stroke_mat.set_shader_parameter("vanish_age", 99.0)     # 選用參數先回預設：上一招設過的不帶到這一招
 	stroke_mat.set_shader_parameter("vanish_soft", 0.12)
+	stroke_mat.set_shader_parameter("pink", float(prof.get("pink", 0.0)))
 	for key in sp:
 		if key != "path" and key != "inner" and key != "outer" and not str(key).begins_with("_"):
 			var v = sp[key]
@@ -442,6 +461,7 @@ func end() -> void:
 	if not active:
 		return
 	active = false
+	aoe.end()
 	_cut_t = skill_t
 	stroke_mat.set_shader_parameter("cut_t", _cut_t)
 	if not cur.is_empty():
@@ -456,6 +476,7 @@ func end() -> void:
 func clear() -> void:
 	active = false
 	_fading = false
+	aoe.clear()
 	if trail.is_emitting:
 		trail.stop_trail()
 	trail._runs.clear()
@@ -497,6 +518,8 @@ func frame(xf: Transform3D, t: float, dt: float, freeze: bool, tip_speed: float)
 		frozen_frames += 1
 	fx_time += adt
 	skill_t = t
+	aoe.blade_xf = xf
+	aoe.frame(t, dt, freeze, enabled)
 	if _fading:
 		_fade = move_toward(_fade, 0.0, dt / 0.25)
 	if not freeze:
@@ -634,6 +657,14 @@ func hit(pos: Vector3, dir: Vector3, normal := Vector3.ZERO, strike := 0) -> voi
 	var cut := dir.normalized() if dir.length() > 0.1 else Vector3.DOWN
 	var nrm := normal.normalized() if normal.length() > 0.1 else -cut
 	_flare = 1.0
+	# 命中爆炎（使用者規則）：命中時額外生成的高溫裂口、爆燃火舌、命中火星、主特效裡 on_hit 的爆燃，預設全部關閉（R16c：全部招式都關，
+	# 命中火星也不生成）；只有 profile 明確寫 hit_burst_enabled: true 才有。傷害、Hit Stop、碰撞、刀身火、主特效都不受影響。
+	var base := pos + nrm * 0.08
+	if not bool(prof.get("hit_burst_enabled", false)):
+		hit_bursts_skipped += 1
+		return
+	hit_bursts += 1
+	aoe.hit(pos, dir, strike)
 	# 高溫裂口：沿刀的行進方向拉長，中心放在接觸點「前方＋外側」，接觸點本身留給刀與目標
 	var mi: MeshInstance3D = _flash_pool[_flash_ix % _flash_pool.size()]
 	_flash_ix += 1
@@ -653,7 +684,6 @@ func hit(pos: Vector3, dir: Vector3, normal := Vector3.ZERO, strike := 0) -> voi
 	mi.visible = true
 	_flashes.append({"mi": mi, "t": 0.0, "life": float(H.get("flash_life", 0.16))})
 	# 定向爆燃＋火星：往「表面外法線＋刀的行進方向」噴
-	var base := pos + nrm * 0.08
 	for i in int(H.get("tongues", 5)):
 		var d := (cut * 0.65 + nrm * 0.85 + Vector3(rng.randf_range(-0.35, 0.35), rng.randf_range(-0.1, 0.45), rng.randf_range(-0.35, 0.35))).normalized()
 		_emit(bursts, base + d * rng.randf_range(0.02, 0.1), d * rng.randf_range(1.6, 3.4), (d + Vector3.UP * 0.6).normalized(),
@@ -704,7 +734,8 @@ func _do_prewarm() -> void:
 		var im: ImmediateMesh = pair[0]
 		im.surface_begin(Mesh.PRIMITIVE_TRIANGLE_STRIP, pair[1])
 		for v: Vector3 in [p - r - u, p - r + u, p + r - u, p + r + u]:
-			im.surface_set_color(Color(1, 1, 1, 0))
+			if im != _stroke_mesh:   # 火帶實際只送 uv／uv2（沒有顏色）：預熱要同一個頂點格式，否則第一次畫火帶會再編譯一次（R16b 日暈第一刀卡 100 ms 漏判）；UV2.x＝99 → 未點燃 → 不畫
+				im.surface_set_color(Color(1, 1, 1, 0))
 			im.surface_set_uv(Vector2(0.5, 0.5))
 			im.surface_set_uv2(Vector2(99.0, 0.0))
 			im.surface_add_vertex(v)
@@ -716,7 +747,8 @@ func _do_prewarm() -> void:
 	_emit(sparks, p, Vector3.ZERO, Vector3.UP, 0.01, 0.03, 0.05, 3, 0.0)
 
 func stats() -> Dictionary:
-	return {"hits": hits_spawned, "hits_ignored": hits_ignored, "freeze_frames": frozen_frames, "emitted": n_emit.duplicate(),
+	return {"profile": skill_key, "hits": hits_spawned, "hits_ignored": hits_ignored, "freeze_frames": frozen_frames, "emitted": n_emit.duplicate(),
 		"trail_live": trail.sample_count(), "fx_time": fx_time, "skill_t": skill_t, "frozen_arc": _frozen, "fade": _fade,
-		"flashes": _flashes.size(), "lights": 0, "mesh_parts": (cur.get("mats", {}) as Dictionary).keys() if not cur.is_empty() else [],
-		"trail_samples": trail.sample_count(), "sparks_est": 0, "hit_particles": 0, "stroke_pts": _stroke_pts.size(), "stroke_sync_err": stroke_sync_err}
+		"flashes": _flashes.size(), "lights": 0, "projectile_events": aoe.projectile_log.duplicate(true), "aoe_spawned": aoe.spawned, "aoe_peak": aoe.peak_items, "mesh_parts": (cur.get("mats", {}) as Dictionary).keys() if not cur.is_empty() else [],
+		"trail_samples": trail.sample_count(), "sparks_est": 0, "hit_particles": 0, "stroke_pts": _stroke_pts.size(), "stroke_sync_err": stroke_sync_err, "hit_bursts": hit_bursts, "hit_bursts_skipped": hit_bursts_skipped,
+		"burst_tongues": int(n_emit.get("burst", 0))}

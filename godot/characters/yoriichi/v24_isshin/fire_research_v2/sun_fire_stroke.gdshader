@@ -42,6 +42,10 @@ uniform float orange_gain = 1.25;
 uniform vec3 col_red = vec3(0.55, 0.035, 0.008);
 uniform float red_gain = 1.0;
 uniform vec3 col_line = vec3(0.07, 0.006, 0.002);
+// R16b 淡粉紅火舌末端（profile.pink 或 stroke.pink；0＝關＝舊行為）：只在外側火舌的橘紅區、由噪聲決定哪幾條有，撕裂時增加；不碰黃色核心、不描邊
+uniform float pink = 0.0;
+uniform vec3 col_pink = vec3(1.0, 0.45, 0.58);   // R16b 第二輪：略飽和（原 1.0/0.6/0.64 在橘紅旁邊幾乎看不出來）；pink＝0 時不用
+uniform float pink_gain = 1.0;
 
 varying float v_t0;
 varying float v_near;
@@ -99,6 +103,10 @@ void fragment() {
 	c = mix(c, col_white * white_gain, head * smoothstep(0.3, 0.0, V) * 0.5);
 	// 內部深色摺痕：只在橘／紅區
 	c = mix(c, col_red * 0.45, smoothstep(0.3, 0.6, tx.a) * (1.0 - sy) * 0.9);
+	float pz = texture(noise_tex, vec2(UV.x * 1.6 + 0.37, 0.61 + st * 0.07)).g;   // 低頻斑塊：火帶哪幾段有粉紅（隨跳格時間慢慢換＝若隱若現）
+	// R16b 第二輪：四個門檻相乘後幾乎是 0（實際畫面看不到）→ 放寬：外側火舌（V 高）、斑塊選中的那幾段、噪聲較高處；黃色區只留三成
+	float pk = pink * smoothstep(0.55, 0.85, V) * smoothstep(0.42, 0.62, pz) * smoothstep(0.35, 0.6, nn + er * 0.35) * (1.0 - sy * 0.7);
+	c = mix(c, col_pink * pink_gain, clamp(pk, 0.0, 0.8));
 	// 外側深色輪廓線（內緣不描，讓內側的黃色直接接背景）
 	float ol = (1.0 - smoothstep(outline_w * 0.6, outline_w, field)) * smoothstep(0.28, 0.42, V);
 	c = mix(c, col_line, ol);
