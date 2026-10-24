@@ -1,0 +1,341 @@
+{
+ "_doc": "R16 日之呼吸・幻日紅（雙手旋轉下斬候選，ART_REVIEW；R15 幻日紅 sun_genjitsu 保留可比較；notes/r16/build_genjitsu_r16.py）。旋轉繞行與 R15 相同（#521 女奏者 c7000 a000_003014：0.46 s 滑步繞到目標右後方 130°、同樣的轉身速度、3 個殘影；執行期依實際目標位置繞行，牆擋得住）。改的是收尾那一刀：原本 #521 的單手大橫掃換成 #300 葦名劍客 c1400 a000_003001 的雙手縱劈（從大上段那一格接入：旋轉最後把刀舉過頭、上步、腰肩手一起往下劈），上步那段 1.4 倍速、下劈原速、低姿收勢縮短；繞行最後加 1.20→1.05 m 的上步，讓刀真的砍到木樁。",
+ "name": "日之呼吸・幻日紅（R16 雙手下斬候選）",
+ "status": "ART_REVIEW",
+ "batch": "R16",
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16_genjitsu.json",
+ "source": "#521 女奏者 c7000 a000_003014（旋轉，TS 1.056）＋ #300 葦名劍客 c1400 a000_003001（雙手縱劈，TS 0.929）",
+ "timeline": "起步 0–0.16 s（Space 可取消）→ 繞行旋轉 0.16–0.62（3 個殘影）→ 舉刀上步 → 雙手下劈 0.78–0.96（爆燃）→ 收勢",
+ "damage": 3,
+ "cooldown": 1.0,
+ "charge_cancel": 0.16,
+ "targets": [
+  {
+   "name": "木樁 2.6 m（設計距離）",
+   "pos": [
+    0.0,
+    0.0,
+    2.6
+   ]
+  },
+  {
+   "name": "木樁 1.8 m（近）",
+   "pos": [
+    0.0,
+    0.0,
+    1.8
+   ]
+  },
+  {
+   "name": "木樁 3.6 m（遠）",
+   "pos": [
+    0.0,
+    0.0,
+    3.6
+   ]
+  }
+ ],
+ "arc": {
+  "t0": 0.16,
+  "t1": 0.62,
+  "phi_deg": 130.0,
+  "r_end": 1.2,
+  "r_min": 0.75,
+  "d0": 2.6,
+  "ease_out": 0.55,
+  "approach": {
+   "t0": 0.6053,
+   "t1": 0.8368,
+   "r": 1.05
+  }
+ },
+ "afterimage": {
+  "times": [
+   0.275,
+   0.39,
+   0.505
+  ],
+  "life": 0.2,
+  "alpha": 0.42,
+  "color": [
+   1.0,
+   0.32,
+   0.1
+  ]
+ },
+ "shot": {
+  "anim": "isshin_r16_genjitsu",
+  "angle": 0.0,
+  "fade_in": 0.05,
+  "fade_out": 0.25,
+  "travel_scale": 0.0,
+  "root_yaw": true,
+  "two_hand": true,
+  "attack": true,
+  "strikes": [
+   [
+    0.777,
+    0.962
+   ]
+  ],
+  "swings": [
+   0.777
+  ],
+  "lockout": 0.1,
+  "min_dist": 0.7,
+  "dodge_cancel": 1.082,
+  "move_cancel": 1.312,
+  "attack_cancel": 1.312,
+  "end_t": 2.3833,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 5,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -12.0,
+   "pitch": 0.7
+  },
+  "dash": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.16,
+   "db": -3.0,
+   "pitch": 1.35
+  },
+  "ghost": {
+   "stream": "res://assets/audio/sfx/dragon_wind_loop.wav",
+   "at": 0.21,
+   "db": -14.0,
+   "pitch": 1.6
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.747,
+   "db": 0.0,
+   "pitch": 0.85
+  },
+  "boom": {
+   "stream": "res://assets/audio/sfx/hit_fire_spin.wav",
+   "at": 0.922,
+   "db": -4.0,
+   "pitch": 0.7
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・幻日紅（R16）",
+  "_doc": "R16 幻日紅：武器層＝刀身點燃＋短刀光；繞行＝殘影（試玩場景的姿勢快照）＋一道貼著身體的旋轉火帶；主特效（aoe）＝雙手下劈那一刀的直立大火焰斬（沿實際刀路平面、往前推進），劈到底時在刀落點地面爆燃（火舌往上、往外噴）。命中爆燃只在實際命中。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     0.757,
+     0.982
+    ]
+   ],
+   "lifetime": 0.13,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.55,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊。",
+   "blade_env": [
+    [
+     0.0,
+     0.3
+    ],
+    [
+     0.16,
+     0.8
+    ],
+    [
+     0.677,
+     1.0
+    ],
+    [
+     1.112,
+     1.0
+    ],
+    [
+     1.562,
+     0.0
+    ]
+   ],
+   "edge_height": 0.14,
+   "end_t": 1.662
+  },
+  "sparks": {
+   "window": [
+    0.16,
+    0.962
+   ],
+   "min_speed": 14.0,
+   "spacing": 0.15,
+   "cap": 20
+  },
+  "hit": {
+   "tongues": 8,
+   "sparks": 18,
+   "flash_len": 0.55,
+   "flash_w": 0.13,
+   "flash_life": 0.2,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.14
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  },
+  "aoe": {
+   "light": {
+    "peak": 3.0,
+    "range": 8.0,
+    "color": [
+     1.0,
+     0.55,
+     0.2
+    ]
+   },
+   "items": [
+    {
+     "type": "crescent",
+     "name": "spin_swirl",
+     "t0": 0.2,
+     "reveal": 0.46,
+     "life": 0.71,
+     "o": [
+      0.0,
+      0.95,
+      0.0
+     ],
+     "x": [
+      1,
+      0,
+      0
+     ],
+     "y": [
+      0,
+      0,
+      -1
+     ],
+     "z": [
+      0,
+      1,
+      0
+     ],
+     "a0": 0.0,
+     "a1": 320.0,
+     "cut_a1": 320.0,
+     "r": 0.95,
+     "r_end": 1.25,
+     "width": 0.35,
+     "thick": 0.22,
+     "travel": [
+      0,
+      0,
+      0
+     ],
+     "rise": 0.0,
+     "tear": 0.6,
+     "gain": 0.55,
+     "seed": 6.0,
+     "layers": 2
+    },
+    {
+     "type": "crescent",
+     "name": "down_cut",
+     "t0": 0.747,
+     "reveal": 0.215,
+     "life": 0.85,
+     "o": [
+      -0.1018,
+      1.0775,
+      0.1656
+     ],
+     "x": [
+      -0.0487,
+      0.7273,
+      -0.6846
+     ],
+     "y": [
+      -0.2616,
+      0.6522,
+      0.7115
+     ],
+     "z": [
+      0.9639,
+      0.2138,
+      0.1585
+     ],
+     "a0": -30.7694,
+     "a1": 266.6681,
+     "cut_a1": 205.1293,
+     "r": 1.1982,
+     "r_end": 2.5982,
+     "width": 0.8,
+     "thick": 0.42,
+     "travel": [
+      0.0956,
+      0.0,
+      1.2965
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 1.15,
+     "seed": 7.0,
+     "layers": 2
+    },
+    {
+     "type": "burst",
+     "name": "ground_burst",
+     "t0": 0.932,
+     "life": 0.9,
+     "o": [
+      0.2482,
+      0.05,
+      0.4675
+     ],
+     "x": [
+      0.9973,
+      0.0,
+      -0.0735
+     ],
+     "y": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "z": [
+      0.0735,
+      0.0,
+      0.9973
+     ],
+     "size": 1.6,
+     "spread": 0.8,
+     "tongues": 14,
+     "flat": 0.35,
+     "on_hit": false,
+     "gain": 0.95,
+     "seed": 8.0
+    }
+   ]
+  }
+ },
+ "id": "sun_genjitsu_r16"
+}

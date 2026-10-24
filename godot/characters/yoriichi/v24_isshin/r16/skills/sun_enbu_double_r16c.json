@@ -1,0 +1,196 @@
+{
+ "_doc": "R16c 日之呼吸・炎舞 2 倍速候選（ART_REVIEW；notes/r16/build_enbu_x2_r16c.py）。動作＝R13 已驗收炎舞（梟 c5060 #80→#81，第二刀水平橫斬）原樣，每隔一格取一格＝整體正好 2 倍速（姿勢、根位移路線、兩刀銜接都和 R13 相同，只是時間減半）；命中、前衝、取消、雙手握刀、音效時間全部減半，火焰時間軸由新動作的實際刀路重排。R13 sun_enbu_double（ART_APPROVED）只讀、保留不動。",
+ "name": "日之呼吸・炎舞（R16c 2 倍速）",
+ "status": "ART_REVIEW",
+ "batch": "R16c",
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16c_enbu_x2.json",
+ "source": "#80→#81 梟 c5060 a000_003000→003001（R13 已驗收動作 ×2 速）",
+ "timeline": "蓄勢 0–0.28 → 第一刀袈裟 0.29–0.34 → 再起刀＋上步 → 第二刀水平橫斬 0.63–0.69 → 收勢（1.35 s）",
+ "damage": 2,
+ "cooldown": 1.2,
+ "charge_cancel": 0.25,
+ "targets": [
+  {
+   "name": "木樁 2.75 m",
+   "pos": [
+    0.0,
+    0.0,
+    2.75
+   ]
+  },
+  {
+   "name": "木樁 2.0 m（近）",
+   "pos": [
+    0.0,
+    0.0,
+    2.0
+   ]
+  }
+ ],
+ "shot": {
+  "anim": "isshin_r16c_enbu_x2",
+  "angle": 0.0,
+  "fade_in": 0.08,
+  "fade_out": 0.2,
+  "travel_scale": 1.0,
+  "two_hand": true,
+  "grip_off": 1.05,
+  "attack": true,
+  "strikes": [
+   [
+    0.287,
+    0.362
+   ],
+   [
+    0.627,
+    0.702
+   ]
+  ],
+  "swings": [
+   0.28,
+   0.62
+  ],
+  "lockout": 0.05,
+  "lunges": [
+   [
+    0.0,
+    0.35
+   ],
+   [
+    0.45,
+    0.725
+   ]
+  ],
+  "lunge_min_dist": [
+   1.1,
+   0.95
+  ],
+  "min_dist": 0.95,
+  "dodge_cancel": 0.81,
+  "move_cancel": 0.975,
+  "attack_cancel": 0.975,
+  "end_t": 1.35,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 5,
+  "root_pose_sync": true,
+  "judge_substeps": 8
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.6
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.06,
+   "db": -10.0,
+   "pitch": 0.75
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 0.28,
+   "db": 0.0,
+   "pitch": 0.95
+  },
+  "swing2": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 0.62,
+   "db": 0.0,
+   "pitch": 1.0
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.075,
+   "loop_to": 0.85,
+   "db": -16.0
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・炎舞（R16c 2 倍速）",
+  "pink": 0.4,
+  "_doc": "炎舞 R16c 2 倍速的 profile 本體（道場預設播 fx2/sun_enbu_double_r16c；這筆只有武器層＝R13 炎舞的刀光、刀身熱邊、火星，時間減半）。",
+  "trail": {
+   "emit": [
+    [
+     0.275,
+     0.36
+    ],
+    [
+     0.615,
+     0.705
+    ]
+   ],
+   "lifetime": 0.09,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.5,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（R13 的時間包絡減半）。",
+   "blade_env": [
+    [
+     0.05,
+     0.0
+    ],
+    [
+     0.15,
+     0.6
+    ],
+    [
+     0.25,
+     1.0
+    ],
+    [
+     0.725,
+     1.0
+    ],
+    [
+     0.975,
+     0.0
+    ]
+   ],
+   "edge_height": 0.13,
+   "end_t": 1.0
+  },
+  "sparks": {
+   "window": [
+    0.28,
+    0.705
+   ],
+   "min_speed": 15.0,
+   "spacing": 0.16,
+   "cap": 22
+  },
+  "hit": {
+   "tongues": 7,
+   "sparks": 16,
+   "flash_len": 0.52,
+   "flash_w": 0.12,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "id": "sun_enbu_double_r16c"
+}

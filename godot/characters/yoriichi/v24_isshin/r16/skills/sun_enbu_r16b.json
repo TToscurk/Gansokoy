@@ -1,0 +1,320 @@
+{
+ "_doc": "R16b 日之呼吸・圓舞（#83 原始動作加快，ART_REVIEW；notes/r16/build_enbu83_r16b.py）。來源 #83 梟 c5060 a000_003003 原動作：姿勢、手臂、刀法、起跳高度（髖部 +1.7 m）、根位移（×1）全部照原動作；只把時間整體加快（平滑時間曲線：起手 ×1.33、起跳到下劈 ×1.35、落地吸收 ×1.20、收勢 ×2.00），去掉重定向後雙腳浮空的固定高度、著地的腳用 IK 釘住、最後收回待機；原動作助跑時後腳（右腳）踮著腳尖在地上滑 1.07 m，改成同起點同終點的小步（抬 0.12 m），起跳那兩格的手臂甩動（原動作每格 54°）做局部平滑。沒有用 R12 火車改過的根位移、跳躍高度或時間。動畫資源 isshin_r16b_enbu、技能 ID、時間軸、特效 profile 都和火車分開。",
+ "name": "日之呼吸・圓舞（R16b #83 原動作加快）",
+ "status": "ART_REVIEW",
+ "batch": "R16b",
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16b_enbu.json",
+ "source": "#83 梟 c5060 a000_003003（原動作）",
+ "timeline": "下蹲 0–0.15 s（Space 可取消）→ 起跳空翻（火焰圓弧）→ 下劈 0.70–0.84（大型弧形火焰斬往前爆發）→ 著地 0.82 → 收勢",
+ "damage": 3,
+ "cooldown": 1.2,
+ "charge_cancel": 0.113,
+ "targets": [
+  {
+   "name": "木樁 6.5 m（原動作落點）",
+   "pos": [
+    0.0,
+    0.0,
+    6.5
+   ]
+  },
+  {
+   "name": "木樁 3.2 m（近：空中位移自動縮短）",
+   "pos": [
+    0.0,
+    0.0,
+    3.2
+   ]
+  }
+ ],
+ "shot": {
+  "anim": "isshin_r16b_enbu",
+  "angle": 0.0,
+  "fade_in": 0.06,
+  "fade_out": 0.3,
+  "travel_scale": 1.0,
+  "two_hand": false,
+  "attack": true,
+  "strikes": [
+   [
+    0.698,
+    0.839
+   ]
+  ],
+  "swings": [
+   0.698
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.165,
+    0.816
+   ]
+  ],
+  "min_dist": 0.9,
+  "lunge_min_dist": [
+   0.9
+  ],
+  "dodge_cancel": 1.064,
+  "move_cancel": 1.314,
+  "attack_cancel": 1.314,
+  "end_t": 2.3333,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 4,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.55
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.05,
+   "db": -8.0,
+   "pitch": 0.7
+  },
+  "launch": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.1453,
+   "db": -4.0,
+   "pitch": 1.25
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.05,
+   "loop_to": 1.339,
+   "db": -12.0
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 0.668,
+   "db": 0.0,
+   "pitch": 0.95
+  },
+  "land": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.8156,
+   "db": -6.0,
+   "pitch": 0.7
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・圓舞（R16b #83）",
+  "pink": 0.4,
+  "_doc": "R16b 圓舞（#83 原始動作加快）：武器層＝刀身點燃＋短刀光（真實刀刃）；主特效（aoe，技能時間軸）＝空翻時一道乾淨的金黃火焰圓弧隨翻轉畫出（圓），下劈時一道最大的弧形火焰斬往前爆發飛出（主要爆發），命中點爆燃只在實際命中；火舌尖端少量淡粉紅。只是視覺，判定只有原動作那一刀。",
+  "trail": {
+   "emit": [
+    [
+     0.678,
+     0.859
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.6,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（蓄勢點燃）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.1,
+     0.8
+    ],
+    [
+     0.1653,
+     1.0
+    ],
+    [
+     0.989,
+     1.0
+    ],
+    [
+     1.439,
+     0.0
+    ]
+   ],
+   "edge_height": 0.15,
+   "end_t": 1.539
+  },
+  "sparks": {
+   "window": [
+    0.1653,
+    0.839
+   ],
+   "min_speed": 14.0,
+   "spacing": 0.15,
+   "cap": 24
+  },
+  "hit": {
+   "tongues": 8,
+   "sparks": 18,
+   "flash_len": 0.6,
+   "flash_w": 0.13,
+   "flash_life": 0.2,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.14
+  },
+  "ignite": {
+   "rate": 24.0,
+   "cap": 16,
+   "max_speed": 12.0
+  },
+  "aoe": {
+   "light": {
+    "peak": 3.4,
+    "range": 9.0,
+    "color": [
+     1.0,
+     0.55,
+     0.2
+    ]
+   },
+   "items": [
+    {
+     "type": "crescent",
+     "name": "circle",
+     "t0": 0.1653,
+     "reveal": 0.5327,
+     "life": 0.9827,
+     "o": [
+      -0.0037,
+      2.7093,
+      3.1219
+     ],
+     "x": [
+      -0.1791,
+      0.733,
+      0.6562
+     ],
+     "y": [
+      -0.144,
+      -0.6793,
+      0.7196
+     ],
+     "z": [
+      0.9732,
+      0.0344,
+      0.2272
+     ],
+     "a0": 0.0,
+     "a1": 303.2308,
+     "cut_a1": 303.2308,
+     "r": 1.3077,
+     "r_end": 1.7577,
+     "width": 0.36,
+     "thick": 0.22,
+     "travel": [
+      0,
+      0,
+      0
+     ],
+     "rise": 0.0,
+     "tear": 0.6,
+     "gain": 1.15,
+     "seed": 11.0,
+     "layers": 2
+    },
+    {
+     "type": "crescent",
+     "name": "enbu_big_slash",
+     "t0": 0.668,
+     "reveal": 0.171,
+     "life": 1.05,
+     "o": [
+      0.045,
+      1.4601,
+      0.564
+     ],
+     "x": [
+      0.1297,
+      0.764,
+      -0.632
+     ],
+     "y": [
+      0.3087,
+      0.5746,
+      0.758
+     ],
+     "z": [
+      0.9423,
+      -0.2934,
+      -0.1613
+     ],
+     "a0": -27.9547,
+     "a1": 251.5923,
+     "cut_a1": 186.3646,
+     "r": 1.7252,
+     "r_end": 4.3252,
+     "width": 1.05,
+     "thick": 0.46,
+     "travel": [
+      0.0,
+      0.2,
+      2.6
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 1.3,
+     "seed": 12.0,
+     "layers": 2
+    },
+    {
+     "type": "burst",
+     "name": "hit_burst",
+     "t0": 0.839,
+     "life": 0.85,
+     "o": [
+      0,
+      0,
+      0
+     ],
+     "x": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "z": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "size": 1.4,
+     "spread": 0.85,
+     "tongues": 14,
+     "flat": 0.3,
+     "on_hit": 0,
+     "gain": 1.0,
+     "seed": 13.0
+    }
+   ]
+  }
+ },
+ "id": "sun_enbu_r16b"
+}

@@ -1,0 +1,200 @@
+{
+ "_doc": "R16b 日之呼吸・火車（瞬步＋高速縱向迴旋斬，ART_REVIEW；notes/r16/build_kasha_r16b.py）。來源 #83 梟 c5060 a000_003003，做法沿用 R12 已驗收的改造（雙手持刀姿勢、腳 IK、落地吸收），但時間與根位移重做：短蓄力 0.14 s → 0.07 s 爆發起步（腳不動、身體往前衝）→ 空中 0.57 s 以等速 7.4 m/s 前進 4.2 m 同時完成縱向 360°（R12 滯空 0.78 s、空中只前進 1.7 m）→ 下劈 → 著地後保留前衝慣性 0.74 m 由腿吸收（腳釘住不滑）。總前進 5.2 m（無障礙）；離目標近時前衝段等比縮短，撞牆由角色膠囊擋住。R12 sun_kasha（已驗收）與 R16 sun_kasha_r16 保留不動。",
+ "name": "日之呼吸・火車（R16b 瞬步＋迴旋斬）",
+ "status": "ART_REVIEW",
+ "batch": "R16b",
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16b_kasha.json",
+ "source": "#83 梟 c5060 a000_003003（R12 改造配方，新時間軸與根位移）",
+ "timeline": "壓低蓄力 0–0.30 s（Space 可取消）→ 0.30 爆發起步 → 0.37 起跳 → 空中前進＋縱向 360°（0.80 轉滿）→ 下劈 0.82–0.97 → 0.94 著地（慣性吸收）→ 收勢",
+ "damage": 3,
+ "cooldown": 1.2,
+ "charge_cancel": 0.28,
+ "cancel_fade_in": 0.16,
+ "targets": [
+  {
+   "name": "木樁 5.4 m（無障礙全程）",
+   "pos": [
+    0.0,
+    0.0,
+    5.4
+   ]
+  },
+  {
+   "name": "木樁 3.0 m（近：前衝自動縮短）",
+   "pos": [
+    0.0,
+    0.0,
+    3.0
+   ]
+  },
+  {
+   "name": "遠方木樁 9 m（前方無障礙：前衝全程）",
+   "pos": [
+    0.0,
+    0.0,
+    9.0
+   ]
+  }
+ ],
+ "shot": {
+  "anim": "isshin_r16b_kasha",
+  "angle": 0.0,
+  "fade_in": 0.1,
+  "fade_out": 0.35,
+  "travel_scale": 1.0,
+  "two_hand": true,
+  "attack": true,
+  "strikes": [
+   [
+    0.825,
+    0.974
+   ]
+  ],
+  "swings": [
+   0.79
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.3,
+    0.94
+   ],
+   [
+    0.94,
+    1.22
+   ]
+  ],
+  "lunge_min_dist": [
+   0.991,
+   0.95
+  ],
+  "min_dist": 0.95,
+  "dodge_cancel": 1.22,
+  "move_cancel": 1.4,
+  "attack_cancel": 1.4,
+  "end_t": 2.017,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 5,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.6
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.12,
+   "db": -9.0,
+   "pitch": 0.75
+  },
+  "launch": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.3,
+   "db": -3.0,
+   "pitch": 1.3
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.12,
+   "loop_to": 1.2,
+   "db": -13.0
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 0.78,
+   "db": 0.0,
+   "pitch": 1.0
+  },
+  "land": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.94,
+   "db": -5.0,
+   "pitch": 0.6
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・火車（R16b 瞬步）",
+  "pink": 0.9,
+  "_doc": "火車 R16b 的 profile 本體（道場預設播 fx2/sun_kasha_r16b，由 build_fx_r16b.py 產生；這筆是只有武器層的備用）。",
+  "trail": {
+   "emit": [
+    [
+     0.805,
+     0.994
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.6,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.1,
+     0.8
+    ],
+    [
+     0.3,
+     1.0
+    ],
+    [
+     1.124,
+     1.0
+    ],
+    [
+     1.574,
+     0.0
+    ]
+   ],
+   "edge_height": 0.15,
+   "end_t": 1.674
+  },
+  "sparks": {
+   "window": [
+    0.37,
+    0.974
+   ],
+   "min_speed": 14.0,
+   "spacing": 0.15,
+   "cap": 24
+  },
+  "hit": {
+   "tongues": 8,
+   "sparks": 18,
+   "flash_len": 0.6,
+   "flash_w": 0.13,
+   "flash_life": 0.2,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.14
+  },
+  "ignite": {
+   "rate": 24.0,
+   "cap": 16,
+   "max_speed": 12.0
+  }
+ },
+ "id": "sun_kasha_r16b"
+}

@@ -1,0 +1,608 @@
+{
+ "_doc": "R16b 日之呼吸・日暈之龍・頭舞（恢復上一版，ART_REVIEW；notes/r16/build_nichirin_r16b.py）。只保留 R16 的起手（#300 雙手大上段穩住）與 R16 的音效；之後＝R15 的瞬步連斬原樣（實測 R16 在 1.35–2.9 s 本來就和 R15 同一份動作：每根骨頭差 ≤1°、根位置相同；收尾 3.0–3.9 s 原本不同（髖 7°、根 7 cm），這版 2.80–2.95 s 交叉淡入 R15 原檔＝收尾也恢復 R15）。龍＝R15 原樣（龍身火帶、殘影、收尾 sun_dragon 龍頭），時間 +0.75 s；刀路特效改成新版火焰斬。R16 龍頭版 sun_nichirin_r16、R15 sun_nichirin_dragon 都保留可比較。",
+ "name": "日之呼吸・日暈之龍・頭舞（R16b 恢復上一版）",
+ "status": "ART_REVIEW",
+ "batch": "R16b",
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16b_nichirin.json",
+ "source": "起手 #300 葦名劍客 c1400 a000_003001（R16）＋ R15 連斬：#293 艾瑪 a000_003061 三刀 → #161 一心 a000_003091 橫斬＋縱劈",
+ "timeline": "大上段蓄勢 0–1.05 s（刀身燃燒；Space 可取消）→ 瞬步①橫 1.17 → ②袈裟 1.60 → ③橫 2.00 → ④橫 2.78 → ⑤縱劈收尾 3.08（龍頭升起）→ 收勢",
+ "damage": 2,
+ "cooldown": 1.6,
+ "charge_cancel": 1.02,
+ "targets": [
+  {
+   "name": "木樁 2.6 m（設計位置）",
+   "pos": [
+    0.0,
+    0.0,
+    2.6
+   ]
+  },
+  {
+   "name": "木樁 2.0 m（近）",
+   "pos": [
+    0.0,
+    0.0,
+    2.0
+   ]
+  }
+ ],
+ "afterimage": {
+  "times": [
+   1.125,
+   1.185,
+   1.438,
+   1.836,
+   1.954,
+   2.632,
+   2.722
+  ],
+  "life": 0.2,
+  "alpha": 0.34,
+  "color": [
+   1.0,
+   0.55,
+   0.2
+  ]
+ },
+ "knock": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.5
+ ],
+ "shot": {
+  "anim": "isshin_r16b_nichirin",
+  "angle": 0.0,
+  "fade_in": 0.06,
+  "fade_out": 0.25,
+  "travel_scale": 1.0,
+  "two_hand": false,
+  "attack": true,
+  "strikes": [
+   [
+    1.169,
+    1.3
+   ],
+   [
+    1.6,
+    1.747
+   ],
+   [
+    2.0,
+    2.148
+   ],
+   [
+    2.78,
+    2.93
+   ],
+   [
+    3.08,
+    3.27
+   ]
+  ],
+  "swings": [
+   1.169,
+   1.6,
+   2.0,
+   2.78,
+   3.08
+  ],
+  "lockout": 0.08,
+  "lunges": [],
+  "min_dist": 0.5,
+  "root_yaw": true,
+  "dodge_cancel": 3.42,
+  "move_cancel": 3.57,
+  "attack_cancel": 3.57,
+  "end_t": 4.1,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 3,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.5
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.25,
+   "db": -8.0,
+   "pitch": 0.6
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.2,
+   "loop_to": 3.97,
+   "db": -11.0
+  },
+  "wind": {
+   "stream": "res://assets/audio/sfx/dragon_wind_loop.wav",
+   "at": 1.05,
+   "db": -10.0,
+   "pitch": 2.22
+  },
+  "dash1": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 1.1208,
+   "db": -2.0,
+   "pitch": 1.4
+  },
+  "dash2": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 1.4382,
+   "db": -3.0,
+   "pitch": 1.5
+  },
+  "dash3": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 1.8357,
+   "db": -3.0,
+   "pitch": 1.45
+  },
+  "dash4": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 2.6323,
+   "db": -2.0,
+   "pitch": 1.4
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 1.169,
+   "db": 0.0,
+   "pitch": 1.1
+  },
+  "swing2": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 1.6,
+   "db": 0.0,
+   "pitch": 1.05
+  },
+  "swing3": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 2.0,
+   "db": 0.0,
+   "pitch": 1.0
+  },
+  "swing4": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 2.78,
+   "db": 0.0,
+   "pitch": 1.0
+  },
+  "swing5": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 3.08,
+   "db": 0.0,
+   "pitch": 0.8
+  },
+  "roar": {
+   "stream": "res://assets/audio/sfx/hit_fire_spin.wav",
+   "at": 3.03,
+   "db": -2.0,
+   "pitch": 0.55
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・日暈之龍・頭舞（R16b 恢復上一版）",
+  "pink": 0.4,
+  "_doc": "R16b 日暈之龍：龍＝R15 原樣（沿緣一實際路線的長龍身火帶、每一步殘影、收尾縱劈時既有 sun_dragon 龍頭升起；時間 +0.75 s），大上段起手時刀身燃燒（R16）；刀路特效更新＝每一刀一道依技能時間軸展開的火焰斬（收尾最大）＋收尾實際命中爆燃；火舌尖端少量淡粉紅。只是視覺，判定只有五刀。",
+  "trail": {
+   "emit": [
+    [
+     1.147,
+     1.32
+    ],
+    [
+     1.58,
+     1.767
+    ],
+    [
+     1.98,
+     2.168
+    ],
+    [
+     2.76,
+     2.95
+    ],
+    [
+     3.06,
+     3.29
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.6,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（大上段點燃，收尾後收）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.3,
+     0.6
+    ],
+    [
+     0.95,
+     1.0
+    ],
+    [
+     3.37,
+     1.0
+    ],
+    [
+     3.77,
+     0.0
+    ]
+   ],
+   "edge_height": 0.16,
+   "end_t": 3.87
+  },
+  "sparks": {
+   "window": [
+    1.167,
+    3.27
+   ],
+   "min_speed": 14.0,
+   "spacing": 0.14,
+   "cap": 30
+  },
+  "hit": {
+   "tongues": 7,
+   "sparks": 16,
+   "flash_len": 0.6,
+   "flash_w": 0.11,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.14
+  },
+  "ignite": {
+   "rate": 26.0,
+   "cap": 18,
+   "max_speed": 12.0
+  },
+  "stroke": {
+   "path": "res://characters/yoriichi/v24_isshin/fire_research_v2/nichirin_r16b_dragon_path.json",
+   "inner": 0.26,
+   "outer": 0.62,
+   "grow": 0.08,
+   "head_len": 0.1,
+   "tear_t": 3.32,
+   "gone_t": 3.97,
+   "tear_lag": 0.8,
+   "vanish_age": 0.9,
+   "vanish_soft": 0.25,
+   "end_t": 4.1,
+   "yellow_cut": 0.8,
+   "orange_cut": 0.4,
+   "outline_w": 0.09,
+   "opacity": 0.9,
+   "near_fade": 0.7,
+   "col_yellow": [
+    1.0,
+    0.6,
+    0.15
+   ],
+   "yellow_gain": 1.3,
+   "col_orange": [
+    1.0,
+    0.3,
+    0.04
+   ],
+   "orange_gain": 1.1,
+   "col_red": [
+    0.55,
+    0.04,
+    0.01
+   ],
+   "red_gain": 1.0,
+   "col_white": [
+    1.0,
+    0.92,
+    0.72
+   ],
+   "white_gain": 2.0,
+   "head_gain": 0.8,
+   "pink": 0.3
+  },
+  "aoe": {
+   "light": {
+    "peak": 2.8,
+    "range": 8.0,
+    "color": [
+     1.0,
+     0.55,
+     0.2
+    ]
+   },
+   "items": [
+    {
+     "type": "crescent",
+     "name": "cut1",
+     "t0": 1.149,
+     "reveal": 0.151,
+     "life": 0.62,
+     "o": [
+      -0.2457,
+      0.9798,
+      0.1804
+     ],
+     "x": [
+      0.8905,
+      0.3911,
+      -0.2324
+     ],
+     "y": [
+      0.3828,
+      -0.3683,
+      0.8473
+     ],
+     "z": [
+      0.2458,
+      -0.8435,
+      -0.4777
+     ],
+     "a0": -42.9912,
+     "a1": 372.5905,
+     "cut_a1": 286.608,
+     "r": 0.8814,
+     "r_end": 1.7814,
+     "width": 0.55,
+     "thick": 0.28,
+     "travel": [
+      0.0,
+      0.0,
+      0.6
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 0.9,
+     "seed": 140.0,
+     "layers": 2
+    },
+    {
+     "type": "crescent",
+     "name": "cut2",
+     "t0": 1.58,
+     "reveal": 0.167,
+     "life": 0.62,
+     "o": [
+      -0.2094,
+      1.2249,
+      0.0618
+     ],
+     "x": [
+      0.143,
+      0.8382,
+      -0.5262
+     ],
+     "y": [
+      -0.9356,
+      -0.0589,
+      -0.3482
+     ],
+     "z": [
+      -0.3229,
+      0.5421,
+      0.7758
+     ],
+     "a0": -32.1964,
+     "a1": 279.0352,
+     "cut_a1": 214.6425,
+     "r": 1.1209,
+     "r_end": 2.0209,
+     "width": 0.55,
+     "thick": 0.28,
+     "travel": [
+      0.0,
+      0.0,
+      0.6
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 0.9,
+     "seed": 141.0,
+     "layers": 2
+    },
+    {
+     "type": "crescent",
+     "name": "cut3",
+     "t0": 1.98,
+     "reveal": 0.168,
+     "life": 0.62,
+     "o": [
+      -0.1433,
+      1.0978,
+      -0.0779
+     ],
+     "x": [
+      0.8199,
+      0.363,
+      0.4426
+     ],
+     "y": [
+      0.3783,
+      0.2366,
+      -0.8949
+     ],
+     "z": [
+      -0.4296,
+      0.9012,
+      0.0567
+     ],
+     "a0": -33.7419,
+     "a1": 292.4294,
+     "cut_a1": 224.9457,
+     "r": 0.9633,
+     "r_end": 1.8633,
+     "width": 0.55,
+     "thick": 0.28,
+     "travel": [
+      0.0,
+      0.0,
+      0.6
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 0.9,
+     "seed": 142.0,
+     "layers": 2
+    },
+    {
+     "type": "crescent",
+     "name": "cut4",
+     "t0": 2.76,
+     "reveal": 0.17,
+     "life": 0.62,
+     "o": [
+      0.107,
+      1.0544,
+      0.2113
+     ],
+     "x": [
+      -0.0771,
+      -0.035,
+      -0.9964
+     ],
+     "y": [
+      0.8353,
+      -0.5478,
+      -0.0454
+     ],
+     "z": [
+      -0.5443,
+      -0.8358,
+      0.0715
+     ],
+     "a0": -38.6332,
+     "a1": 334.8214,
+     "cut_a1": 257.5549,
+     "r": 0.9412,
+     "r_end": 1.8412,
+     "width": 0.55,
+     "thick": 0.28,
+     "travel": [
+      0.0,
+      0.0,
+      0.6
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 0.9,
+     "seed": 143.0,
+     "layers": 2
+    },
+    {
+     "type": "crescent",
+     "name": "cut5",
+     "t0": 3.06,
+     "reveal": 0.21,
+     "life": 0.9,
+     "o": [
+      -0.0023,
+      1.1355,
+      0.1444
+     ],
+     "x": [
+      0.0274,
+      0.866,
+      -0.4993
+     ],
+     "y": [
+      -0.1462,
+      0.4976,
+      0.855
+     ],
+     "z": [
+      0.9889,
+      0.0495,
+      0.1403
+     ],
+     "a0": -26.4266,
+     "a1": 229.0306,
+     "cut_a1": 176.1774,
+     "r": 1.0663,
+     "r_end": 2.8663,
+     "width": 0.85,
+     "thick": 0.4,
+     "travel": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 1.15,
+     "seed": 144.0,
+     "layers": 2
+    },
+    {
+     "type": "burst",
+     "name": "final_burst",
+     "t0": 3.27,
+     "life": 0.9,
+     "o": [
+      0,
+      0,
+      0
+     ],
+     "x": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "z": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "size": 1.6,
+     "spread": 0.9,
+     "tongues": 16,
+     "flat": 0.25,
+     "on_hit": 4,
+     "gain": 1.0,
+     "seed": 146.0
+    }
+   ]
+  }
+ },
+ "id": "sun_nichirin_r16",
+ "dragon": {
+  "at": 3.03,
+  "y": 0.2,
+  "fwd": 1.2,
+  "reveal": 0.5,
+  "hold": 0.35,
+  "burn": 0.6,
+  "intensity": 1.0,
+  "scale": 0.9
+ }
+}

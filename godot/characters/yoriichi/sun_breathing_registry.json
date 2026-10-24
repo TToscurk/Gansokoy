@@ -1,0 +1,1125 @@
+{
+ "_doc": "日之呼吸唯一正式技能清單（十二式＋衍生技）。道場與正式技能選擇介面都只透過 characters/yoriichi/sun_breathing_registry.gd 讀這份資料，不另外維護順序。由 D:/research/sekiro_r8_p0/notes/r16/build_sun12_registry.py 產生：選版寫在產生器，動畫／命中判定／傷害／時間軸從各技能 JSON 讀出。編號＝遊戲選單順序（01～12＝漫畫第 192 話炭治郎口述；13 起＝衍生技），不是原作「壹之型」稱號。kind＝form（十二式）／derived（衍生技，不進第十三型的循環）。",
+ "version": "sun12-r16-2026-10-24b",
+ "order_source": "《鬼滅之刃》漫畫第 192 話 炭治郎口述的連續施展順序（不採圓環示意圖推定的排列）；衍生技排在十二式之後",
+ "switch": {
+  "next_key": "X",
+  "prev_key": "Z",
+  "cyclic": true,
+  "menu": "01 → … → 12 → 13（衍生技）→ 01"
+ },
+ "status": "暫時通過（ART_REVIEW）",
+ "entries": [
+  {
+   "order": 1,
+   "menu": "01",
+   "id": "sun01_enbu",
+   "name_zh": "圓舞",
+   "name_ja": "円舞",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_enbu_r16b",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r16/skills/sun_enbu_r16b.json",
+   "skill_json_key": "",
+   "version": "R16b＋收勢挺直",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "2026-10-23 12:07 指示「圓舞：改用 #83 原始動作」；R16b 道場第一招",
+   "motion_source": "#83 梟 c5060 a000_003003（原動作）",
+   "anim": "isshin_r16b_enbu_up",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_r16b_enbu_up.res",
+   "anim_base": "isshin_r16b_enbu",
+   "posture_fix": {
+    "src": "godot_tracks_r16b_enbu.json",
+    "tool": "notes/r16/upright_recovery.py",
+    "t_a": 0.879,
+    "ramp": 0.28,
+    "ext_deg": 8.0,
+    "arm_keep": 0.6,
+    "bal": [
+     4.0,
+     22.0,
+     0.4
+    ],
+    "k_bal": [
+     1.0,
+     1.0,
+     1.0,
+     0.8,
+     0.5
+    ],
+    "tracks": "retarget/godot_tracks_r16b_enbu_up.json",
+    "doc": "收勢挺直：最後一刀判定窗結束後，脊椎／脖子／頭往一心站姿扳直，上臂跟著修正；判定窗以前、雙腿、髖、根位移不變"
+   },
+   "vfx_profile": "fx2/sun_enbu_r16b",
+   "vfx_aoe_items": [
+    "crescent",
+    "crescent"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_enbu_r16b 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      0.698,
+      0.839
+     ]
+    ],
+    "swings": [
+     0.698
+    ],
+    "lunges": [
+     [
+      0.165,
+      0.816
+     ]
+    ],
+    "lunge_min_dist": [
+     0.9
+    ],
+    "min_dist": 0.9,
+    "hitstop_frames": 4,
+    "freeze_hit_frame": true,
+    "two_hand": false
+   },
+   "damage": {
+    "per_strike": 3,
+    "strike_windows": 1,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 2.3333,
+    "dodge_cancel": 1.064,
+    "move_cancel": 1.314,
+    "attack_cancel": 1.314,
+    "fade_in": 0.06,
+    "fade_out": 0.3,
+    "lockout": 0.1,
+    "charge_cancel": 0.113,
+    "cooldown": 1.2,
+    "doc": "下蹲 0–0.15 s（Space 可取消）→ 起跳空翻（火焰圓弧）→ 下劈 0.70–0.84（大型弧形火焰斬往前爆發）→ 著地 0.82 → 收勢"
+   },
+   "rollback": [
+    "收勢駝背原版：isshin_r16b_enbu",
+    "sun_enbu_r16（#533 R16）",
+    "sun_enbu_r15（#533 R15）",
+    "sun_enbu（R9 原版）"
+   ],
+   "form13_next": "sun02_hekira"
+  },
+  {
+   "order": 2,
+   "menu": "02",
+   "id": "sun02_hekira",
+   "name_zh": "碧羅之天",
+   "name_ja": "碧羅の天",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_hekiraten_r15",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r15/skills/sun_hekiraten_r15.json",
+   "skill_json_key": "",
+   "version": "R15（R16b 起 fx2 特效）",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "使用者指定 #121 a000_003008；碧羅天動作由使用者決定、15:14 起「碧羅天不要動」",
+   "motion_source": "#121 劍聖 葦名一心 c5400 a000_003008（TS 0.78）",
+   "anim": "isshin_sun_hekira_r15",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_sun_hekira_r15.res",
+   "anim_base": "isshin_sun_hekira_r15",
+   "posture_fix": null,
+   "vfx_profile": "fx2/sun_hekiraten_r15",
+   "vfx_aoe_items": [
+    "crescent",
+    "crescent"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_hekiraten_r15 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      0.7,
+      0.966
+     ]
+    ],
+    "swings": [
+     0.7
+    ],
+    "lunges": [
+     [
+      0.6222,
+      0.966
+     ]
+    ],
+    "lunge_min_dist": [
+     1.0
+    ],
+    "min_dist": 0.85,
+    "hitstop_frames": 5,
+    "freeze_hit_frame": true,
+    "two_hand": true
+   },
+   "damage": {
+    "per_strike": 3,
+    "strike_windows": 1,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 2.1667,
+    "dodge_cancel": 1.086,
+    "move_cancel": 1.25,
+    "attack_cancel": 1.25,
+    "fade_in": 0.08,
+    "fade_out": 0.25,
+    "lockout": 0.1,
+    "charge_cancel": 0.5722,
+    "cooldown": 1.2,
+    "doc": "蓄勢舉刀 0–0.62 s（刀身漸燃；Space 可取消）→ 回轉圓斬 0.62–0.97（判定 0.70–0.97）＋火環展開 → 低姿 → 起身收勢"
+   },
+   "rollback": [
+    "sun_hekiraten（R11 原版）"
+   ],
+   "form13_next": "sun03_retsujitsu"
+  },
+  {
+   "order": 3,
+   "menu": "03",
+   "id": "sun03_retsujitsu",
+   "name_zh": "烈日紅鏡",
+   "name_ja": "烈日紅鏡",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_retsujitsu",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r11/sun_breathing_r11.json",
+   "skill_json_key": "sun_retsujitsu",
+   "version": "R10 動作（R16b 起 fx2 特效）",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "唯一版本；道場實際載入的是 r11/sun_breathing_r11.json 這一份",
+   "motion_source": "葦名弦一郎（c7100）a000_003068：左右連續橫斬——先右→左橫斬、0.37 s 後左→右橫斬回來（第二刀刀尖在胸口高度），前進 1.85 m（×0.85）；從第 12 格（0.40 s）起播，縮短起手",
+   "anim": "isshin_sun_retsujitsu",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_sun_retsujitsu.res",
+   "anim_base": "isshin_sun_retsujitsu",
+   "posture_fix": null,
+   "vfx_profile": "fx2/sun_retsujitsu",
+   "vfx_aoe_items": [
+    "crescent",
+    "crescent",
+    "burst"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_retsujitsu 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      0.5,
+      0.69
+     ],
+     [
+      0.86,
+      0.99
+     ]
+    ],
+    "swings": [
+     0.46
+    ],
+    "lunges": [
+     [
+      0.0,
+      0.99
+     ]
+    ],
+    "min_dist": 1.0,
+    "hitstop_frames": 3,
+    "freeze_hit_frame": true,
+    "two_hand": false
+   },
+   "damage": {
+    "per_strike": 2,
+    "strike_windows": 2,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 1.9,
+    "dodge_cancel": 1.02,
+    "move_cancel": 1.15,
+    "attack_cancel": 1.15,
+    "fade_in": 0.1,
+    "fade_out": 0.35,
+    "lockout": 0.1,
+    "charge_cancel": 0.0,
+    "cooldown": 1.0,
+    "doc": ""
+   },
+   "rollback": [],
+   "form13_next": "sun04_genjitsu"
+  },
+  {
+   "order": 4,
+   "menu": "04",
+   "id": "sun04_genjitsu",
+   "name_zh": "幻日虹",
+   "name_ja": "幻日虹",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_genjitsu_r16",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r16/skills/sun_genjitsu_r16.json",
+   "skill_json_key": "",
+   "version": "R16c（包身旋轉火焰、無地面爆炎）",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "15:14 指示的旋轉包身火焰版；舊檔名寫「幻日紅」，同一招",
+   "motion_source": "#521 女奏者 c7000 a000_003014（旋轉，TS 1.056）＋ #300 葦名劍客 c1400 a000_003001（雙手縱劈，TS 0.929）",
+   "anim": "isshin_r16_genjitsu",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_r16_genjitsu.res",
+   "anim_base": "isshin_r16_genjitsu",
+   "posture_fix": null,
+   "vfx_profile": "fx2/sun_genjitsu_r16",
+   "vfx_aoe_items": [
+    "swirl",
+    "swirl",
+    "crescent"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_genjitsu_r16 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      0.777,
+      0.962
+     ]
+    ],
+    "swings": [
+     0.777
+    ],
+    "min_dist": 0.7,
+    "hitstop_frames": 5,
+    "freeze_hit_frame": true,
+    "two_hand": true
+   },
+   "damage": {
+    "per_strike": 3,
+    "strike_windows": 1,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 2.3833,
+    "dodge_cancel": 1.082,
+    "move_cancel": 1.312,
+    "attack_cancel": 1.312,
+    "fade_in": 0.05,
+    "fade_out": 0.25,
+    "lockout": 0.1,
+    "charge_cancel": 0.16,
+    "cooldown": 1.0,
+    "doc": "起步 0–0.16 s（Space 可取消）→ 繞行旋轉 0.16–0.62（3 個殘影）→ 舉刀上步 → 雙手下劈 0.78–0.96（爆燃）→ 收勢"
+   },
+   "rollback": [
+    "sun_genjitsu（R15）"
+   ],
+   "form13_next": "sun05_kasha"
+  },
+  {
+   "order": 5,
+   "menu": "05",
+   "id": "sun05_kasha",
+   "name_zh": "火車",
+   "name_ja": "火車",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_kasha_r16b",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r16/skills/sun_kasha_r16b.json",
+   "skill_json_key": "",
+   "version": "R16b（瞬步＋空中縱向 360° 空翻斬）＋收勢挺直",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "13:50 指示「火車改成瞬步＋高速縱向迴旋斬」；R16b 起道場火車位置",
+   "motion_source": "#83 梟 c5060 a000_003003（R12 改造配方，新時間軸與根位移）",
+   "anim": "isshin_r16b_kasha_up",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_r16b_kasha_up.res",
+   "anim_base": "isshin_r16b_kasha",
+   "posture_fix": {
+    "src": "godot_tracks_r16b_kasha.json",
+    "tool": "notes/r16/upright_recovery.py",
+    "t_a": 1.014,
+    "ramp": 0.28,
+    "ext_deg": 8.0,
+    "arm_keep": 0.6,
+    "bal": [
+     4.0,
+     22.0,
+     0.4
+    ],
+    "k_bal": [
+     1.0,
+     1.0,
+     1.0,
+     0.8,
+     0.5
+    ],
+    "tracks": "retarget/godot_tracks_r16b_kasha_up.json",
+    "doc": "收勢挺直：最後一刀判定窗結束後，脊椎／脖子／頭往一心站姿扳直，上臂跟著修正；判定窗以前、雙腿、髖、根位移不變"
+   },
+   "vfx_profile": "fx2/sun_kasha_r16b",
+   "vfx_aoe_items": [
+    "crescent",
+    "crescent",
+    "crescent",
+    "crescent",
+    "crescent",
+    "crescent",
+    "swirl",
+    "crescent",
+    "burst"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_kasha_r16b 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      0.825,
+      0.974
+     ]
+    ],
+    "swings": [
+     0.79
+    ],
+    "lunges": [
+     [
+      0.3,
+      0.94
+     ],
+     [
+      0.94,
+      1.22
+     ]
+    ],
+    "lunge_min_dist": [
+     0.991,
+     0.95
+    ],
+    "min_dist": 0.95,
+    "hitstop_frames": 5,
+    "freeze_hit_frame": true,
+    "two_hand": true
+   },
+   "damage": {
+    "per_strike": 3,
+    "strike_windows": 1,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 2.017,
+    "dodge_cancel": 1.22,
+    "move_cancel": 1.4,
+    "attack_cancel": 1.4,
+    "fade_in": 0.1,
+    "fade_out": 0.35,
+    "lockout": 0.1,
+    "charge_cancel": 0.28,
+    "cooldown": 1.2,
+    "doc": "壓低蓄力 0–0.30 s（Space 可取消）→ 0.30 爆發起步 → 0.37 起跳 → 空中前進＋縱向 360°（0.80 轉滿）→ 下劈 0.82–0.97 → 0.94 著地（慣性吸收）→ 收勢"
+   },
+   "rollback": [
+    "收勢駝背原版：isshin_r16b_kasha",
+    "sun_kasha（R12 原地空翻，ART_APPROVED）",
+    "sun_kasha_r16（R12 動作＋R16 特效）"
+   ],
+   "form13_next": "sun06_shakkotsu"
+  },
+  {
+   "order": 6,
+   "menu": "06",
+   "id": "sun06_shakkotsu",
+   "name_zh": "灼骨炎陽",
+   "name_ja": "灼骨炎陽",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_shakkotsu_r16f",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r16/skills/sun_shakkotsu_r16f.json",
+   "skill_json_key": "",
+   "version": "R16f 動作＋R16g「日輪渦」特效＋收勢挺直",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "使用者鎖定 #97 梟 a000_003029 動作；10-24 R16g 日輪渦為道場預設特效",
+   "motion_source": "#97 梟 c5060 a000_003029（同動作，0.30s後 1.182倍速）",
+   "anim": "isshin_r16f_shakkotsu_up",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_r16f_shakkotsu_up.res",
+   "anim_base": "isshin_r16f_shakkotsu",
+   "posture_fix": {
+    "src": "godot_tracks_r16f_shakkotsu.json",
+    "tool": "notes/r16/upright_recovery.py",
+    "t_a": 1.0423,
+    "ramp": 0.28,
+    "ext_deg": 8.0,
+    "arm_keep": 0.6,
+    "bal": [
+     4.0,
+     22.0,
+     0.4
+    ],
+    "k_bal": [
+     1.0,
+     1.0,
+     1.0,
+     0.8,
+     0.5
+    ],
+    "tracks": "retarget/godot_tracks_r16f_shakkotsu_up.json",
+    "doc": "收勢挺直：最後一刀判定窗結束後，脊椎／脖子／頭往一心站姿扳直，上臂跟著修正；判定窗以前、雙腿、髖、根位移不變"
+   },
+   "vfx_profile": "fx2/sun_shakkotsu_r16f",
+   "vfx_aoe_items": [
+    "shakkotsu_sun"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_shakkotsu_r16f 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      0.8475,
+      1.0023
+     ]
+    ],
+    "lunges": [
+     [
+      0.0,
+      0.9245
+     ]
+    ],
+    "lunge_min_dist": [
+     1.46
+    ],
+    "min_dist": 1.46,
+    "hitstop_frames": 4,
+    "freeze_hit_frame": true,
+    "two_hand": false
+   },
+   "damage": {
+    "per_strike": 3,
+    "strike_windows": 1,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 2.5,
+    "dodge_cancel": 1.3408,
+    "move_cancel": 1.3408,
+    "attack_cancel": 1.3408,
+    "fade_in": 0.06,
+    "fade_out": 0.2115,
+    "lockout": 0.1,
+    "charge_cancel": 0.6952,
+    "cooldown": 1.2,
+    "doc": "原蓄勢0–0.30s → 加速跳斬 0.847–1.002 → 收勢至2.500s；Hit Stop仍4格"
+   },
+   "rollback": [
+    "收勢駝背原版：isshin_r16f_shakkotsu",
+    "B 鍵＝R16f 捲焰特效",
+    "sun_shakkotsu_r16d（原速）",
+    "sun_shakkotsu_r16（#79）",
+    "sun_shakkotsu（R15）"
+   ],
+   "form13_next": "sun07_youkatotsu"
+  },
+  {
+   "order": 7,
+   "menu": "07",
+   "id": "sun07_youkatotsu",
+   "name_zh": "陽華突",
+   "name_ja": "陽華突",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_youkatotsu_r16b",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r16/skills/sun_youkatotsu_r16b.json",
+   "skill_json_key": "",
+   "version": "R16c（高跳 1.45 m 包身上升）",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "15:14 指示的新版跳躍突刺（全身火焰上升、無地板火）",
+   "motion_source": "#221 葦名弦一郎 c7100 a000_003062（R14 改造配方，加強跳躍）",
+   "anim": "isshin_r16b_youka",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_r16b_youka.res",
+   "anim_base": "isshin_r16b_youka",
+   "posture_fix": null,
+   "vfx_profile": "fx2/sun_youkatotsu_r16b",
+   "vfx_aoe_items": [
+    "swirl",
+    "swirl",
+    "swirl"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_youkatotsu_r16b 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      0.53,
+      0.815
+     ]
+    ],
+    "swings": [
+     0.516
+    ],
+    "lunges": [
+     [
+      0.556,
+      1.341
+     ]
+    ],
+    "lunge_min_dist": [
+     0.15
+    ],
+    "min_dist": 0.4,
+    "hitstop_frames": 5,
+    "freeze_hit_frame": true,
+    "two_hand": true
+   },
+   "damage": {
+    "per_strike": 3,
+    "strike_windows": 1,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 2.633,
+    "dodge_cancel": 1.521,
+    "move_cancel": 1.641,
+    "attack_cancel": 1.641,
+    "fade_in": 0.05,
+    "fade_out": 0.3,
+    "lockout": 0.1,
+    "charge_cancel": 0.49,
+    "cooldown": 1.2,
+    "doc": "後跳蓄勢 → 下蹲（Space 可取消）→ 0.54 蹬地起跳＋往前上方突刺 → 頂點 0.84（懸停到 1.00）→ 1.34 著地（重落地）→ 收勢"
+   },
+   "rollback": [
+    "sun_youkatotsu（R14 第二版，已驗收）"
+   ],
+   "form13_next": "sun08_hirin"
+  },
+  {
+   "order": 8,
+   "menu": "08",
+   "id": "sun08_hirin",
+   "name_zh": "飛輪陽炎",
+   "name_ja": "飛輪陽炎",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_hirin_kagerou",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r15/skills/sun_hirin_kagerou.json",
+   "skill_json_key": "",
+   "version": "R15（R16b 起 fx2 特效）",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "唯一版本",
+   "motion_source": "#250 弦一郎・巴流 c7110 a000_003027（TS 0.829）",
+   "anim": "isshin_sun_hirin_r15",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_sun_hirin_r15.res",
+   "anim_base": "isshin_sun_hirin_r15",
+   "posture_fix": null,
+   "vfx_profile": "fx2/sun_hirin_kagerou",
+   "vfx_aoe_items": [
+    "crescent",
+    "crescent"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_hirin_kagerou 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      1.155,
+      1.296
+     ]
+    ],
+    "swings": [
+     1.155
+    ],
+    "lunges": [
+     [
+      0.3,
+      1.1884
+     ]
+    ],
+    "lunge_min_dist": [
+     1.3
+    ],
+    "min_dist": 0.85,
+    "hitstop_frames": 5,
+    "freeze_hit_frame": true,
+    "two_hand": true
+   },
+   "damage": {
+    "per_strike": 3,
+    "strike_windows": 1,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 2.8167,
+    "dodge_cancel": 2.1996,
+    "move_cancel": 2.3796,
+    "attack_cancel": 2.3796,
+    "fade_in": 0.06,
+    "fade_out": 0.3,
+    "lockout": 0.1,
+    "charge_cancel": 0.28,
+    "cooldown": 1.2,
+    "doc": "蓄勢 0–0.30 s（Space 可取消）→ 起跳旋身＋第一擊短刀光 0.60–0.75 → 第二擊橫斬（判定）1.16–1.30＋刀尖竄出長火焰 → 2.08 落地 → 收勢"
+   },
+   "rollback": [],
+   "form13_next": "sun09_shayou"
+  },
+  {
+   "order": 9,
+   "menu": "09",
+   "id": "sun09_shayou",
+   "name_zh": "斜陽轉身",
+   "name_ja": "斜陽転身",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_shayou_tenshin",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r15/skills/sun_shayou_tenshin.json",
+   "skill_json_key": "",
+   "version": "R15（R16b 起 fx2 特效）＋收勢挺直",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "唯一版本",
+   "motion_source": "#99 梟 c5060 a000_003034（TS 0.679；同一支的落地段）",
+   "anim": "isshin_sun_shayou_r15_up",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_sun_shayou_r15_up.res",
+   "anim_base": "isshin_sun_shayou_r15",
+   "posture_fix": {
+    "src": "godot_tracks_r15_shayou.json",
+    "tool": "notes/r16/upright_recovery.py",
+    "t_a": 0.66,
+    "ramp": 0.28,
+    "ext_deg": 8.0,
+    "arm_keep": 0.6,
+    "bal": [
+     4.0,
+     22.0,
+     0.4
+    ],
+    "k_bal": [
+     1.0,
+     1.0,
+     1.0,
+     0.8,
+     0.5
+    ],
+    "tracks": "retarget/godot_tracks_r15_shayou_up.json",
+    "doc": "收勢挺直：最後一刀判定窗結束後，脊椎／脖子／頭往一心站姿扳直，上臂跟著修正；判定窗以前、雙腿、髖、根位移不變"
+   },
+   "vfx_profile": "fx2/sun_shayou_tenshin",
+   "vfx_aoe_items": [
+    "crescent",
+    "crescent"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_shayou_tenshin 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      0.425,
+      0.62
+     ]
+    ],
+    "swings": [
+     0.425
+    ],
+    "lunges": [
+     [
+      0.2664,
+      0.76
+     ]
+    ],
+    "lunge_min_dist": [
+     0.9
+    ],
+    "min_dist": 0.8,
+    "hitstop_frames": 5,
+    "freeze_hit_frame": true,
+    "two_hand": true
+   },
+   "damage": {
+    "per_strike": 3,
+    "strike_windows": 1,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 1.95,
+    "dodge_cancel": 0.96,
+    "move_cancel": 1.11,
+    "attack_cancel": 1.11,
+    "fade_in": 0.06,
+    "fade_out": 0.25,
+    "lockout": 0.1,
+    "charge_cancel": 0.2264,
+    "cooldown": 1.3,
+    "doc": "下蹲收刀 0–0.27 s（Space 可取消）→ 起跳側翻 → 倒立橫斬 0.42–0.62（判定）→ 身體回正 → 著地 0.76 → 架刀收勢"
+   },
+   "rollback": [
+    "收勢駝背原版：isshin_sun_shayou_r15"
+   ],
+   "form13_next": "sun10_kiki"
+  },
+  {
+   "order": 10,
+   "menu": "10",
+   "id": "sun10_kiki",
+   "name_zh": "輝輝恩光",
+   "name_ja": "輝輝恩光",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_kiki_onkou",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r15/skills/sun_kiki_onkou.json",
+   "skill_json_key": "",
+   "version": "R15 動作＋R16d 最後一擊飛射爆炎＋收勢挺直",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "10-23 指示「只有最後一擊從刀刃射出大型爆炎」（fx2 的 finisher_projectile）",
+   "motion_source": "#100 梟 c5060 a000_003035（主體，TS 0.679）＋ #99 a000_003034 起跳",
+   "anim": "isshin_sun_kiki_r15_up",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_sun_kiki_r15_up.res",
+   "anim_base": "isshin_sun_kiki_r15",
+   "posture_fix": {
+    "src": "godot_tracks_r15_kiki.json",
+    "tool": "notes/r16/upright_recovery.py",
+    "t_a": 1.044,
+    "ramp": 0.28,
+    "ext_deg": 8.0,
+    "arm_keep": 0.6,
+    "bal": [
+     4.0,
+     22.0,
+     0.4
+    ],
+    "k_bal": [
+     1.0,
+     1.0,
+     1.0,
+     0.8,
+     0.5
+    ],
+    "tracks": "retarget/godot_tracks_r15_kiki_up.json",
+    "doc": "收勢挺直：最後一刀判定窗結束後，脊椎／脖子／頭往一心站姿扳直，上臂跟著修正；判定窗以前、雙腿、髖、根位移不變"
+   },
+   "vfx_profile": "fx2/sun_kiki_onkou",
+   "vfx_aoe_items": [
+    "swirl",
+    "finisher_projectile"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_kiki_onkou 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      0.771,
+      1.004
+     ]
+    ],
+    "swings": [
+     0.771
+    ],
+    "lunges": [
+     [
+      0.2345,
+      0.86
+     ]
+    ],
+    "lunge_min_dist": [
+     0.9
+    ],
+    "min_dist": 0.85,
+    "hitstop_frames": 6,
+    "freeze_hit_frame": true,
+    "two_hand": true
+   },
+   "damage": {
+    "per_strike": 4,
+    "strike_windows": 1,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 2.35,
+    "dodge_cancel": 1.154,
+    "move_cancel": 1.2828,
+    "attack_cancel": 1.2828,
+    "fade_in": 0.06,
+    "fade_out": 0.25,
+    "lockout": 0.1,
+    "charge_cancel": 0.1945,
+    "cooldown": 1.4,
+    "doc": "下蹲 0–0.23 s（Space 可取消）→ 起跳 → 空中螺旋一圈下撲（刀由高到低、螺旋火帶）→ 落地縱劈 0.77–1.00（唯一判定、爆燃）→ 起身收勢"
+   },
+   "rollback": [
+    "收勢駝背原版：isshin_sun_kiki_r15",
+    "B 鍵＝R15 原特效"
+   ],
+   "form13_next": "sun11_nichirin"
+  },
+  {
+   "order": 11,
+   "menu": "11",
+   "id": "sun11_nichirin",
+   "name_zh": "日暈之龍・頭舞",
+   "name_ja": "日暈の龍・頭舞い",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_nichirin_r16b",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r16/skills/sun_nichirin_r16b.json",
+   "skill_json_key": "",
+   "version": "R16b（R16 大上段起手＋R15 連斬與龍）",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "使用者指定「R16 舉刀蓄勢，其餘恢復 R15 動作與龍形」",
+   "motion_source": "起手 #300 葦名劍客 c1400 a000_003001（R16）＋ R15 連斬：#293 艾瑪 a000_003061 三刀 → #161 一心 a000_003091 橫斬＋縱劈",
+   "anim": "isshin_r16b_nichirin",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_r16b_nichirin.res",
+   "anim_base": "isshin_r16b_nichirin",
+   "posture_fix": null,
+   "vfx_profile": "fx2/sun_nichirin_r16b",
+   "vfx_aoe_items": [
+    "crescent",
+    "crescent",
+    "crescent",
+    "crescent",
+    "crescent"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_nichirin_r16b 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      1.169,
+      1.3
+     ],
+     [
+      1.6,
+      1.747
+     ],
+     [
+      2.0,
+      2.148
+     ],
+     [
+      2.78,
+      2.93
+     ],
+     [
+      3.08,
+      3.27
+     ]
+    ],
+    "swings": [
+     1.169,
+     1.6,
+     2.0,
+     2.78,
+     3.08
+    ],
+    "lunges": [],
+    "min_dist": 0.5,
+    "hitstop_frames": 3,
+    "freeze_hit_frame": true,
+    "two_hand": false
+   },
+   "damage": {
+    "per_strike": 2,
+    "strike_windows": 5,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 4.1,
+    "dodge_cancel": 3.42,
+    "move_cancel": 3.57,
+    "attack_cancel": 3.57,
+    "fade_in": 0.06,
+    "fade_out": 0.25,
+    "lockout": 0.08,
+    "charge_cancel": 1.02,
+    "cooldown": 1.6,
+    "doc": "大上段蓄勢 0–1.05 s（刀身燃燒；Space 可取消）→ 瞬步①橫 1.17 → ②袈裟 1.60 → ③橫 2.00 → ④橫 2.78 → ⑤縱劈收尾 3.08（龍頭升起）→ 收勢"
+   },
+   "rollback": [
+    "sun_nichirin_r16（R16 龍頭起手）",
+    "sun_nichirin_dragon（R15）"
+   ],
+   "form13_next": "sun12_enbu_flame"
+  },
+  {
+   "order": 12,
+   "menu": "12",
+   "id": "sun12_enbu_flame",
+   "name_zh": "炎舞",
+   "name_ja": "炎舞",
+   "kind": "form",
+   "in_form13": true,
+   "skill_key": "sun_enbu_double_r16c",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r16/skills/sun_enbu_double_r16c.json",
+   "skill_json_key": "",
+   "version": "R16c（R13 雙段斬 2 倍速）＋收勢挺直",
+   "status": "暫時通過（ART_REVIEW）",
+   "selected_because": "15:14 指示「炎舞整體加快 2 倍」；動作＝R13 已驗收雙段斬（第二刀水平）",
+   "motion_source": "#80→#81 梟 c5060 a000_003000→003001（R13 已驗收動作 ×2 速）",
+   "anim": "isshin_r16c_enbu_x2_up",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_r16c_enbu_x2_up.res",
+   "anim_base": "isshin_r16c_enbu_x2",
+   "posture_fix": {
+    "src": "godot_tracks_r16c_enbu_x2.json",
+    "tool": "notes/r16/upright_recovery.py",
+    "t_a": 0.742,
+    "ramp": 0.28,
+    "ext_deg": 8.0,
+    "arm_keep": 0.6,
+    "bal": [
+     4.0,
+     22.0,
+     0.4
+    ],
+    "k_bal": [
+     1.0,
+     1.0,
+     1.0,
+     0.8,
+     0.5
+    ],
+    "tracks": "retarget/godot_tracks_r16c_enbu_x2_up.json",
+    "doc": "收勢挺直：最後一刀判定窗結束後，脊椎／脖子／頭往一心站姿扳直，上臂跟著修正；判定窗以前、雙腿、髖、根位移不變"
+   },
+   "vfx_profile": "fx2/sun_enbu_double_r16c",
+   "vfx_aoe_items": [
+    "crescent",
+    "crescent"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_enbu_double_r16c 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      0.287,
+      0.362
+     ],
+     [
+      0.627,
+      0.702
+     ]
+    ],
+    "swings": [
+     0.28,
+     0.62
+    ],
+    "lunges": [
+     [
+      0.0,
+      0.35
+     ],
+     [
+      0.45,
+      0.725
+     ]
+    ],
+    "lunge_min_dist": [
+     1.1,
+     0.95
+    ],
+    "min_dist": 0.95,
+    "judge_substeps": 8,
+    "hitstop_frames": 5,
+    "freeze_hit_frame": true,
+    "two_hand": true
+   },
+   "damage": {
+    "per_strike": 2,
+    "strike_windows": 2,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 1.35,
+    "dodge_cancel": 0.81,
+    "move_cancel": 0.975,
+    "attack_cancel": 0.975,
+    "fade_in": 0.08,
+    "fade_out": 0.2,
+    "lockout": 0.05,
+    "charge_cancel": 0.25,
+    "cooldown": 1.2,
+    "doc": "蓄勢 0–0.28 → 第一刀袈裟 0.29–0.34 → 再起刀＋上步 → 第二刀水平橫斬 0.63–0.69 → 收勢（1.35 s）"
+   },
+   "rollback": [
+    "收勢駝背原版：isshin_r16c_enbu_x2",
+    "sun_enbu_double（R13，ART_APPROVED）",
+    "sun_enbu_double_r16（#6→#4）"
+   ],
+   "form13_next": "sun01_enbu"
+  },
+  {
+   "order": 13,
+   "menu": "13",
+   "id": "sun13_enbu_issen",
+   "name_zh": "圓舞一閃",
+   "name_ja": "円舞一閃",
+   "kind": "derived",
+   "in_form13": false,
+   "skill_key": "sun_enbu_issen",
+   "skill_json": "res://characters/yoriichi/v24_isshin/r15/skills/sun_enbu_issen.json",
+   "skill_json_key": "",
+   "version": "R15 動作（#161 一心 a000_003091）＋R16b 新版特效",
+   "status": "ART_REVIEW（既有完成版，本次只整合）",
+   "selected_because": "專案裡唯一一份圓舞一閃（r15/skills/sun_enbu_issen.json、anims/isshin_sun_issen_r15.res）；R16 道場原本就用這份＋fx2/sun_enbu_issen（R16b 新版特效）；其他檔（sun_enbu_r15／sun_enbu_r16）只有「Shift+L 接圓舞一閃」或「不接圓舞一閃」的說明，不是另一版",
+   "motion_source": "#161 劍聖 葦名一心 c5400 a000_003091（TS 0.78；#4 接不起來，見說明）",
+   "anim": "isshin_sun_issen_r15",
+   "anim_res": "res://characters/yoriichi/v24_isshin/anims/isshin_sun_issen_r15.res",
+   "anim_base": "isshin_sun_issen_r15",
+   "posture_fix": null,
+   "vfx_profile": "fx2/sun_enbu_issen",
+   "vfx_aoe_items": [
+    "swirl",
+    "crescent"
+   ],
+   "vfx_fallback": "B 鍵＝技能原本的特效（sun_enbu_issen 自己的設定）",
+   "hit": {
+    "strikes": [
+     [
+      0.653,
+      0.776
+     ]
+    ],
+    "swings": [
+     0.653
+    ],
+    "lunges": [
+     [
+      0.2,
+      0.653
+     ]
+    ],
+    "lunge_min_dist": [
+     1.3
+    ],
+    "min_dist": 0.9,
+    "hitstop_frames": 6,
+    "freeze_hit_frame": true,
+    "two_hand": false
+   },
+   "damage": {
+    "per_strike": 3,
+    "strike_windows": 1,
+    "hit_burst_enabled": false
+   },
+   "timeline": {
+    "end_t": 1.45,
+    "dodge_cancel": 0.896,
+    "move_cancel": 1.026,
+    "attack_cancel": 1.026,
+    "fade_in": 0.05,
+    "fade_out": 0.25,
+    "lockout": 0.1,
+    "charge_cancel": 0.2,
+    "cooldown": 1.2,
+    "doc": "下蹲 0–0.22 s（Space 可取消）→ 瞬步 0.22–0.44（6.3 m，光帶＋殘影）→ 收住接短衝 → 一閃 0.65–0.78 → 收勢"
+   },
+   "rollback": [
+    "B 鍵＝R15 原特效（sun_enbu_issen 自己的設定）",
+    "--legacy-list＝舊比較清單"
+   ],
+   "derived_from": "sun01_enbu",
+   "label_suffix": "（衍生技）"
+  }
+ ],
+ "form13": {
+  "enabled": false,
+  "note": "第十三型＝十二式依序連續施展，炎舞接回圓舞形成循環（不含衍生技）。目前只保留資料入口，尚未實作自動連段；十二式單獨出招方式不變。",
+  "sequence": [
+   "sun01_enbu",
+   "sun02_hekira",
+   "sun03_retsujitsu",
+   "sun04_genjitsu",
+   "sun05_kasha",
+   "sun06_shakkotsu",
+   "sun07_youkatotsu",
+   "sun08_hirin",
+   "sun09_shayou",
+   "sun10_kiki",
+   "sun11_nichirin",
+   "sun12_enbu_flame"
+  ],
+  "loop": true,
+  "loop_from": "sun12_enbu_flame",
+  "loop_to": "sun01_enbu",
+  "link_rule": "（預留）每一式在前一式的 attack_cancel 時間接下一式"
+ }
+}

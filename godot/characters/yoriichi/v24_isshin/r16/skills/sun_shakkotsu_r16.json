@@ -1,0 +1,310 @@
+{
+ "_doc": "R16 日之呼吸・灼骨炎陽（A110 316210 候選，ART_REVIEW；R15 灼骨炎陽 sun_shakkotsu（#550）保留可比較；notes/r16/build_shakkotsu_r16.py）。來源 #79 狼 c0000 a110_316210（突刺→橫斬，原動作自己轉 2.7 圈、蹲低往前滑 3 m）。蓄勢＝原動作下蹲、身體向右擰緊、刀往後收的那一段放慢成 0.45 s；之後原速：旋身突刺（火焰旋流往前噴出）→ 橫斬 L→R（把旋流撕開）→ 收勢。人體只轉原動作的 2.7 圈；「五圈」由火焰旋流本身旋轉演出。腳離地的高度降一半（貼地滑行，不拖 3 m 滑步）；第二段根位移 ×0.80。",
+ "name": "日之呼吸・灼骨炎陽（R16 A110 316210 候選）",
+ "status": "ART_REVIEW",
+ "batch": "R16",
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16_shakkotsu.json",
+ "source": "#79 狼 c0000 a110_316210（TS 1.017）",
+ "timeline": "蓄勢 0.10–0.55 s（身體擰緊、刀身點燃、火焰往身上收；Space 可取消）→ 旋身突刺 0.81–1.00（火焰旋流往前噴）→ 橫斬 1.11–1.30（撕開旋流）→ 收勢",
+ "damage": 3,
+ "cooldown": 1.2,
+ "charge_cancel": 0.55,
+ "targets": [
+  {
+   "name": "木樁 2.2 m（設計距離）",
+   "pos": [
+    0.0,
+    0.0,
+    2.2
+   ]
+  },
+  {
+   "name": "木樁 4.7 m（遠，只有火焰到得了）",
+   "pos": [
+    0.0,
+    0.0,
+    4.7
+   ]
+  }
+ ],
+ "shot": {
+  "anim": "isshin_r16_shakkotsu",
+  "angle": 0.0,
+  "fade_in": 0.06,
+  "fade_out": 0.25,
+  "travel_scale": 1.0,
+  "two_hand": true,
+  "attack": true,
+  "strikes": [
+   [
+    0.813,
+    0.997
+   ],
+   [
+    1.113,
+    1.297
+   ]
+  ],
+  "swings": [
+   0.813,
+   1.113
+  ],
+  "lockout": 0.1,
+  "min_dist": 0.9,
+  "dodge_cancel": 1.417,
+  "move_cancel": 1.647,
+  "attack_cancel": 1.647,
+  "end_t": 2.1167,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 4,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -12.0,
+   "pitch": 0.55
+  },
+  "charge": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.1,
+   "loop_to": 1.45,
+   "db": -12.0
+  },
+  "jet": {
+   "stream": "res://assets/audio/sfx/hit_fire_spin.wav",
+   "at": 0.783,
+   "db": -3.0,
+   "pitch": 0.8
+  },
+  "swing2": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 1.093,
+   "db": 0.0,
+   "pitch": 1.0
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・灼骨炎陽（R16）",
+  "_doc": "R16 灼骨炎陽：武器層＝蓄勢點燃刀身＋短刀光；主特效（aoe）＝①蓄勢時腳邊一圈火焰往身上收（力量凝聚）②突刺瞬間從胸前往前噴出的火焰旋流（4 道螺旋火帶＋金黃火芯，前緣 0.45 s 推到 7.5 m、錐形放大到 1.8 m、本身持續旋轉，外緣不規則捲動）③橫斬的大範圍火焰斬把旋流撕開，之後整體撕裂消散。命中爆燃只在實際命中。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     0.813,
+     0.997
+    ],
+    [
+     1.093,
+     1.317
+    ]
+   ],
+   "lifetime": 0.12,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.5,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（蓄勢逐漸點燃）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.1,
+     0.2
+    ],
+    [
+     0.55,
+     1.0
+    ],
+    [
+     1.397,
+     1.0
+    ],
+    [
+     1.897,
+     0.0
+    ]
+   ],
+   "edge_height": 0.15,
+   "end_t": 1.997
+  },
+  "sparks": {
+   "window": [
+    0.813,
+    1.297
+   ],
+   "min_speed": 14.0,
+   "spacing": 0.14,
+   "cap": 22
+  },
+  "hit": {
+   "tongues": 7,
+   "sparks": 16,
+   "flash_len": 0.5,
+   "flash_w": 0.12,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "rate": 26.0,
+   "cap": 16,
+   "max_speed": 12.0
+  },
+  "aoe": {
+   "light": {
+    "peak": 3.2,
+    "range": 8.0,
+    "color": [
+     1.0,
+     0.55,
+     0.2
+    ]
+   },
+   "items": [
+    {
+     "type": "crescent",
+     "name": "gather",
+     "t0": 0.1,
+     "reveal": 0.27,
+     "life": 0.57,
+     "o": [
+      0.0127,
+      0.25,
+      0.0305
+     ],
+     "x": [
+      1,
+      0,
+      0
+     ],
+     "y": [
+      0,
+      0,
+      -1
+     ],
+     "z": [
+      0,
+      1,
+      0
+     ],
+     "a0": 0.0,
+     "a1": 300.0,
+     "cut_a1": 300.0,
+     "r": 1.5,
+     "r_end": 0.55,
+     "width": 0.45,
+     "thick": 0.3,
+     "travel": [
+      0,
+      0,
+      0
+     ],
+     "rise": 0.0,
+     "tear": 0.8,
+     "gain": 0.7,
+     "seed": 3.0,
+     "layers": 2
+    },
+    {
+     "type": "vortex",
+     "name": "vortex",
+     "t0": 0.783,
+     "life": 1.45,
+     "o": [
+      0.0285,
+      0.7976,
+      0.6149
+     ],
+     "x": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "z": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "length": 7.5,
+     "jet": 0.45,
+     "r0": 0.4,
+     "r1": 1.8,
+     "turns": 2.5,
+     "spin": 2.2,
+     "bands": 4,
+     "tear": 0.5,
+     "gain": 1.1,
+     "seed": 4.0
+    },
+    {
+     "type": "crescent",
+     "name": "tear_cut",
+     "t0": 1.093,
+     "reveal": 0.204,
+     "life": 0.8,
+     "o": [
+      -0.0451,
+      0.8912,
+      0.4508
+     ],
+     "x": [
+      0.15,
+      0.3343,
+      -0.9304
+     ],
+     "y": [
+      0.9146,
+      -0.4042,
+      0.0022
+     ],
+     "z": [
+      -0.3754,
+      -0.8514,
+      -0.3664
+     ],
+     "a0": -40.768,
+     "a1": 353.3222,
+     "cut_a1": 271.7863,
+     "r": 1.1386,
+     "r_end": 2.7386,
+     "width": 0.75,
+     "thick": 0.36,
+     "travel": [
+      0.0,
+      0.0,
+      1.4
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 1.0,
+     "seed": 5.0,
+     "layers": 2
+    }
+   ]
+  }
+ },
+ "id": "sun_shakkotsu_r16"
+}

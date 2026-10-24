@@ -1,0 +1,170 @@
+{
+ "_doc": "User-selected #97 Owl c5060 a000_003029, original timing and root path. One source horizontal slash; no extra body spins. Old R16 retained.",
+ "name": "日之呼吸・灼骨炎陽（R16d 梟3029）",
+ "status": "ART_REVIEW",
+ "batch": "R16",
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16d_shakkotsu.json",
+ "source": "#97 梟 c5060 a000_003029（原速、TS 0.679）",
+ "timeline": "原速下蹲起跳 → 跳躍橫斬 0.947–1.130 → 落地收勢；主火焰瞬發、分散旋轉後消散",
+ "damage": 3,
+ "cooldown": 1.2,
+ "charge_cancel": 0.767,
+ "targets": [
+  {
+   "name": "木樁 5.0 m",
+   "pos": [
+    0,
+    0,
+    5.0
+   ]
+  },
+  {
+   "name": "遠距離（僅視覺）",
+   "pos": [
+    0,
+    0,
+    10
+   ]
+  }
+ ],
+ "shot": {
+  "anim": "isshin_r16d_shakkotsu",
+  "angle": 0.0,
+  "fade_in": 0.06,
+  "fade_out": 0.25,
+  "travel_scale": 1.0,
+  "two_hand": false,
+  "attack": true,
+  "strikes": [
+   [
+    0.947,
+    1.13
+   ]
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.0,
+    1.038
+   ]
+  ],
+  "min_dist": 1.46,
+  "move_cancel": 1.53,
+  "dodge_cancel": 1.53,
+  "attack_cancel": 1.53,
+  "end_t": 2.9,
+  "freeze_hit_frame": true,
+  "min_dist_gen": 1.0,
+  "blade_reach": [
+   1.58
+  ],
+  "lunges_gen": [
+   [
+    0.0,
+    1.13
+   ]
+  ],
+  "lunge_min_dist": [
+   1.46
+  ],
+  "root_pose_sync": true,
+  "hitstop_frames": 4
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -12.0,
+   "pitch": 0.55
+  },
+  "jet": {
+   "stream": "res://assets/audio/sfx/hit_fire_spin.wav",
+   "at": 0.927,
+   "db": -3.0,
+   "pitch": 0.8
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・灼骨炎陽（R16）",
+  "_doc": "R16 灼骨炎陽：武器層＝蓄勢點燃刀身＋短刀光；主特效（aoe）＝①蓄勢時腳邊一圈火焰往身上收（力量凝聚）②突刺瞬間從胸前往前噴出的火焰旋流（4 道螺旋火帶＋金黃火芯，前緣 0.45 s 推到 7.5 m、錐形放大到 1.8 m、本身持續旋轉，外緣不規則捲動）③橫斬的大範圍火焰斬把旋流撕開，之後整體撕裂消散。命中爆燃只在實際命中。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     0.947,
+     1.13
+    ]
+   ],
+   "lifetime": 0.12,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.5,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "blade_env": [
+    [
+     0,
+     0
+    ],
+    [
+     0.2,
+     0.7
+    ],
+    [
+     0.867,
+     1
+    ],
+    [
+     1.23,
+     1
+    ],
+    [
+     1.63,
+     0
+    ]
+   ],
+   "edge_height": 0.15,
+   "end_t": 1.73
+  },
+  "sparks": {
+   "window": [
+    0.947,
+    1.13
+   ],
+   "min_speed": 14.0,
+   "spacing": 0.14,
+   "cap": 22
+  },
+  "hit": {
+   "tongues": 7,
+   "sparks": 16,
+   "flash_len": 0.5,
+   "flash_w": 0.12,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "rate": 26.0,
+   "cap": 16,
+   "max_speed": 12.0
+  },
+  "aoe": {
+   "items": []
+  }
+ },
+ "id": "sun_shakkotsu_r16d"
+}

@@ -1,0 +1,227 @@
+{
+ "_doc": "Accepted #97 Owl3029 poses/root path; first 0.30s unchanged then 1.181818x. Previous R16d/e files retained. Damage/range unchanged.",
+ "name": "日之呼吸・灼骨炎陽（R16f 強化）",
+ "status": "ART_REVIEW",
+ "batch": "R16",
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16f_shakkotsu.json",
+ "source": "#97 梟 c5060 a000_003029（同動作，0.30s後 1.182倍速）",
+ "timeline": "原蓄勢0–0.30s → 加速跳斬 0.847–1.002 → 收勢至2.500s；Hit Stop仍4格",
+ "damage": 3,
+ "cooldown": 1.2,
+ "charge_cancel": 0.6952,
+ "targets": [
+  {
+   "name": "木樁 5.0 m",
+   "pos": [
+    0,
+    0,
+    5.0
+   ]
+  },
+  {
+   "name": "遠距離（僅視覺）",
+   "pos": [
+    0,
+    0,
+    10
+   ]
+  }
+ ],
+ "shot": {
+  "anim": "isshin_r16f_shakkotsu",
+  "angle": 0.0,
+  "fade_in": 0.06,
+  "fade_out": 0.2115,
+  "travel_scale": 1.0,
+  "two_hand": false,
+  "attack": true,
+  "strikes": [
+   [
+    0.8475,
+    1.0023
+   ]
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.0,
+    0.9245
+   ]
+  ],
+  "min_dist": 1.46,
+  "move_cancel": 1.3408,
+  "dodge_cancel": 1.3408,
+  "attack_cancel": 1.3408,
+  "end_t": 2.5,
+  "freeze_hit_frame": true,
+  "min_dist_gen": 1.0,
+  "blade_reach": [
+   1.58
+  ],
+  "lunges_gen": [
+   [
+    0.0,
+    1.0023
+   ]
+  ],
+  "lunge_min_dist": [
+   1.46
+  ],
+  "root_pose_sync": true,
+  "hitstop_frames": 4
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -12.0,
+   "pitch": 0.55
+  },
+  "jet": {
+   "stream": "res://assets/audio/sfx/hit_fire_spin.wav",
+   "at": 0.8305,
+   "db": -3.0,
+   "pitch": 0.8
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "灼骨炎陽（量體加強・後段1.18倍速）",
+  "_doc": "Accepted folded wreath; 12% wider cross-section and 10% deeper, more local tongues/forks, unchanged ring radius/light gain. Same retime map as animation.",
+  "trail": {
+   "emit": [
+    [
+     0.8475,
+     1.0023
+    ]
+   ],
+   "lifetime": 0.1015,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.5,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "blade_env": [
+    [
+     0.0,
+     0
+    ],
+    [
+     0.2,
+     0.7
+    ],
+    [
+     0.7798,
+     1
+    ],
+    [
+     1.0869,
+     1
+    ],
+    [
+     1.4254,
+     0
+    ]
+   ],
+   "edge_height": 0.15,
+   "end_t": 1.51
+  },
+  "sparks": {
+   "window": [
+    0.8475,
+    1.0023
+   ],
+   "min_speed": 14.0,
+   "spacing": 0.14,
+   "cap": 22
+  },
+  "hit": {
+   "tongues": 7,
+   "sparks": 16,
+   "flash_len": 0.5,
+   "flash_w": 0.12,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "rate": 26.0,
+   "cap": 16,
+   "max_speed": 12.0
+  },
+  "aoe": {
+   "items": [
+    {
+     "type": "shakkotsu_wreath",
+     "name": "reference_folded_fire",
+     "t0": 0.8475,
+     "life": 0.6938,
+     "o": [
+      0.0,
+      0.1,
+      0.35
+     ],
+     "x": [
+      1,
+      0,
+      0
+     ],
+     "y": [
+      0,
+      0.985,
+      -0.174
+     ],
+     "z": [
+      0,
+      0.174,
+      0.985
+     ],
+     "follow": "hips",
+     "follow_until": 1.0023,
+     "tear": 0.28,
+     "gain": 1.02,
+     "seed": 461.0,
+     "pink": 0.24,
+     "hot": 0.6,
+     "t_body": 0.6,
+     "t_space": 0.4,
+     "t_len": 1.0,
+     "t_fork": 0.46,
+     "t_lean": 0.85,
+     "t_pinksel": 0.25,
+     "enrich": 1.0,
+     "vfx_speed": 1.1818
+    }
+   ],
+   "style": 1,
+   "hot": 0.6,
+   "pink": 0.24,
+   "light": {
+    "peak": 2.5,
+    "range": 7,
+    "color": [
+     1.0,
+     0.55,
+     0.2
+    ]
+   },
+   "t_space": 0.47
+  },
+  "hit_burst_enabled": false,
+  "pink": 0.22
+ },
+ "id": "sun_shakkotsu_r16f"
+}

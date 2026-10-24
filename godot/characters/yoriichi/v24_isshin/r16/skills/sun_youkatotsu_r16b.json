@@ -1,0 +1,192 @@
+{
+ "_doc": "R16b 日之呼吸・陽華突（更高、更有力量的跳躍突刺，ART_REVIEW；notes/r16/build_youka_r16b.py＝R14 已驗收建置腳本的副本，只改參數）。同一個來源 #221 葦名弦一郎 c7100 a000_003062、同一套手臂 IK 突刺線；跳躍（R16c）：髖部上升 0.55→1.45 m（0.30 s 衝到頂點、頂點懸停 0.16 s、0.34 s 落下）、滯空 0.55→0.80 s、空中前進 1.8→2.4 m、下蹲 0.18→0.12 s、起跳前下沉 0.10 m 再爆發、突刺仰角 38→36°、胸口上仰 10→17°、落地下沉 0.07→0.20 m（0.32 s）。R14 sun_youkatotsu（已驗收）保留不動。",
+ "name": "日之呼吸・陽華突（R16b 高跳）",
+ "status": "ART_REVIEW",
+ "batch": "R16b",
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16b_youka.json",
+ "source": "#221 葦名弦一郎 c7100 a000_003062（R14 改造配方，加強跳躍）",
+ "timeline": "後跳蓄勢 → 下蹲（Space 可取消）→ 0.54 蹬地起跳＋往前上方突刺 → 頂點 0.84（懸停到 1.00）→ 1.34 著地（重落地）→ 收勢",
+ "damage": 3,
+ "cooldown": 1.2,
+ "charge_cancel": 0.49,
+ "cancel_fade_in": 0.12,
+ "targets": [
+  {
+   "name": "地面木樁 1.1 m",
+   "pos": [
+    0.0,
+    0.0,
+    1.1
+   ]
+  },
+  {
+   "name": "空中目標（球心高 2.85 m、前方 1.9 m）",
+   "pos": [
+    0.0,
+    2.85,
+    1.9
+   ],
+   "air": true
+  },
+  {
+   "name": "高空目標（球心高 3.2 m、前方 2.3 m）",
+   "pos": [
+    0.0,
+    3.2,
+    2.3
+   ],
+   "air": true
+  }
+ ],
+ "shot": {
+  "anim": "isshin_r16b_youka",
+  "angle": 0.0,
+  "fade_in": 0.05,
+  "fade_out": 0.3,
+  "travel_scale": 1.0,
+  "two_hand": true,
+  "grip_off": 1.241,
+  "attack": true,
+  "strikes": [
+   [
+    0.53,
+    0.815
+   ]
+  ],
+  "swings": [
+   0.516
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.556,
+    1.341
+   ]
+  ],
+  "lunge_min_dist": [
+   0.15
+  ],
+  "min_dist": 0.4,
+  "dodge_cancel": 1.521,
+  "move_cancel": 1.641,
+  "attack_cancel": 1.641,
+  "end_t": 2.633,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 5,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.6
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.2,
+   "db": -10.0,
+   "pitch": 0.75
+  },
+  "thrust": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 0.516,
+   "db": 0.0,
+   "pitch": 1.15
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.15,
+   "loop_to": 1.491,
+   "db": -14.0
+  },
+  "land": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 1.341,
+   "db": -4.0,
+   "pitch": 0.45
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・陽華突（R16b）",
+  "pink": 0.9,
+  "_doc": "陽華突 R16b 的 profile 本體（道場預設播 fx2/sun_youkatotsu_r16b；這筆只有武器層）。",
+  "trail": {
+   "emit": [
+    [
+     0.51,
+     0.835
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.6,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.3,
+     0.8
+    ],
+    [
+     0.516,
+     1.0
+    ],
+    [
+     1.015,
+     1.0
+    ],
+    [
+     1.415,
+     0.0
+    ]
+   ],
+   "edge_height": 0.15,
+   "end_t": 1.515
+  },
+  "sparks": {
+   "window": [
+    0.516,
+    0.815
+   ],
+   "min_speed": 12.0,
+   "spacing": 0.15,
+   "cap": 20
+  },
+  "hit": {
+   "tongues": 8,
+   "sparks": 18,
+   "flash_len": 0.6,
+   "flash_w": 0.13,
+   "flash_life": 0.2,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.14
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  }
+ },
+ "id": "sun_youkatotsu_r16b"
+}

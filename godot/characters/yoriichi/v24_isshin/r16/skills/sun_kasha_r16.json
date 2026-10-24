@@ -1,0 +1,306 @@
+{
+ "_doc": "R16 日之呼吸・火車（大型烈焰特效候選，ART_REVIEW；notes/r16/build_reuse_r16.py）。核對結果：R12 火車用的就是使用者指定的 #83 梟 c5060 a000_003003（同一支來源），R12 已驗收的動作原樣播放（isshin_sun_kasha_r12，不重做、不改檔）；只換成 R16 的大範圍主特效。R12 sun_kasha（Blender KS12／統一火環兩版）原樣保留可比較。",
+ "name": "日之呼吸・火車（R16 大型烈焰）",
+ "status": "ART_REVIEW（特效）／動作＝R12 已驗收",
+ "batch": "R16",
+ "source": "#83 梟 c5060 a000_003003（R12 已驗收動作）",
+ "timeline": "蓄勢（Space 可取消）→ 起跳空翻（火輪隨翻轉展開）→ 下劈 1.19–1.36（落點爆燃）→ 收勢",
+ "damage": 3,
+ "cooldown": 1.2,
+ "charge_cancel": 0.44,
+ "cancel_fade_in": 0.16,
+ "targets": [
+  {
+   "name": "木樁 3.2 m",
+   "pos": [
+    0.0,
+    0.0,
+    3.2
+   ]
+  }
+ ],
+ "shot": {
+  "anim": "isshin_r16_kasha",
+  "angle": 0.0,
+  "fade_in": 0.12,
+  "fade_out": 0.35,
+  "travel_scale": 1.0,
+  "two_hand": true,
+  "attack": true,
+  "strikes": [
+   [
+    1.19,
+    1.36
+   ]
+  ],
+  "swings": [
+   1.15
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.46,
+    1.32
+   ]
+  ],
+  "lunge_min_dist": [
+   1.2
+  ],
+  "min_dist": 0.95,
+  "dodge_cancel": 1.62,
+  "move_cancel": 1.85,
+  "attack_cancel": 1.85,
+  "end_t": 2.45,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 5,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.6
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.2,
+   "db": -10.0,
+   "pitch": 0.75
+  },
+  "launch": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.47,
+   "db": -4.0,
+   "pitch": 1.15
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 1.16,
+   "db": 0.0,
+   "pitch": 0.95
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.2,
+   "loop_to": 1.6,
+   "db": -16.0
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・火車（R16 大型烈焰）",
+  "_doc": "R16 火車（動作＝R12 已驗收版，不改；R12 sun_kasha 與它的兩種特效原樣保留）：武器層＝刀身點燃＋短刀光；主特效（aoe）＝空翻時一個隨翻轉方向展開的大型開口火輪（沿實際刀尖繞行的平面、半徑放大到 2 m 左右、約 300° 不閉合），下劈一道大火焰斬，落地那一刀在落點爆燃。命中爆燃只在實際命中。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     1.17,
+     1.38
+    ]
+   ],
+   "lifetime": 0.14,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.6,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（蓄勢點燃）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.25,
+     0.8
+    ],
+    [
+     0.46,
+     1.0
+    ],
+    [
+     1.51,
+     1.0
+    ],
+    [
+     1.96,
+     0.0
+    ]
+   ],
+   "edge_height": 0.15,
+   "end_t": 2.06
+  },
+  "sparks": {
+   "window": [
+    0.4833,
+    1.36
+   ],
+   "min_speed": 14.0,
+   "spacing": 0.15,
+   "cap": 24
+  },
+  "hit": {
+   "tongues": 8,
+   "sparks": 18,
+   "flash_len": 0.6,
+   "flash_w": 0.13,
+   "flash_life": 0.2,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.14
+  },
+  "ignite": {
+   "rate": 24.0,
+   "cap": 16,
+   "max_speed": 12.0
+  },
+  "aoe": {
+   "light": {
+    "peak": 3.4,
+    "range": 9.0,
+    "color": [
+     1.0,
+     0.55,
+     0.2
+    ]
+   },
+   "items": [
+    {
+     "type": "crescent",
+     "name": "flip_wheel",
+     "t0": 0.4833,
+     "reveal": 0.6894,
+     "life": 1.25,
+     "o": [
+      -0.0035,
+      1.554,
+      1.3068
+     ],
+     "x": [
+      0.0713,
+      0.8142,
+      0.5762
+     ],
+     "y": [
+      -0.0693,
+      -0.5722,
+      0.8172
+     ],
+     "z": [
+      0.995,
+      -0.0982,
+      0.0156
+     ],
+     "a0": 0.0,
+     "a1": 300.0,
+     "cut_a1": 300.0,
+     "r": 1.7278,
+     "r_end": 2.4278,
+     "width": 0.85,
+     "thick": 0.5,
+     "travel": [
+      0,
+      0,
+      0
+     ],
+     "rise": 0.0,
+     "tear": 0.6,
+     "gain": 1.1,
+     "seed": 31.0,
+     "layers": 2
+    },
+    {
+     "type": "crescent",
+     "name": "down_cut",
+     "t0": 1.16,
+     "reveal": 0.2,
+     "life": 0.85,
+     "o": [
+      0.0391,
+      1.1227,
+      0.3815
+     ],
+     "x": [
+      0.1635,
+      0.7063,
+      -0.6887
+     ],
+     "y": [
+      0.3017,
+      0.6289,
+      0.7166
+     ],
+     "z": [
+      0.9393,
+      -0.325,
+      -0.1102
+     ],
+     "a0": -28.6709,
+     "a1": 248.4808,
+     "cut_a1": 191.1391,
+     "r": 1.4424,
+     "r_end": 2.9424,
+     "width": 0.85,
+     "thick": 0.42,
+     "travel": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 1.15,
+     "seed": 32.0,
+     "layers": 2
+    },
+    {
+     "type": "burst",
+     "name": "landing_burst",
+     "t0": 1.32,
+     "life": 0.95,
+     "o": [
+      -0.3522,
+      0.05,
+      0.8772
+     ],
+     "x": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "z": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "size": 1.7,
+     "spread": 0.8,
+     "tongues": 14,
+     "flat": 0.35,
+     "on_hit": false,
+     "gain": 0.95,
+     "seed": 33.0
+    }
+   ]
+  }
+ },
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r12_kasha.json",
+ "id": "sun_kasha_r16"
+}

@@ -1,0 +1,270 @@
+{
+ "_doc": "R16 日之呼吸・炎舞（#6→#4 修改候選，ART_REVIEW；R13 炎舞 sun_enbu_double＝已驗收基準，原樣保留；notes/r16/build_enbu2_r16.py）。#6 狼 c0000 a050_300101 袈裟（右上→左下，雙手）砍完的位置正好是 #4 狼 c0000 a050_300020 逆袈裟（左下→右上）的起刀位置：#6 0–0.53 s 原速 → 0.06 s 交叉淡入 #4（0.39 s 起，原速；髖部朝向對齊、第二段根位移 ×0.45 讓兩刀砍同一個木樁）→ #4 收勢。兩手能搆到的地方雙手握。",
+ "name": "日之呼吸・炎舞（R16 #6→#4 候選）",
+ "status": "ART_REVIEW",
+ "batch": "R16",
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16_enbu2.json",
+ "source": "#6 狼 c0000 a050_300101 → #4 狼 c0000 a050_300020（TS 1.017）",
+ "timeline": "起手 0–0.21 → 第一刀袈裟 0.21–0.40（右上→左下）→ 第二刀逆袈裟 0.53–0.69（左下→右上）→ 收勢",
+ "damage": 3,
+ "cooldown": 1.0,
+ "charge_cancel": 0.0,
+ "targets": [
+  {
+   "name": "木樁 2.8 m（設計距離）",
+   "pos": [
+    0.0,
+    0.0,
+    2.8
+   ]
+  },
+  {
+   "name": "木樁 2.6 m（近）",
+   "pos": [
+    0.0,
+    0.0,
+    2.6
+   ]
+  }
+ ],
+ "shot": {
+  "anim": "isshin_r16_enbu2",
+  "angle": 0.0,
+  "fade_in": 0.06,
+  "fade_out": 0.25,
+  "travel_scale": 1.0,
+  "two_hand": true,
+  "attack": true,
+  "strikes": [
+   [
+    0.213,
+    0.397
+   ],
+   [
+    0.533,
+    0.687
+   ]
+  ],
+  "swings": [
+   0.213,
+   0.533
+  ],
+  "lockout": 0.08,
+  "min_dist": 0.85,
+  "dodge_cancel": 0.807,
+  "move_cancel": 1.037,
+  "attack_cancel": 1.037,
+  "end_t": 2.2,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 4,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.0,
+   "db": -10.0,
+   "pitch": 0.8
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 0.193,
+   "db": 0.0,
+   "pitch": 1.0
+  },
+  "swing2": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 0.513,
+   "db": 0.0,
+   "pitch": 0.95
+  },
+  "boom": {
+   "stream": "res://assets/audio/sfx/hit_fire_spin.wav",
+   "at": 0.583,
+   "db": -6.0,
+   "pitch": 0.75
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・炎舞（R16 #6→#4 候選）",
+  "_doc": "R16 炎舞：武器層＝刀身點燃＋短刀光；主特效（aoe）＝兩道大範圍火焰斬：第一道沿袈裟（右上→左下）、第二道沿逆袈裟（左下→右上），各自依該刀實際的刀路平面與掃掠方向展開、放大並往前推進，之後撕裂消散；命中爆燃只在實際命中。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     0.213,
+     0.397
+    ],
+    [
+     0.513,
+     0.707
+    ]
+   ],
+   "lifetime": 0.12,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.5,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊。",
+   "blade_env": [
+    [
+     0.0,
+     0.3
+    ],
+    [
+     0.1,
+     1.0
+    ],
+    [
+     0.787,
+     1.0
+    ],
+    [
+     1.187,
+     0.0
+    ]
+   ],
+   "edge_height": 0.13,
+   "end_t": 1.287
+  },
+  "sparks": {
+   "window": [
+    0.213,
+    0.687
+   ],
+   "min_speed": 15.0,
+   "spacing": 0.15,
+   "cap": 18
+  },
+  "hit": {
+   "tongues": 6,
+   "sparks": 14,
+   "flash_len": 0.5,
+   "flash_w": 0.12,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "rate": 20.0,
+   "cap": 12,
+   "max_speed": 12.0
+  },
+  "aoe": {
+   "light": {
+    "peak": 2.6,
+    "range": 7.0,
+    "color": [
+     1.0,
+     0.55,
+     0.2
+    ]
+   },
+   "items": [
+    {
+     "type": "crescent",
+     "name": "kesa",
+     "t0": 0.193,
+     "reveal": 0.204,
+     "life": 0.85,
+     "o": [
+      0.0266,
+      1.0478,
+      1.0159
+     ],
+     "x": [
+      -0.2131,
+      0.3548,
+      -0.9103
+     ],
+     "y": [
+      -0.4856,
+      0.7701,
+      0.4138
+     ],
+     "z": [
+      0.8478,
+      0.5302,
+      0.0082
+     ],
+     "a0": -38.7089,
+     "a1": 335.4769,
+     "cut_a1": 258.0591,
+     "r": 1.2913,
+     "r_end": 2.7913,
+     "width": 0.7,
+     "thick": 0.36,
+     "travel": [
+      0.0,
+      0.0,
+      1.2
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 1.0,
+     "seed": 1.0,
+     "layers": 2
+    },
+    {
+     "type": "crescent",
+     "name": "return",
+     "t0": 0.513,
+     "reveal": 0.174,
+     "life": 0.95,
+     "o": [
+      -0.5296,
+      1.0565,
+      0.1663
+     ],
+     "x": [
+      0.904,
+      -0.1644,
+      -0.3947
+     ],
+     "y": [
+      0.312,
+      -0.3774,
+      0.8719
+     ],
+     "z": [
+      -0.2923,
+      -0.9113,
+      -0.2899
+     ],
+     "a0": -37.3893,
+     "a1": 324.0402,
+     "cut_a1": 249.2617,
+     "r": 1.4521,
+     "r_end": 3.3521,
+     "width": 0.8,
+     "thick": 0.4,
+     "travel": [
+      0.0,
+      0.3,
+      1.8
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 1.15,
+     "seed": 2.0,
+     "layers": 2
+    }
+   ]
+  }
+ },
+ "id": "sun_enbu_double_r16"
+}

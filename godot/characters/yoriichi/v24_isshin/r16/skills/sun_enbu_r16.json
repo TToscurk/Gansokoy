@@ -1,0 +1,295 @@
+{
+ "_doc": "R16 日之呼吸・圓舞（ART_REVIEW；notes/r16/build_reuse_r16.py）。動作＝R15 已用 #533 狼 c0000 a050_309050 做好的版本（isshin_sun_enbu_r15，兩刀雙手袈裟原速、兩刀之間的前滾移除；本輪沒有重做動作），不接圓舞一閃、不加其他攻擊。改的是特效：大型弧形火焰斬取代 R15 的細新月火帶。R9 圓舞 sun_enbu 原樣保留作回退依據。",
+ "name": "日之呼吸・圓舞（R16 大型弧斬）",
+ "status": "ART_REVIEW",
+ "batch": "R16",
+ "source": "#533 狼 c0000 a050_309050（TS 1.017；前滾移除）",
+ "timeline": "蓄勢 0–0.14 s（Space 可取消）→ 下沉前衝 → 第一刀袈裟 0.38–0.52 → 回正上步 → 第二刀袈裟 0.60–0.79 → 低姿 → 起身收勢",
+ "damage": 2,
+ "cooldown": 1.0,
+ "charge_cancel": 0.14,
+ "targets": [
+  {
+   "name": "木樁 3.1 m（設計距離）",
+   "pos": [
+    0.0,
+    0.0,
+    3.1
+   ]
+  },
+  {
+   "name": "木樁 2.5 m（近）",
+   "pos": [
+    0.0,
+    0.0,
+    2.5
+   ]
+  }
+ ],
+ "shot": {
+  "anim": "isshin_r16_enbu",
+  "angle": 0.0,
+  "fade_in": 0.06,
+  "fade_out": 0.25,
+  "travel_scale": 1.0,
+  "two_hand": true,
+  "grip_off": 1.0561,
+  "attack": true,
+  "strikes": [
+   [
+    0.375,
+    0.52
+   ],
+   [
+    0.603,
+    0.786
+   ]
+  ],
+  "swings": [
+   0.375,
+   0.603
+  ],
+  "lockout": 0.1,
+  "lunges": [
+   [
+    0.1,
+    0.48
+   ],
+   [
+    0.48,
+    0.786
+   ]
+  ],
+  "lunge_min_dist": [
+   1.2,
+   1.1
+  ],
+  "min_dist": 0.85,
+  "dodge_cancel": 0.936,
+  "move_cancel": 1.0,
+  "attack_cancel": 1.0,
+  "end_t": 2.0,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 4,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.6
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.05,
+   "db": -10.0,
+   "pitch": 0.8
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 0.405,
+   "db": 0.0,
+   "pitch": 1.0
+  },
+  "swing2": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 0.583,
+   "db": 0.0,
+   "pitch": 0.95
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.1,
+   "loop_to": 1.3,
+   "db": -16.0
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・圓舞（R16）",
+  "_doc": "R16 圓舞：武器層＝刀身點燃＋短刀光（沿真實刀刃）；主特效（aoe）＝每一刀一道大型弧形火焰斬：沿該刀實際刀路平面、依揮刀時間展開，金黃火芯＋橘紅外焰，展開後放大並往前飛出、撕裂消散；第二刀是主要的爆發（更大、飛更遠）。命中爆燃只在實際命中。只是視覺，判定不變。",
+  "trail": {
+   "emit": [
+    [
+     0.375,
+     0.52
+    ],
+    [
+     0.583,
+     0.806
+    ]
+   ],
+   "lifetime": 0.16,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.55,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（蓄勢點燃，第二刀後收）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.12,
+     0.7
+    ],
+    [
+     0.25,
+     1.0
+    ],
+    [
+     0.886,
+     1.0
+    ],
+    [
+     1.286,
+     0.0
+    ]
+   ],
+   "edge_height": 0.14,
+   "end_t": 1.386
+  },
+  "sparks": {
+   "window": [
+    0.375,
+    0.786
+   ],
+   "min_speed": 15.0,
+   "spacing": 0.15,
+   "cap": 22
+  },
+  "hit": {
+   "tongues": 6,
+   "sparks": 14,
+   "flash_len": 0.5,
+   "flash_w": 0.12,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.12
+  },
+  "ignite": {
+   "rate": 22.0,
+   "cap": 14,
+   "max_speed": 12.0
+  },
+  "aoe": {
+   "light": {
+    "peak": 3.0,
+    "range": 8.0,
+    "color": [
+     1.0,
+     0.55,
+     0.2
+    ]
+   },
+   "items": [
+    {
+     "type": "crescent",
+     "name": "cut1",
+     "t0": 0.355,
+     "reveal": 0.165,
+     "life": 0.8,
+     "o": [
+      0.0409,
+      0.8948,
+      0.6997
+     ],
+     "x": [
+      -0.4639,
+      0.5535,
+      -0.6917
+     ],
+     "y": [
+      -0.382,
+      0.5795,
+      0.7199
+     ],
+     "z": [
+      0.7993,
+      0.5982,
+      -0.0573
+     ],
+     "a0": -20.9056,
+     "a1": 181.1816,
+     "cut_a1": 139.3705,
+     "r": 1.5179,
+     "r_end": 2.8179,
+     "width": 0.7,
+     "thick": 0.34,
+     "travel": [
+      0.0,
+      0.0,
+      1.1
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 0.95,
+     "seed": 21.0,
+     "layers": 2
+    },
+    {
+     "type": "crescent",
+     "name": "cut2_big",
+     "t0": 0.583,
+     "reveal": 0.203,
+     "life": 1.0,
+     "o": [
+      0.0762,
+      0.759,
+      0.3099
+     ],
+     "x": [
+      -0.6886,
+      0.7251,
+      -0.0015
+     ],
+     "y": [
+      -0.0911,
+      -0.0844,
+      0.9923
+     ],
+     "z": [
+      0.7194,
+      0.6834,
+      0.1242
+     ],
+     "a0": -28.5969,
+     "a1": 247.8395,
+     "cut_a1": 190.6458,
+     "r": 1.1403,
+     "r_end": 3.4403,
+     "width": 0.95,
+     "thick": 0.46,
+     "travel": [
+      0.0,
+      0.25,
+      2.6
+     ],
+     "rise": 0.0,
+     "tear": 0.45,
+     "gain": 1.25,
+     "seed": 22.0,
+     "layers": 2
+    }
+   ]
+  }
+ },
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r15_enbu.json",
+ "id": "sun_enbu_r16"
+}

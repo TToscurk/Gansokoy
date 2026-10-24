@@ -1,0 +1,41 @@
+{
+ "isshin_r16_enbu2": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16_enbu2.json"
+ },
+ "isshin_r16c_enbu_x2": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16c_enbu_x2.json"
+ },
+ "isshin_r16_enbu": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r15_enbu.json"
+ },
+ "isshin_r16b_enbu": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16b_enbu.json"
+ },
+ "isshin_r16_genjitsu": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16_genjitsu.json"
+ },
+ "isshin_r16_kasha": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r12_kasha.json"
+ },
+ "isshin_r16b_kasha": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16b_kasha.json"
+ },
+ "isshin_r16_nichirin": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16_nichirin.json"
+ },
+ "isshin_r16b_nichirin": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16b_nichirin.json"
+ },
+ "isshin_r16_shakkotsu": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16_shakkotsu.json"
+ },
+ "isshin_r16d_shakkotsu": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16d_shakkotsu.json"
+ },
+ "isshin_r16f_shakkotsu": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16f_shakkotsu.json"
+ },
+ "isshin_r16b_youka": {
+  "json": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16b_youka.json"
+ }
+}

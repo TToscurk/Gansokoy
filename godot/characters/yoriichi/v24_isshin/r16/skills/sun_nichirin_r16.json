@@ -1,0 +1,379 @@
+{
+ "_doc": "R16 日之呼吸・日暈之龍・頭舞（龍頭起手候選，ART_REVIEW；R15 日暈之龍 sun_nichirin_dragon 保留可比較；notes/r16/build_nichirin_r16.py）。① 起手＝#300 葦名劍客 c1400 a000_003001：雙手把刀舉過頭成大上段並穩住（舉刀原速、停留 0.57 倍速），身體轉 +48° 正對目標；這段刀身燃燒、火焰往前收成龍頭（Space 可取消）。② 之後與 R15 相同的瞬步連斬：#293 艾瑪 c7400 a000_003061 三刀 → #161 一心 c5400 a000_003091 橫斬＋縱劈收尾，繞目標一圈（root_yaw，前四刀不擊退＝R15 既有規則）。③ 龍：龍頭先在刀上方成形，瞬步開始後在緣一前方 1.6 m 帶路，龍身＝緣一實際走過的路線（每一步瞬步都往前延伸），收尾縱劈時龍頭撲向目標爆燃，龍身由尾往頭燒散。",
+ "name": "日之呼吸・日暈之龍・頭舞（R16 龍頭起手候選）",
+ "status": "ART_REVIEW",
+ "batch": "R16",
+ "tracks": "D:/research/sekiro_r8_p0/retarget/godot_tracks_r16_nichirin.json",
+ "source": "#300 葦名劍客 c1400 a000_003001（大上段起手）＋ #293 艾瑪 a000_003061（瞬步三刀）＋ #161 一心 a000_003091（橫斬＋縱劈）",
+ "timeline": "大上段蓄勢 0–1.05 s（龍頭成形；Space 可取消）→ 瞬步①橫 1.17 → ②袈裟 1.60 → ③橫 2.00 → ④橫 2.78 → ⑤縱劈收尾 3.08（龍頭撲擊爆燃）→ 收勢",
+ "damage": 2,
+ "cooldown": 1.6,
+ "charge_cancel": 1.02,
+ "targets": [
+  {
+   "name": "木樁 2.6 m（設計位置）",
+   "pos": [
+    0.0,
+    0.0,
+    2.6
+   ]
+  },
+  {
+   "name": "木樁 2.0 m（近）",
+   "pos": [
+    0.0,
+    0.0,
+    2.0
+   ]
+  }
+ ],
+ "afterimage": {
+  "times": [
+   1.121,
+   1.187,
+   1.438,
+   1.836,
+   1.954,
+   2.632,
+   2.722
+  ],
+  "life": 0.2,
+  "alpha": 0.3,
+  "color": [
+   1.0,
+   0.55,
+   0.2
+  ]
+ },
+ "knock": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.5
+ ],
+ "shot": {
+  "anim": "isshin_r16_nichirin",
+  "angle": 0.0,
+  "fade_in": 0.06,
+  "fade_out": 0.25,
+  "travel_scale": 1.0,
+  "two_hand": false,
+  "attack": true,
+  "strikes": [
+   [
+    1.169,
+    1.3
+   ],
+   [
+    1.6,
+    1.747
+   ],
+   [
+    2.0,
+    2.148
+   ],
+   [
+    2.78,
+    2.93
+   ],
+   [
+    3.08,
+    3.27
+   ]
+  ],
+  "swings": [
+   1.169,
+   1.6,
+   2.0,
+   2.78,
+   3.08
+  ],
+  "lockout": 0.08,
+  "lunges": [],
+  "min_dist": 0.5,
+  "root_yaw": true,
+  "dodge_cancel": 3.42,
+  "move_cancel": 3.57,
+  "attack_cancel": 3.57,
+  "end_t": 4.1,
+  "freeze_hit_frame": true,
+  "hitstop_frames": 3,
+  "root_pose_sync": true
+ },
+ "audio": {
+  "breath": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 0.0,
+   "db": -11.0,
+   "pitch": 0.5
+  },
+  "ignite": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_3.wav",
+   "at": 0.25,
+   "db": -8.0,
+   "pitch": 0.6
+  },
+  "flame": {
+   "stream": "res://assets/audio/sfx/dragon_fire_loop.wav",
+   "loop_from": 0.2,
+   "loop_to": 3.97,
+   "db": -11.0
+  },
+  "wind": {
+   "stream": "res://assets/audio/sfx/dragon_wind_loop.wav",
+   "at": 1.05,
+   "db": -10.0,
+   "pitch": 2.22
+  },
+  "dash1": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 1.1208,
+   "db": -2.0,
+   "pitch": 1.4
+  },
+  "dash2": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 1.4382,
+   "db": -3.0,
+   "pitch": 1.5
+  },
+  "dash3": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 1.8357,
+   "db": -3.0,
+   "pitch": 1.45
+  },
+  "dash4": {
+   "stream": "res://assets/audio/sfx/roll_whoosh.wav",
+   "at": 2.6323,
+   "db": -2.0,
+   "pitch": 1.4
+  },
+  "swing": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 1.169,
+   "db": 0.0,
+   "pitch": 1.1
+  },
+  "swing2": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 1.6,
+   "db": 0.0,
+   "pitch": 1.05
+  },
+  "swing3": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 2.0,
+   "db": 0.0,
+   "pitch": 1.0
+  },
+  "swing4": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_2.wav",
+   "at": 2.78,
+   "db": 0.0,
+   "pitch": 1.0
+  },
+  "swing5": {
+   "stream": "res://assets/audio/sfx/sword_fire_swing_1.wav",
+   "at": 3.08,
+   "db": 0.0,
+   "pitch": 0.8
+  },
+  "roar": {
+   "stream": "res://assets/audio/sfx/hit_fire_spin.wav",
+   "at": 3.03,
+   "db": -2.0,
+   "pitch": 0.55
+  },
+  "hit": {
+   "stream": "res://assets/audio/sfx/hit_fire_heavy.wav",
+   "on": "hit",
+   "db": 0.0
+  }
+ },
+ "vfx_profile": {
+  "name": "日之呼吸・日暈之龍・頭舞（R16）",
+  "_doc": "R16 日暈之龍：武器層＝大上段時刀身燃燒＋每刀短刀光；主特效（aoe）＝龍：龍頭（Blender 製作的風格化龍頭網格＋流動火焰著色器）在刀上方成形 → 瞬步時在前方帶路、龍身沿實際路線拖出（越斬越長）→ 收尾縱劈時龍頭撲向目標、大爆燃 → 龍身由尾往頭燒散；每一步有殘影。命中爆燃只在實際命中。只是視覺，判定只有五刀。",
+  "trail": {
+   "emit": [
+    [
+     1.149,
+     1.32
+    ],
+    [
+     1.58,
+     1.767
+    ],
+    [
+     1.98,
+     2.168
+    ],
+    [
+     2.76,
+     2.95
+    ],
+    [
+     3.06,
+     3.29
+    ]
+   ],
+   "lifetime": 0.13,
+   "extend": 0.08,
+   "inset": -0.3,
+   "lift": 0.05,
+   "core_ratio": 0.7,
+   "core_root_skip": 0.45,
+   "head_fade": 0.03,
+   "max_step_deg": 4.0,
+   "core_gain": 0.6,
+   "flame_heat": 0.9,
+   "flame_occlusion": 0.5,
+   "flame_on": 0.0
+  },
+  "mesh": {
+   "_doc": "沒有 GLB：刀身熱邊（大上段點燃，收尾後收）。",
+   "blade_env": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.3,
+     0.6
+    ],
+    [
+     0.95,
+     1.0
+    ],
+    [
+     3.37,
+     1.0
+    ],
+    [
+     3.77,
+     0.0
+    ]
+   ],
+   "edge_height": 0.16,
+   "end_t": 3.87
+  },
+  "sparks": {
+   "window": [
+    1.169,
+    3.27
+   ],
+   "min_speed": 14.0,
+   "spacing": 0.14,
+   "cap": 30
+  },
+  "hit": {
+   "tongues": 7,
+   "sparks": 16,
+   "flash_len": 0.6,
+   "flash_w": 0.11,
+   "flash_life": 0.18,
+   "flash_ahead": 0.12,
+   "flash_out": 0.1,
+   "flare_time": 0.14
+  },
+  "ignite": {
+   "rate": 26.0,
+   "cap": 18,
+   "max_speed": 12.0
+  },
+  "aoe": {
+   "light": {
+    "peak": 3.4,
+    "range": 9.0,
+    "color": [
+     1.0,
+     0.55,
+     0.2
+    ]
+   },
+   "items": [
+    {
+     "type": "dragon",
+     "name": "sun_dragon_r16",
+     "t0": 0.22,
+     "o": [
+      0.0,
+      1.95,
+      1.15
+     ],
+     "x": [
+      1,
+      0,
+      0
+     ],
+     "y": [
+      0,
+      1,
+      0
+     ],
+     "z": [
+      0,
+      0,
+      1
+     ],
+     "form": 0.8,
+     "charge_pos": [
+      0.0,
+      1.95,
+      1.15
+     ],
+     "t_go": 1.09,
+     "lead": 1.6,
+     "height": 1.35,
+     "t_final": 3.08,
+     "final_pos": [
+      0.0,
+      1.0,
+      0.7861
+     ],
+     "head_scale": 1.25,
+     "charge_yaw_deg": 70.0,
+     "radius": 0.36,
+     "burn": 0.9,
+     "burn_delay": 0.3,
+     "gain": 1.0,
+     "final_burst": {
+      "type": "burst",
+      "name": "dragon_final",
+      "t0": 3.08,
+      "life": 1.05,
+      "o": [
+       0,
+       0,
+       0
+      ],
+      "x": [
+       1.0,
+       0.0,
+       0.0
+      ],
+      "y": [
+       0.0,
+       1.0,
+       0.0
+      ],
+      "z": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "size": 2.0,
+      "spread": 0.9,
+      "tongues": 16,
+      "flat": 0.0,
+      "on_hit": false,
+      "gain": 0.95,
+      "seed": 12.0
+     }
+    }
+   ]
+  }
+ },
+ "id": "sun_nichirin_r16"
+}
